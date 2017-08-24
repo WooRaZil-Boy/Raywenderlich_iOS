@@ -1,0 +1,435 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EF5036BD1E2A92B3002AD43F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5036BC1E2A92B3002AD43F /* AppDelegate.swift */; };
+		EF5036BF1E2A92B3002AD43F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5036BE1E2A92B3002AD43F /* ViewController.swift */; };
+		EF5036C21E2A92B3002AD43F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF5036C01E2A92B3002AD43F /* Main.storyboard */; };
+		EF5036C41E2A92B3002AD43F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF5036C31E2A92B3002AD43F /* Assets.xcassets */; };
+		EF5036C71E2A92B3002AD43F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF5036C51E2A92B3002AD43F /* LaunchScreen.storyboard */; };
+		EF5036D21E2A92B3002AD43F /* IrisTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5036D11E2A92B3002AD43F /* IrisTests.swift */; };
+		EF5036DE1E2A9446002AD43F /* Assistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5036DD1E2A9446002AD43F /* Assistant.swift */; };
+		EF5036E01E2A944F002AD43F /* MicMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5036DF1E2A944F002AD43F /* MicMonitor.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EF5036CE1E2A92B3002AD43F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF5036B11E2A92B3002AD43F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF5036B81E2A92B3002AD43F;
+			remoteInfo = Iris;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		EF5036B91E2A92B3002AD43F /* Iris.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Iris.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF5036BC1E2A92B3002AD43F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EF5036BE1E2A92B3002AD43F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EF5036C11E2A92B3002AD43F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		EF5036C31E2A92B3002AD43F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EF5036C61E2A92B3002AD43F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		EF5036C81E2A92B3002AD43F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF5036CD1E2A92B3002AD43F /* IrisTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IrisTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF5036D11E2A92B3002AD43F /* IrisTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IrisTests.swift; sourceTree = "<group>"; };
+		EF5036D31E2A92B3002AD43F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF5036DD1E2A9446002AD43F /* Assistant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assistant.swift; sourceTree = "<group>"; };
+		EF5036DF1E2A944F002AD43F /* MicMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MicMonitor.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EF5036B61E2A92B3002AD43F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF5036CA1E2A92B3002AD43F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EF5036B01E2A92B3002AD43F = {
+			isa = PBXGroup;
+			children = (
+				EF5036DC1E2A9311002AD43F /* Starter Classes */,
+				EF5036BB1E2A92B3002AD43F /* Iris */,
+				EF5036D01E2A92B3002AD43F /* IrisTests */,
+				EF5036BA1E2A92B3002AD43F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EF5036BA1E2A92B3002AD43F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EF5036B91E2A92B3002AD43F /* Iris.app */,
+				EF5036CD1E2A92B3002AD43F /* IrisTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EF5036BB1E2A92B3002AD43F /* Iris */ = {
+			isa = PBXGroup;
+			children = (
+				EF5036BC1E2A92B3002AD43F /* AppDelegate.swift */,
+				EF5036BE1E2A92B3002AD43F /* ViewController.swift */,
+				EF5036C01E2A92B3002AD43F /* Main.storyboard */,
+				EF5036C31E2A92B3002AD43F /* Assets.xcassets */,
+				EF5036C51E2A92B3002AD43F /* LaunchScreen.storyboard */,
+				EF5036C81E2A92B3002AD43F /* Info.plist */,
+			);
+			path = Iris;
+			sourceTree = "<group>";
+		};
+		EF5036D01E2A92B3002AD43F /* IrisTests */ = {
+			isa = PBXGroup;
+			children = (
+				EF5036D11E2A92B3002AD43F /* IrisTests.swift */,
+				EF5036D31E2A92B3002AD43F /* Info.plist */,
+			);
+			path = IrisTests;
+			sourceTree = "<group>";
+		};
+		EF5036DC1E2A9311002AD43F /* Starter Classes */ = {
+			isa = PBXGroup;
+			children = (
+				EF5036DD1E2A9446002AD43F /* Assistant.swift */,
+				EF5036DF1E2A944F002AD43F /* MicMonitor.swift */,
+			);
+			name = "Starter Classes";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EF5036B81E2A92B3002AD43F /* Iris */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EF5036D61E2A92B3002AD43F /* Build configuration list for PBXNativeTarget "Iris" */;
+			buildPhases = (
+				EF5036B51E2A92B3002AD43F /* Sources */,
+				EF5036B61E2A92B3002AD43F /* Frameworks */,
+				EF5036B71E2A92B3002AD43F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Iris;
+			productName = Iris;
+			productReference = EF5036B91E2A92B3002AD43F /* Iris.app */;
+			productType = "com.apple.product-type.application";
+		};
+		EF5036CC1E2A92B3002AD43F /* IrisTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EF5036D91E2A92B3002AD43F /* Build configuration list for PBXNativeTarget "IrisTests" */;
+			buildPhases = (
+				EF5036C91E2A92B3002AD43F /* Sources */,
+				EF5036CA1E2A92B3002AD43F /* Frameworks */,
+				EF5036CB1E2A92B3002AD43F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EF5036CF1E2A92B3002AD43F /* PBXTargetDependency */,
+			);
+			name = IrisTests;
+			productName = IrisTests;
+			productReference = EF5036CD1E2A92B3002AD43F /* IrisTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EF5036B11E2A92B3002AD43F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "근성가이";
+				TargetAttributes = {
+					EF5036B81E2A92B3002AD43F = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
+					EF5036CC1E2A92B3002AD43F = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = EF5036B81E2A92B3002AD43F;
+					};
+				};
+			};
+			buildConfigurationList = EF5036B41E2A92B3002AD43F /* Build configuration list for PBXProject "Iris" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = EF5036B01E2A92B3002AD43F;
+			productRefGroup = EF5036BA1E2A92B3002AD43F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EF5036B81E2A92B3002AD43F /* Iris */,
+				EF5036CC1E2A92B3002AD43F /* IrisTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EF5036B71E2A92B3002AD43F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF5036C71E2A92B3002AD43F /* LaunchScreen.storyboard in Resources */,
+				EF5036C41E2A92B3002AD43F /* Assets.xcassets in Resources */,
+				EF5036C21E2A92B3002AD43F /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF5036CB1E2A92B3002AD43F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EF5036B51E2A92B3002AD43F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF5036E01E2A944F002AD43F /* MicMonitor.swift in Sources */,
+				EF5036BF1E2A92B3002AD43F /* ViewController.swift in Sources */,
+				EF5036DE1E2A9446002AD43F /* Assistant.swift in Sources */,
+				EF5036BD1E2A92B3002AD43F /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF5036C91E2A92B3002AD43F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF5036D21E2A92B3002AD43F /* IrisTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EF5036CF1E2A92B3002AD43F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF5036B81E2A92B3002AD43F /* Iris */;
+			targetProxy = EF5036CE1E2A92B3002AD43F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		EF5036C01E2A92B3002AD43F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EF5036C11E2A92B3002AD43F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		EF5036C51E2A92B3002AD43F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EF5036C61E2A92B3002AD43F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		EF5036D41E2A92B3002AD43F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		EF5036D51E2A92B3002AD43F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EF5036D71E2A92B3002AD43F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Iris/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = world.hello.Iris;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		EF5036D81E2A92B3002AD43F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Iris/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = world.hello.Iris;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		EF5036DA1E2A92B3002AD43F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = IrisTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = world.hello.IrisTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Iris.app/Iris";
+			};
+			name = Debug;
+		};
+		EF5036DB1E2A92B3002AD43F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = IrisTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = world.hello.IrisTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Iris.app/Iris";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EF5036B41E2A92B3002AD43F /* Build configuration list for PBXProject "Iris" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF5036D41E2A92B3002AD43F /* Debug */,
+				EF5036D51E2A92B3002AD43F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EF5036D61E2A92B3002AD43F /* Build configuration list for PBXNativeTarget "Iris" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF5036D71E2A92B3002AD43F /* Debug */,
+				EF5036D81E2A92B3002AD43F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		EF5036D91E2A92B3002AD43F /* Build configuration list for PBXNativeTarget "IrisTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF5036DA1E2A92B3002AD43F /* Debug */,
+				EF5036DB1E2A92B3002AD43F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EF5036B11E2A92B3002AD43F /* Project object */;
+}

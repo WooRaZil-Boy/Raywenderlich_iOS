@@ -1,0 +1,478 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		500EDFFC1E1D68DE0068457E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500EDFFB1E1D68DE0068457E /* AppDelegate.swift */; };
+		500EE0011E1D68DE0068457E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 500EDFFF1E1D68DE0068457E /* Main.storyboard */; };
+		500EE0031E1D68DE0068457E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 500EE0021E1D68DE0068457E /* Assets.xcassets */; };
+		500EE0061E1D68DE0068457E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 500EE0041E1D68DE0068457E /* LaunchScreen.storyboard */; };
+		500EE0111E1D68DE0068457E /* SurfJournalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500EE0101E1D68DE0068457E /* SurfJournalTests.swift */; };
+		500EE01F1E1D6C8E0068457E /* SurfJournalModel.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 500EE01C1E1D6C8E0068457E /* SurfJournalModel.sqlite */; };
+		500EE0201E1D6C8E0068457E /* SurfJournalModel.sqlite-shm in Resources */ = {isa = PBXBuildFile; fileRef = 500EE01D1E1D6C8E0068457E /* SurfJournalModel.sqlite-shm */; };
+		500EE0211E1D6C8E0068457E /* SurfJournalModel.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 500EE01E1E1D6C8E0068457E /* SurfJournalModel.sqlite-wal */; };
+		500EE0241E1D6CDF0068457E /* SurfJournalModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 500EE0221E1D6CDF0068457E /* SurfJournalModel.xcdatamodeld */; };
+		500EE0261E1D6D550068457E /* JournalEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500EE0251E1D6D550068457E /* JournalEntry.swift */; };
+		500EE0281E1D6D920068457E /* JournalEntry+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500EE0271E1D6D920068457E /* JournalEntry+Helper.swift */; };
+		500EE02B1E1D6E720068457E /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500EE02A1E1D6E720068457E /* CoreDataStack.swift */; };
+		500EE02D1E1D76D30068457E /* JournalListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500EE02C1E1D76D30068457E /* JournalListViewController.swift */; };
+		500EE02F1E1D78A30068457E /* JournalEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500EE02E1E1D78A30068457E /* JournalEntryViewController.swift */; };
+		500EE0311E1D79130068457E /* SurfEntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500EE0301E1D79130068457E /* SurfEntryTableViewCell.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		500EE00D1E1D68DE0068457E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 500EDFF01E1D68DE0068457E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 500EDFF71E1D68DE0068457E;
+			remoteInfo = SurfJournal;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		500EDFF81E1D68DE0068457E /* SurfJournal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SurfJournal.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		500EDFFB1E1D68DE0068457E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		500EE0001E1D68DE0068457E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		500EE0021E1D68DE0068457E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		500EE0051E1D68DE0068457E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		500EE0071E1D68DE0068457E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		500EE00C1E1D68DE0068457E /* SurfJournalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SurfJournalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		500EE0101E1D68DE0068457E /* SurfJournalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurfJournalTests.swift; sourceTree = "<group>"; };
+		500EE0121E1D68DE0068457E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		500EE01C1E1D6C8E0068457E /* SurfJournalModel.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = SurfJournalModel.sqlite; sourceTree = "<group>"; };
+		500EE01D1E1D6C8E0068457E /* SurfJournalModel.sqlite-shm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SurfJournalModel.sqlite-shm"; sourceTree = "<group>"; };
+		500EE01E1E1D6C8E0068457E /* SurfJournalModel.sqlite-wal */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SurfJournalModel.sqlite-wal"; sourceTree = "<group>"; };
+		500EE0231E1D6CDF0068457E /* SurfJournalModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SurfJournalModel.xcdatamodel; sourceTree = "<group>"; };
+		500EE0251E1D6D550068457E /* JournalEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JournalEntry.swift; sourceTree = "<group>"; };
+		500EE0271E1D6D920068457E /* JournalEntry+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JournalEntry+Helper.swift"; sourceTree = "<group>"; };
+		500EE0291E1D6E550068457E /* SurfJournal-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SurfJournal-Bridging-Header.h"; sourceTree = "<group>"; };
+		500EE02A1E1D6E720068457E /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		500EE02C1E1D76D30068457E /* JournalListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JournalListViewController.swift; sourceTree = "<group>"; };
+		500EE02E1E1D78A30068457E /* JournalEntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JournalEntryViewController.swift; sourceTree = "<group>"; };
+		500EE0301E1D79130068457E /* SurfEntryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SurfEntryTableViewCell.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		500EDFF51E1D68DE0068457E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		500EE0091E1D68DE0068457E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		500EDFEF1E1D68DE0068457E = {
+			isa = PBXGroup;
+			children = (
+				500EDFFA1E1D68DE0068457E /* SurfJournal */,
+				500EE00F1E1D68DE0068457E /* SurfJournalTests */,
+				500EDFF91E1D68DE0068457E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		500EDFF91E1D68DE0068457E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				500EDFF81E1D68DE0068457E /* SurfJournal.app */,
+				500EE00C1E1D68DE0068457E /* SurfJournalTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		500EDFFA1E1D68DE0068457E /* SurfJournal */ = {
+			isa = PBXGroup;
+			children = (
+				500EDFFB1E1D68DE0068457E /* AppDelegate.swift */,
+				500EE02C1E1D76D30068457E /* JournalListViewController.swift */,
+				500EE02E1E1D78A30068457E /* JournalEntryViewController.swift */,
+				500EE0301E1D79130068457E /* SurfEntryTableViewCell.swift */,
+				500EDFFF1E1D68DE0068457E /* Main.storyboard */,
+				500EE0021E1D68DE0068457E /* Assets.xcassets */,
+				500EE0221E1D6CDF0068457E /* SurfJournalModel.xcdatamodeld */,
+				500EE02A1E1D6E720068457E /* CoreDataStack.swift */,
+				500EE0251E1D6D550068457E /* JournalEntry.swift */,
+				500EE0271E1D6D920068457E /* JournalEntry+Helper.swift */,
+				500EE0291E1D6E550068457E /* SurfJournal-Bridging-Header.h */,
+				500EE01B1E1D6C7C0068457E /* CoreDataSeed */,
+				500EE0041E1D68DE0068457E /* LaunchScreen.storyboard */,
+				500EE0071E1D68DE0068457E /* Info.plist */,
+			);
+			path = SurfJournal;
+			sourceTree = "<group>";
+		};
+		500EE00F1E1D68DE0068457E /* SurfJournalTests */ = {
+			isa = PBXGroup;
+			children = (
+				500EE0101E1D68DE0068457E /* SurfJournalTests.swift */,
+				500EE0121E1D68DE0068457E /* Info.plist */,
+			);
+			path = SurfJournalTests;
+			sourceTree = "<group>";
+		};
+		500EE01B1E1D6C7C0068457E /* CoreDataSeed */ = {
+			isa = PBXGroup;
+			children = (
+				500EE01C1E1D6C8E0068457E /* SurfJournalModel.sqlite */,
+				500EE01D1E1D6C8E0068457E /* SurfJournalModel.sqlite-shm */,
+				500EE01E1E1D6C8E0068457E /* SurfJournalModel.sqlite-wal */,
+			);
+			name = CoreDataSeed;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		500EDFF71E1D68DE0068457E /* SurfJournal */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 500EE0151E1D68DE0068457E /* Build configuration list for PBXNativeTarget "SurfJournal" */;
+			buildPhases = (
+				500EDFF41E1D68DE0068457E /* Sources */,
+				500EDFF51E1D68DE0068457E /* Frameworks */,
+				500EDFF61E1D68DE0068457E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SurfJournal;
+			productName = SurfJournal;
+			productReference = 500EDFF81E1D68DE0068457E /* SurfJournal.app */;
+			productType = "com.apple.product-type.application";
+		};
+		500EE00B1E1D68DE0068457E /* SurfJournalTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 500EE0181E1D68DE0068457E /* Build configuration list for PBXNativeTarget "SurfJournalTests" */;
+			buildPhases = (
+				500EE0081E1D68DE0068457E /* Sources */,
+				500EE0091E1D68DE0068457E /* Frameworks */,
+				500EE00A1E1D68DE0068457E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				500EE00E1E1D68DE0068457E /* PBXTargetDependency */,
+			);
+			name = SurfJournalTests;
+			productName = SurfJournalTests;
+			productReference = 500EE00C1E1D68DE0068457E /* SurfJournalTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		500EDFF01E1D68DE0068457E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "근성가이";
+				TargetAttributes = {
+					500EDFF71E1D68DE0068457E = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
+					500EE00B1E1D68DE0068457E = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 500EDFF71E1D68DE0068457E;
+					};
+				};
+			};
+			buildConfigurationList = 500EDFF31E1D68DE0068457E /* Build configuration list for PBXProject "SurfJournal" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 500EDFEF1E1D68DE0068457E;
+			productRefGroup = 500EDFF91E1D68DE0068457E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				500EDFF71E1D68DE0068457E /* SurfJournal */,
+				500EE00B1E1D68DE0068457E /* SurfJournalTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		500EDFF61E1D68DE0068457E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				500EE0061E1D68DE0068457E /* LaunchScreen.storyboard in Resources */,
+				500EE0031E1D68DE0068457E /* Assets.xcassets in Resources */,
+				500EE0211E1D6C8E0068457E /* SurfJournalModel.sqlite-wal in Resources */,
+				500EE0011E1D68DE0068457E /* Main.storyboard in Resources */,
+				500EE01F1E1D6C8E0068457E /* SurfJournalModel.sqlite in Resources */,
+				500EE0201E1D6C8E0068457E /* SurfJournalModel.sqlite-shm in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		500EE00A1E1D68DE0068457E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		500EDFF41E1D68DE0068457E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				500EE02D1E1D76D30068457E /* JournalListViewController.swift in Sources */,
+				500EE02B1E1D6E720068457E /* CoreDataStack.swift in Sources */,
+				500EE0281E1D6D920068457E /* JournalEntry+Helper.swift in Sources */,
+				500EE0261E1D6D550068457E /* JournalEntry.swift in Sources */,
+				500EE0311E1D79130068457E /* SurfEntryTableViewCell.swift in Sources */,
+				500EE02F1E1D78A30068457E /* JournalEntryViewController.swift in Sources */,
+				500EDFFC1E1D68DE0068457E /* AppDelegate.swift in Sources */,
+				500EE0241E1D6CDF0068457E /* SurfJournalModel.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		500EE0081E1D68DE0068457E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				500EE0111E1D68DE0068457E /* SurfJournalTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		500EE00E1E1D68DE0068457E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 500EDFF71E1D68DE0068457E /* SurfJournal */;
+			targetProxy = 500EE00D1E1D68DE0068457E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		500EDFFF1E1D68DE0068457E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				500EE0001E1D68DE0068457E /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		500EE0041E1D68DE0068457E /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				500EE0051E1D68DE0068457E /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		500EE0131E1D68DE0068457E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		500EE0141E1D68DE0068457E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		500EE0161E1D68DE0068457E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SurfJournal/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = world.hello.SurfJournal;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		500EE0171E1D68DE0068457E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SurfJournal/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = world.hello.SurfJournal;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		500EE0191E1D68DE0068457E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = SurfJournalTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = world.hello.SurfJournalTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SurfJournal.app/SurfJournal";
+			};
+			name = Debug;
+		};
+		500EE01A1E1D68DE0068457E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = SurfJournalTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = world.hello.SurfJournalTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SurfJournal.app/SurfJournal";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		500EDFF31E1D68DE0068457E /* Build configuration list for PBXProject "SurfJournal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				500EE0131E1D68DE0068457E /* Debug */,
+				500EE0141E1D68DE0068457E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		500EE0151E1D68DE0068457E /* Build configuration list for PBXNativeTarget "SurfJournal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				500EE0161E1D68DE0068457E /* Debug */,
+				500EE0171E1D68DE0068457E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		500EE0181E1D68DE0068457E /* Build configuration list for PBXNativeTarget "SurfJournalTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				500EE0191E1D68DE0068457E /* Debug */,
+				500EE01A1E1D68DE0068457E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		500EE0221E1D6CDF0068457E /* SurfJournalModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				500EE0231E1D6CDF0068457E /* SurfJournalModel.xcdatamodel */,
+			);
+			currentVersion = 500EE0231E1D6CDF0068457E /* SurfJournalModel.xcdatamodel */;
+			path = SurfJournalModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 500EDFF01E1D68DE0068457E /* Project object */;
+}

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C68" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="HLh-kg-JOr">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="cG1-Rr-57d">
+            <objects>
+                <viewController id="HLh-kg-JOr" customClass="ViewController" customModule="Iris" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="kgf-eq-5d3"/>
+                        <viewControllerLayoutGuide type="bottom" id="BEc-k8-xB5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="UNX-P7-mxk">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Touch to speak" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sfm-18-xpO">
+                                <rect key="frame" x="16" y="311" width="288" height="99"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="99" id="M56-eK-gCj"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ucp-Kp-W29">
+                                <rect key="frame" x="126.5" y="418" width="67" height="67"/>
+                                <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="67" id="AQW-rq-78c"/>
+                                    <constraint firstAttribute="width" constant="67" id="pb7-ve-WM4"/>
+                                </constraints>
+                                <state key="normal">
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <state key="highlighted" title="..."/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="33"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="actionEndMonitoring:" destination="HLh-kg-JOr" eventType="touchUpInside" id="rBh-ji-ULo"/>
+                                    <action selector="actionEndMonitoring:" destination="HLh-kg-JOr" eventType="touchUpOutside" id="vSn-ZO-ain"/>
+                                    <action selector="actionStartMonitoring:" destination="HLh-kg-JOr" eventType="touchDown" id="EwY-lM-fJ2"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Ucp-Kp-W29" firstAttribute="top" secondItem="Sfm-18-xpO" secondAttribute="bottom" constant="8" id="6tS-to-LGv"/>
+                            <constraint firstItem="Sfm-18-xpO" firstAttribute="leading" secondItem="UNX-P7-mxk" secondAttribute="leadingMargin" id="Qs7-WK-kbd"/>
+                            <constraint firstItem="BEc-k8-xB5" firstAttribute="top" secondItem="Ucp-Kp-W29" secondAttribute="bottom" constant="83" id="Rqm-gk-aTm"/>
+                            <constraint firstAttribute="centerX" secondItem="Sfm-18-xpO" secondAttribute="centerX" id="e6z-wK-y2g"/>
+                            <constraint firstAttribute="centerX" secondItem="Ucp-Kp-W29" secondAttribute="centerX" id="kgc-CE-zIa"/>
+                            <constraint firstItem="Sfm-18-xpO" firstAttribute="trailing" secondItem="UNX-P7-mxk" secondAttribute="trailingMargin" id="r2N-tS-doG"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="e6z-wK-y2g"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="meterLabel" destination="Sfm-18-xpO" id="uN9-vu-e33"/>
+                        <outlet property="speakButton" destination="Ucp-Kp-W29" id="3bG-py-Kji"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NM8-zE-H26" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="339.5" y="386.5"/>
+        </scene>
+    </scenes>
+</document>

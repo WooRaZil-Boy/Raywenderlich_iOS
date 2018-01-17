@@ -10,9 +10,15 @@
 //메서드를 작성하면 Xcode 메뉴 method jump bar에서 쉽게 찾을 수 있다.
 //Swift의 많은 부분은 Objective C 프레임워크에서 왔다.
 
+//iOS의 기본적인 패턴 : Delegate, Target-Action, Model-View-Controller
+//Model : 데이터의 처리
+//View : 시각적인 부분
+//Controller : 데이터 모델을 뷰에 연결 (iOS에서는 ViewController)
+
 import UIKit //"UI"로 시작하는 모든 것은 UIKit의 일부
 
 class ChecklistViewController: UITableViewController { //테이블 뷰 컨트롤러(기본적으로 뷰 컨트롤러)가 delegate가 된다.
+    var items: [ChecklistItem] //배열 선언. 생성한 것은 아니다.
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +29,56 @@ class ChecklistViewController: UITableViewController { //테이블 뷰 컨트롤
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    required init?(coder aDecoder: NSCoder) { //사용하기 전에 초기화가 완료 되어야 한다.
+        items = [ChecklistItem]() //배열 생성. 배열 안에 값은 없다.
+        
+        let row0item = ChecklistItem() //인스턴스 생성
+        row0item.text = "Walk the dog"
+        row0item.checked = false
+        items.append(row0item)
+        
+        let row1item = ChecklistItem()
+        row1item.text = "Brush my teeth"
+        row1item.checked = true
+        items.append(row1item)
+        
+        let row2item = ChecklistItem()
+        row2item.text = "Learn iOS development"
+        row2item.checked = true
+        items.append(row2item)
+        
+        let row3item = ChecklistItem()
+        row3item.text = "Soccer practice"
+        row3item.checked = false
+        items.append(row3item)
+        
+        let row4item = ChecklistItem()
+        row4item.text = "Eat ice cream"
+        row4item.checked = true
+        items.append(row4item)
+        
+        super.init(coder: aDecoder)
+    }
+    
+    func configureCheckmark(for cell: UITableViewCell, with item: ChecklistItem) { //외부, 내부 레이블
+        //Swift에서는 "at", "with"또는 "for"같은 전치사를 메서드 이름에 추가하는 것이 일반적.
+        //메서드의 이름이 적절한 영어 구문과 같이 발음 되도록.
+        
+        //로컬 변수로 중복을 줄일 수 있다. //0이면 false, 1이면 true
+        if item.checked {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
+    }
+    
+    func configureText(for cell: UITableViewCell, with item: ChecklistItem) { //각각 위치에 짧게 쓸 수 있지만 조금이라도 중복되면 메서드를 만드는 것이 좋다.
+        let label = cell.viewWithTag(1000) as! UILabel //스토리보드에서 태그 값을 설정해 줄 수 있다. 태그의 기본 값은 0이다.
+        //태그는 @IBOutlet을 만들지 않고도 손쉽게 UI 요소에 대한 참조를 가져올 수 있다.
+        //이 경우에는 @IBOutlet로 연결하면, 각 객체의 레이블이 아니라 프로토 타입의 하나의 객체만 가져오므로 적절치 않다.
+        label.text = item.text
+    }
 }
 
 //Delegate를 통해 코드 수행의 일부를 위임한다. 여기서 테이블 뷰는 실제 데이터의 종류나 처리를 신경쓰지 않아도 된다.
@@ -31,7 +87,7 @@ class ChecklistViewController: UITableViewController { //테이블 뷰 컨트롤
 //MARK: - UITableViewDataSource
 extension ChecklistViewController { //프로토콜. 특정 메소드나 변수를 구현하지만, 모든 세부 사항을 알 필요는 없다.
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { //각 섹션의 열 수를 반환 //tableView가 메서드 이름이 아니라 arguments까지 모두 메서드의 이름이다.
-        return 100
+        return items.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { //해당 셀을 가져온다.
@@ -44,21 +100,12 @@ extension ChecklistViewController { //프로토콜. 특정 메소드나 변수�
         //3. tableView.dequeueReusableCell (withIdentifier : for :)을 호출한다.
         //  필요한 경우 프로토 타입 셀의 복사본을 만들거나 더 이상 사용하지 않는 기존 셀을 재활용한다.
         
-        let label = cell.viewWithTag(1000) as! UILabel //스토리보드에서 태그 값을 설정해 줄 수 있다. 태그의 기본 값은 0이다.
-        //태그는 @IBOutlet을 만들지 않고도 손쉽게 UI 요소에 대한 참조를 가져올 수 있다.
-        //이 경우에는 @IBOutlet로 연결하면, 각 객체의 레이블이 아니라 프로토 타입의 하나의 객체만 가져오므로 적절치 않다.
+        let item = items[indexPath.row] //배열에서 해당하는 순서의 요소를 가져온다.
         
-        if indexPath.row % 5 == 0 { //나머지 연산자
-            label.text = "Walk the dog"
-        } else if indexPath.row % 5 == 1 {
-            label.text = "Brush my teeth"
-        } else if indexPath.row % 5 == 2 {
-            label.text = "Learn iOS development"
-        } else if indexPath.row % 5 == 3 {
-            label.text = "Soccer practice"
-        } else if indexPath.row % 5 == 4 {
-            label.text = "Eat ice cream"
-        }
+        configureText(for: cell, with: item)
+        configureCheckmark(for: cell, with: item) //영어 문장 발음하듯이 메서드를 호출한다.
+        //일반적인 언어에서 메서드 호출은 configureCheckmark(someCell, someIndexPath)
+        //Objective C와의 호환을 위한 어쩔 수 없는 측면도 있다.
         
         return cell
     }
@@ -69,11 +116,10 @@ extension ChecklistViewController { //행이 선택된 이후 불리는 메서�
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) { //indexPath에 맞춰 cell 반환 //없으면 nil
             //위의 tableView.cellForRow(at :) 메서드와 혼동 주의
-            if cell.accessoryType == .none {
-                cell.accessoryType = .checkmark
-            } else {
-                cell.accessoryType = .none
-            }
+            
+            let item = items[indexPath.row]
+            item.toggleChecked()
+            configureCheckmark(for: cell, with: item)
         }
         
         tableView.deselectRow(at: indexPath, animated: true) //해당 셀 선택 해제

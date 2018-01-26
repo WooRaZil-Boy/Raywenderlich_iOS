@@ -23,6 +23,8 @@ class ChecklistViewController: UITableViewController { //테이블 뷰 컨트롤
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+//        navigationController?.navigationBar.prefersLargeTitles = true //Large Title //iOS 11에서 추가 //스토리보드에서 설정할 수도 있다. //메인 뷰 등에만 추천
     }
 
     override func didReceiveMemoryWarning() {
@@ -59,6 +61,23 @@ class ChecklistViewController: UITableViewController { //테이블 뷰 컨트롤
         items.append(row4item)
         
         super.init(coder: aDecoder)
+    }
+    
+    @IBAction func addItem() {
+        let newRowIndex = items.count
+        
+        let item = ChecklistItem() //1. 오브젝트 생성
+        item.text = "I am a new row"
+        item.checked = false
+        items.append(item) //2. 데이터 모델에 추가
+        
+        let indexPath = IndexPath(row: newRowIndex, section: 0) //해당 세션의 newRowIndex에 row를 생성
+        let indexPaths = [indexPath] //insertRows 메서드를 위해 배열로 만들어야 한다.
+        tableView.insertRows(at: indexPaths, with: .automatic) //3. 뷰 업데이트
+        //하나 밖에 없더라도 배열로만 넣어 줘야 한다. //with: .automatic로 애니메이션
+        //tableView.insertRows (at : with :)를 호출하여 새 행을 삽입하면, OS가 tableView (_ : cellForRowAt :)를 호출하여 새 셀을 만든다.
+        //단, 새로운 행이 실제 테이블 뷰에 보이는 부분에 있어야만 된다.
+        //항상 데이터 모델과 뷰에 모두 추가해야 한다.
     }
     
     func configureCheckmark(for cell: UITableViewCell, with item: ChecklistItem) { //외부, 내부 레이블
@@ -109,6 +128,14 @@ extension ChecklistViewController { //프로토콜. 특정 메소드나 변수�
         
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) { //이 메서드가 있는 경우, 테이블 뷰는 자동으로 스와이프 할 수 있도록 설정된다.
+        items.remove(at: indexPath.row) //1. 데이터 모델에서 삭제
+        
+        let indexPaths = [indexPath]
+        tableView.deleteRows(at: indexPaths, with: .automatic) //2. 뷰에서 삭제
+        //레퍼런스가 없어지면 삭제된다.(ARC : Automatic Reference Counting)
+    }
 }
 
 //MARK: - UITableViewDelegate
@@ -127,4 +154,13 @@ extension ChecklistViewController { //행이 선택된 이후 불리는 메서�
 }
 
 //적절한 데이터 모델을 사용하지 않으면, 재사용 셀을 사용하면서 이전 셀의 내용과 새로운 셀의 내용이 겹쳐지거나 제대로 안 보여질 때가 있다.
+
+//세그 종류
+//1. Show : 스택의 맨 위에 오도록 푸시. (메일에서 폴더 탐색)
+//2. Show Detail : Split View에서 주로 사용. (메시지에서 대화 탭)
+//3. Present Modally : 새로운 뷰 컨트롤러를 위에 띄운다. 가장 일반적. (설정에서 비밀번호)
+//4. Present as Popover : 팝 오버 된 이외의 부분을 두드리면 사라진다(iPad). iPhone에서는 Modal로 표시 된다.
+//5. Custom : 사용자 지정
+
+//바 버튼 아이템을 시스템으로 해 두면, OS 설정 언어에 따라 표시되는 언어가 자동으로 바뀐다.
 

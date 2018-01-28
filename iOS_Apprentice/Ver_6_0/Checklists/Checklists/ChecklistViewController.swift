@@ -63,7 +63,7 @@ class ChecklistViewController: UITableViewController { //테이블 뷰 컨트롤
         super.init(coder: aDecoder)
     }
     
-    @IBAction func addItem() {
+    @IBAction func addItem() { //()는 반환형이 없음을 나타낸다. // -> () // -> Void와 같다.
         let newRowIndex = items.count
         
         let item = ChecklistItem() //1. 오브젝트 생성

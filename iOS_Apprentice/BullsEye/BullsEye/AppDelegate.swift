@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  BullsEye
 //
-//  Created by 근성가이 on 2016. 10. 19..
-//  Copyright © 2016년 근성가이. All rights reserved.
+//  Created by 근성가이 on 2017. 12. 20..
+//  Copyright © 2017년 근성가이. All rights reserved.
 //
 
 import UIKit

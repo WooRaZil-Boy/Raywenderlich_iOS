@@ -32,6 +32,11 @@ class AddItemViewController: UITableViewController { //하나의 뷰 컨트롤�
     //단순 참조. 댈리게이트가 참조하는 객체는 ChecklistViewController이지만 여기서는 단순히 필요한 부분을 넘겨주고, ChecklistViewController에서 해당 내용을 구현하면 된다.
     //초기화 되어야 하기 때문에 옵셔널, 현재 뷰 컨트롤러가 메모리 해제되어도 순환참조가 일어날 수 있으므로 방지하기 위해 weak.
     
+    //strong 참조로 되어 있을 경우에는 두 객체는 삭제되거나 할당이 취소되지 않는다.
+    //따라서 할당이 해제되어야 할 경우에 해제가 되지 않아 메모리가 낭비되는 경우가 있을 수도 있다.
+    //이런 경우 서로 연결되어 있는 객체 중 하나를 weak으로 하면, 순환이 끊어질 수 있다.
+    //@IBOutlet의 경우에도 weak으로 선언된다. 이 경우에는 메모리 순환을 끊기 위해서가 아니라 뷰 컨트롤러가 @IBOutlet의 소유자가 아님을 확실히 하기 위해서이다.
+    
     //@IBOutlet이나 @IBAction의 왼쪽 원을 눌러보면 어느 객체와 연결되어 있는지 알 수 있다.
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
     @IBOutlet weak var textField: UITextField!

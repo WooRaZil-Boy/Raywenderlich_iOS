@@ -10,9 +10,27 @@ import UIKit
 
 //Cocoa touch 클래스로 만들어진 코멘트가 달린 코드를 보일러 플레이트(boilerplate)라 한다.
 //네비게이션 컨트롤러와 탭 바 컨트롤러는 컨테이너라 생각하면 된다. (하나의 컨트롤러에는 하나의 화면)
-//테이블 뷰에 섹션과 행의 수를 미리 알고 있는 경우에 Static cell을 사용할 수 있다. 
+//테이블 뷰에 섹션과 행의 수를 미리 알고 있는 경우에 Static cell을 사용할 수 있다.
+
+
+protocol AddItemViewControllerDelegate: class { //자바의 Interface와 비슷
+    func addItemViewControllerDidCancel(_ controller: AddItemViewController) //프로토콜에서는 메서드의 이름만 적고, 메서드의 내용은 프로토콜이 구현된 곳에서 한다.
+    func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: ChecklistItem)
+    //delegate 메서드는 일반적으로 첫 번재 파라미터로 owner를 받는 게 일반적이다.
+    //delegate를 구현한 뷰 컨트롤러와 연결되는 delegate가 하나가 아닐 수 있기 때문에.
+    //따라서 메서드 이름도 addItemViewController~ 로 시작하도록 했다.
+}
+//직접 객체를 받아와서 DTO를 만들고 넣어줘도 된다. 하지만, iOS 개발에서는 Delegate를 사용하는 것이 더 일반적이다.
+//각각의 화면에는 하나의 뷰와 그 뷰에 관계된 작업만이 이루어지는 것을 권장.
+//AddItemViewController에서 ChecklistViewController에 대한 작업을 하지 않는 것이 가장 좋다.
+//따라서 Delegate로 ChecklistViewController의 작업은 ChecklistViewController에서 이루어 지도록 설계한다.
+
 
 class AddItemViewController: UITableViewController { //하나의 뷰 컨트롤러의 여러개의 delegate 패턴을 가질 수 있다. (ex. 테이블 뷰, 테이블 뷰 데이터 소스, 텍스트 필트 ...)
+    
+    weak var delegate: AddItemViewControllerDelegate? //델리게이트
+    //단순 참조. 댈리게이트가 참조하는 객체는 ChecklistViewController이지만 여기서는 단순히 필요한 부분을 넘겨주고, ChecklistViewController에서 해당 내용을 구현하면 된다.
+    //초기화 되어야 하기 때문에 옵셔널, 현재 뷰 컨트롤러가 메모리 해제되어도 순환참조가 일어날 수 있으므로 방지하기 위해 weak.
     
     //@IBOutlet이나 @IBAction의 왼쪽 원을 눌러보면 어느 객체와 연결되어 있는지 알 수 있다.
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
@@ -36,13 +54,17 @@ class AddItemViewController: UITableViewController { //하나의 뷰 컨트롤�
     }
     
     @IBAction func cancel() {
-        navigationController?.popViewController(animated: true) //pop. 빼낸다.
+        delegate?.addItemViewControllerDidCancel(self) //델리게이트로 넘겨, 해당 뷰 컨트롤러에서 구현한다.
+        //delegate가 nil이라도 옵셔널 체이닝을 사용했기 때문에 실행되지 않고 crash를 방지한다.
     }
     
     @IBAction func done() {
-        print("Contents of the text field: \(textField.text!)")
+        let item = ChecklistItem()
+        item.text = textField.text!
+        item.checked = false
         
-        navigationController?.popViewController(animated:true)
+        delegate?.addItemViewController(self, didFinishAdding: item) //델리게이트로 넘겨, 해당 뷰 컨트롤러에서 구현한다.
+        //delegate가 nil이라도 옵셔널 체이닝을 사용했기 때문에 실행되지 않고 crash를 방지한다.
     }
 }
 

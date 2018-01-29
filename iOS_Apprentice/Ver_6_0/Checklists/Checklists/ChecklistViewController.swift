@@ -20,7 +20,7 @@ import UIKit //"UI"로 시작하는 모든 것은 UIKit의 일부
 class ChecklistViewController: UITableViewController { //테이블 뷰 컨트롤러(기본적으로 뷰 컨트롤러)가 delegate가 된다.
     var items: [ChecklistItem] //배열 선언. 생성한 것은 아니다.
 
-    override func viewDidLoad() {
+    override func viewDidLoad() { //()는 반환형이 없음을 나타낸다. // -> () // -> Void와 같다.
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
@@ -63,23 +63,6 @@ class ChecklistViewController: UITableViewController { //테이블 뷰 컨트롤
         super.init(coder: aDecoder)
     }
     
-    @IBAction func addItem() { //()는 반환형이 없음을 나타낸다. // -> () // -> Void와 같다.
-        let newRowIndex = items.count
-        
-        let item = ChecklistItem() //1. 오브젝트 생성
-        item.text = "I am a new row"
-        item.checked = false
-        items.append(item) //2. 데이터 모델에 추가
-        
-        let indexPath = IndexPath(row: newRowIndex, section: 0) //해당 세션의 newRowIndex에 row를 생성
-        let indexPaths = [indexPath] //insertRows 메서드를 위해 배열로 만들어야 한다.
-        tableView.insertRows(at: indexPaths, with: .automatic) //3. 뷰 업데이트
-        //하나 밖에 없더라도 배열로만 넣어 줘야 한다. //with: .automatic로 애니메이션
-        //tableView.insertRows (at : with :)를 호출하여 새 행을 삽입하면, OS가 tableView (_ : cellForRowAt :)를 호출하여 새 셀을 만든다.
-        //단, 새로운 행이 실제 테이블 뷰에 보이는 부분에 있어야만 된다.
-        //항상 데이터 모델과 뷰에 모두 추가해야 한다.
-    }
-    
     func configureCheckmark(for cell: UITableViewCell, with item: ChecklistItem) { //외부, 내부 레이블
         //Swift에서는 "at", "with"또는 "for"같은 전치사를 메서드 이름에 추가하는 것이 일반적.
         //메서드의 이름이 적절한 영어 구문과 같이 발음 되도록.
@@ -97,6 +80,14 @@ class ChecklistViewController: UITableViewController { //테이블 뷰 컨트롤
         //태그는 @IBOutlet을 만들지 않고도 손쉽게 UI 요소에 대한 참조를 가져올 수 있다.
         //이 경우에는 @IBOutlet로 연결하면, 각 객체의 레이블이 아니라 프로토 타입의 하나의 객체만 가져오므로 적절치 않다.
         label.text = item.text
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AddItem" { //여러 개의 세그가 있을 수 있으므로 해당 세그를 찾는다.
+            let controller = segue.destination as! AddItemViewController //새롭게 표시할 뷰 컨트롤러는 destination으로 가져올 수 있다.
+            //일반적으로 UIViewController 이므로, 참조할 객체를 가져오기 위해 캐스팅이 필요하다.
+            controller.delegate = self
+        }
     }
 }
 
@@ -152,6 +143,33 @@ extension ChecklistViewController { //행이 선택된 이후 불리는 메서�
         tableView.deselectRow(at: indexPath, animated: true) //해당 셀 선택 해제
     }
 }
+
+extension ChecklistViewController: AddItemViewControllerDelegate { //AddItemViewControllerDelegate를 추가하고 Xcode의 fix를 통해 구현되지 않은 메서드나 파라미터 코드를 손쉽게 추가할 수 있다.
+    func addItemViewControllerDidCancel(_ controller: AddItemViewController) {
+        navigationController?.popViewController(animated: true) //pop. 빼낸다.
+    }
+    
+    func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: ChecklistItem) { //1. 오브젝트 생성(이전 뷰 컨트롤러에서 생성해서 delegate로 넘어온다.)
+        let newRowIndex = items.count
+        items.append(item) //2. 데이터 모델에 추가
+        
+        let indexPath = IndexPath(row: newRowIndex, section: 0) //해당 세션의 newRowIndex에 row를 생성
+        let indexPaths = [indexPath] //insertRows 메서드를 위해 배열로 만들어야 한다.
+        tableView.insertRows(at: indexPaths, with: .automatic) //3. 뷰 업데이트
+        //하나 밖에 없더라도 배열로만 넣어 줘야 한다. //with: .automatic로 애니메이션
+        //tableView.insertRows (at : with :)를 호출하여 새 행을 삽입하면, OS가 tableView (_ : cellForRowAt :)를 호출하여 새 셀을 만든다.
+        //단, 새로운 행이 실제 테이블 뷰에 보이는 부분에 있어야만 된다.
+        //항상 데이터 모델과 뷰에 모두 추가해야 한다.
+        
+        navigationController?.popViewController(animated: true) //pop. 빼낸다.
+    }
+}
+//Delegate 설정
+//1 - 객체 B에 대한 delegate Protocol 정의
+//2 - 객체 B에 delegate 변수를 weak, optional로 지정
+//3 - 필요할 때 객체 B를 업데이트하여 delegate에 메시지를 전송. delegate?.methodName(self, ...)
+//4 - 객체 A가 delegate protocol을 선언하고 구현
+//5 - 객체 B에게 객체 A가 delegate 임을 전달 (prepare(for: sender))
 
 //적절한 데이터 모델을 사용하지 않으면, 재사용 셀을 사용하면서 이전 셀의 내용과 새로운 셀의 내용이 겹쳐지거나 제대로 안 보여질 때가 있다.
 

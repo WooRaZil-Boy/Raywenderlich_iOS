@@ -66,12 +66,13 @@ class ChecklistViewController: UITableViewController { //테이블 뷰 컨트롤
     func configureCheckmark(for cell: UITableViewCell, with item: ChecklistItem) { //외부, 내부 레이블
         //Swift에서는 "at", "with"또는 "for"같은 전치사를 메서드 이름에 추가하는 것이 일반적.
         //메서드의 이름이 적절한 영어 구문과 같이 발음 되도록.
+        let label = cell.viewWithTag(1001) as! UILabel
         
         //로컬 변수로 중복을 줄일 수 있다. //0이면 false, 1이면 true
         if item.checked {
-            cell.accessoryType = .checkmark
+            label.text = "✔︎"
         } else {
-            cell.accessoryType = .none
+            label.text = ""
         }
     }
     
@@ -84,11 +85,20 @@ class ChecklistViewController: UITableViewController { //테이블 뷰 컨트롤
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AddItem" { //여러 개의 세그가 있을 수 있으므로 해당 세그를 찾는다.
-            let controller = segue.destination as! AddItemViewController //새롭게 표시할 뷰 컨트롤러는 destination으로 가져올 수 있다.
+            let controller = segue.destination as! ItemDetailViewController //새롭게 표시할 뷰 컨트롤러는 destination으로 가져올 수 있다.
             //일반적으로 UIViewController 이므로, 참조할 객체를 가져오기 위해 캐스팅이 필요하다.
             controller.delegate = self
+        } else if segue.identifier == "EditItem" { //Accessory action으로 셀을 터치 하는 것이 아니라, 엑서서리를 터치해 이동하는 segue를 만들 수 있다.
+            let controller = segue.destination as! ItemDetailViewController
+            controller.delegate = self
+            
+            if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) { //sender를 캐스팅 해서 indexPath를 가져올 수 있다.
+                controller.itemToEdit = items[indexPath.row] //컨트롤러 간 데이터 보내기
+            }
         }
     }
+    //1. 보낸 후의 컨트롤러에 속성을 만들어 보내기 전의 컨트롤러에서 인스턴스 생성해 할당한다.
+    //2. delegate 이용
 }
 
 //Delegate를 통해 코드 수행의 일부를 위임한다. 여기서 테이블 뷰는 실제 데이터의 종류나 처리를 신경쓰지 않아도 된다.
@@ -144,12 +154,12 @@ extension ChecklistViewController { //행이 선택된 이후 불리는 메서�
     }
 }
 
-extension ChecklistViewController: AddItemViewControllerDelegate { //AddItemViewControllerDelegate를 추가하고 Xcode의 fix를 통해 구현되지 않은 메서드나 파라미터 코드를 손쉽게 추가할 수 있다.
-    func addItemViewControllerDidCancel(_ controller: AddItemViewController) {
+extension ChecklistViewController: ItemDetailViewControllerDelegate { //AddItemViewControllerDelegate를 추가하고 Xcode의 fix를 통해 구현되지 않은 메서드나 파라미터 코드를 손쉽게 추가할 수 있다.
+    func itemDetailViewControllerDidCancel(_ controller: ItemDetailViewController) {
         navigationController?.popViewController(animated: true) //pop. 빼낸다.
     }
     
-    func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: ChecklistItem) { //1. 오브젝트 생성(이전 뷰 컨트롤러에서 생성해서 delegate로 넘어온다.)
+    func itemDetailViewController(_ controller: ItemDetailViewController, didFinishAdding item: ChecklistItem) { //1. 오브젝트 생성(이전 뷰 컨트롤러에서 생성해서 delegate로 넘어온다.)
         let newRowIndex = items.count
         items.append(item) //2. 데이터 모델에 추가
         
@@ -162,6 +172,18 @@ extension ChecklistViewController: AddItemViewControllerDelegate { //AddItemView
         //항상 데이터 모델과 뷰에 모두 추가해야 한다.
         
         navigationController?.popViewController(animated: true) //pop. 빼낸다.
+    }
+    
+    func itemDetailViewController(_ controller: ItemDetailViewController, didFinishEditing item: ChecklistItem) {
+        if let index = items.index(of: item) { //객체로 배열의 해당 인덱스를 가져올 수 있다. //없을 경우 nil
+            //index(of :)를 사용하려면 equatable 프로토콜을 구현해야 한다. (비교 연산을 해야 되기 때문에)
+            let indexPath = IndexPath(row: index, section: 0)
+            if let cell = tableView.cellForRow(at: indexPath) {
+                configureText(for: cell, with: item)
+            }
+        }
+        
+        navigationController?.popViewController(animated: true)
     }
 }
 //Delegate 설정

@@ -6,7 +6,10 @@
 //  Copyright © 2018년 근성가이. All rights reserved.
 //
 
-class ChecklistItem { //초기화가 완료 되어야 한다.
+import Foundation
+
+class ChecklistItem: NSObject { //초기화가 완료 되어야 한다.
+    //Objective-C의 거의 모든 객체는 NSObject 기반. //NSObjectf를 상속하면 equatable이 구현되어 있는 상태.
     var text = ""
     var checked = false
     

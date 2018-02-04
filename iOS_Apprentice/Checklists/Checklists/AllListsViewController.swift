@@ -10,23 +10,12 @@ import UIKit
 
 class AllListsViewController: UITableViewController {
     
-    var lists = [Checklist]() //Array<Checklist>() 같은 표현이다.
+    var dataModel: DataModel! //앱이 시작될 때 dataModel이 일시적으로 nil이 되기 때문에 !이 필요하다.
+    //?로 할 필요가 없는 이유는 앱이 시작될 때 한 번 객체가 생성되고 종료 시까지 계속해서 값을 가지고 있기 때문이다.
 
     override func viewDidLoad() {
         super.viewDidLoad()
 //        navigationController?.navigationBar.prefersLargeTitles = true //스토리 보드에서 할 수도.
-        
-        var list = Checklist(name: "Birthdays")
-        lists.append(list)
-        
-        list = Checklist(name: "Groceries")
-        lists.append(list)
-        
-        list = Checklist(name: "Cool Apps")
-        lists.append(list)
-        
-        list = Checklist(name: "To Do")
-        lists.append(list)
     }
 
     override func didReceiveMemoryWarning() {
@@ -71,12 +60,12 @@ extension AllListsViewController {
 //MARK: - UITableViewDataSource
 extension AllListsViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return lists.count
+            return dataModel.lists.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = makeCell(for: tableView)
-        let checklist = lists[indexPath.row]
+        let checklist = dataModel.lists[indexPath.row]
         
         cell.textLabel!.text = checklist.name
         cell.accessoryType = .detailDisclosureButton
@@ -85,7 +74,7 @@ extension AllListsViewController {
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) { //삭제
-        lists.remove(at: indexPath.row) //Model에서 삭제 후
+        dataModel.lists.remove(at: indexPath.row) //Model에서 삭제 후
         
         let indexPaths = [indexPath]
         tableView.deleteRows(at: indexPaths, with: .automatic) //View에서도 삭제
@@ -95,7 +84,7 @@ extension AllListsViewController {
 //MARK: - UITableViewDelegate
 extension AllListsViewController { //행이 선택된 이후 불리는 메서드
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let checklist = lists[indexPath.row]
+        let checklist = dataModel.lists[indexPath.row]
         performSegue(withIdentifier: "ShowChecklist", sender: checklist) //코드로 세그를 실행할 수 있다. //sender에 보낼 객체를 지정한다.
         //스토리보드에서 컨트롤러 자체와 연결되는 세그를 설정하고 id를 입력한 후 특정 조건일 때 실행되게 하면 된다.
     }
@@ -105,7 +94,7 @@ extension AllListsViewController { //행이 선택된 이후 불리는 메서드
         //스토리보드에서 식별자로 뷰 컨트롤러 객체를 가져온다.
         controller.delegate = self
         
-        let checklist = lists[indexPath.row]
+        let checklist = dataModel.lists[indexPath.row]
         controller.checklistToEdit = checklist
         
         navigationController?.pushViewController(controller, animated: true)
@@ -122,8 +111,8 @@ extension AllListsViewController: ListDetailViewControllerDelegate {
     }
     
     func listDetailViewController(_ controller: ListDetailViewController, didFinishAdding checklist: Checklist) {
-        let newRowIndex = lists.count
-        lists.append(checklist)
+        let newRowIndex = dataModel.lists.count
+        dataModel.lists.append(checklist)
         
         let indexPath = IndexPath(row: newRowIndex, section: 0)
         let indexPaths = [indexPath]
@@ -133,7 +122,7 @@ extension AllListsViewController: ListDetailViewControllerDelegate {
     }
     
     func listDetailViewController(_ controller: ListDetailViewController, didFinishEditing checklist: Checklist) {
-        if let index = lists.index(of: checklist) { //객체로 배열의 해당 인덱스를 가져올 수 있다.
+        if let index = dataModel.lists.index(of: checklist) { //객체로 배열의 해당 인덱스를 가져올 수 있다.
             let indexPath = IndexPath(row: index, section: 0)
             if let cell = tableView.cellForRow(at: indexPath) {
                 cell.textLabel?.text = checklist.name

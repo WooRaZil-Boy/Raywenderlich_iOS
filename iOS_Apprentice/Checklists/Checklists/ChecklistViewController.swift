@@ -18,8 +18,6 @@
 import UIKit //"UI"로 시작하는 모든 것은 UIKit의 일부
 
 class ChecklistViewController: UITableViewController { //테이블 뷰 컨트롤러(기본적으로 뷰 컨트롤러)가 delegate가 된다.
-    var items = [ChecklistItem]() //배열 생성. 배열 안에 값은 없다.
-//    var items: [ChecklistItem] //배열 선언. 생성한 것은 아니다.
     
     var checklist: Checklist!
 
@@ -31,7 +29,6 @@ class ChecklistViewController: UITableViewController { //테이블 뷰 컨트롤
         
 //        navigationController?.navigationBar.prefersLargeTitles = true //Large Title //iOS 11에서 추가 //스토리보드에서 설정할 수도 있다. //메인 뷰 등에만 추천
         
-        loadChecklistItems()
         title = checklist.name //navigation bar에 타이틀 입력
     }
 
@@ -61,59 +58,6 @@ class ChecklistViewController: UITableViewController { //테이블 뷰 컨트롤
     }
 }
 
-//Delegate를 통해 코드 수행의 일부를 위임한다. 여기서 테이블 뷰는 실제 데이터의 종류나 처리를 신경쓰지 않아도 된다.
-//이런 식으로 구현하면, 테이블 뷰의 구성이 단순하게 유지되고, 코드를 효율적으로 관리할 수 있다.
-
-//MARK: - Documents
-extension ChecklistViewController {
-    func documentsDirectory() -> URL { //sandbox 경로 가져온다. //저장할 경로
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        //sandbox 내의 Documents 폴더
-        
-        return paths[0]
-    } //모든 iOS 앱은 Document 안에 sandbox라는 내부 저장 공간을 가지고 있다. //시뮬레이터의 경우 finder를 쓰는 것이 더 편하다.
-    
-    func dataFilePath() -> URL {
-        return documentsDirectory().appendingPathComponent("Checklists.plist")
-    }
-    
-    func saveChecklistItems() { //loadChecklistItems와 비교
-        let encoder = PropertyListEncoder() //리스트 변환 인코더 생성 //인코딩 되려면 객체가 Encodable를 구현해야 한다.
-        
-        do { //오류 처리위한 블록
-            let data = try encoder.encode(items) //인코더로 items를 저장 가능한 binarydata로 바꾼다.
-            
-            try data.write(to: dataFilePath(), options: Data.WritingOptions.atomic) //지정된 경로에 데이터 쓰기
-        } catch { //try 구문에서 에러가 발생하면, catch로 넘어온다.
-            print("Error encoding item array!")
-        }
-    }
-    
-    func loadChecklistItems() { //saveChecklistItems와 비교
-        let path = dataFilePath() //파일이 저장된 경로를 불러온다.
-        
-        if let data = try? Data(contentsOf: path) { //불러온 Checklists.plist를 Data 객체로 변환
-            //try? 로 되어 있으므로 실패하면 nil을 반환하고 앱이 종료되지 않는다(앱이 처음 시작할 경우).
-            let decoder = PropertyListDecoder() //디코더 생성
-            
-            do {
-                items = try decoder.decode([ChecklistItem].self, from: data) //디코더로 binarydata를 Array로 바꾼다.
-            } catch { //try 구문에서 에러가 발생하면, catch로 넘어온다.
-                print("Error decoding item array!")
-            }
-        }
-    }
-    
-    //.plist는 앱의 추가정보 제공. xml 형식으로 저장된다. (데이터 저장을 위해서 사용할 수도 있다.)
-    //Swift4 부터 Codable 이라는 새 프로토콜이 있다. 이전의 NSCoder와 비슷.
-}
-
-//Sandbox 구성
-//Documents :: 앱이 데이터를 저장할 폴더
-//Library :: 캐시와 기본 설정 파일
-//SystemData :: 운영체제에서 앱과 관련된 시스템 정보 저장
-//tmp :: 임시 파일. Documents 지저분해 지는 것을 방지. 운영체제가 수시로 삭제한다.
-
 //MARK: - Navigation
 extension ChecklistViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -126,7 +70,7 @@ extension ChecklistViewController {
             controller.delegate = self
             
             if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) { //sender를 캐스팅 해서 indexPath를 가져올 수 있다.
-                controller.itemToEdit = items[indexPath.row] //컨트롤러 간 데이터 보내기
+                controller.itemToEdit = checklist.items[indexPath.row] //컨트롤러 간 데이터 보내기
             }
         }
     }
@@ -137,7 +81,7 @@ extension ChecklistViewController {
 //MARK: - UITableViewDataSource
 extension ChecklistViewController { //프로토콜. 특정 메소드나 변수를 구현하지만, 모든 세부 사항을 알 필요는 없다.
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { //각 섹션의 열 수를 반환 //tableView가 메서드 이름이 아니라 arguments까지 모두 메서드의 이름이다.
-        return items.count
+        return checklist.items.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { //해당 셀을 가져온다.
@@ -150,7 +94,7 @@ extension ChecklistViewController { //프로토콜. 특정 메소드나 변수�
         //3. tableView.dequeueReusableCell (withIdentifier : for :)을 호출한다.
         //  필요한 경우 프로토 타입 셀의 복사본을 만들거나 더 이상 사용하지 않는 기존 셀을 재활용한다.
         
-        let item = items[indexPath.row] //배열에서 해당하는 순서의 요소를 가져온다.
+        let item = checklist.items[indexPath.row] //배열에서 해당하는 순서의 요소를 가져온다.
         
         configureText(for: cell, with: item)
         configureCheckmark(for: cell, with: item) //영어 문장 발음하듯이 메서드를 호출한다.
@@ -161,13 +105,11 @@ extension ChecklistViewController { //프로토콜. 특정 메소드나 변수�
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) { //이 메서드가 있는 경우, 테이블 뷰는 자동으로 스와이프 할 수 있도록 설정된다.
-        items.remove(at: indexPath.row) //1. 데이터 모델에서 삭제
+        checklist.items.remove(at: indexPath.row) //1. 데이터 모델에서 삭제
         
         let indexPaths = [indexPath]
         tableView.deleteRows(at: indexPaths, with: .automatic) //2. 뷰에서 삭제
         //레퍼런스가 없어지면 삭제된다.(ARC : Automatic Reference Counting)
-        
-        saveChecklistItems()
     }
 }
 
@@ -177,14 +119,12 @@ extension ChecklistViewController { //행이 선택된 이후 불리는 메서�
         if let cell = tableView.cellForRow(at: indexPath) { //indexPath에 맞춰 cell 반환 //없으면 nil
             //위의 tableView.cellForRow(at :) 메서드와 혼동 주의
             
-            let item = items[indexPath.row]
+            let item = checklist.items[indexPath.row]
             item.toggleChecked()
             configureCheckmark(for: cell, with: item)
         }
         
         tableView.deselectRow(at: indexPath, animated: true) //해당 셀 선택 해제
-        
-        saveChecklistItems()
     }
 }
 
@@ -196,8 +136,8 @@ extension ChecklistViewController: ItemDetailViewControllerDelegate { //AddItemV
     }
     
     func itemDetailViewController(_ controller: ItemDetailViewController, didFinishAdding item: ChecklistItem) { //1. 오브젝트 생성(이전 뷰 컨트롤러에서 생성해서 delegate로 넘어온다.)
-        let newRowIndex = items.count
-        items.append(item) //2. 데이터 모델에 추가
+        let newRowIndex = checklist.items.count
+        checklist.items.append(item) //2. 데이터 모델에 추가
         
         let indexPath = IndexPath(row: newRowIndex, section: 0) //해당 세션의 newRowIndex에 row를 생성
         let indexPaths = [indexPath] //insertRows 메서드를 위해 배열로 만들어야 한다.
@@ -208,12 +148,10 @@ extension ChecklistViewController: ItemDetailViewControllerDelegate { //AddItemV
         //항상 데이터 모델과 뷰에 모두 추가해야 한다.
         
         navigationController?.popViewController(animated: true) //pop. 빼낸다.
-        
-        saveChecklistItems()
     }
     
     func itemDetailViewController(_ controller: ItemDetailViewController, didFinishEditing item: ChecklistItem) {
-        if let index = items.index(of: item) { //객체로 배열의 해당 인덱스를 가져올 수 있다. //없을 경우 nil
+        if let index = checklist.items.index(of: item) { //객체로 배열의 해당 인덱스를 가져올 수 있다. //없을 경우 nil
             //index(of :)를 사용하려면 equatable 프로토콜을 구현해야 한다. (비교 연산을 해야 되기 때문에)
             let indexPath = IndexPath(row: index, section: 0)
             if let cell = tableView.cellForRow(at: indexPath) {
@@ -222,10 +160,12 @@ extension ChecklistViewController: ItemDetailViewControllerDelegate { //AddItemV
         }
         
         navigationController?.popViewController(animated: true)
-        
-        saveChecklistItems()
     }
 }
+
+//Delegate를 통해 코드 수행의 일부를 위임한다. 여기서 테이블 뷰는 실제 데이터의 종류나 처리를 신경쓰지 않아도 된다.
+//이런 식으로 구현하면, 테이블 뷰의 구성이 단순하게 유지되고, 코드를 효율적으로 관리할 수 있다.
+
 //Delegate 설정
 //1 - 객체 B에 대한 delegate Protocol 정의
 //2 - 객체 B에 delegate 변수를 weak, optional로 지정

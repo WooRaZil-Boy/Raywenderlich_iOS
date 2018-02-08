@@ -10,10 +10,50 @@ import Foundation
 
 class DataModel { //데이터 모델만을 따로 관리할 객체를 따로 만드는 것이 좋다.
     var lists = [Checklist]() //Array<Checklist>() 같은 표현이다.
+    var indexOfSelectedChecklist: Int { //computed property
+        get { //indexOfSelectedChecklist 값을 읽을 때 반환
+            
+            return UserDefaults.standard.integer(forKey: "ChecklistIndex")
+        }
+        
+        set { //indexOfSelectedChecklist 값을 설정할 때 실행 된다.
+            UserDefaults.standard.set(newValue, forKey: "ChecklistIndex")
+            UserDefaults.standard.synchronize() //동기화
+            //위의 동기화를 하지 않는 경우, UserDefaults에는 value가 저장되었지만, plist에 저장 되지 않은 경우(충돌로 인한 강제 종료) 앱을 시작하자 마자 충돌이 난다.
+        }
+    } //이렇게 computed property으로 구현하면 다른 객체에서 접근할 때 캡슐화가 된다.
+    //코드가 더 명료해지고, 중복이 줄어든다.
+    //나중에 데이터베이스에 UserDefaults 데이터를 저장하려 한다면, DataModel에서 변경을 할 수 있다.
+    
+    //여기서는 UserDefaults로 단순한 Integer 값만 저장하지만, 복원을 하는 API가 따로 있다.
+    //https://www.raywenderlich.com/117471/state-restoration-tutorial
     
     init() { //DataModel 객체가 생성되자 마자 Checklists.plist를 로드한다.
         //DataModel은 super class가 없으므로 따로 super.init()를 할 필요 없다.
         loadChecklists()
+        registerDefaults()
+        handleFirstTime()
+    }
+    
+    func registerDefaults() { //처음 앱을 실행하거나 지웠다가 다시 설치한 경우에는 UserDefaults의 값이 없어서 Error가 난다.
+        //그 경우를 방지하기 위해 UserDefaults에 기본 값을 설정해 준다.
+        let dictionary: [String: Any] = ["ChecklistIndex": -1, "FirstTime": true] //FirstTime으로 앱을 처음 시작한 경우, 리스트가 아닌 편집 화면으로 시작하도록
+        //Any로 여러가지 변수형을 한 번에 담을 수 있다.
+        UserDefaults.standard.register(defaults: dictionary) //기본값으로 설정. 값이 있는 경우에는 덮어쓰지 않는다.
+    }
+    
+    func handleFirstTime() {
+        let userDefaults = UserDefaults.standard
+        let firstTime = userDefaults.bool(forKey: "FirstTime") //FirstTime의 값을 가져온다.
+        
+        if firstTime { //처음으로 앱을 실행시
+            let checklist = Checklist(name: "List") //List 이름의 checklist 생성
+            lists.append(checklist)
+            indexOfSelectedChecklist = 0 //첫 번째 checklist를 선택해서 편집화면으로 가도록
+            
+            userDefaults.set(false, forKey: "FirstTime") //FirstTime의 값을 false로 설정
+            userDefaults.synchronize()
+        }
     }
 }
 

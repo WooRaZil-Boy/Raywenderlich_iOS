@@ -13,9 +13,26 @@ class AllListsViewController: UITableViewController {
     var dataModel: DataModel! //앱이 시작될 때 dataModel이 일시적으로 nil이 되기 때문에 !이 필요하다.
     //?로 할 필요가 없는 이유는 앱이 시작될 때 한 번 객체가 생성되고 종료 시까지 계속해서 값을 가지고 있기 때문이다.
 
-    override func viewDidLoad() {
+    override func viewDidLoad() { //이 뷰 컨트롤러가 생성 될 때 한 번 호출
         super.viewDidLoad()
 //        navigationController?.navigationBar.prefersLargeTitles = true //스토리 보드에서 할 수도.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) { //이 뷰 컨트롤러가 생성 될 때 뿐 아니라 나타날 때 마다 호출
+        super.viewDidAppear(animated)
+        
+        navigationController?.delegate = self
+        
+        let index = dataModel.indexOfSelectedChecklist //처음 앱을 실행하거나 지웠다가 다시 설치한 경우에는 Error
+        if index >= 0 && index < dataModel.lists.count  { //이전에 종료된 화면 기록이 있다면
+            //index < dataModel.lists.count로 UserDefaults에는 value가 저장되었지만, plist에 저장 되지 않은 경우(충돌로 인한 강제 종료), 에러를 막을 수 있다.
+            let checklist = dataModel.lists[index]
+            
+            performSegue(withIdentifier: "ShowChecklist", sender: checklist) //이전에 종료된 화면으로 이동
+        }
+        //로직 상으로 보면, 체크 리스트 복원은 앱이 시작될 때 한 번만 수행되어야 하므로, viewDidLoad가 맞다.
+        //실행 순서는 viewDidLoad가 먼저, navigationController(_ : willShow : animated :)가 이후 실행 된 후, viewDidAppear가 실행된다.
+        //따라서 저장된 값이 있더라도 navigationController(_ : willShow : animated :)의 값이 덮어씌워지게 된다.
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,6 +74,18 @@ extension AllListsViewController {
     }
 }
 
+//MARK: - UINavigationControllerDelegate
+extension AllListsViewController: UINavigationControllerDelegate { //UINavigationControllerDelegate로 push, pop의 알림을 받을 수 있다.
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) { //navigationController에 새 화면이 표시될 때마다 호출
+        if viewController === self { //뒤로 가기로 눌러 AllList(메인)으로 왔을 때
+            // == 를 사용하면, 두 변수가 같은 값을 가지고 있는 지 확인
+            // === 를 사용하면, 두 변수가 같은 객체를 참조하는 지 확인
+            //여기서는 == 를 써도 동일한 결과를 반환하지만, === 가 더 정확한 표현이다.
+            dataModel.indexOfSelectedChecklist = -1
+        }
+    } //navigationController (_ : willShow : animated :)가 먼저 실행 된 이후, viewDidAppear가 실행된다.
+}
+
 //MARK: - UITableViewDataSource
 extension AllListsViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -84,6 +113,11 @@ extension AllListsViewController {
 //MARK: - UITableViewDelegate
 extension AllListsViewController { //행이 선택된 이후 불리는 메서드
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        dataModel.indexOfSelectedChecklist = indexPath.row
+        //UserDefaults를 활용해 필요한 정보를 간단하게 저장할 수 있다. UserDefaults 또한 sandbox에 저장된다.
+        //UserDefaults는 일종의 dictionary로 생각하면 된다.
+        //보통 적절한 값이 없을 경우는 -1로 저장한다. 보통 index가 0부터 시작하기 때문에.
+        
         let checklist = dataModel.lists[indexPath.row]
         performSegue(withIdentifier: "ShowChecklist", sender: checklist) //코드로 세그를 실행할 수 있다. //sender에 보낼 객체를 지정한다.
         //스토리보드에서 컨트롤러 자체와 연결되는 세그를 설정하고 id를 입력한 후 특정 조건일 때 실행되게 하면 된다.

@@ -55,6 +55,12 @@ class DataModel { //데이터 모델만을 따로 관리할 객체를 따로 만
             userDefaults.synchronize()
         }
     }
+    
+    func sortChecklists() {
+        lists.sort(by: { checklist1, checklist2 in //sorting 방법을 정의
+            return checklist1.name.localizedStandardCompare(checklist2.name) == .orderedAscending }) //localizedStandardCompare를 한 군데에만 쓰면 된다.
+        //localizedStandardCompare(_:)는 대, 소문자의 구분을 하지 않고 로컬 규칙을 고려한다.
+    }
 }
 
 //MARK: - Documents
@@ -91,6 +97,7 @@ extension DataModel {
             
             do {
                 lists = try decoder.decode([Checklist].self, from: data) //디코더로 binarydata를 Array로 바꾼다.
+                sortChecklists()
             } catch { //try 구문에서 에러가 발생하면, catch로 넘어온다.
                 print("Error decoding item array!")
             }

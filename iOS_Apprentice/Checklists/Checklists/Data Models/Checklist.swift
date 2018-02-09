@@ -14,13 +14,21 @@ import UIKit
 
 class Checklist: NSObject, Codable {
     var name = ""
+    var iconName = "No Icon"
     var items = [ChecklistItem]() //var items: [ChecklistItem] = []과 같다.
+    
 //    var items = [ChecklistItem]() //배열 생성. 배열 안에 값은 없다.
 //    var items: [ChecklistItem] //배열 선언. 생성한 것은 아니다.
     
-    init(name: String) {
+    init(name: String, iconName: String = "No Icon") { //default 값 설정
         self.name = name //컴파일러가 혼동을 하기 때문에 이 경우에는 self를 반드시 써 줘야 한다.
+        self.iconName = iconName
         
         super.init()
+    }
+    
+    func countUncheckedItems() -> Int { //functional programming으로 짧게 처리할 수 있다.
+        return items.reduce(0) { cnt, item in cnt + (item.checked ? 0: 1) } //삼항 연산자 (앞의 조건이 참이면 0, 아니면 1)
+        //초기값이 0. 처음 cnt 변수에는 0이 들어 있지만, 이후 0이나 1을 계속 더해간다.
     }
 }

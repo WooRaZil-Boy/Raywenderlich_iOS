@@ -41,6 +41,7 @@ class ChecklistViewController: UITableViewController { //테이블 뷰 컨트롤
         //Swift에서는 "at", "with"또는 "for"같은 전치사를 메서드 이름에 추가하는 것이 일반적.
         //메서드의 이름이 적절한 영어 구문과 같이 발음 되도록.
         let label = cell.viewWithTag(1001) as! UILabel
+        label.textColor = view.tintColor //틴트 색 변경
         
         //로컬 변수로 중복을 줄일 수 있다. //0이면 false, 1이면 true
         if item.checked {
@@ -129,7 +130,7 @@ extension ChecklistViewController { //행이 선택된 이후 불리는 메서�
 }
 
 
-//MARK: - Delegate
+//MARK: - ItemDetailViewControllerDelegate
 extension ChecklistViewController: ItemDetailViewControllerDelegate { //AddItemViewControllerDelegate를 추가하고 Xcode의 fix를 통해 구현되지 않은 메서드나 파라미터 코드를 손쉽게 추가할 수 있다.
     func itemDetailViewControllerDidCancel(_ controller: ItemDetailViewController) {
         navigationController?.popViewController(animated: true) //pop. 빼낸다.

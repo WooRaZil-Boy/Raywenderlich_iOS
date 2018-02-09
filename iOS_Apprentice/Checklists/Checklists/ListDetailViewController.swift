@@ -17,10 +17,12 @@ protocol ListDetailViewControllerDelegate: class {
 class ListDetailViewController: UITableViewController {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
+    @IBOutlet weak var iconImageView: UIImageView!
     
     weak var delegate: ListDetailViewControllerDelegate?
     
     var checklistToEdit: Checklist?
+    var iconName = "Folder"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +33,9 @@ class ListDetailViewController: UITableViewController {
             title = "Edit Checklist"
             textField.text = checklist.name
             doneBarButton.isEnabled = true
+            iconName = checklist.iconName
         }
+        iconImageView.image = UIImage(named: iconName)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,10 +54,21 @@ extension ListDetailViewController {
     @IBAction func done() {
         if let checklist = checklistToEdit { //Edit 시
             checklist.name = textField.text!
+            checklist.iconName = iconName
             delegate?.listDetailViewController(self, didFinishEditing: checklist)
         } else { //Add 시
-            let checklist = Checklist(name: textField.text!) //Checklist가 init()가 없으므로 Checklist()을 하면 오류난다.
+            let checklist = Checklist(name: textField.text!, iconName: iconName) //Checklist가 init()가 없으므로 Checklist()을 하면 오류난다.
             delegate?.listDetailViewController(self, didFinishAdding: checklist)
+        }
+    }
+}
+
+// MARK:- Navigation
+extension ListDetailViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "PickIcon" {
+            let controller = segue.destination as! IconPickerViewController
+            controller.delegate = self
         }
     }
 }
@@ -66,7 +81,11 @@ extension ListDetailViewController {
 //MARK: - UITableViewDelegate
 extension ListDetailViewController {
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        return nil //선택이 안 되도록
+        if indexPath.section == 1 { //아이콘 선택 창에서는 선택 되도록
+            return indexPath
+        } else {
+            return nil //선택이 안 되도록
+        }
     }
 }
 
@@ -82,7 +101,14 @@ extension ListDetailViewController: UITextFieldDelegate  { //텍스트 필드의
         
         return true
     }
-    
+}
+
+extension ListDetailViewController : IconPickerViewControllerDelegate {
+    func iconPicker(_ picker: IconPickerViewController, didPick iconName: String) { //아이콘 이미지 선택 시
+        self.iconName = iconName
+        iconImageView.image = UIImage(named: iconName)
+        navigationController?.popViewController(animated: true)
+    }
 }
 
 

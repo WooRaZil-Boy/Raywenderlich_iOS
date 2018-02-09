@@ -18,6 +18,14 @@ class AllListsViewController: UITableViewController {
 //        navigationController?.navigationBar.prefersLargeTitles = true //스토리 보드에서 할 수도.
     }
     
+    override func viewWillAppear(_ animated: Bool) { //이 뷰 컨트롤러가 나타나기 전에 호출
+        //viewDidAppear()보다 먼저 호출된다. 뷰는 나타났지만, 아직 애니메이션 효과는 적용되지 않은 상태에서 호출된다.
+        super.viewWillAppear(animated)
+        tableView.reloadData() //이 코드가 없으면, 한 번 만들어진 셀이 변경되지 않기 때문에, 체크리스트의 체크가 바뀌어도 업데이트가 되지 않는다.
+        //체크 할 때 마다 델리게이트로 하나하나 업데이트 하는 것보다, 보여지는 경우가 하나 뿐이므로 여기서 업데이트 하는 것이 낫다.
+        //총 셀의 수가 이번 앱에서는 크지 않으므로 메모리 낭비가 그리 크지 않다.
+    }
+    
     override func viewDidAppear(_ animated: Bool) { //이 뷰 컨트롤러가 생성 될 때 뿐 아니라 나타날 때 마다 호출
         super.viewDidAppear(animated)
         
@@ -46,7 +54,7 @@ class AllListsViewController: UITableViewController {
             //tableView.dequeueReusableCell(withIdentifier: <#T##String#>, for: <#T##IndexPath#>)도 있다. 이 메서드는 프로토 타입 셀에서만 작동한다.
             return cell
         } else { //재활용할 셀이 없을 때
-            return UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
+            return UITableViewCell(style: .subtitle, reuseIdentifier: cellIdentifier)
         } //항상 재활용할 셀이 있는지 확인 후에 없을 경우 새 셀을 만든다. 재활용할 셀이 있는데도 재활용하지 않을 경우, 메모리가 낭비되고 속도가 느려진다.
         
         //테이블 뷰 셀을 만드는 방법
@@ -98,6 +106,16 @@ extension AllListsViewController {
         
         cell.textLabel!.text = checklist.name
         cell.accessoryType = .detailDisclosureButton
+        cell.imageView?.image = UIImage(named: checklist.iconName) //셀 기본적으로 imageView가 있다.
+    
+        let count = checklist.countUncheckedItems()
+        if checklist.items.count == 0 {
+            cell.detailTextLabel!.text = "(No Items)" //Force unwrapping
+        } else if count == 0 {
+            cell.detailTextLabel!.text = "All Done!"
+        } else {
+            cell.detailTextLabel!.text = "\(count) Remaining"
+        }
         
         return cell
     }
@@ -147,22 +165,16 @@ extension AllListsViewController: ListDetailViewControllerDelegate {
     func listDetailViewController(_ controller: ListDetailViewController, didFinishAdding checklist: Checklist) {
         let newRowIndex = dataModel.lists.count
         dataModel.lists.append(checklist)
+        dataModel.sortChecklists()
         
-        let indexPath = IndexPath(row: newRowIndex, section: 0)
-        let indexPaths = [indexPath]
-        tableView.insertRows(at: indexPaths, with: .automatic)
-        
+        tableView.reloadData() //직접 행을 삽입할 필요없이 전체 테이블 내용을 고친다. //총 셀의 수가 이번 앱에서는 크지 않으므로 메모리 낭비가 그리 크지 않다.
         navigationController?.popViewController(animated: true)
     }
     
     func listDetailViewController(_ controller: ListDetailViewController, didFinishEditing checklist: Checklist) {
-        if let index = dataModel.lists.index(of: checklist) { //객체로 배열의 해당 인덱스를 가져올 수 있다.
-            let indexPath = IndexPath(row: index, section: 0)
-            if let cell = tableView.cellForRow(at: indexPath) {
-                cell.textLabel?.text = checklist.name
-            }
-        }
+        dataModel.sortChecklists()
         
+        tableView.reloadData() //직접 행을 고칠 필요 없이 전체 테이블 내용을 고친다. //총 셀의 수가 이번 앱에서는 크지 않으므로 메모리 낭비가 그리 크지 않다.
         navigationController?.popViewController(animated: true)
     }
 }

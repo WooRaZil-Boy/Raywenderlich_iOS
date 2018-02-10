@@ -104,6 +104,18 @@ extension DataModel {
         }
     }
     
+    class func nextChecklistItemID() -> Int { //userDefaults에 ChecklistItemID 값을 저장하고, 필요할 때 사용
+        //class func로 이 클래스 전체가 공유하는 메서드를 만들 수 있다. //객체에 대한 참조 없이도 호출 가능하다.
+        let userDefaults = UserDefaults.standard
+        let itemID = userDefaults.integer(forKey: "ChecklistItemID") //userDefaults에서 이번에 쓸 ChecklistItemID를 가져온다.
+        userDefaults.set(itemID + 1, forKey: "ChecklistItemID") //값에서 하나를 더 해서 다시 저장
+        userDefaults.synchronize() //변경 사항 저장. (충돌로 앱이 종료되어도 값이 손실되지 않는다.)
+        //"ChecklistItemID"에 대한 기본값을 registerDefaults () 메소드에 추가하여 항목 ID의 시작 값을 사용자 정의 할 수 있수도 있다.
+        //하지만 기존 값이 없을 때 "ChecklistItemID"를 사용하면 0을 다시 얻는다.
+        
+        return itemID //ChecklistItemID 값 리턴
+    }
+    
     //.plist는 앱의 추가정보 제공. xml 형식으로 저장된다. (데이터 저장을 위해서 사용할 수도 있다.)
     //Swift4 부터 Codable 이라는 새 프로토콜이 있다. 이전의 NSCoder와 비슷.
 }

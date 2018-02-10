@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications //유저의 동의를 받은 후에만 Local notification을 보낼 수 있다.
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,13 +19,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //객체를 let으로 선언했다는 것은 메모리 주소를 바꿀 수 없다는 것. 객체 내부의 변수는 바뀔 수 있고, 참조한 원본의 데이터가 바뀌도 객체를 let으로 선언했어도 각 변수의 값은 바뀌게 된다.
     //옵셔널은 값이 변경될 수 있음을 의미하므로 반드시 var로 선언해야 한다.
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool { //프로그램이 시작하자 마자 호출된다.
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool { //프로그램이 시작하자 마자 호출된다. //앱이 시작된 후 코드를 수행 할 수 있는 첫 번째 위치
         // Override point for customization after application launch.
         
         let navigationController = window!.rootViewController as! UINavigationController //윈도우 변수에서 루트 뷰 컨트롤러를 찾는다.
         //window가 nil이라면 모든 뷰 컨트롤러도 nil 이다. 따라서 옵셔널을 강제로 풀 수 있다.
         let controller = navigationController.viewControllers[0] as! AllListsViewController //루트 뷰에서 메인뷰를 찾는다.
         controller.dataModel = dataModel //AppDelegate에서 생성된 DataModel을 컨트롤러에 넘겨준다.
+        
+        // Notification authorization
+        let center = UNUserNotificationCenter.current()
+        center.delegate = self
+        
+//        center.requestAuthorization(options: [.alert, .sound]) { //alert과 sound의 권한을 받는다. //.badge, .sound, .alert, .carPlay 가 있다.
+//            granted, error in
+//            if granted {
+//                print("We have permission")
+//            } else {
+//                print("Permission denied")
+//            }
+//        }
         
         return true
     }
@@ -64,3 +78,10 @@ extension AppDelegate {
 //1. iOS 4 이전에는 사용자가 앱을 실행하는 동안에도 종료될 수 있었다. //iOS 4부터 멀티 태스킹 지원. - 일시중지되어 백그라운드로 간다. (ex. iOS 4 이전에는 앱 실행 중 전화가 오면 종료됨)
 //2. 앱이 일시 중지된 경우라도(백 그라운드) OS가 많은 메모리를 필요하는 앱(게임)을 실행해야 될 때 리소스 확보를 위해 강제 종료하는 경우가 있다. 알림이 전송되지 않는다.
 //3. 충돌로 인한 종료.
+
+//MARK: - UNUserNotificationCenterDelegate
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) { //로컬 알림이 실행되고 앱이 실행 중일 때
+        print("Received local notification \(notification)")
+    }
+}

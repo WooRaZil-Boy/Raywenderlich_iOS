@@ -55,7 +55,8 @@ class ChecklistViewController: UITableViewController { //테이블 뷰 컨트롤
         let label = cell.viewWithTag(1000) as! UILabel //스토리보드에서 태그 값을 설정해 줄 수 있다. 태그의 기본 값은 0이다.
         //태그는 @IBOutlet을 만들지 않고도 손쉽게 UI 요소에 대한 참조를 가져올 수 있다.
         //이 경우에는 @IBOutlet로 연결하면, 각 객체의 레이블이 아니라 프로토 타입의 하나의 객체만 가져오므로 적절치 않다.
-        label.text = item.text
+//        label.text = item.text
+        label.text = "\(item.text)"
     }
 }
 

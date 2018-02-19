@@ -1,104 +1,81 @@
 //
-/**
-* Copyright (c) 2017 Razeware LLC
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-* Notwithstanding the foregoing, you may not use, copy, modify, merge, publish, 
-* distribute, sublicense, create a derivative work, and/or sell copies of the 
-* Software in any work that is designed, intended, or marketed for pedagogical or 
-* instructional purposes related to programming, coding, application development, 
-* or information technology.  Permission for such use, copying, modification,
-* merger, publication, distribution, sublicensing, creation of derivative works, 
-* or sale is expressly withheld.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-* THE SOFTWARE.
-*/
+//  CategoryPickerViewController.swift
+//  MyLocations
+//
+//  Created by IndieCF on 2018. 2. 19..
+//  Copyright © 2018년 근성가이. All rights reserved.
+//
 
 import UIKit
 
 class CategoryPickerViewController: UITableViewController {
-  var selectedCategoryName = ""
-  
-  let categories = [
-    "No Category",
-    "Apple Store",
-    "Bar",
-    "Bookstore",
-    "Club",
-    "Grocery Store",
-    "Historic Building",
-    "House",
-    "Icecream Vendor",
-    "Landmark",
-    "Park"]
-  
-  var selectedIndexPath = IndexPath()
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
+    var selectedCategoryName = ""
+    let categories = ["No Category", "Apple Store", "Bar", "Bookstore", "Club", "Grocery Store", "Historic Building", "House", "Icecream Vendor", "Landmark", "Park"]
+    var selectedIndexPath = IndexPath()
     
-    for i in 0..<categories.count {
-      if categories[i] == selectedCategoryName {
-        selectedIndexPath = IndexPath(row: i, section: 0)
-        break
-      }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        for i in 0..<categories.count { //해당 인덱스를 알아야 하기에 for in 대신 이런 식으로 쓴다.
+            //0에서 categories.count - 1 까지
+            //for (i, category) in categories.enumerated()으로 해도 된다.
+            if categories[i] == selectedCategoryName {
+                selectedIndexPath = IndexPath(row: i, section: 0)
+                
+                break
+            }
+        }
     }
-  }
-  
-  // MARK:- Navigation
-  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    if segue.identifier == "PickedCategory" {
-      let cell = sender as! UITableViewCell
-      if let indexPath = tableView.indexPath(for: cell) {
-        selectedCategoryName = categories[indexPath.row]
-      }
+}
+
+//MARK: - Navigations
+extension CategoryPickerViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "PickedCategory" { //unwind segue의 경우
+            let cell = sender as! UITableViewCell
+            if let indexPath = tableView.indexPath(for: cell) { //셀 선택시 마다 selectedCategoryName을 업데이트 해서 할 수도 있지만, 여기서의 기능 상 단순히 마지막에 추가해 주는 것이 더 효율적이다.
+                //뒤로 가기 눌렀을 경우, 따로 처리해 줄 필요가 없어진다.
+                selectedCategoryName = categories[indexPath.row]
+            }
+        }
     }
-  }
-  
-  // MARK:- Table View Delegates
-  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return categories.count
-  }
-  
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-      
-      let categoryName = categories[indexPath.row]
-      cell.textLabel!.text = categoryName
-      
-      if categoryName == selectedCategoryName {
-        cell.accessoryType = .checkmark
-      } else {
-        cell.accessoryType = .none
-      }
-      return cell
-  }
-  
-  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    if indexPath.row != selectedIndexPath.row {
-      if let newCell = tableView.cellForRow(at: indexPath) {
-        newCell.accessoryType = .checkmark
-      }
-      if let oldCell = tableView.cellForRow(
-        at: selectedIndexPath) {
-        oldCell.accessoryType = .none
-      }
-      selectedIndexPath = indexPath
+}
+
+//MARK: - UITableViewDataSource
+extension CategoryPickerViewController {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return categories.count
     }
-  }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        //이 메서드는 프로토 타입 셀에서만 작동한다. cf.tableView.dequeueReusableCell(withIdentifier: <#T##String#>)
+        let categoryName = categories[indexPath.row]
+        cell.textLabel!.text = categoryName
+        
+        if categoryName == selectedCategoryName { //선택된 카테고리라면
+            cell.accessoryType = .checkmark
+        } else { //선택된 카테고리가 아니라면
+            cell.accessoryType = .none
+        }
+        
+        return cell
+    }
+}
+
+//MARK: - UITableViewDelegate
+extension CategoryPickerViewController {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row != selectedIndexPath.row { //이미 선택된 카테고리를 다시 선택하는 경우가 아니라면
+            if let newCell = tableView.cellForRow(at: indexPath) { //선택한 셀을 체크
+                newCell.accessoryType = .checkmark
+            }
+            
+            if let oldCell = tableView.cellForRow(at: selectedIndexPath) { //이전 선택했던 카테고리 셀을 언 체크
+                oldCell.accessoryType = .none
+            }
+            
+            selectedIndexPath = indexPath
+        }
+    }
 }

@@ -17,6 +17,9 @@
 		EF6EEE35202F3EF000EE0984 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF6EEE34202F3EF000EE0984 /* Assets.xcassets */; };
 		EF6EEE38202F3EF000EE0984 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF6EEE36202F3EF000EE0984 /* LaunchScreen.storyboard */; };
 		EF6EEE402034AB6B00EE0984 /* LocationDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6EEE3F2034AB6A00EE0984 /* LocationDetailsViewController.swift */; };
+		EF6EEE43203B1AC100EE0984 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EF6EEE41203B1AC100EE0984 /* DataModel.xcdatamodeld */; };
+		EF6EEE46203B26D900EE0984 /* Location+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6EEE44203B26D900EE0984 /* Location+CoreDataClass.swift */; };
+		EF6EEE47203B26D900EE0984 /* Location+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6EEE45203B26D900EE0984 /* Location+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +35,9 @@
 		EF6EEE37202F3EF000EE0984 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EF6EEE39202F3EF000EE0984 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF6EEE3F2034AB6A00EE0984 /* LocationDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailsViewController.swift; sourceTree = "<group>"; };
+		EF6EEE42203B1AC100EE0984 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		EF6EEE44203B26D900EE0984 /* Location+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Location+CoreDataClass.swift"; path = "MyLocations/Location+CoreDataClass.swift"; sourceTree = "<group>"; };
+		EF6EEE45203B26D900EE0984 /* Location+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Location+CoreDataProperties.swift"; path = "MyLocations/Location+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +54,8 @@
 		EF6EEE1F202F3EF000EE0984 = {
 			isa = PBXGroup;
 			children = (
+				EF6EEE44203B26D900EE0984 /* Location+CoreDataClass.swift */,
+				EF6EEE45203B26D900EE0984 /* Location+CoreDataProperties.swift */,
 				EF6EEE2A202F3EF000EE0984 /* MyLocations */,
 				EF6EEE29202F3EF000EE0984 /* Products */,
 			);
@@ -75,6 +83,7 @@
 				EF6EEE34202F3EF000EE0984 /* Assets.xcassets */,
 				EF6EEE36202F3EF000EE0984 /* LaunchScreen.storyboard */,
 				EF6EEE39202F3EF000EE0984 /* Info.plist */,
+				EF6EEE41203B1AC100EE0984 /* DataModel.xcdatamodeld */,
 			);
 			path = MyLocations;
 			sourceTree = "<group>";
@@ -152,10 +161,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF6EEE402034AB6B00EE0984 /* LocationDetailsViewController.swift in Sources */,
+				EF6EEE43203B1AC100EE0984 /* DataModel.xcdatamodeld in Sources */,
 				EF6EEE30202F3EF000EE0984 /* SecondViewController.swift in Sources */,
 				A43E222B203AA34F00611CEB /* HudView.swift in Sources */,
+				EF6EEE47203B26D900EE0984 /* Location+CoreDataProperties.swift in Sources */,
 				A43E222D203ABA0400611CEB /* Functions.swift in Sources */,
 				EF6EEE2C202F3EF000EE0984 /* AppDelegate.swift in Sources */,
+				EF6EEE46203B26D900EE0984 /* Location+CoreDataClass.swift in Sources */,
 				A43E2229203A6DF100611CEB /* CategoryPickerViewController.swift in Sources */,
 				EF6EEE2E202F3EF000EE0984 /* CurrentLocationViewController.swift in Sources */,
 			);
@@ -340,6 +352,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		EF6EEE41203B1AC100EE0984 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				EF6EEE42203B1AC100EE0984 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = EF6EEE42203B1AC100EE0984 /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = EF6EEE20202F3EF000EE0984 /* Project object */;
 }

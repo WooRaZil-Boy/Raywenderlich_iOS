@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation //로케이션 프레임워크
+import CoreData
 
 class CurrentLocationViewController: UIViewController {
     @IBOutlet weak var messageLabel: UILabel!
@@ -30,6 +31,9 @@ class CurrentLocationViewController: UIViewController {
     var lastGeocodingError: Error? //오류가 없으면 nil이 되므로 옵셔널
     
     var timer: Timer?
+    
+    var managedObjectContext: NSManagedObjectContext! //Core Data
+    //옵셔널은 가능한한 적게 사용하는 것이 좋다. 
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -222,6 +226,7 @@ extension CurrentLocationViewController {
             let controller = segue.destination as! LocationDetailsViewController
             controller.coordinate = location!.coordinate
             controller.placemark = placemark
+            controller.managedObjectContext = managedObjectContext //Core Data dependency injection
         }
     }
 }

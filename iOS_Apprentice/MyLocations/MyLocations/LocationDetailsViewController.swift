@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import CoreData
 
 class LocationDetailsViewController: UITableViewController {
     @IBOutlet weak var descriptionTextView: UITextView!
@@ -34,6 +35,16 @@ class LocationDetailsViewController: UITableViewController {
 
     var categoryName = "No Category"
     
+    var managedObjectContext: NSManagedObjectContext! //Core Data
+//    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+//    let context = appDelegate.managedObjectContext
+    //이런 식으로 AppDelegate의 managedObjectContext 속성을 불러와 참조를 얻을 수 있다.
+    //하지만 이 방법으로는 모든 객체가 AppDelegate에 종속되고, 코드가 꼬이게 된다.
+    //디자인 방법에서는 한 클래스가 다른 클래스에 최대한 적게 의존하도록 만드는 것이 좋다.
+    //많은 클래스가 AppDelegate에 집접 접근해야 하는 경우 디자인을 다시 생각해 보는 것이 좋다.
+    //dependency injection(의존성 주입) :: AppDelegate에서 첫 viewController로 객체를 전달하고, Segue를 통해 다음 viewController로 전달 해 주도록 디자인하는 것이 나은 해결책
+    var date = Date() //Location에 날짜 저장
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,7 +60,7 @@ class LocationDetailsViewController: UITableViewController {
             addressLabel.text = "No Address Found"
         }
         
-        dateLabel.text = format(date: Date()) //날짜 형태 지정에 DateFormatter 사용
+        dateLabel.text = format(date: date) //날짜 형태 지정에 DateFormatter 사용
         //하지만 DateFormatter는 메모리를 많이 사용한다. 초기화하는데 시간이 걸림.
         //따라서 한 번 DateFormatter를 만들고 재사용하는 것이 좋다.
         
@@ -126,16 +137,25 @@ extension LocationDetailsViewController {
         let hudView = HudView.hud(inView: navigationController!.view, animated: true)
         //navigationController가 아닌 self.view로 하면, navigationController가 상위 뷰 이므로, 네비게이션 영역을 다 커버하지 못한다.
         hudView.text = "Tagged"
-        afterDelay(0.6) { //hubView를 볼 수 있게 0.6초 딜레이 //trailing closure syntax - 마지막 매개변수가 클로저인 경우
-            hudView.hide() //hudView는 done()메서드 범위 내에서 존재하는 로컬 변수 이므로 클로저 내라도 self를 쓰지 않는다.
-            self.navigationController?.popViewController(animated: true)
-        }
+
+        let location = Location(context: managedObjectContext) //location 인스턴스 생성
+        location.locationDescription = descriptionTextView.text
+        location.category = categoryName
+        location.latitude = coordinate.latitude
+        location.longitude = coordinate.longitude
+        location.date = date
+        location.placemark = placemark
         
-        let delayInSeconds = 0.6
-        DispatchQueue.main.asyncAfter(deadline: .now() + delayInSeconds) {
-            
-            hudView.hide()
-            
+        do {
+            try managedObjectContext.save() //Core Data에 저장
+            afterDelay(0.6) { //hubView를 볼 수 있게 0.6초 딜레이 //trailing closure syntax - 마지막 매개변수가 클로저인 경우
+                hudView.hide() //hudView는 done()메서드 범위 내에서 존재하는 로컬 변수 이므로 클로저 내라도 self를 쓰지 않는다.
+                self.navigationController?.popViewController(animated: true)
+            }
+        } catch { //save가 실패할 경우
+            fatalCoreDataError(error)
+            //NotificationCenter에 알림을 보내고, Appdelegate에서 추가해 두었던 해당 옵저버가 받아 클로저를 실행한다.
+//            fatalError("Error: \(error)") //강제 종료 //실제로 릴리즈 할 때는 빼야 한다.
         }
     }
     
@@ -203,3 +223,5 @@ extension LocationDetailsViewController {
 }
 
 //키보드가 활성화되면 제거할 마땅한 방법이 없다. 그리고 키보드의 크기가 크다.
+
+//데이터 모델을 변경하면 데이터 베이스 파일도 새로 적용해 줘야 한다.

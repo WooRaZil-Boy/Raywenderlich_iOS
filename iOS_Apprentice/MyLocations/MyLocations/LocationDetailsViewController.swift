@@ -45,10 +45,29 @@ class LocationDetailsViewController: UITableViewController {
     //dependency injection(의존성 주입) :: AppDelegate에서 첫 viewController로 객체를 전달하고, Segue를 통해 다음 viewController로 전달 해 주도록 디자인하는 것이 나은 해결책
     var date = Date() //Location에 날짜 저장
     
+    var locationToEdit: Location? { //수정. 추가 때는 nil
+        didSet { //Obsever //didSet으로 설정하면, 변수에 새 값이 입력될 때 마다 코드 블럭이 수행된다.
+            //locationToEdit에서 값이 입력되는 경우는 이전 뷰 컨트롤러에서 navigation으로 넘어오는 경우 이므로
+            //viewDidLoad()보다 먼저 호출되어, 올바른 값을 화면에 출력한다.
+            if let location = locationToEdit {
+                descriptionText = location.locationDescription
+                categoryName = location.category
+                date = location.date
+                coordinate = CLLocationCoordinate2DMake(location.latitude, location.longitude)
+                placemark = location.placemark
+            }
+        }
+    }
+    var descriptionText = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        descriptionTextView.text = ""
+        if let location = locationToEdit {
+            title = "Edit Location"
+        }
+        
+        descriptionTextView.text = descriptionText
         categoryLabel.text = categoryName
         latitudeLabel.text = String(format: "%.8f", coordinate.latitude)
         longitudeLabel.text = String(format: "%.8f", coordinate.longitude) //8자리까지 표시
@@ -136,9 +155,16 @@ extension LocationDetailsViewController {
     @IBAction func done() {
         let hudView = HudView.hud(inView: navigationController!.view, animated: true)
         //navigationController가 아닌 self.view로 하면, navigationController가 상위 뷰 이므로, 네비게이션 영역을 다 커버하지 못한다.
-        hudView.text = "Tagged"
-
-        let location = Location(context: managedObjectContext) //location 인스턴스 생성
+        
+        let location: Location //let으로 선언해도 한 번은 초기화 할 수 있다.
+        if let temp = locationToEdit { //수정
+            hudView.text = "Updated"
+            location = temp
+        } else { //추가
+            hudView.text = "Tagged"
+            location = Location(context: managedObjectContext) //location 인스턴스 생성
+        } //if 문 이후 location은 반드시 값을 가지게 된다.
+        
         location.locationDescription = descriptionTextView.text
         location.category = categoryName
         location.latitude = coordinate.latitude

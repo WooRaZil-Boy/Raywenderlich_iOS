@@ -22,11 +22,12 @@
                     <connections>
                         <segue destination="A9j-gU-YVa" kind="relationship" relationship="viewControllers" id="n6H-Wa-Fbx"/>
                         <segue destination="sen-MP-EwV" kind="relationship" relationship="viewControllers" id="6RJ-aT-5dx"/>
+                        <segue destination="UZp-wy-kkn" kind="relationship" relationship="viewControllers" id="2jF-41-08I"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="0.0" y="0.0"/>
+            <point key="canvasLocation" x="81" y="352"/>
         </scene>
         <!--Locations-->
         <scene sceneID="Lxu-kn-5lb">
@@ -76,7 +77,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lSO-M3-ol0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1417.5" y="351.76056338028167"/>
+            <point key="canvasLocation" x="1418" y="352"/>
         </scene>
         <!--Locations-->
         <scene sceneID="onZ-bw-Hzx">
@@ -94,6 +95,46 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vwJ-89-gTR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="750" y="352"/>
+        </scene>
+        <!--Map-->
+        <scene sceneID="xSB-rf-6jE">
+            <objects>
+                <viewController id="bwP-XF-ZTg" customClass="MapViewController" customModule="MyLocations" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qbS-dv-4t6">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jK4-NB-awa">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="bwP-XF-ZTg" id="HcP-nJ-pCw"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="u1u-aS-EQP"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Map" id="erV-5O-gyR">
+                        <barButtonItem key="leftBarButtonItem" title="Locations" id="67t-gy-yS6">
+                            <connections>
+                                <action selector="showLocations" destination="bwP-XF-ZTg" id="8R3-Ul-ehB"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="User" id="grO-HT-ve5">
+                            <connections>
+                                <action selector="showUser" destination="bwP-XF-ZTg" id="TBn-6x-iw5"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="jK4-NB-awa" id="73D-vL-H15"/>
+                        <segue destination="SWh-Ik-SIK" kind="show" identifier="EditLocation" id="DwD-uk-GWi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hzb-cv-YNc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1418" y="1024"/>
         </scene>
         <!--Current Location View Controller-->
         <scene sceneID="pAJ-3T-7aL">
@@ -448,11 +489,30 @@
             </objects>
             <point key="canvasLocation" x="2753" y="-321"/>
         </scene>
+        <!--Map-->
+        <scene sceneID="PUx-oP-xM5">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="UZp-wy-kkn" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Map" id="fZD-Cn-cwR"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="LhM-SS-CAX">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="bwP-XF-ZTg" kind="relationship" relationship="rootViewController" id="Qd3-UW-Jtb"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jme-Qp-lAw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="750" y="1023.5915492957747"/>
+        </scene>
     </scenes>
     <resources>
         <image name="first" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="kh3-yc-pWH"/>
+        <segue reference="DwD-uk-GWi"/>
     </inferredMetricsTieBreakers>
 </document>

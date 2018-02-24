@@ -46,6 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let tabController = window!.rootViewController as! UITabBarController
         //윈도우는 이 앱의 최상위 객체. //rootViewController로 첫 시작 시의 viewController를 가져온다.
         if let tabViewControllers = tabController.viewControllers {
+            print("앱 시작 시")
             var navController = tabViewControllers[0] as! UINavigationController //first tab
             let controller1 = navController.viewControllers.first as! CurrentLocationViewController
             controller1.managedObjectContext = managedObjectContext
@@ -55,6 +56,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             controller2.managedObjectContext = managedObjectContext
             //managedObjectContext는 lazy로 되어 있으므로 여기에서 NSPersistentContainer 인스턴스가 만들어진다(내부의 클로저가 실행된다).
             let _ = controller2.view //CoreData 버그 때문에. p.672 참고
+            
+            navController = tabViewControllers[2] as! UINavigationController //third tab
+            let controller3 = navController.viewControllers.first as! MapViewController
+            controller3.managedObjectContext = managedObjectContext
             
         } //따라서 대신 뷰 계층 구조를 따라가면서 D.I 해주어야 한다.
         

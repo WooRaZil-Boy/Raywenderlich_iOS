@@ -49,6 +49,42 @@ public class Location: NSManagedObject, MKAnnotation { //NSManagedObject Core Da
     public var subtitle: String? { //MKAnnotation //computed property //read-only
         return category
     }
+    
+    var hasPhoto: Bool { //사진 있는지 여부 반환
+        return photoID != nil
+    }
+    
+    var photoURL: URL { //URL로 파일 참조
+        assert(photoID != nil, "No photo ID set") //nil이면 "No photo ID set" 출력하고 crash
+        //App Store 출시 할 때는 비활성화
+        let filename = "Photo-\(photoID!.intValue).jpg"
+        
+        return applicationDocumentsDirectory.appendingPathComponent(filename) //추가
+    }
+    
+    var photoImage: UIImage? {
+        return UIImage(contentsOfFile: photoURL.path) //URL.path로 String 변환
+    }
+    
+    class func nextPhotoID() -> Int { //클래스 메서드 //저장할 이미지의 아이디를 증가시킨다.
+        //이미지 파일이 하나씩 추가될 때 마다 증가
+        let userDefaults = UserDefaults.standard //UserDefaults로 간단한 값을 저장해 둘 수 있다.
+        let currentID = userDefaults.integer(forKey: "PhotoID") + 1
+        userDefaults.set(currentID, forKey: "PhotoID")
+        userDefaults.synchronize()
+        
+        return currentID
+    }
+    
+    func removePhotoFile() { //Location 객체 삭제 시, Documents 폴더에서 해당 사진 삭제
+        if hasPhoto {
+            do {
+                try FileManager.default.removeItem(at: photoURL) //FileManager.default.removeItem(at) : 해당 경로의 파일이나 폴더 삭제
+            } catch {
+                print("Error removing file: \(error)")
+            }
+        }
+    }
 }
 
 //스키마를 추가해 SQL을 볼 수도 있다. p.637

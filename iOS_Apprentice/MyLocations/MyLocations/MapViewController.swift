@@ -39,10 +39,11 @@ class MapViewController: UIViewController {
 //                    }
                 }
             }
-        } //didSet로 추가했기에 managedObjectContext의 값이 바뀔 때마다 옵저버 추가하는 거 아닌가?
+        } //didSet로 추가했기에 managedObjectContext의 값이 바뀔 때마다 옵저버 중복 추가하는 거 아닌가??
     }
     var locations = [Location]()
     
+    //MARK: - ViewLifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -17,6 +17,12 @@ class LocationDetailsViewController: UITableViewController {
     @IBOutlet weak var longitudeLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
+    //Aspect fit으로 하면, 가로 세로 비율이 유지된다.
+    //Aspect fill은 전체 뷰를 채우면서 가로 세로 비율을 유지한다.
+    @IBOutlet weak var addPhotoLabel: UILabel!
+    
+    var image: UIImage?
     
     var coordinate = CLLocationCoordinate2D(latitude: 0, longitude: 0) //CLLocationCoordinate2D로 CLLocation 객체에서 위도와 경도 정보를 가져온다.
     //CLLocation은 struct로 위도와 경도 외에도 다른 정보들이 있으나, 여기에서는 위도와 경도 정보만 필요하다.
@@ -59,12 +65,20 @@ class LocationDetailsViewController: UITableViewController {
         }
     }
     var descriptionText = ""
+    var observer: Any! //옵저버 해제위한 객체
     
+    //MARK: - ViewLifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if let location = locationToEdit {
             title = "Edit Location"
+            
+            if location.hasPhoto { //이미지가 있으면
+                if let theImage = location.photoImage {
+                    show(image: theImage) //뷰에 추가해 준다.
+                }
+            }
         }
         
         descriptionTextView.text = descriptionText
@@ -92,24 +106,24 @@ class LocationDetailsViewController: UITableViewController {
         tableView.addGestureRecognizer(gestureRecognizer) //테이블 뷰에 제스처 인식기 추가
         //스토리보드에서 추가할 때는 @IBAction function을 만들고, cancelsTouchesInView behavior을 설정하고
         //Referencing Outlet Collections의 gestureRecognizers를 tableView로 연결하면 된다.
+        
+        listenForBackgroundNotification() //옵저버 추가
     }
     
-    @objc func hideKeyboard(_ gestureRecognizer: UIGestureRecognizer) { //테이블 뷰에서 제스처(탭)할 때마다 호출
-        let point = gestureRecognizer.location(in: tableView) //tableView 내의 탭 위치
-        let indexPath = tableView.indexPathForRow(at: point) //CGPoint로 탭한 위치의 indexPath를 알아낸다.
-        
-        if indexPath != nil && indexPath!.section == 0 && indexPath!.row == 0 { //첫 번째 description 입력 란에서는 해제가 되지 않도록
-            //indexPath != nil에 의해(short-circuiting), 뒤의 조건들의 indexPath는 nil이 될 수 없다.
-            return
-        }
-        //스토리 보드에서 Dismiss on drag를 선택해 스크롤 시 키보드를 숨길 수 있다(시뮬레이터에선 잘 안 되는 경우 있음).
-        
-        descriptionTextView.resignFirstResponder() //포커스 해제
-        
-//        if let indexPath = indexPath, indexPath.section != 0 && indexPath.row != 0 {
-//            descriptionTextView.resignFirstResponder()
-//        }
-        //위의 조건 대신 이런 식으로 쓸 수도 있다.
+    override func didReceiveMemoryWarning() { //메모리가 부족할 때 실행된다.
+        //UIImagePickerController는 매우 많은 메모리를 사용한다.
+        //상황에 따라 다른 앱들이 백그라운드에 있는 경우 이 메서드가 호출될 수 있고, iOS가 앱을 강제로 종료할 수도 있다.
+        //여기에서 필요없는 메모리를 비울 수 있다. //캐시 데이터나 나중에 다시 쉽게 만들 수 있는 작업들을 우선적으로 해제하는 것이 좋다.
+        //UIKit에서 어느 정도 수준까지 자동적으로 실행하지만, 더 세세하게 컨트롤하고 싶은 경우, 이 메서드를 override하면 된다.
+        //시뮬레이터에서 Debug → Simulate Memory Warning로 메모리 부족을 트리거할 수 있다.
+        super.didReceiveMemoryWarning()
+    }
+    
+    deinit {
+        print("*** deinit \(self)")
+        NotificationCenter.default.removeObserver(observer) //옵저버 해제 //해제하지 않으면 LocationDetailsViewController이 새로 생성될 때마다 새 옵저버가 중첩된다.
+        //따라서 메모리 낭비를 막기 위해, 항상 옵저버를 사용 후 해제하는 것이 좋다.
+        //Strong reference 주의
     }
     
     //MARK: - Prviate Methods
@@ -146,6 +160,32 @@ class LocationDetailsViewController: UITableViewController {
     func format(date: Date) -> String { //dateFormatter가 lazy이므로(전역변수)이 메서드가 실행될 때 할당된다.
         return dateFormatter.string(from: date)
     }
+    
+    func show(image: UIImage) { //image를 추가하는 것이므로 image의 didSet 옵저버를 활용해도 된다.
+        imageView.image = image
+        imageView.isHidden = false
+        imageView.frame = CGRect(x: 10, y: 10, width: 260, height: 260) //이미지 뷰 크기 조절
+        
+        addPhotoLabel.isHidden = true
+    }
+    
+    func listenForBackgroundNotification() { //사용자가 홈 버튼 눌러 백그라운드로 전환될 때, modal view를 화면에서 제거하는 것을 권장한다.
+        observer = NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationDidEnterBackground, object: nil, queue: OperationQueue.main) { [weak self] _ in //백 그라운드로 옵저버 추가 //알림 수신되면 클로저 실행
+            //클로저는 변수를 저장하기 때문에 나중에 다른 곳에서 에러없이 실행될 수 있다.
+            //따라서 클로저가 사용된 뷰 컨트롤러의 메모리가 해제되어야 할 때도 클로저 내부에서 사용하는 변수는 메모리가 해제되지 않고 남아 있을 수 있게 된다.
+            //그런 경우 Strong reference가 유지되어 메모리가 낭비될 수 있다. 따라서 항상 클로저를 사용할 때 유의해야 한다.
+            //Strong reference 막기 위해 weak self 선언한다. 배열([])의 객체는 클로저의 캡처 목록을 나타낸다([weak self]).
+            //즉, self를 참조하지만, weak reference. nil이 될 수 있다.
+            if let weakSelf = self { //weak reference는 nil이 될 수 있으므로 항상 optional이다. //따라서 optaional을 해제 후 사용해야 한다.
+                if weakSelf.presentedViewController != nil { //현재 뷰 컨트롤러가 모달 뷰 컨트롤러를 표시하는 중인 경우에만 값이 있다.
+                    //Alert, ActionSheet, imagePicker 등
+                    weakSelf.dismiss(animated: false) //dismiss(animate)는 모달 뷰 컨트롤러를 닫는 메서드
+                    //여기서도 Modal 컨트롤러를 닫고, LocationDetailsViewController를 그대로 남는다.
+                }
+                weakSelf.descriptionTextView.resignFirstResponder()
+            }
+        }
+    }
 }
 
 //Label의 line을 0으로 설정하면, 텍스트에 맞게 크기가 조절된다.
@@ -163,6 +203,8 @@ extension LocationDetailsViewController {
         } else { //추가
             hudView.text = "Tagged"
             location = Location(context: managedObjectContext) //location 인스턴스 생성
+            location.photoID = nil //새로운 Location 인스턴스를 생성할 때, photoID는 초기값으로 0이 된다.
+            //따라서 실제로는 no Photo를 의미하는 nil이 되어야 한다.
         } //if 문 이후 location은 반드시 값을 가지게 된다.
         
         location.locationDescription = descriptionTextView.text
@@ -171,6 +213,22 @@ extension LocationDetailsViewController {
         location.longitude = coordinate.longitude
         location.date = date
         location.placemark = placemark
+        
+        //Save image
+        if let image = image { //이미지가 있는 경우
+            if !location.hasPhoto { //이전에, Location에 이미지가 추가되지 않았었다면
+                location.photoID = Location.nextPhotoID() as NSNumber
+                //새로운 photoID를 입력해 준다.
+            } //이전에 이미지가 추가되었다면, 이전에 쓰던 photoID를 계속 쓴다.
+            
+            if let data = UIImageJPEGRepresentation(image, 0.5) { //UIImage를 JPEG형식으로 변환해 data 반환 //0.5는 이미지 품질(0.0 ~ 1.0)
+                do {
+                    try data.write(to: location.photoURL, options: .atomic) //photoURL(경로)에 JPEG 변환한 데이터를 쓴다.
+                } catch {
+                    print("Error writing file: \(error)")
+                }
+            }
+        }
         
         do {
             try managedObjectContext.save() //Core Data에 저장
@@ -211,17 +269,20 @@ extension LocationDetailsViewController {
 //MARK: - UITableViewDataSource
 extension LocationDetailsViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { //주소 길이에 따라 셀의 높이를 변경해 줘야 한다. //일반적으로 각 셀의 높이가 같을 경우에는 스토리보드에서 간단히 설정해 줄 수 있다.
-        if indexPath.section == 0 && indexPath.row == 0 { //Description cell
+        switch (indexPath.section, indexPath.row) { //튜플. //if로 써도 동일하지만, Switch가 구별하기 더 쉬울 때가 많다.
+        case (0, 0): //Description cell
             return 88
-        } else if indexPath.section == 2 && indexPath.row == 2 { //address cell
-            addressLabel.frame.size = CGSize(width: view.bounds.size.width - 120, height: 10000)
-            //레이블의 너비를 화면 너비보다 120 작게, 높이를 충분히 크게
+        case (1, _): //첫 번째 섹션(이미지 추가 섹션)
+            return imageView.isHidden ? 44 : 280 //이미지 없을 때(일반 셀) 44, 이미지 추가시 280(260 * 260. 상하 10포인트 여백) //삼항 연산자
+        case (2, 2): //address cell
+            addressLabel.frame.size = CGSize(width: view.bounds.size.width - 115, height: 10000)
+            //레이블의 너비를 화면 너비보다 115 작게, 높이를 충분히 크게
             addressLabel.sizeToFit() //레이블의 크기를 적절하게 다시 조정. 이미 viewDidLoad에서 addressLabel에 text를 입력해 뒀다.
-            addressLabel.frame.origin.x = view.bounds.size.width - addressLabel.frame.size.width - 16
-            //sizeToFit()으로 레이블의 오른쪽과 아래쪽의 여유공간이 제거된다. x위치가 16pt 여백을 두도록 배치
+            addressLabel.frame.origin.x = view.bounds.size.width - addressLabel.frame.size.width - 15
+            //sizeToFit()으로 레이블의 오른쪽과 아래쪽의 여유공간이 제거된다. x위치가 15pt 여백을 두도록 배치
             
             return addressLabel.frame.size.height + 20 //적절한 여분을 추가하고(상하, 10px) 반환
-        } else { //이외의 셀
+        default: //이외의 셀
             return 44
         }
     }
@@ -244,9 +305,96 @@ extension LocationDetailsViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 0 { //위의 tableView (_ : willSelectRowAt :)에서 return indexPath를 했기 때문에 여백이 있는 가장자리를 탭해도 선택이 된다.
             descriptionTextView.becomeFirstResponder() //텍스트 뷰 포커스
+        } else if indexPath.section == 1 && indexPath.row == 0 { //사진 추가 셀 선택
+            tableView.deselectRow(at: indexPath, animated: true) //선택 후 셀이 회색으로 남아 있는 것을 해제해 준다.
+            pickPhoto()
         }
     }
+    
+    @objc func hideKeyboard(_ gestureRecognizer: UIGestureRecognizer) { //테이블 뷰에서 제스처(탭)할 때마다 호출
+        let point = gestureRecognizer.location(in: tableView) //tableView 내의 탭 위치
+        let indexPath = tableView.indexPathForRow(at: point) //CGPoint로 탭한 위치의 indexPath를 알아낸다.
+        
+        if indexPath != nil && indexPath!.section == 0 && indexPath!.row == 0 { //첫 번째 description 입력 란에서는 해제가 되지 않도록
+            //indexPath != nil에 의해(short-circuiting), 뒤의 조건들의 indexPath는 nil이 될 수 없다.
+            return
+        }
+        //스토리 보드에서 Dismiss on drag를 선택해 스크롤 시 키보드를 숨길 수 있다(시뮬레이터에선 잘 안 되는 경우 있음).
+        
+        descriptionTextView.resignFirstResponder() //포커스 해제
+        
+        //        if let indexPath = indexPath, indexPath.section != 0 && indexPath.row != 0 {
+        //            descriptionTextView.resignFirstResponder()
+        //        }
+        //위의 조건 대신 이런 식으로 쓸 수도 있다.
+    }
 }
+
+//MARK: - UIImagePickerControllerDelegate
+extension LocationDetailsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    //UIImagePickerController도 CoreData를 사용한다. (console에 로그 찍히도록 설정해 뒀으면 로그가 출력된다.)
+    func takePhotoWithCamera() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .camera //picker 유형. 기본값은 .photoLibrary //.camera는 시뮬레이터에서 지원하지 않는다.
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true //최종 선택 전 사진 편집
+        
+        present(imagePicker, animated: true)
+    }
+    
+    func choosePhotoFromLibrary() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary //picker 유형. 기본값은 .photoLibrary //.camera는 시뮬레이터에서 지원하지 않는다.
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true //최종 선택 전 사진 편집
+        
+        present(imagePicker, animated: true)
+    }
+    
+    func showPhotoMenu() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        //alertController 종류에는 .alert, .actionSheet가 있다.
+        
+        let actCancel = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(actCancel)
+        
+        let actPhoto = UIAlertAction(title: "Take Photo", style: .default) { _ in
+            self.takePhotoWithCamera()
+        }
+        alert.addAction(actPhoto)
+        
+        let actLibrary = UIAlertAction(title: "Choose From Library", style: .default) { _ in
+            self.choosePhotoFromLibrary()
+        }
+        alert.addAction(actLibrary)
+        
+        present(alert, animated: true)
+    }
+    
+    func pickPhoto() {
+        if UIImagePickerController.isSourceTypeAvailable(.camera) { //카메라를 사용할 수 있는 지 여부 확인
+            //시뮬레이터에서 actionSheet를 확인하려면 if true || UIImagePickerController.isSourceTypeAvailable(.camera)로 하면 된다.
+            showPhotoMenu()
+        } else { //사용할 수 없으면 포토 라이브러리
+            choosePhotoFromLibrary()
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) { //이미지 선택 시
+        image = info[UIImagePickerControllerEditedImage] as? UIImage //[String : Any] 딕셔너리에서 최종 수정된 이미지 가져온다.
+        if let theImage = image { //유효한 이미지라면
+            show(image: theImage) //추가 //image의 didSet 옵저버를 활용할 수도 있다.
+        }
+        
+        tableView.reloadData() //Photo 셀의 높이를 조절해 준다.
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) { //취소 시
+        dismiss(animated: true, completion: nil)
+    }
+} //Info.plist에서 Privacy 추가해 줘야 한다.
 
 //키보드가 활성화되면 제거할 마땅한 방법이 없다. 그리고 키보드의 크기가 크다.
 

@@ -28,6 +28,10 @@ extension Location { //DataModel.xcdatamodeld에서 지정한 속성의 특성�
     //Placemark는 CLPlacemark 객체인데, Core Data Model의 Type에서 지원하지 않는 유형이다.
     //이런 경우 NSCoding 프로토콜을 구현하는 클래스를 DataModel.xcdatamodeld에서는 Transformable 타입으로 지정하면 된다.
     //NSCoding은 Objective-C에서 쓰이며, Swift의 Codable 프로토콜과 동일하다. 이를 통해 인코딩, 디코딩할 수 있다.
+    @NSManaged public var photoID: NSNumber?
+    //이미지는 blob(Binary Large OBjects)로 CoreData에 저장할 수 있지만, 이런 큰 데이터는 Documents 디렉토리에 일반 파일로 저장하고 그 주소를 CoreData에 저장하는 것이 낫다.
+    //Data Model에서는 Int32로 선언했지만 여기서는 NSNumber인 이유는 Objective-C 프레임워크 이므로 제한이 있다. NSNumber는 Objective-C의 number 객체 처리.
+    //Swift는 NSNumber를 Int로 자동 변환한다.
     
     //@NSManaged 키워드는 Core Data가 런타임에 지정된 속성을 확인한다는 것을 의미한다.
     //이런 속성에 새 값을 입력하면, Core Data는 해당 값을 일반 인스턴스 변수 대신 데이터 저장소에 저장한다.
@@ -44,4 +48,8 @@ extension Location { //DataModel.xcdatamodeld에서 지정한 속성의 특성�
 //Codegen 설정에서 자동으로 클래스가 만들어지도록 할 수 있다.(기본값)
 
 //iOS에서 Core Data는 모든 데이터를 SQLite 데이터베이스에 저장한다.
+
+
+
+
 

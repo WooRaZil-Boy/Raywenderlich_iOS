@@ -13,6 +13,7 @@ class CategoryPickerViewController: UITableViewController {
     let categories = ["No Category", "Apple Store", "Bar", "Bookstore", "Club", "Grocery Store", "Historic Building", "House", "Icecream Vendor", "Landmark", "Park"]
     var selectedIndexPath = IndexPath()
     
+    //MARK: - ViewLifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -35,6 +35,7 @@ class CurrentLocationViewController: UIViewController {
     var managedObjectContext: NSManagedObjectContext! //Core Data
     //옵셔널은 가능한한 적게 사용하는 것이 좋다. 
 
+    //MARK: - ViewLifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         

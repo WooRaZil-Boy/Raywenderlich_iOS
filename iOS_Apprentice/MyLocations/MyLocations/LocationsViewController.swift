@@ -42,12 +42,7 @@ class LocationsViewController: UITableViewController {
         return fetchedResultsController
     }()
     
-    deinit { //해당 뷰 컨트롤러의 메모리가 해제될 때 deinit가 호출된다.
-        fetchedResultsController.delegate = nil //fetchedResultsController로 페치한 경우에는, 데이터가 변경될 때마다 delegate가 호출된다.
-        //따라서 NSFetchedResultsController가 더 이상 필요하지 않을 때는 알림 표시를 막기 위해 delegate를 nil로 설정하는 것이 좋다.
-    } //실제로 LocationsViewController는 탭바의 최상위 뷰 컨트롤러이므로 메모리가 해제되지는 않는다.
-    //Defensive programming으로 deinit를 사용
-    
+    //MARK: - ViewLifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,6 +53,12 @@ class LocationsViewController: UITableViewController {
         //CoreData 버그 때문에 p.672 참고. //캐시를 삭제해 버리기 때문에 좋은 해결책은 아니다.
         performFetch()
     }
+    
+    deinit { //해당 뷰 컨트롤러의 메모리가 해제될 때 deinit가 호출된다.
+        fetchedResultsController.delegate = nil //fetchedResultsController로 페치한 경우에는, 데이터가 변경될 때마다 delegate가 호출된다.
+        //따라서 NSFetchedResultsController가 더 이상 필요하지 않을 때는 알림 표시를 막기 위해 delegate를 nil로 설정하는 것이 좋다.
+    } //실제로 LocationsViewController는 탭바의 최상위 뷰 컨트롤러이므로 메모리가 해제되지는 않는다.
+    //Defensive programming으로 deinit를 사용
     
     // MARK:- Private methods
     func performFetch() {
@@ -120,9 +121,10 @@ extension LocationsViewController {
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) { //이 메서드를 구현하면 스와이프 삭제가 가능해 진다.
-        if editingStyle == .delete {
+        if editingStyle == .delete { //삭제
             let location = fetchedResultsController.object(at: indexPath)
             //fetchedResultsController에서 indexPath에 해당하는 정보 가져오기
+            location.removePhotoFile() //사진 파일이 있으면 삭제해 준다
             managedObjectContext.delete(location)
             
             do {

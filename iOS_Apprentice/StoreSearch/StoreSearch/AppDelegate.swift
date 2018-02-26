@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  StoreSearch
 //
-//  Created by 근성가이 on 2016. 12. 7..
-//  Copyright © 2016년 근성가이. All rights reserved.
+//  Created by 근성가이 on 2018. 2. 27..
+//  Copyright © 2018년 근성가이. All rights reserved.
 //
 
 import UIKit
@@ -12,33 +12,10 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
-    //MARK: - IPad : Computed Properties
-    var splitViewController: UISplitViewController {
-        return window!.rootViewController as! UISplitViewController
-    }
-    
-    var searchViewController: SearchViewController {
-        return splitViewController.viewControllers.first as! SearchViewController
-    }
-    
-    var detailNavigationController: UINavigationController {
-        return splitViewController.viewControllers.last as! UINavigationController
-    }
-    
-    var detailViewController: DetailViewController {
-        return detailNavigationController.topViewController as! DetailViewController
-    }
-    
+
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        customizeAppearance()
-        detailViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem //버튼 추가
-        searchViewController.splitViewDetail = detailViewController
-        
-        splitViewController.delegate = self
-        
         return true
     }
 
@@ -63,36 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+
+
 }
-
-extension AppDelegate {
-    func customizeAppearance () {
-        let barTintColor = UIColor(red: 20/255, green: 160/255, blue: 160/255, alpha: 1)
-        UISearchBar.appearance().barTintColor = barTintColor
-        
-        window!.tintColor = UIColor(red: 10/255, green: 80/255, blue: 80/255, alpha: 1)
-    }
-}
-
-//MARK: - UISplitViewControllerDelegate
-extension AppDelegate: UISplitViewControllerDelegate {
-    func splitViewController(_ svc: UISplitViewController, willChangeTo displayMode: UISplitViewControllerDisplayMode) {
-        print(#function)
-        if displayMode == .primaryOverlay { //UISplitViewController에서 마스터 영역이 표시되면
-            svc.dismiss(animated: true, completion: nil) //표시되어 있는 모든 뷰 컨트롤러를 닫는다. //popover
-        }
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
 

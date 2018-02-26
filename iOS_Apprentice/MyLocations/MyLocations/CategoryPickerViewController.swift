@@ -50,7 +50,7 @@ extension CategoryPickerViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        //이 메서드는 프로토 타입 셀에서만 작동한다. cf.tableView.dequeueReusableCell(withIdentifier: <#T##String#>)
+        //이 메서드는 프로토 타입 셀에서만 작동한다. cf.tableView.dequeueReusableCell(withIdentifier: )
         let categoryName = categories[indexPath.row]
         cell.textLabel!.text = categoryName
         
@@ -59,6 +59,12 @@ extension CategoryPickerViewController {
         } else { //선택된 카테고리가 아니라면
             cell.accessoryType = .none
         }
+        
+        let selection = UIView(frame: CGRect.zero)
+        selection.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
+        cell.selectedBackgroundView = selection
+        //selectedBackgroundView으로 선택된 셀의 컬러를 변경하는 듯한 효과를 얻을 수 있다.
+        //셀을 탭할 때, 셀의 배경에 20% 투명도의 흰색 뷰가 배치된다.
         
         return cell
     }

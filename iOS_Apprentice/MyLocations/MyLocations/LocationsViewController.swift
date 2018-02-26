@@ -48,6 +48,8 @@ class LocationsViewController: UITableViewController {
         
         navigationItem.rightBarButtonItem = editButtonItem //에디트 버튼 추가
         //스토리보드에서 구현하려면 따로 메서드 구현해야 한다.
+        tableView.sectionHeaderHeight = 28 //테이블 뷰 섹션 높이
+        //스토리보드에서 sectionHeaderHeight를 28로 설정하면 높이가 -1로 되는 버그가 있다??
         
 //        NSFetchedResultsController<Location>.deleteCache(withName: "Locations") //캐시 삭제
         //CoreData 버그 때문에 p.672 참고. //캐시를 삭제해 버리기 때문에 좋은 해결책은 아니다.
@@ -109,7 +111,30 @@ extension LocationsViewController {
         let sectionInfo = fetchedResultsController.sections![section]
         //fetchedResultsController의 sections로 섹션 정보를 가져온다
         
-        return sectionInfo.name
+        return sectionInfo.name.uppercased() //대문자로
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        //cellForRowAt에서 cell을 정의 하듯이, 헤더 섹션을 Cutom으로 정의해 줄 수 있다. //각 섹션마다 호출된다.
+        let labelRect = CGRect(x: 15, y: tableView.sectionHeaderHeight - 14, width: 300, height: 14)
+        let label = UILabel(frame: labelRect)
+        label.font = UIFont.boldSystemFont(ofSize: 11)
+        label.text = tableView.dataSource!.tableView!(tableView, titleForHeaderInSection: section)
+        //label.text = self.tableView(tableView, titleForHeaderInSection : section)과 같다.
+        label.textColor = UIColor(white: 1.0, alpha: 0.4)
+        label.backgroundColor = UIColor.clear
+        
+        let separatorRect = CGRect(x: 15, y: tableView.sectionHeaderHeight - 0.5, width: tableView.bounds.size.width - 15, height: 0.5)
+        let separator = UIView(frame: separatorRect)
+        separator.backgroundColor = tableView.separatorColor
+        
+        let viewRect = CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.sectionHeaderHeight)
+        let view = UIView(frame: viewRect)
+        view.backgroundColor = UIColor(white: 0, alpha: 0.85)
+        view.addSubview(label) //레이블
+        view.addSubview(separator) //구분선
+        
+        return view
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation //로케이션 프레임워크
 import CoreData
+import AudioToolbox
 
 class CurrentLocationViewController: UIViewController {
     @IBOutlet weak var messageLabel: UILabel!
@@ -17,6 +18,10 @@ class CurrentLocationViewController: UIViewController {
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var tagButton: UIButton!
     @IBOutlet weak var getButton: UIButton!
+    @IBOutlet weak var latitudeTextLabel: UILabel!
+    @IBOutlet weak var longitudeTextLabel: UILabel!
+    
+    @IBOutlet weak var containerView: UIView!
     
     let locationManager = CLLocationManager() //CLLocationManager : GPS 좌표를 알려주는 객체
     //그렇다고 바로 GPS좌표를 사용할 수 있는 것은 아니다. startUpdatingLocation()으로 좌표를 받아와야 한다.
@@ -33,13 +38,30 @@ class CurrentLocationViewController: UIViewController {
     var timer: Timer?
     
     var managedObjectContext: NSManagedObjectContext! //Core Data
-    //옵셔널은 가능한한 적게 사용하는 것이 좋다. 
+    //옵셔널은 가능한한 적게 사용하는 것이 좋다.
+    
+    var logoVisible = false //로고 표시 여부
+    lazy var logoButton: UIButton = { //lazy로 선언
+        let button = UIButton(type: .custom)
+        button.setBackgroundImage(UIImage(named: "Logo"), for: .normal) //로고 이미지로 된 버튼
+        button.sizeToFit()
+        button.addTarget(self, action: #selector(getLocation), for: .touchUpInside)
+        button.center.x = self.view.bounds.midX
+        button.center.y = 220
+        
+        return button
+    }() //앱이 시작될 때 로고 버튼을 보여준다.
+    
+    var soundID: SystemSoundID = 0
 
     //MARK: - ViewLifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         updateLabels()
+        loadSoundEffect("Sound.caf") //caf는 Core Audio Format으로 짧은 오디오 파일
+        //afconvert로 caf를 변환할 수 있다. //$ /usr/bin/afconvert -f caff -d LEI16 Sound.wav Sound.caf
+        //wav등 다른 확장자도 재생되지만, caf가 iOS에 최적화되어 있다. //p.766
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,6 +77,7 @@ class CurrentLocationViewController: UIViewController {
         
     }
     
+    // MARK:- Private methods
     func showLocationServicesDeniedAlert() {
         let alert = UIAlertController(title: "Location Services Disabled", message: "Please enable location services for this app in Settings.", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default)
@@ -80,6 +103,9 @@ class CurrentLocationViewController: UIViewController {
             } else {
                 addressLabel.text = "No Address Found"
             }
+            
+            latitudeTextLabel.isHidden = false
+            longitudeTextLabel.isHidden = false
         } else { //location 가져 오지 못한 경우
             latitudeLabel.text = ""
             longitudeLabel.text = ""
@@ -98,10 +124,14 @@ class CurrentLocationViewController: UIViewController {
                 statusMessage = "Location Services Disabled"
             } else if updatingLocation { //오류 없고 정상적. 첫 번째 위치가 수신 대기 전의 상태
                 statusMessage = "Searching..."
-            } else {
-                statusMessage = "Tap 'Get My Location' to Start"
+            } else { //좌표를 찾지 못했을 때
+                statusMessage = ""
+                showLogoView() //로고 보여주기
             }
             messageLabel.text = statusMessage
+            
+            latitudeTextLabel.isHidden = true
+            longitudeTextLabel.isHidden = true
         }
         
         configureGetButton()
@@ -133,39 +163,98 @@ class CurrentLocationViewController: UIViewController {
     }
     
     func configureGetButton() {
+        let spinnerTag = 1000 //태그 인덱스로 쉽게 객체를 찾아올 수 있다.
+        
         if updatingLocation {
             getButton.setTitle("Stop", for: .normal)
+            
+            if view.viewWithTag(spinnerTag) == nil {
+                let spinner = UIActivityIndicatorView(activityIndicatorStyle: .white) //spinner. //스토리보드에서 만들 수도 있다.
+                spinner.center = messageLabel.center
+                spinner.center.y += spinner.bounds.size.height / 2 + 15
+                spinner.startAnimating()
+                spinner.tag = spinnerTag
+                
+                containerView.addSubview(spinner)
+            }
         } else {
             getButton.setTitle("Get My Location", for: .normal)
+            
+            if let spinner = view.viewWithTag(spinnerTag) {
+                spinner.removeFromSuperview() //spinner 제거
+            }
         }
     }
     
     func string(from placemark: CLPlacemark) -> String { //불완전하거나 누락된 주소 요소가 있을 수 있다.
         var line1 = ""
-
-        if let s = placemark.subThoroughfare { //house number
-            line1 += s + " "
-        }
-        
-        if let s = placemark.thoroughfare { //street name
-            line1 += s
-        }
+        line1.add(text: placemark.subThoroughfare) //house number
+        line1.add(text: placemark.thoroughfare, separatedBy: " ") //street name //separatedBy가 text이전에 삽입
         
         var line2 = ""
+        line2.add(text: placemark.locality) //the city
+        line2.add(text: placemark.administrativeArea, separatedBy: " ") //the state or province
+        line2.add(text: placemark.postalCode, separatedBy: " ") //zip code
         
-        if let s = placemark.locality { //the city
-            line2 += s + " "
+        line1.add(text: line2, separatedBy: "\n") //"\n" 줄바꿈
+        //subThoroughfare thoroughfare
+        //locality administrativeArea postalCode
+        
+        return line1
+    }
+    
+    func showLogoView() {
+        if !logoVisible {
+            logoVisible = true
+            containerView.isHidden = true
+            view.addSubview(logoButton) //컨테이너 뷰를 숨기고, 로고 버튼을 보이게 한다.
         }
+    }
+    
+    func hideLogoView() {
+        if !logoVisible { return } //예외 처리. guard로 쓸 수도 있다.
         
-        if let s = placemark.administrativeArea { //the state or province
-            line2 += s + " "
-        }
+        logoVisible = false
+        containerView.isHidden = false
+        containerView.center.x = view.bounds.size.width * 2 //화면에서 안 보이게 오른쪽으로 이동
+        containerView.center.y = 40 + containerView.bounds.size.height / 2 //Message Label 가리지 않게 하기 위해
         
-        if let s = placemark.postalCode { //zip code
-            line2 += s
-        }
+        let centerX = view.bounds.midX
         
-        return line1 + "\n" + line2 //"\n" 줄바꿈
+        let panelMover = CABasicAnimation(keyPath: "position") //컨테이너 뷰 화면 중심으로 이동 (포지션 변화)
+        panelMover.isRemovedOnCompletion = false //애니메이션 완료 시 대상 애니메이션 제거 여부
+        panelMover.fillMode = kCAFillModeForwards //애니메이션 완료 후, 해당 뷰의 상태. 기본값은 kCAFillModeRemoved
+        //kCAFillModeForwards 최종 애니메이션 끝난 상태로 남아있는다.
+        //kCAFillModeRemoved 애니메이션 시작 전의 상태로 남아있는다.
+        panelMover.duration = 0.6 //지속 시간
+        panelMover.fromValue = NSValue(cgPoint: containerView.center) //시작 값
+        panelMover.toValue = NSValue(cgPoint: CGPoint(x: centerX, y: containerView.center.y)) //종료 값
+        panelMover.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut) //타이밍 커브 (0 ~ 1)
+        //kCAMediaTimingFunctionEaseOut 빨리 시작해서 진행하면서 느려짐
+        panelMover.delegate = self //panelMover애니메이션이 가장 길기 때문에 delegate 여기에만 설정해도, 애니메이션 종료를 알아낼 수 있다.
+        
+        containerView.layer.add(panelMover, forKey: "panelMover")
+        
+        let logoMover = CABasicAnimation(keyPath: "position") //로고 버튼 화면 바깥으로 이동 (포지션 변화)
+        logoMover.isRemovedOnCompletion = false
+        logoMover.fillMode = kCAFillModeForwards
+        logoMover.duration = 0.5
+        logoMover.fromValue = NSValue(cgPoint: logoButton.center)
+        logoMover.toValue = NSValue(cgPoint: CGPoint(x: -centerX, y: logoButton.center.y))
+        logoMover.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+        //kCAMediaTimingFunctionEaseIn : 느리게 시작해서 진행하면서 빨라짐
+        
+        logoButton.layer.add(logoMover, forKey: "logoMover")
+        
+        let logoRotator = CABasicAnimation(keyPath: "transform.rotation.z") //회전 (x축 변화)
+        logoRotator.isRemovedOnCompletion = false
+        logoRotator.fillMode = kCAFillModeForwards
+        logoRotator.duration = 0.5
+        logoRotator.fromValue = 0.0
+        logoRotator.toValue = -2 * Double.pi //pi //-360° 회전
+        logoRotator.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+        
+        logoButton.layer.add(logoRotator, forKey: "logoRotator")
     }
     
     @objc func didTimeOut() { //1분 후에도 유요한 위치를 찾지 못한 경우 강제로 종료
@@ -189,6 +278,29 @@ class CurrentLocationViewController: UIViewController {
 // 3. GPS : 가장 정확하지만 느리고, 실내에서 잘 작동하지 않는다.
 //Core Location은 GPS를 수신하는 동안, Cell tower와 Wi-Fi로 위치를 파악하고, 정확한 GPS가 수신되면 업데이트한다.
 
+//MARK:- Sound effects
+extension CurrentLocationViewController {
+    func loadSoundEffect(_ name: String) {
+        if let path = Bundle.main.path(forResource: name, ofType: nil) { //파일경로 가져오기 //name이 Sound.caf이므로 type이 불필요
+            let fileURL = URL(fileURLWithPath: path, isDirectory: false) //URL로 경로 생성
+            let error = AudioServicesCreateSystemSoundID(fileURL as CFURL, &soundID) //아이디로 시스템 사운드 객체 생성
+            
+            if error != kAudioServicesNoError { //에러가 있다면
+                print("Error code \(error) loading sound: \(path)")
+            }
+        }
+    }
+    
+    func unloadSoundEffect() {
+        AudioServicesDisposeSystemSoundID(soundID) //사운드 객체 삭제
+        soundID = 0
+    }
+    
+    func playSoundEffect() { //시뮬레이터에서는 작동하지만 소리가 안들리는 경우가 종종 있다.
+        AudioServicesPlaySystemSound(soundID) //사운드 객체 실행
+    }
+}
+
 //MARK: - Actions
 extension CurrentLocationViewController {
     @IBAction func getLocation() {
@@ -204,6 +316,10 @@ extension CurrentLocationViewController {
             showLocationServicesDeniedAlert()
             
             return
+        }
+        
+        if logoVisible {
+            hideLogoView()
         }
         
         if updatingLocation { //위치 정보 업데이트 중에 버튼 눌렀다면 취소 //앱이 어떤 상태에 있는지를 결정하기 위해 updatingLocation 플래그를 사용
@@ -307,6 +423,11 @@ extension CurrentLocationViewController: CLLocationManagerDelegate {
                     self.lastLocationError = error //오류 객체 저장. 오류 없으면 nil
                     
                     if error == nil, let p = placemarks, !p.isEmpty { //에러 없고, placemarks가 비어있지 않은 경우 == reverseGeocodeLocation 변환 성공
+                        if self.placemark == nil { //처음으로 주소 찾은 경우
+                            print("FIRST TIME!")
+                            self.playSoundEffect() //사운드 재생
+                        }
+                        
                         self.placemark = p.last //일반적으로 반환한 배열에는 하나의 주소만 있지만, 2 개 이상의 주소가 있는 경우도 있다.
                     } else {
                         self.placemark = nil
@@ -325,6 +446,19 @@ extension CurrentLocationViewController: CLLocationManagerDelegate {
                 updateLabels()
             }
         }
+    }
+}
+
+//MARKL: - CAAnimationDelegate
+extension CurrentLocationViewController: CAAnimationDelegate {
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        containerView.layer.removeAllAnimations() //모든 애니메이션 삭제
+        containerView.center.x = view.bounds.size.width / 2
+        containerView.center.y = 40 + containerView.bounds.size.height / 2
+        //원래 위치로
+
+        logoButton.layer.removeAllAnimations() //모든 애니메이션 삭제
+        logoButton.removeFromSuperview() //메모리 해제
     }
 }
 
@@ -348,3 +482,6 @@ extension CurrentLocationViewController: CLLocationManagerDelegate {
 //super view의 4면에 고정되거나, 가로 세로를 조절한다.
 
 //private API는 가급적 사용하지 않는 것이 좋다.
+
+//Project Settings - General - App Icons and Launch Images에서 Use Asset Catalog버튼을 눌러 이미지로 런치 스크린을 대신할 수 있다.
+//설정하면 Assets.xcassets에 LaunchImage가 생성된다.

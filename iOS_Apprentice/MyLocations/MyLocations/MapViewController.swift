@@ -161,6 +161,7 @@ extension MapViewController: MKMapViewDelegate {
             pinView.canShowCallout = true //추가 정보 풍선창 표시 여부. true이면 annotation 선택 시 설명 풍선 창이 추가 된다.
             pinView.animatesDrop = false //annotation이 추가될 때 애니메이션 여부
             pinView.pinTintColor = UIColor(red: 0.32, green: 0.82, blue: 0.4, alpha: 1) //녹색
+            pinView.tintColor = UIColor(white: 0.0, alpha: 0.5) //핀 뷰의 틴트 컬러. (i)버튼에 영향
             
             let rightButton = UIButton(type: .detailDisclosure) //상세보기 있는 버튼 생성
             rightButton.addTarget(self, action: #selector(showLocationDetails), for: .touchUpInside) //버튼 이벤트 연결

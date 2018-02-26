@@ -41,6 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        customizeAppearance() //UI 변경
         
         //Interface Builder에서는 AppDelegate의 viewController를 만들 수 없다.
         let tabController = window!.rootViewController as! UITabBarController
@@ -116,5 +117,20 @@ Press OK to terminate the app. Sorry for the inconvenience.
             let tabController = self.window!.rootViewController! //현재 화면에서 최상위 뷰 컨트롤러를 가져온다.
             tabController.present(alert, animated: true)
         } //알림을 보여주고 앱을 종료한다.
+    }
+}
+
+//MARK: - Custom UI
+extension AppDelegate {
+    func customizeAppearance() { 
+        UINavigationBar.appearance().barTintColor = UIColor.black //이 앱의 모든 네비게이션 바 틴트 컬러 변경
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white] //이 앱의 모든 네비게이션 바 타이틀 텍스트 설정 변경
+        
+        UITabBar.appearance().barTintColor = UIColor.black //이 앱의 모든 탭바 바 틴트 컬러 변경
+        
+        let tintColor = UIColor(red: 255/255.0, green: 238/255.0, blue: 136/255.0, alpha: 1.0)
+        UITabBar.appearance().tintColor = tintColor //이 앱의 모든 탭바 틴트 컬러 변경
+        
+        //탭바 이미지는 최대 30x30(Retina는 60x60, RetinaHD는 90x90)
     }
 }

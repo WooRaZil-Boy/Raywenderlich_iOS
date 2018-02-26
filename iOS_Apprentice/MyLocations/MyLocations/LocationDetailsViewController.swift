@@ -128,33 +128,15 @@ class LocationDetailsViewController: UITableViewController {
     
     //MARK: - Prviate Methods
     func string(from placemark: CLPlacemark) -> String { //주소를 반환
-        var text = ""
+        var line = ""
+        line.add(text: placemark.subThoroughfare) //house number
+        line.add(text: placemark.thoroughfare, separatedBy: " ") //street name //separatedBy가 text이전에 삽입
+        line.add(text: placemark.locality, separatedBy: ", ") //the city
+        line.add(text: placemark.administrativeArea, separatedBy: ", ") //the state or province
+        line.add(text: placemark.postalCode, separatedBy: " ") //zip code
+        line.add(text: placemark.country, separatedBy: ", ") //country
         
-        if let s = placemark.subThoroughfare {
-            text += s + " "
-        }
-        
-        if let s = placemark.thoroughfare {
-            text += s + ", "
-        }
-        
-        if let s = placemark.locality {
-            text += s + ", "
-        }
-        
-        if let s = placemark.administrativeArea {
-            text += s + " "
-        }
-        
-        if let s = placemark.postalCode {
-            text += s + ", "
-        }
-        
-        if let s = placemark.country {
-            text += s
-        }
-        
-        return text
+        return line
     }
     
     func format(date: Date) -> String { //dateFormatter가 lazy이므로(전역변수)이 메서드가 실행될 때 할당된다.
@@ -289,6 +271,19 @@ extension LocationDetailsViewController {
     //frame과 bounds는 보통 width, height는 동일하나, x, y가 다르다.
     //frame은 부모 요소를 기준으로 한다. UIView의 위치가 크기를 설정하는 경우 등에 사용한다.
     //bounds는 자신을 기준으로 한다. 자신의 내부에 뭔가를 그릴 때나 터치 영역 판정 등에 사용한다.
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) { //셀이 표시되기 직전에 호출 -> 셀과 내용에 대한 마지막 설정을 해 줄 수 있다.
+        //이전의 LocationsViewController에서는 LocationCell의 selectedBackgroundView를 추가했지만,
+        //LocationDetailsViewController에서는 재사용 셀이 아닌, static cell을 사용하므로 delegate에서 selectedBackgroundView를 추가해 준다.
+        //tableView(_, cellForRowAt: )에서 해당 로직을 추가해 줄 수 있다(CategoryPickerViewController).
+        let selection = UIView(frame: CGRect.zero)
+        selection.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
+        //selectedBackgroundView으로 선택된 셀의 컬러를 변경하는 듯한 효과를 얻을 수 있다.
+        //셀을 탭할 때, 셀의 배경에 20% 투명도의 흰색 뷰가 배치된다.
+        
+        cell.selectedBackgroundView = selection
+    }
+    
 }
 
 //MARK: - UITableViewDelegate
@@ -334,10 +329,11 @@ extension LocationDetailsViewController {
 extension LocationDetailsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     //UIImagePickerController도 CoreData를 사용한다. (console에 로그 찍히도록 설정해 뒀으면 로그가 출력된다.)
     func takePhotoWithCamera() {
-        let imagePicker = UIImagePickerController()
+        let imagePicker = MyImagePickerController()
         imagePicker.sourceType = .camera //picker 유형. 기본값은 .photoLibrary //.camera는 시뮬레이터에서 지원하지 않는다.
         imagePicker.delegate = self
         imagePicker.allowsEditing = true //최종 선택 전 사진 편집
+        imagePicker.view.tintColor = view.tintColor //틴트 색 변경
         
         present(imagePicker, animated: true)
     }
@@ -347,6 +343,7 @@ extension LocationDetailsViewController: UIImagePickerControllerDelegate, UINavi
         imagePicker.sourceType = .photoLibrary //picker 유형. 기본값은 .photoLibrary //.camera는 시뮬레이터에서 지원하지 않는다.
         imagePicker.delegate = self
         imagePicker.allowsEditing = true //최종 선택 전 사진 편집
+        imagePicker.view.tintColor = view.tintColor //틴트 색 변경
         
         present(imagePicker, animated: true)
     }

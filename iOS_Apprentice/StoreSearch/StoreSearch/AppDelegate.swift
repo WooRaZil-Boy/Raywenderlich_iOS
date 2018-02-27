@@ -10,12 +10,12 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
     var window: UIWindow?
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        customizeAppearance()
+        
         return true
     }
 
@@ -40,7 +40,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
 }
+
+// MARK:- Helper Methods
+extension AppDelegate {
+    func customizeAppearance() {
+        let barTintColor = UIColor(red: 20/255, green: 160/255, blue: 160/255, alpha: 1)
+        UISearchBar.appearance().barTintColor = barTintColor //앱의 모든 UISearchBar에 영향
+        
+        window!.tintColor = UIColor(red: 10/255, green: 80/255, blue: 80/255, alpha: 1) //Global Tint
+    }
+}
+
+//AppDelegate는 main window와 최상위 뷰 컨트롤러를 가지고 있다.
+//AppDelegate에 너무 많은 기능을 넣는 경우가 많은데(DB와 비슷하게 사용), 그러한 디자인 모델은 피해야 한다.
+//수행할 기능이 있다면, 그 기능을 위한 별도의 클래스를 만들고, D.I(dependency injection)를 활용해 제어권을 넘겨줘야 한다.
+//밑의 코드처럼 사용하지 말 것.
+//let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//appDelegate.someProperty = . . .
 

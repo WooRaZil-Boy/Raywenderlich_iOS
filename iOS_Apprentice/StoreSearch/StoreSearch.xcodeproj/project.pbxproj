@@ -16,6 +16,7 @@
 		EFC9510620446EAC001E12ED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EFC9510420446EAC001E12ED /* Main.storyboard */; };
 		EFC9510820446EAC001E12ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFC9510720446EAC001E12ED /* Assets.xcassets */; };
 		EFC9510B20446EAC001E12ED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EFC9510920446EAC001E12ED /* LaunchScreen.storyboard */; };
+		EFFB06802046D6DE009E5470 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFFB067F2046D6DE009E5470 /* LoadingCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		EFC9510720446EAC001E12ED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EFC9510A20446EAC001E12ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EFC9510C20446EAC001E12ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EFFB067F2046D6DE009E5470 /* LoadingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 				A402271E204536DB0017C371 /* SearchResultCell.swift */,
 				A4022720204536E70017C371 /* SearchResultCell.xib */,
 				A4022722204558860017C371 /* NothingFoundCell.xib */,
+				EFFB067F2046D6DE009E5470 /* LoadingCell.xib */,
 				EFC9510220446EAC001E12ED /* SearchViewController.swift */,
 				EFC9510420446EAC001E12ED /* Main.storyboard */,
 				EFC9510720446EAC001E12ED /* Assets.xcassets */,
@@ -137,6 +140,7 @@
 			files = (
 				EFC9510B20446EAC001E12ED /* LaunchScreen.storyboard in Resources */,
 				EFC9510820446EAC001E12ED /* Assets.xcassets in Resources */,
+				EFFB06802046D6DE009E5470 /* LoadingCell.xib in Resources */,
 				A4022721204536E70017C371 /* SearchResultCell.xib in Resources */,
 				A4022723204558860017C371 /* NothingFoundCell.xib in Resources */,
 				EFC9510620446EAC001E12ED /* Main.storyboard in Resources */,

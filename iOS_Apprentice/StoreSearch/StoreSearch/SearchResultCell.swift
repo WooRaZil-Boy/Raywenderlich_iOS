@@ -35,3 +35,5 @@ class SearchResultCell: UITableViewCell {
 //Editor - Canvas - Show Bounds Rectangles로 인터페이스 빌더에서 경계선을 볼 수 있다.
 
 //이미지 뷰의 이미지를 로드하는 데에는 시간이 걸릴 수 있으므로, default 이미지를 넣어 주고 업데이트 하는 것이 좋다.
+
+//Editor → Resolve Auto Layout Issues → Update Frames로 오토 레이아웃 프레임 업데이트

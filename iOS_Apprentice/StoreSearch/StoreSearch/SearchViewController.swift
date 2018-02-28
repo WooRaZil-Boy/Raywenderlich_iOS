@@ -51,28 +51,93 @@ class SearchViewController: UIViewController {
     }
 }
 
+//MARK: - Private Methods
+extension SearchViewController {
+    func iTunesURL(searchText: String) -> URL {
+        let encodedText = searchText.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)! //문자열을 urlQueryAllowed로 인코딩한다(이스케이핑).
+        //URL에서 공백은 유요한 문자가 아니다. 이 외에도 여러 기호들을 이스케이프 처리해야 한다.(URL 인코딩)
+        //UTF-8로 인코딩 한다. UTF-8은 유니코드 텍스트를 인코딩할 때 가장 보편적으로 쓰인다.
+        
+        let urlString = String(format: "https://itunes.apple.com/search?term=%@", encodedText)
+        //C언어에서 주로 쓰이는 formatted string을 이용할 수 있다. %d : 정수, %f : 실수, %@ : 객체
+        //HTTPS는 안전하고 암호화 된 HTTP 버전. 기본 프로토콜은 동일하지만 송수신 중인 byte는 네트워킹 전에 암호화된다.
+        //iOS 9 이후 부터, HTTPS 사용을 권고. HTTP를 사용해도, iOS는. HTTPS로 연결을 시도하고, HTTPS로 구성되지 않은 네트워크인 경우 연결이 실패한다.
+        //info.plist에서 HTTP로 연결되도록 설정할 수 있다.
+        let url = URL(string: urlString) //string으로 URL 생성
+        
+        return url!
+    }
+    
+    func performStoreRequest(with url: URL) -> Data? { //서버 응답과정에서 오류가 있을 수 있으므로 옵셔널
+        do {
+            return try Data(contentsOf: url) //String을 Data로 변환할 수도 있지만, 서버에서 Data로 받아오는 것이 낫다.
+            
+//            return try String(contentsOf: url, encoding: .utf8)
+            //해당 인코딩(UTF-8)으로 URL의 데이터를 읽어와 String으로 반환한다.
+        } catch {
+            print("Download Error: \(error.localizedDescription)")
+            showNetworkError()
+            
+            return nil
+        }
+    }
+    
+    func parse(data: Data) -> [SearchResult] {
+        do {
+            let decoder = JSONDecoder() //JSON results 디코더
+            let result = try decoder.decode(ResultArray.self, from: data)
+            //data를 JSON 디코더를 통해 ResultArray 타입으로 변환한다.
+            //프로퍼티 명에 맞춰서 파싱된명.
+            
+            return result.results //결과에서 배열 부분만 반환
+        } catch { //일반적인 통신 오류가 있을 수도 있지만, 서버에서 반환 JSON 형식을 바꿔도 오류가 난다(지정된 형식만 파싱한다).
+            //항상 방어적으로 프로그래밍하는 것이 좋다.
+            print("JSON Error : \(error)")
+            
+            return []
+        }
+    }
+    
+    //HTTP request를 요청할 때는 Synchronous networking을 되도록 피하는 게 좋다.
+    //프로그래밍하기는 쉽지만, 인터페이스가 차단되어 네트워킹이 진행되는 동안 앱이 응답하지 않는다(나머지 부분을 차단한다).
+    
+    func showNetworkError() {
+        let alert = UIAlertController(title: "Whoops...", message: "There was an error accessing the iTunes Store." + " Please try again.", preferredStyle: .alert)
+        //\n로 연결할 수도 있지만, +로 연결하는 것이 더 직관적
+        let action = UIAlertAction(title: "OK", style: .default)
+        alert.addAction(action)
+        
+        present(alert, animated: true)
+    }
+}
+
 //MARK: - UISearchBarDelegate
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) { //키보드의 검색 버튼 눌렀을 경우
-        searchBar.resignFirstResponder() //키보드 해제
-        //tableView - ScrollView에서 keyboard 설정을 바꿔준다.
-        
-        searchResults = []
-        
-        if searchBar.text! != "justin bieber" { //검색결과가 있다면
-            for i in 0...2 {
-                let searchResult = SearchResult()
-                searchResult.name = String(format: "Fake Result %d for", i)
-                //C언어에서 주로 쓰이는 formatted string을 이용할 수 있다. %d : 정수, %f : 실수, %@ : 객체
-                searchResult.artistName = searchBar.text!
-                //작은 따옴표를 넣어 텍스트 전후에 공백 있는지 확인할 수 있다.
-                
-                searchResults.append(searchResult)
+        if !searchBar.text!.isEmpty { //빈 텍스트로 검색한 것이 아니라면
+            searchBar.resignFirstResponder() //키보드 해제
+            //스토리보드에서 tableView - ScrollView에서 keyboard 설정을 바꿔줄 수 있다.
+            
+            hasSearched = true
+            searchResults = []
+            
+            let url = iTunesURL(searchText: searchBar.text!)
+            //searchBar.text가 비어 있지 않은 경우에만 조건문에 들어오므로 force unwrapping할 수 있다.
+            print("URL : '\(url)'") //작은 따옴표를 넣어 텍스트 전후에 공백 있는지 쉽게 확인할 수 있다.
+            
+            if let data = performStoreRequest(with: url) {
+                //HTTP request를 서버로 보내 JSON(JavaScript Object Notation) results를 받는다.
+                //구문 분석이 쉽기 때문에 XML보다 JSON을 선호한다.
+                //JSON 결과, {}는 딕셔너리, []는 배열
+                //codebeautify.org/jsonviewer
+                searchResults = parse(data: data) //파싱된 결과 로컬 변수에 저장
+                searchResults.sort(by: <)
+                //자동완성을 더블클릭하면 코드 블럭이 자동으로 추가 된다. //반환형도 생략 가능
+                //각 요소의 name을 비교해 오름차순으로 정렬 //p.858
             }
+            
+            tableView.reloadData() //데이터 다시 불러올 수 있도록 리로드
         }
-        
-        hasSearched = true
-        tableView.reloadData() //데이터 다시 불러올 수 있도록 리로드
     }
     
     func position(for bar: UIBarPositioning) -> UIBarPosition { //바의 위치를 지정한다.
@@ -107,7 +172,12 @@ extension SearchViewController: UITableViewDataSource { //UITableViewController�
             
             let searchResult = searchResults[indexPath.row]
             cell.nameLabel.text = searchResult.name
-            cell.artistNameLabel.text = searchResult.artistName
+            
+            if searchResult.artistName.isEmpty { //아트스트 네임 없는 경우
+                cell.artistNameLabel.text = "Unknown"
+            } else { //있는 경우엔, 이름과 타입 출력
+                cell.artistNameLabel.text = String(format: "%@ (%@)", searchResult.artistName, searchResult.type)
+            }
             
             return cell
         }
@@ -144,6 +214,5 @@ extension SearchViewController: UITableViewDelegate { //UITableViewController가
 //EXC_BAD_ACCESS는 대개 메모리 관리에 문제 있을 때 나타난다.
 //EXC_BREAKPOINT는 오류가 아니다. Break point로 중단한 것.
 //Report navigator에서 Build 시 log를 확인할 수 있다.
-
 
 //하나의 객체가 여러개의 @IBOutlet에 연결될 수도 있다.

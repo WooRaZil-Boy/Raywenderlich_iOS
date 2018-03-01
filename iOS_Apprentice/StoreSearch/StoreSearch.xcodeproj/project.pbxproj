@@ -11,11 +11,11 @@
 		A402271F204536DB0017C371 /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A402271E204536DB0017C371 /* SearchResultCell.swift */; };
 		A4022721204536E70017C371 /* SearchResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4022720204536E70017C371 /* SearchResultCell.xib */; };
 		A4022723204558860017C371 /* NothingFoundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4022722204558860017C371 /* NothingFoundCell.xib */; };
+		EFC2C83C204793E600A19B80 /* UIImageView+DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC2C83B204793E600A19B80 /* UIImageView+DownloadImage.swift */; };
 		EFC9510120446EAC001E12ED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC9510020446EAC001E12ED /* AppDelegate.swift */; };
 		EFC9510320446EAC001E12ED /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC9510220446EAC001E12ED /* SearchViewController.swift */; };
 		EFC9510620446EAC001E12ED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EFC9510420446EAC001E12ED /* Main.storyboard */; };
 		EFC9510820446EAC001E12ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFC9510720446EAC001E12ED /* Assets.xcassets */; };
-		EFC9510B20446EAC001E12ED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EFC9510920446EAC001E12ED /* LaunchScreen.storyboard */; };
 		EFFB06802046D6DE009E5470 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFFB067F2046D6DE009E5470 /* LoadingCell.xib */; };
 /* End PBXBuildFile section */
 
@@ -24,12 +24,12 @@
 		A402271E204536DB0017C371 /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
 		A4022720204536E70017C371 /* SearchResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchResultCell.xib; sourceTree = "<group>"; };
 		A4022722204558860017C371 /* NothingFoundCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NothingFoundCell.xib; sourceTree = "<group>"; };
+		EFC2C83B204793E600A19B80 /* UIImageView+DownloadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadImage.swift"; sourceTree = "<group>"; };
 		EFC950FD20446EAC001E12ED /* StoreSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoreSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFC9510020446EAC001E12ED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EFC9510220446EAC001E12ED /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		EFC9510520446EAC001E12ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EFC9510720446EAC001E12ED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		EFC9510A20446EAC001E12ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EFC9510C20446EAC001E12ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EFFB067F2046D6DE009E5470 /* LoadingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -65,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				EFC9510020446EAC001E12ED /* AppDelegate.swift */,
+				EFC2C83B204793E600A19B80 /* UIImageView+DownloadImage.swift */,
 				A402271C20452FAE0017C371 /* SearchResult.swift */,
 				A402271E204536DB0017C371 /* SearchResultCell.swift */,
 				A4022720204536E70017C371 /* SearchResultCell.xib */,
@@ -73,7 +74,6 @@
 				EFC9510220446EAC001E12ED /* SearchViewController.swift */,
 				EFC9510420446EAC001E12ED /* Main.storyboard */,
 				EFC9510720446EAC001E12ED /* Assets.xcassets */,
-				EFC9510920446EAC001E12ED /* LaunchScreen.storyboard */,
 				EFC9510C20446EAC001E12ED /* Info.plist */,
 			);
 			path = StoreSearch;
@@ -138,7 +138,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFC9510B20446EAC001E12ED /* LaunchScreen.storyboard in Resources */,
 				EFC9510820446EAC001E12ED /* Assets.xcassets in Resources */,
 				EFFB06802046D6DE009E5470 /* LoadingCell.xib in Resources */,
 				A4022721204536E70017C371 /* SearchResultCell.xib in Resources */,
@@ -158,6 +157,7 @@
 				A402271D20452FAE0017C371 /* SearchResult.swift in Sources */,
 				A402271F204536DB0017C371 /* SearchResultCell.swift in Sources */,
 				EFC9510120446EAC001E12ED /* AppDelegate.swift in Sources */,
+				EFC2C83C204793E600A19B80 /* UIImageView+DownloadImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -170,14 +170,6 @@
 				EFC9510520446EAC001E12ED /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		EFC9510920446EAC001E12ED /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				EFC9510A20446EAC001E12ED /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

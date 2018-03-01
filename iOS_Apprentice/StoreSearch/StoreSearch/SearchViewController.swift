@@ -225,6 +225,18 @@ extension SearchViewController {
     }
 }
 
+//MARK: - Navigations
+extension SearchViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowDetail" {
+            let detailViewController = segue.destination as! DetailViewController
+            let indexPath = sender as! IndexPath
+            let searchResult = searchResults[indexPath.row] //터치한 셀의 정보
+            detailViewController.searchResult = searchResult
+        }
+    }
+}
+
 //MARK: - UISearchBarDelegate
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -282,6 +294,9 @@ extension SearchViewController: UITableViewDelegate { //UITableViewController가
     //UITableViewController와 달리 메서드를 재정의하는 것이 아니므로 override도 아니다.
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { //셀 선택 시
         tableView.deselectRow(at: indexPath, animated: true) //선택 해제
+        performSegue(withIdentifier: "ShowDetail", sender: indexPath)
+        //프로토 타입 셀을 사용하지 않기 때문에 ViewController 자체에 segue를 설정해야 한다.
+        //수동으로 segue를 트리거 하도록 만들어야 한다.
     }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? { //셀이 선택 되기 전
@@ -315,3 +330,16 @@ extension SearchViewController: UITableViewDelegate { //UITableViewController가
 
 //Source Control navigator에서 Branch를 손쉽게 생성할 수 있다.
 //브런치를 변경해 소스를 업데이트하거나 버그를 수정하고 다시 마스터 브런치와 병합할 수 있다.
+//아직 버그가 있는 경우가 종종 있다. 그럴 땐 터미널에서 하는 것이 낫다.
+
+//URLSession을 대체할 수 있는 네트워킹 라이브러리
+//AFNetworking(github.com/AFNetworking)
+//Alamofire(github.com/Alamofire)
+
+
+
+
+
+
+
+

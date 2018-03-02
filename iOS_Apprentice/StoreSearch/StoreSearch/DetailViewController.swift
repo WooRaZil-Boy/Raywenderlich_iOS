@@ -46,6 +46,9 @@ class DetailViewController: UIViewController {
         if searchResult != nil { //let _ = searchResult으로 옵셔널을 풀 수도 있다.
             updateUI() //터치한 셀의 정보 업데이트
         }
+        
+        view.backgroundColor = UIColor.clear //뷰의 배경색이 50% alpha이므로 GradientView와 곱해져 너무 어두워 진다.
+        //스토리보드에서 변경할 수 있지만, pop-up view를 편집하기 어려워 지기 때문에 여기서 코드로.
     }
     
     deinit { //이외에도 클로저의 [weak self]를 확인하기 위해 deinit를 사용해 보는 것이 좋다.
@@ -114,12 +117,21 @@ extension DetailViewController {
 
 //MARK: - UIViewControllerTransitioningDelegate
 extension DetailViewController: UIViewControllerTransitioningDelegate {
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+    //Modal로 해당 뷰 컨트롤러를 표시하려면 modalPresentationStyle = .custom으로 하고, UIViewControllerTransitioningDelegate를 구현해야 한다.
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? { //Modal 프레젠테이션 관리위한 사용자 지정 프레젠테이션 컨트롤러를 반환한다.
         return DimmingPresentationController(presentedViewController: presented, presenting: presenting)
         //해당 뷰 컨트롤러가 표시될 때, DimmingPresentationController 사용
         //이 메서드를 구현하지 않거나 nil을 반환하면 기본 프레젠테이션 컨트롤러를 사용한다.
         //presented : 표시되는 뷰 컨트롤러
         //presenting : 표시되는 뷰 컨트롤러를 이전의 컨트롤러(부모 뷰 컨트롤러이거나 마지막 표시된 뷰 컨트롤러인 경우가 많다.)
+    }
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? { //presented 전환시 사용할 애니메이터 객체 전달 //nil를 반환하면 default
+        return BounceAnimationController()
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return SlideOutAnimationController() //dismissed 전환시 사용할 애니메이터 객체 전달 //nil를 반환하면 default
     }
 }
 
@@ -139,3 +151,10 @@ extension DetailViewController: UIGestureRecognizerDelegate {
 //stretchable images를 적용할 경우, 이미지의 크기가 같은지 확인해 볼 것
 //이미지의 색을 포토샵에서 바꿀 수도 있지만, Assets.xcassets에서 Render As를 Template Image으로 설정해 지정해줄 수도 있다.
 //Template Image로 설정하면, 원본의 색을 제거한다. 이후, 스토리보드나 코드로 색을 지정해 준다.
+
+//시뮬레이터나 디바이스 설정에서 General → Accessibility → Larger Text로 텍스트 크기를 조정할 수 있다.
+//Xcode에서 텍스트를 Dynamic Type으로 설정하면, 글씨가 맞춰서 조정된다. (Font) - Header, Subhead, Caption 1...
+//이런 Dynamic Type을 설정하는 경우, 폰트 크기가 얼마인지 미리 알지 못하므로 레이블 자체의 크기를 알 수 없다.
+//auto layout에서 가까운 객체와 간격을 설정해서 크기를 자동으로 조정한다.
+//Greater Than or Equal등으로 크기 조절 가능하다.
+//UIStackView로 Auto layout을 쉽게 구현할 수 있다.

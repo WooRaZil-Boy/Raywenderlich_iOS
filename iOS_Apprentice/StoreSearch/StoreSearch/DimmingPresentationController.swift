@@ -11,8 +11,34 @@ import UIKit
 class DimmingPresentationController: UIPresentationController {
     //UIPresentationController에서 ViewController를 표시하기 위한 논리(advanced view, transition management)를 지정해 줄 수 있다.
     //UIPresentationController는 ViewController가 아니다.
+    lazy var dimmingView = GradientView(frame: CGRect.zero)
+    
     override var shouldRemovePresentersView: Bool { //프레젠테이션 애니메이션이 끝날 때 뷰 컨트롤러 뷰를 제거할지
         return false
+    }
+    
+    override func presentationTransitionWillBegin() { //프레젠테이션 이동이 시작될 때 //새 뷰 컨트롤러가 표시될 때
+        dimmingView.frame = containerView!.bounds
+        containerView!.insertSubview(dimmingView, at: 0) //0 : 서브 뷰 중 최상위에
+        //containerView는 SearchViewController위에 배치된 새로운 뷰이며 DetailViewController의 뷰를 포함한다.
+        //from ViewController위에 배치된 새로운 뷰로, to Viewcontroller 뷰의 슈퍼뷰 역할을 한다.
+        
+        //Animate background gradient view
+        dimmingView.alpha = 0 //완전히 투명
+        if let coordinator = presentedViewController.transitionCoordinator {
+            //transitionCoordinator는 프레젠테이션 컨트롤러, 애니메이션 컨트롤러, 새 뷰 컨트롤러 전환에 일어나는 모든 이벤트 관리
+            coordinator.animate(alongsideTransition: { _ in //전환과 동시에 애니메이션 실행
+                self.dimmingView.alpha = 1
+            }, completion: nil)
+        }
+    }
+    
+    override func dismissalTransitionWillBegin() { //presentationTransitionWillBegin의 반대
+        if let coordinator = presentedViewController.transitionCoordinator {
+            coordinator.animate(alongsideTransition: { _ in
+                self.dimmingView.alpha = 0
+            }, completion: nil)
+        }
     }
 }
 

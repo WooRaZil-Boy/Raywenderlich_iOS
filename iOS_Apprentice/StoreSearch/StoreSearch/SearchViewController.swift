@@ -21,6 +21,7 @@ class SearchViewController: UIViewController {
     //이를 막기 위해 searchResults를 옵셔널로 해서 판단하거나, Bool 변수를 별도로 사용할 수 있다. 옵셔널은 될 수 있으면 피하는 것이 좋다.
     var isLoading = false
     var dataTask: URLSessionDataTask? //검색 중 취소를 위해 //검색 전에는 데이터 작업이 없으므로 optional
+    var landscapeVC: LandscapeViewController? //세로일 때는 nil, 가로일 때만 값을 가진다.
     
     struct TableViewCellIdentifiers { //재사용 식별자 같은 문자열 리터럴은 상수로 만들어 두는 것이 좋다. //변경이 단일 지점, 한 번으로 제한된다.
         //클래스 안에 구조체를 배치해 해당 클래스의 고유한 구조체를 선언할 수 있다.
@@ -214,6 +215,106 @@ extension SearchViewController {
         
         present(alert, animated: true)
     }
+}
+
+//MARK: - Rotaion
+extension SearchViewController {
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        //가로 사이즈, 세로 사이즈, 디스플레이 비율(Retina), 인터페이스(iPhone, iPad), Dynamic type font 변경 등의 경우에 호출된다.
+        super.willTransition(to: newCollection, with: coordinator)
+        
+        switch newCollection.verticalSizeClass { //트랜지션 변경 후 세로 사이즈 //회전 감지를 위해선 세로를 확인해야 한다.
+        case .compact: //가로
+            showLandscape(with: coordinator)
+        case .regular, .unspecified: //세로
+            hideLandscape(with: coordinator)
+        }
+        //Horizontal x Vertical
+        //compact x compact : iPhone Landscape
+        //compact x regular : iPhone Portrait
+        //regular x compact : iPhone Plus Landscape
+        //regular x regular : iPad Portrait, iPad Landscape
+        //p.956
+    }
+    
+    func showLandscape(with coordinator: UIViewControllerTransitionCoordinator) {
+        //LandscapeViewController를 SearchViewController의 하위 뷰 컨트롤러로 추가한다.
+        //Modal에서나 다른 뷰 컨트롤러 전환과 달리 segue를 만들지 않는다.
+        guard landscapeVC == nil else { //LandscapeViewController가 존재하면 return
+            return
+        }
+        
+        landscapeVC = storyboard!.instantiateViewController(withIdentifier: "LandscapeViewController") as? LandscapeViewController //Storyboard ID로 인스턴스화
+        if let controller = landscapeVC { //unwrapping
+            controller.searchResults = searchResults //검색결과를 전달 //없거나 검색하지 않은 경우 nil
+            controller.view.frame = view.bounds //뷰 컨트롤러 크기 전체화면 덮게.
+            controller.view.alpha = 0
+            
+            view.addSubview(controller.view) //SearchViewController의 뷰가 부모 뷰가 된다. (현재 뷰 컨트롤러의 가장 위로 배치된다.)
+            //controller.view가 SearchViewController의 테이블 뷰, 서치 바, 세그먼트 컨트롤 위에 배치
+            addChildViewController(controller) //하위 뷰 컨트롤러로 추가 //화면의 해당 부분을 담당하고 있음을 알린다.
+            //willMove가 addChildViewControlle()에 의해 자동적으로 호출된다.(제거할 때는 반대로)
+            
+            coordinator.animate(alongsideTransition: { _ in //애니메이션 추가
+                controller.view.alpha = 1
+                self.searchBar.resignFirstResponder() //키보드 해제
+            }, completion: { _ in
+                controller.didMove(toParentViewController: self) //뷰 컨트롤러 계층 구조로 들어갔음을 알림
+                //뷰 컨트롤러가 컨테이너 뷰 컨트롤러에 추가되거나 제거된 후 호출된다.
+                //addChildViewController에서 이미 추가. //따라서 이 코드가 꼭 필요하지 않는 경우도 있다.
+                //하지만 UIKit은 정확히 이 메서드를 호출해야 하는 시점을 알지 못하기 때문에 추가해 주는 것이 좋다.
+                //제거할 때는 반대로 didMove()가 자동으로 호출되고, willMove()를 명시적으로 호출한다.
+                
+                if self.presentedViewController != nil { //Modal 뷰 컨트롤러가 있는 경우
+                    //현재 뷰 컨트롤러가 다른 뷰 컨트롤러를 Modal로 표시하지 않으면 nil이다.
+                    self.dismiss(animated: true) //닫기
+                }
+            })
+            
+            //SearchViewController가 부모가 되고, LandscapeViewController이 자식이 된다.
+            //Landscaped의 스크린은 SearchViewController 안에 내장된다.
+            //이런 식으로 전환하면, 자식 뷰 컨트롤러는 부모 뷰 컨트롤러에 포함되어 있으므로 부모 뷰 컨트롤러에서 소유하고 관리한다.
+            //Modal처럼 독립적이지 않으며, Modal처럼 표현되지도 않는다.
+            //따라서 자식 뷰 컨트롤러는 부모 UINavigationController, UITabBarController의 하위 컨트롤러가 된다.
+            //일반적으로 전체 화면 영역을 차지하는 뷰 컨트롤러를 표시할 때는 Modal을 사용해야 하고,
+            //화면 일부를 관리하려면 ChildViewController로 관리한다.
+            //여기서는 전체화면을 차지해서 Modal로 구현하는 것이 적절하지만,
+            //세부 항목 뷰 컨트롤러가 이미 Modal로 구현되어 있어, 가로모드도 Modal로 하면 충돌이 일어날 수도 있다.
+        }
+        
+        //a. 자식 뷰 컨트롤러의 뷰를 부모 뷰 컨트롤러의 뷰에 추가한다.
+        //b. 부모 뷰 컨트롤러에서 자식 뷰 컨트롤러를 추가한다.
+        //c. 전환
+    }
+    
+    func hideLandscape(with coordinator: UIViewControllerTransitionCoordinator) {
+        if let controller = landscapeVC {
+            controller.willMove(toParentViewController: nil) //뷰 컨트롤러 계층 구조에서 벗어난다는 것을 알림
+            //뷰 컨트롤러가 컨테이너 뷰 컨트롤러에 추가되거나 제거되기 전에 호출된다.
+            //메모리 해제할 것이기에 부모 뷰가 존재할 필요 없으므로 toParentViewController는 nil이 된다.
+            
+            coordinator.animate(alongsideTransition: { _ in //애니메이션 추가
+                controller.view.alpha = 0
+            }, completion: { _ in
+                controller.view.removeFromSuperview() //뷰 제거
+                controller.removeFromParentViewController() //뷰 컨트롤러 제거
+                //삭제 이후에는 didMove()가 자동으로 호출된다.
+                //추가할 때는 반대로 didMove()를 명시적으로 호출하고, willMove()가 자동으로 호출된다.
+                self.landscapeVC = nil //메모리 해제
+            })
+        }
+    }
+    
+    //하나의 화면에는 하나의 뷰 컨트롤러가 있는 것이 원칙. 그러나 화면이 커지면서 한 화면에 뷰 컨트롤러를 나눠 각각 제어하게 만들 수 있다.
+    //뷰 컨트롤러가 다른 뷰 컨트롤러의 일부가 되는 것을 view controller containment라 한다. iPad에 주로 쓰이지만, iPhone도 사용 가능하다.
+    //LandscapeViewController에 뷰 컨트롤러를 포함시킨다. Modal을 만들고 애니메이션으로 구현해도 되지만 다른 방법으로 구현.
+    //뷰 컨트롤러를 포함시키는 방법에는 3가지가 있다.
+    //1. LandscapeViewController로 만들지 않고, View로 만들어 SearchViewController의 하위뷰로 추가한다.
+    //   하지만 이 방법은 SearchViewController에 LandscapeView의 로직이 섞이므로 좋은 방법이 아니다.
+    //   각 화면의 로직은 자체 뷰 컨트롤러에 있어야 한다.
+    //2. View Controller containment API를 사용해 LandscapeViewController를 SearchViewController 내부에 임베드 한다. (여기선 이 방법을 쓴다.)
+    //3. presentation controller를 사용해 Modal segue가 ViewController를 화면에 표시하는 방법을 정의해 줄 수 있다.
+    //   DimmingPresentationController에서 해결하는 방법이 3번이다.
 }
 
 //MARK: - Actions

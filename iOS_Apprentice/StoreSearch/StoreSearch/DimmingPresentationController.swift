@@ -42,7 +42,7 @@ class DimmingPresentationController: UIPresentationController {
     }
 }
 
-//DetailViewController로 넘어갈 때 Modal로 잘 표현되지 않는다. 해결방법은 3가지가 있다.
+//DetailViewController로 넘어갈 때 Modal로 잘 표현되지 않는다. 해결방법은 3가지가 있다(뷰 컨트롤러에 다른 뷰 컨트롤러를 포함시키는 방법).
 //1. DetailViewController로 만들지 않고, View로 만들어 SearchViewController의 하위뷰로 추가한다.
 //   하지만 이 방법은 SearchViewController에 DetailView의 로직이 섞이므로 좋은 방법이 아니다.
 //   각 화면의 로직은 자체 뷰 컨트롤러에 있어야 한다.

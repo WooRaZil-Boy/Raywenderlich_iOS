@@ -13,12 +13,20 @@ class GradientView: UIView {
         super.init(frame: frame)
         
         backgroundColor = UIColor.clear
+        autoresizingMask = [.flexibleWidth, .flexibleHeight] //오토 리사이징 //가로, 세로 비례하여 확대
+        //화면이 회전하면서 바뀌는 동안 그라디언트 뷰가 제대로 맞지 않는다. 짧은 시간이고 큰 문제를 주는 것은 아니지만.
+        //그라디언트 뷰를 윈도우 가장자리에 고정하여 항상 윈도우와 함께 늘어나도록 하면 된다.
+        //오토 레이아웃 제약 조건을 NSLayoutConstraint를 통해 코드로 추가해 줄 수도 있다.
+        //Autoresizing으로 간단히 설정해 줄 수도 있다. 오토 리사이징은 오토 레이아웃 이전부터 사용해 오던 방법이다.
+        //스토리보드에서 Autolayout과 Autoresizing 모두 설정해 줄 수 있다.
+        //autoresizingMask으로 코드로 설정해 준다. 제한적인 기능을 가졌지만, 여기서는 이 정도로 충분
     }
     
     required init?(coder aDecoder: NSCoder) { //스토리보드, nib으로 초기화
         super.init(coder: aDecoder)
         
         backgroundColor = UIColor.clear
+        autoresizingMask = [.flexibleWidth, .flexibleHeight] //오토 리사이징 //가로, 세로 비례하여 확대
     } //스토리보드에서 생성되는 일이 없더라도 required이므로 구현해야 한다.
     
     override func draw(_ rect: CGRect) { //투명 배경(init) 위에 그라디언트를 그린다.
@@ -51,4 +59,3 @@ class GradientView: UIView {
 }
 
 //PhotoShop 등에서도 이미지를 만들어 낼 수 있다. 하지만, 이미지를 사용하면 앱 용량이 커지고, 화면 크기를 맞춰야 하는 등 문제가 생길 수 있다.
-

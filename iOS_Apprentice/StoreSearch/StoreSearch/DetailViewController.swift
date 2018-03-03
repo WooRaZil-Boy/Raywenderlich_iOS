@@ -19,6 +19,14 @@ class DetailViewController: UIViewController {
     
     var searchResult: SearchResult!
     var downloadTask: URLSessionDownloadTask? //이미지 다운로드 테스크
+    var dismissStyle = AnimationStyle.fade //애니메이션 스타일
+    
+    enum AnimationStyle { //애니메이션의 방법을 지정하는 enum 사용 //가능한 값의 목록
+        //DetailViewController.AnimationStyle
+        //특정 클래스와 관련된 것들은 클래스 안에서 유지하는 것이 좋다.
+        case slide //일반 종료 시 사용될 애니메이션
+        case fade //가로 회전 때 사용될 애니메이션
+    }
 
     //MARK: - ViewLifeCycle
     required init?(coder aDecoder: NSCoder) { //스토리보드에서 뷰 컨트롤러 로드할 때 호출된다.
@@ -104,6 +112,7 @@ extension DetailViewController {
 //MARK:- Actions
 extension DetailViewController {
     @IBAction func close() {
+        dismissStyle = .slide
         dismiss(animated: true, completion: nil)
     }
     
@@ -130,8 +139,13 @@ extension DetailViewController: UIViewControllerTransitioningDelegate {
         return BounceAnimationController()
     }
     
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return SlideOutAnimationController() //dismissed 전환시 사용할 애니메이터 객체 전달 //nil를 반환하면 default
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? { //dismissed 전환시 사용할 애니메이터 객체 전달 //nil를 반환하면 default
+        switch dismissStyle {
+        case .slide: //일반적인 종료의 경우
+            return SlideOutAnimationController()
+        case .fade: //가로로 회전하는 경우
+            return FadeOutAnimationController()
+        }
     }
 }
 

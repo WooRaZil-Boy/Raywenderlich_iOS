@@ -76,7 +76,7 @@ extension DetailViewController {
         nameLabel.text = searchResult.name
         
         if searchResult.artistName.isEmpty { //비어 있는 경우
-            artistNameLabel.text = "Unknown"
+            artistNameLabel.text = NSLocalizedString("Unknown", comment:"Artist Name Label")
         } else {
             artistNameLabel.text = searchResult.artistName
         }
@@ -92,7 +92,7 @@ extension DetailViewController {
         
         let priceText: String
         if searchResult.price == 0 {
-            priceText = "Free"
+            priceText = NSLocalizedString("Free", comment: "Price text")
         } else if let text = formatter.string(from: searchResult.price as NSNumber) {
             //formatter에 실제 숫자를 입력해야 변환할 수 있다. 따라서 NSNumber으로 캐스팅 후 문자열로 변환
             priceText = text

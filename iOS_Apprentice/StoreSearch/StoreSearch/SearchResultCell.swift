@@ -47,10 +47,13 @@ extension SearchResultCell {
         nameLabel.text = result.name
         
         if result.artistName.isEmpty { //아트스트 네임 없는 경우
-            artistNameLabel.text = "Unknown"
+            artistNameLabel.text = NSLocalizedString("Unknown", comment:"Artist Name Label")
         } else { //있는 경우
-            artistNameLabel.text = String(format: "%@ (%@)", result.artistName, result.type)
+//            artistNameLabel.text = String(format: "%@ (%@)", result.artistName, result.type)
+            artistNameLabel.text = String(format: NSLocalizedString("ARTIST_NAME_LABEL_FORMAT", comment: "Format for artist name"), result.artistName, result.type)
             //C언어에서 주로 쓰이는 formatted string을 이용할 수 있다. %d : 정수, %f : 실수, %@ : 객체
+            //String(format)도 NSLocalizedString을 활용할 수 있다. //Localize dynamically constructed strings
+            //뒤의 인자를 클로저($1, $2)에서 처럼 %1, %2로 받을 수 있다.
         }
         
         artworkImageView.image = UIImage(named: "Placeholder") //default 이미지 //로드 완료 전까지 표시

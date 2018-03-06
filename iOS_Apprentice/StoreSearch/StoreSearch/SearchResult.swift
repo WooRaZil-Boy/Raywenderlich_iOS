@@ -6,6 +6,25 @@
 //  Copyright © 2018년 근성가이. All rights reserved.
 //
 
+import Foundation
+
+private let typeForKind = [
+    "album": NSLocalizedString("Album", comment: "Localized kind: Album"),
+    "audiobook": NSLocalizedString("Audio Book", comment: "Localized kind: Audio Book"),
+    "book": NSLocalizedString("Book", comment: "Localized kind: Book"),
+    "ebook": NSLocalizedString("E-Book", comment: "Localized kind: E-Book"),
+    "feature-movie": NSLocalizedString("Movie", comment: "Localized kind: Feature Movie"),
+    "music-video": NSLocalizedString("Music Video", comment: "Localized kind: Music Video"),
+    "podcast": NSLocalizedString("Podcast", comment: "Localized kind: Podcast"),
+    "software": NSLocalizedString("App", comment: "Localized kind: Software"),
+    "song": NSLocalizedString("Song", comment: "Localized kind: Song"),
+    "tv-episode": NSLocalizedString("TV Episode", comment: "Localized kind: TV Episode"),
+    //NSLocalizedString으로 로컬라이징된 문자열을 출력할 수 있다.
+    //Localizable.strings에 지정된 대로 번역을 반환하고, 지정한 키가 없을 경우는 그대로 텍스트를 반환한다.
+]
+//원래 모델에서는 type 변수가 switch 문에서 맞는 값을 찾아 할당된다. 이렇게 구현할 경우, 새로운 유형이 추가될 때 case를 계속 추가해야 한다.
+//이런 경우, 코드구조(switch)에서 데이터 기반(딕셔너리)으로 변경하면 더 직관적으로 코드를 정리할 수 있다.
+
 class ResultArray: Codable { //JSON parser Object
     //JSON parser
     //iOS 11 이전에는 JSON 파싱하려면 다른 프레임워크나, iOS의 JSON parser를 이용해 수동으로 해 줘야 했다.
@@ -81,22 +100,7 @@ class SearchResult: Codable { //JSON parser로 실제로 사용할(필요한) �
     var type: String {
         let kind = self.kind ?? "audiobook" //audiobook인 경우 kind가 nil인 품목들이 있다.
         
-        switch kind { //텍스트를 좀 더 이해하기 쉽게 변환 //Swift에서 switch는 가능한 모든 case가 있어야 한다.
-        case "album": return "Album"
-        case "audiobook": return "Audio Book"
-        case "book": return "Book"
-        case "ebook": return "E-Book"
-        case "feature-movie": return "Movie"
-        case "music-video": return "Music Video"
-        case "podcast": return "Podcast"
-        case "software": return "App"
-        case "song": return "Song"
-        case "tv-episode": return "TV Episode"
-        default: break
-        } //Swift에서는 break를 모든 case에 써 줄 필요 없다. 다른 언어와 달리 하나의 case만 실행하는 것이 기본
-        //fallthrough를 써서, 다른 언어의 switch처럼 해당하는 모든 case를 거치도록 할 수 있다.
-        
-        return "Unknown"
+        return typeForKind[kind] ?? kind //딕셔너리는 옵셔널을 반환하므로 ??로 옵셔널을 풀어줄 수 있다.
     }
 }
 

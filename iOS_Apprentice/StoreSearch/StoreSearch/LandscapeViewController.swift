@@ -217,7 +217,7 @@ extension LandscapeViewController {
     
     private func showNothingFoundLabel() {
         let label = UILabel(frame: CGRect.zero)
-        label.text = "Nothing Found"
+        label.text = NSLocalizedString("Nothing Found", comment:"Nothing Found Label Text")
         label.textColor = UIColor.white
         label.backgroundColor = UIColor.clear
         label.sizeToFit() //레이블 크기 최적화 //localized string 사용 시 좋다.

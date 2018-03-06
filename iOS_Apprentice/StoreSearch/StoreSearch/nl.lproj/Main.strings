@@ -1,0 +1,40 @@
+
+/* Class = "UILabel"; text = "Artist Name"; ObjectID = "EJg-QE-Jbg"; */
+"EJg-QE-Jbg.text" = "Artist Name";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "Ey9-Ee-ejv"; */
+"Ey9-Ee-ejv.text" = "Name";
+
+/* Class = "UILabel"; text = "Type:"; ObjectID = "Jdd-sx-6WV"; */
+"Jdd-sx-6WV.text" = "Soort:";
+
+/* Class = "UISegmentedControl"; PbI-FN-OC4.segmentTitles[0] = "All"; ObjectID = "PbI-FN-OC4"; */
+"PbI-FN-OC4.segmentTitles[0]" = "Alles";
+
+/* Class = "UISegmentedControl"; PbI-FN-OC4.segmentTitles[1] = "Music"; ObjectID = "PbI-FN-OC4"; */
+"PbI-FN-OC4.segmentTitles[1]" = "Muziek";
+
+/* Class = "UISegmentedControl"; PbI-FN-OC4.segmentTitles[2] = "Software"; ObjectID = "PbI-FN-OC4"; */
+"PbI-FN-OC4.segmentTitles[2]" = "Software";
+
+/* Class = "UISegmentedControl"; PbI-FN-OC4.segmentTitles[3] = "E-books"; ObjectID = "PbI-FN-OC4"; */
+"PbI-FN-OC4.segmentTitles[3]" = "E-boeken";
+
+/* Class = "UILabel"; text = "Kind Value"; ObjectID = "VsT-C3-1Uk"; */
+"VsT-C3-1Uk.text" = "Kind Value";
+
+/* Class = "UILabel"; text = "Genre:"; ObjectID = "icF-dw-26g"; */
+"icF-dw-26g.text" = "Genre:";
+
+/* Class = "UISearchBar"; placeholder = "App name, artist, song, album, e-book"; ObjectID = "npT-Rz-Mk1"; */
+"npT-Rz-Mk1.placeholder" = "Naam van artiest, nummer, album";
+
+/* Class = "UILabel"; text = "Genre Value"; ObjectID = "o5w-ky-W0V"; */
+"o5w-ky-W0V.text" = "Genre Value";
+
+/* Class = "UIButton"; normalTitle = "$9.99"; ObjectID = "qrN-gO-VN0"; */
+"qrN-gO-VN0.normalTitle" = "$9.99";
+
+//Assistant editor - Preview에서 미리보기할 수 있다.
+//.strings에서 현지화가 필요없는 텍스트를 제거하면, Base의 현지화 언어로 표현된다.
+

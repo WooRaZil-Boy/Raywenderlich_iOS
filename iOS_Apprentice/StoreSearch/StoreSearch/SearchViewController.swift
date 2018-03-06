@@ -85,7 +85,7 @@ extension SearchViewController {
     }
     
     func showNetworkError() {
-        let alert = UIAlertController(title: "Whoops...", message: "There was an error accessing the iTunes Store." + " Please try again.", preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Whoops...", comment:"Network error alert title"), message: NSLocalizedString("There was an error accessing the iTunes Store. Please try again.", comment:"Network error alert message"), preferredStyle: .alert)
         //\n로 연결할 수도 있지만, +로 연결하는 것이 더 직관적
         let action = UIAlertAction(title: "OK", style: .default)
         alert.addAction(action)
@@ -329,4 +329,15 @@ extension SearchViewController: UITableViewDelegate { //UITableViewController가
 //URLSession을 대체할 수 있는 네트워킹 라이브러리
 //AFNetworking(github.com/AFNetworking)
 //Alamofire(github.com/Alamofire)
+
+//internationalization를 "i18n"라 하기도 한다.
+//지역화를 위해 인터페이스 빌더 - File inspector - Localize... 버튼을 눌러 추가하면 된다.
+//Project에서 사용 언어를 추가 (순서 바껴도 상관 없음)
+//지역화를 나중에 추가하게 되면, 앱을 제거하고 새로 빌드해야 할 수도 있다. nib이 현지화 되지 않았기 때문이다.
+//따라서 인터페이스 빌더를 만들 때 en.lproj나 Base.lproj에 모든 nib 파일과 스토리 보드를 넣는 게 좋다. (Base를 만들어 놓는 것이 좋다.)
+//Base.lproj를 사용하면, 전체 nib를 복사하지 않고 문자열만을 복사해 번역할 수 있다.
+//Finder에서 해당 nib가 Base.lproj 폴더로 이동했는지 확인해보면 된다.
+//Assistant editor - Preview에서 미리보기할 수 있다.
+
+
 

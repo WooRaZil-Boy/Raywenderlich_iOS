@@ -6,7 +6,6 @@
 //  Copyright © 2018년 근성가이. All rights reserved.
 //
 
-//import Foundation
 import UIKit
 
 typealias SearchComplete = (Bool) -> Void //새로운 타입 설정 //Bool 매개변수를 사용해 Void를 반환하는 클로저 타입
@@ -21,7 +20,7 @@ class Search {
         case software = 2
         case ebooks = 3
         
-        var type: String {
+        var type: String { //Swift에서 switch는 가능한 모든 case가 있어야 한다.
             switch self { //Int를 범주에 따라 변환한다.
             case .all: return ""
             case .music: return "musicTrack"
@@ -35,6 +34,9 @@ class Search {
             //segmentedControl.selectedSegmentIndex를 직접 사용할 수도 있다.
             //하지만 매개변수를 활용하는 것이 더 나은 디자인인데, Segmented Control을 다른 컨트롤러로 바꾸는 경우에도 해당 메서드를 재사용할 수 있기 때문이다.
             //가능한한 서로 독립되도록 설계하는 것이 좋다.
+            
+            //Swift에서는 break를 모든 case에 써 줄 필요 없다. 다른 언어와 달리 하나의 case만 실행하는 것이 기본
+            //fallthrough를 써서, 다른 언어의 switch처럼 해당하는 모든 case를 거치도록 할 수 있다.
         }
     }
     
@@ -171,19 +173,28 @@ extension Search {
 extension Search {
     //앱의 다른 객체에서는 사용하지 않는 메서드들이므로 private로 설정해 줄 수 있다.
     private func iTunesURL(searchText: String, category: Category) -> URL {
+        let locale = Locale.autoupdatingCurrent //사용자의 환경 설정을 가져온다.
+        //autoupdatingCurrent는 항상 현재 상태를 가져온다. 앱 실행 중 사용자가 정보를 변경하더라도, 새 설정을 사용하게 된다.
+        let language = locale.identifier //언어
+        let countryCode = locale.regionCode ?? "en_US" //국가 코드 //없으면 nil이므로 기본 값을 설정해 준다.
+        //언어 설정은 국가 설정과 별개 이다. 통화 및 숫자가 표시되는 방법은 언어가 아닌 지역 설정을 따른다.
+        //iTunes Store에 request할 때, 국가 혹은 언어를 따로 지정하지 않으면 가격을 달러로 반환하게 된다.
+
         let kind = category.type //열거형 computed property에서 String을 가져온다.
         let encodedText = searchText.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)! //문자열을 urlQueryAllowed로 인코딩한다(이스케이핑).
         //URL에서 공백은 유요한 문자가 아니다. 이 외에도 여러 기호들을 이스케이프 처리해야 한다.(URL 인코딩)
         //UTF-8로 인코딩 한다. UTF-8은 유니코드 텍스트를 인코딩할 때 가장 보편적으로 쓰인다.
         
         let urlString = "https://itunes.apple.com/search?" +
-        "term=\(encodedText)&limit=200&entity=\(kind)"
+            "term=\(encodedText)&limit=200&entity=\(kind)" +
+        "&lang=\(language)&country=\(countryCode)"
         //HTTPS는 안전하고 암호화 된 HTTP 버전. 기본 프로토콜은 동일하지만 송수신 중인 byte는 네트워킹 전에 암호화된다.
         //iOS 9 이후 부터, HTTPS 사용을 권고. HTTP를 사용해도, iOS는. HTTPS로 연결을 시도하고, HTTPS로 구성되지 않은 네트워크인 경우 연결이 실패한다.
         //info.plist에서 HTTP로 연결되도록 설정할 수 있다.
+        // + 로 연결하면 더 직관적으로 URL을 확인해 볼 수 있다.
         let url = URL(string: urlString) //string으로 URL 생성
         
-        print("URL :: \(url)")
+        print("URL: \(url!)")
         
         return url!
     }
@@ -204,7 +215,6 @@ extension Search {
         }
     }
 }
-
 
 //LandscapeViewController에서는 검색 상태(검색 중, 완료)를 알 수 없다.
 //SearchViewController의 searchResults를 살펴 보더라도, 검색 결과가 빈 경우가 있으므로 정확하게 알 수 없다.

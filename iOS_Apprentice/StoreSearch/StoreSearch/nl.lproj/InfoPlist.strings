@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  StoreSearch
+
+  Created by IndieCF on 2018. 3. 6..
+  Copyright © 2018년 근성가이. All rights reserved.
+*/
+
+CFBundleDisplayName = "StoreZoeker"; //앱이 표시되는 이름을 로컬라이징해 줄 수 있다.

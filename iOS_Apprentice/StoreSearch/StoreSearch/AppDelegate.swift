@@ -11,10 +11,40 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
+    
+    //iPad //스토리보드 구조대로
+    var splitVC: UISplitViewController {
+        return window!.rootViewController as! UISplitViewController
+    }
+    
+    var searchVC: SearchViewController {
+        return splitVC.viewControllers.first as! SearchViewController
+    }
+    
+    var detailNavController: UINavigationController { //스플릿 뷰를 스와이프하여 표시되도록 하는 버튼 추가 위해
+        return splitVC.viewControllers.last as! UINavigationController
+    }
+    
+    var detailVC: DetailViewController {
+        return detailNavController.topViewController as! DetailViewController
+    }
+    
+    //iPad에서는 화면이 훨씬 크므로 SplitView를 쓰는 것이 좋다.
+    //iPad는 가로, 세로로 쓰기 때문에 모든 방향을 똑같이 지원해야 한다.
+    //최신 버전의 Xcode는 iPhone용과 iPad용 뷰 컨트롤러를 한 스토리보드에서 관리할 수 있다.
+    //여기에서 Split View Controller는 iPad에서만 사용하고, iPhone에서는 감춰진 상태로 유지될 것이다.
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         customizeAppearance()
+        
+        //iPad
+        detailVC.navigationItem.leftBarButtonItem = splitVC.displayModeButtonItem
+        //SplitViewController의 표시 모드 변경 버튼 추가
+        //DetailViewController가 UINavigationController에 내장되어 있기 때문에 쉽게 추가할 수 있다.
+        searchVC.splitViewDetail = detailVC
+        //iPad에서는 DetailViewController를 선택 시 마다 할당 하는 게 아니라 미리 오른쪽 뷰에 할당해 놓고 재사용.
+        splitVC.delegate = self
         
         return true
     }
@@ -49,6 +79,17 @@ extension AppDelegate {
         UISearchBar.appearance().barTintColor = barTintColor //앱의 모든 UISearchBar에 영향
         
         window!.tintColor = UIColor(red: 10/255, green: 80/255, blue: 80/255, alpha: 1) //Global Tint
+    }
+}
+
+//MARK: - UISplitViewControllerDelegate(iPad)
+extension AppDelegate: UISplitViewControllerDelegate {
+    func splitViewController(_ svc: UISplitViewController, willChangeTo displayMode: UISplitViewControllerDisplayMode) { //디스플레이 모드 변경될 때 호출
+        print(#function) //현재 메서드의 이름을 출력. //디버깅에 좋다.
+        
+        if displayMode == .primaryOverlay { //부분적으로 겹쳐지게 되면(마스터 분할 영역 표시되는 경우)
+            svc.dismiss(animated: true, completion: nil) //pop-over 되어 있는 뷰 닫기
+        }
     }
 }
 

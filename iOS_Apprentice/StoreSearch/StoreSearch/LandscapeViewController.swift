@@ -272,6 +272,7 @@ extension LandscapeViewController {
                 let searchResult = list[(sender as! UIButton).tag - 2000]
                 //sender 버튼의 태그로 searchResult 찾는다.
                 detailViewController.searchResult = searchResult
+                detailViewController.isPopUp = true //iPhone
             }
         }
     }

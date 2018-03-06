@@ -19,6 +19,10 @@ class SearchViewController: UIViewController {
     private let search = Search() //통신의 모든 로직 캡슐화
     var landscapeVC: LandscapeViewController? //세로일 때는 nil, 가로일 때만 값을 가진다.
     
+    weak var splitViewDetail: DetailViewController? //iPad
+    //iPad SplitViewController의 세부 창에서 반복 사용할 DetailViewController
+    //iPhone에서는 쓸 필요 없어 nil이 되므로 옵셔널로 선언한다.
+    
     struct TableViewCellIdentifiers { //재사용 식별자 같은 문자열 리터럴은 상수로 만들어 두는 것이 좋다. //변경이 단일 지점, 한 번으로 제한된다.
         //클래스 안에 구조체를 배치해 해당 클래스의 고유한 구조체를 선언할 수 있다.
         static let searchResultCell = "SearchResultCell" //static으로 선언하면, 인스턴스 없이 사용할 수 있다.
@@ -48,7 +52,14 @@ class SearchViewController: UIViewController {
         //loadingCell은 따로 설정할 속성이 없으므로 UITableViewCell의 하위 클래스를 만들 필요가 없다.
         //nib를 등록하는 것으로 충분하다.
         
-        searchBar.becomeFirstResponder() //서치바에 포커스를 줘서, 키보드를 활성화 시킨다.
+        title = NSLocalizedString("Search", comment: "split view master button") //iPad
+        //NavigationController가 있어야 title을 표시할 수 있다.
+        
+        if UIDevice.current.userInterfaceIdiom != .pad { //iPhone
+            //userInterfaceIdiom으로 현재 실행되는 디바이스의 종류를 알 수 있다. //.pad, .phone
+            searchBar.becomeFirstResponder() //서치바에 포커스를 줘서, 키보드를 활성화 시킨다.
+            //iPad에서는 입력 포커스를 주지 않는 것이 좋다.
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -92,6 +103,15 @@ extension SearchViewController {
         
         present(alert, animated: true)
     }
+    
+    private func hideMasterPane() { //검색 결과 탭 시 마스터 분할 창 숨기기
+        UIView.animate(withDuration: 0.25, animations: { //preferredDisplayMode로 기본 설정을 해준다.
+            self.splitViewController!.preferredDisplayMode = .primaryHidden //마스터 분할 창 숨기기
+        }, completion: { _ in
+            self.splitViewController!.preferredDisplayMode = .automatic //애니메이션 완료 후 자동 옵션으로 복원
+            //.automatic으로 다시 복원해 놓지 않으면 마스터 패널이 가로 모드에서 숨겨진다.
+        })
+    }
 }
 
 //MARK: - Rotaion
@@ -100,18 +120,31 @@ extension SearchViewController {
         //가로 사이즈, 세로 사이즈, 디스플레이 비율(Retina), 인터페이스(iPhone, iPad), Dynamic type font 변경 등의 경우에 호출된다.
         super.willTransition(to: newCollection, with: coordinator)
         
-        switch newCollection.verticalSizeClass { //트랜지션 변경 후 세로 사이즈 //회전 감지를 위해선 세로를 확인해야 한다.
-        case .compact: //가로
-            showLandscape(with: coordinator)
-        case .regular, .unspecified: //세로
-            hideLandscape(with: coordinator)
+        let rect = UIScreen.main.bounds
+        if (rect.width == 736 && rect.height == 414) || (rect.width == 414 && rect.height == 736) { //iPhone Plus
+            //현재 x3 화면이 있는 유일한 장치는 Plus이므로 디스플레이 배울을 확인해도 되지만, 사용자가 확대 기능을 사용할 때 맞지 않는다.
+            //혹은 디바이스의 이름을 확인할 수 있지만, 같은 iPhone이라도 다른 이름을 가질 수 있다.
+            //화면 크기로 Plus를 찾아내는 것이 가장 적절한 방법. //가로 세로 모두 확인해야 한다.
+            if presentedViewController != nil { //Modal View가 있다면
+                dismiss(animated: true) //dismiss
+            }
+        } else if UIDevice.current.userInterfaceIdiom != .pad { //iPhone
+            switch newCollection.verticalSizeClass { //트랜지션 변경 후 세로 사이즈 //회전 감지를 위해선 세로를 확인해야 한다.
+                //iPad에서는 디바이스 방향에 관계없이 항상 가로 세로 크기 사이즈가 regular이다.
+            //따라서 iPad에서는 회전해도 사이즈가 변하지 않으므로 처음 초기화 이후 이 메서드가 불려지지 않는다.
+            case .compact: //가로
+                showLandscape(with: coordinator)
+            case .regular, .unspecified: //세로
+                hideLandscape(with: coordinator)
+            }
+            //Horizontal x Vertical
+            //compact x compact : iPhone Landscape
+            //compact x regular : iPhone Portrait
+            //regular x compact : iPhone Plus Landscape
+            //regular x regular : iPad Portrait, iPad Landscape
+            //p.956
         }
-        //Horizontal x Vertical
-        //compact x compact : iPhone Landscape
-        //compact x regular : iPhone Portrait
-        //regular x compact : iPhone Plus Landscape
-        //regular x regular : iPad Portrait, iPad Landscape
-        //p.956
+
     }
     
     func showLandscape(with coordinator: UIViewControllerTransitionCoordinator) {
@@ -212,11 +245,12 @@ extension SearchViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowDetail" {
             if case .results(let list) = search.state { //.results의 경우에만 신경 쓰면 된다.
-                //하나의 경우에만 신경스면 되므로 Switch를 쓸 필요 없이 case if 문으로 단일 사례를 처리할 수 있다.
+                //하나의 경우에만 신경쓰면 되므로 Switch를 쓸 필요 없이 case if 문으로 단일 사례를 처리할 수 있다.
                 let detailViewController = segue.destination as! DetailViewController
                 let indexPath = sender as! IndexPath
                 let searchResult = list[indexPath.row] //터치한 셀의 정보
                 detailViewController.searchResult = searchResult
+                detailViewController.isPopUp = true //iPhone
             }
         }
     }
@@ -282,10 +316,30 @@ extension SearchViewController: UITableViewDataSource { //UITableViewController�
 extension SearchViewController: UITableViewDelegate { //UITableViewController가 아닌 UITableView를 UIViewController에 추가한 것이므로 UITableViewDelegate를 직접 연결해 줘야 한다.
     //UITableViewController와 달리 메서드를 재정의하는 것이 아니므로 override도 아니다.
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { //셀 선택 시
-        tableView.deselectRow(at: indexPath, animated: true) //선택 해제
-        performSegue(withIdentifier: "ShowDetail", sender: indexPath)
-        //프로토 타입 셀을 사용하지 않기 때문에 ViewController 자체에 segue를 설정해야 한다.
-        //수동으로 segue를 트리거 하도록 만들어야 한다.
+        if view.window!.rootViewController!.traitCollection.horizontalSizeClass == .compact { //iPhone
+            //iPhone에서는 horizontalSizeClass가 항상 compact이다. (iPhone Plus 제외)
+            //iPad는 horizontalSizeClass가 항상 regular다.
+            //SearchViewController가 아닌 rootViewController에서 사이즈를 가져오는 이유는
+            //SplitViewController의 일부로 SearchViewController가 들어 있어, iPad에서라도 .compact로 처리된다.
+            
+            //compact x compact : iPhone Landscape
+            //compact x regular : iPhone Portrait
+            //regular x compact : iPhone Plus Landscape
+            //regular x regular : iPad Portrait, iPad Landscape
+            tableView.deselectRow(at: indexPath, animated: true) //선택 해제
+            performSegue(withIdentifier: "ShowDetail", sender: indexPath)
+            //프로토 타입 셀을 사용하지 않기 때문에 ViewController 자체에 segue를 설정해야 한다.
+            //수동으로 segue를 트리거 하도록 만들어야 한다.
+        } else { //iPad
+            if case .results(let list) = search.state {
+                splitViewDetail?.searchResult = list[indexPath.row]
+                
+                if splitViewController!.displayMode != .allVisible { //가로방향이 아닌 경우 (세로인 경우)
+                    //.allVisible 모드는 가로 방향만 지원된다.
+                    hideMasterPane() //마스터 분할 패널 숨기기
+                }
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? { //셀이 선택 되기 전
@@ -339,5 +393,10 @@ extension SearchViewController: UITableViewDelegate { //UITableViewController가
 //Finder에서 해당 nib가 Base.lproj 폴더로 이동했는지 확인해보면 된다.
 //Assistant editor - Preview에서 미리보기할 수 있다.
 
-
-
+//Main.storyboard - View as에서 각 디바이스의 가로 세로 모드를 볼 수 있다. //p.1053
+//이를 이용해 특정 크기의 클래스에만 적용하는 편집을 할 수도 있다.
+//Horizontal x Vertical
+//compact x compact : iPhone Landscape
+//compact x regular : iPhone Portrait
+//regular x compact : iPhone Plus Landscape
+//regular x regular : iPad Portrait, iPad Landscape

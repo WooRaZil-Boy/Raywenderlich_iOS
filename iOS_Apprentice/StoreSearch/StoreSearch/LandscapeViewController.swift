@@ -13,7 +13,7 @@ class LandscapeViewController: UIViewController {
     //UITableView도 UIScrollView에서 확장된 것
     @IBOutlet weak var pageControl: UIPageControl!
     
-    var searchResults = [SearchResult]()
+    var search: Search!
     private var firstTime = true //private는 이 객체(LandscapeViewController) 내에서만 사용 가능하다.
     //다른 객체에서는 사용하거나 불러올 수 없다. 가능한 한 객체 내부에 숨기고, 외부에 최소한으로만 연결할 수 있도록 해야한다.
     private var downloads = [URLSessionDownloadTask]() //세로모드로 돌아갈 때 취소하기 위해
@@ -61,12 +61,22 @@ class LandscapeViewController: UIViewController {
         
         if firstTime { //한 번만 실행하기 위해
             firstTime = false
-            tileButtons(searchResults) //버튼 추가
-            //이 메서드 호출 코드를 viewDidLoad()에서 실행하지 않는 이유는 viewDidLoad()가 실행되었을 때,
-            //화면은 아직 불려지지 않았고 뷰 계층 구조에 추가되지 않았기 때문이다.
-            //viewDidLoad() 종료 이후에 view는 실제 화면에 맞춰 크기가 조정된다.
-            //뷰의 frame, bounds를 사용하는 코드는 viewDidLoad()에서 실행하면 안 된다(할 순 있지만 올바른 결과를 보장 못한다).
-            //viewWillLayoutSubviews()가 뷰의 frame, bounds를 사용해 계산을 하기 안전한 메서드이다.
+            
+            switch search.state {
+            case .notSearchedYet:
+                break
+            case .loading:
+                showSpinner()
+            case .noResults:
+                showNothingFoundLabel()
+            case .results(let list):
+                tileButtons(list) //버튼 추가
+                //이 메서드 호출 코드를 viewDidLoad()에서 실행하지 않는 이유는 viewDidLoad()가 실행되었을 때,
+                //화면은 아직 불려지지 않았고 뷰 계층 구조에 추가되지 않았기 때문이다.
+                //viewDidLoad() 종료 이후에 view는 실제 화면에 맞춰 크기가 조정된다.
+                //뷰의 frame, bounds를 사용하는 코드는 viewDidLoad()에서 실행하면 안 된다(할 순 있지만 올바른 결과를 보장 못한다).
+                //viewWillLayoutSubviews()가 뷰의 frame, bounds를 사용해 계산을 하기 안전한 메서드이다.
+            }
         }
     }
     
@@ -83,7 +93,7 @@ class LandscapeViewController: UIViewController {
     }
 }
 
-//MARK: - Private Methods
+//MARK: - PrivateMethods
 extension LandscapeViewController {
     private func tileButtons(_ searchResults: [SearchResult]) {
         var columnsPerPage = 5
@@ -125,14 +135,16 @@ extension LandscapeViewController {
         var row = 0
         var column = 0
         var x = marginX
-        for (_, result) in searchResults.enumerated() { //enumerated로 요소와 인덱스를 모두 가져올 수 있다.
+        for (index, result) in searchResults.enumerated() { //enumerated로 요소와 인덱스를 모두 가져올 수 있다.
             //enumerated로 튜플 형태로 요소와 인덱스를 가져오며, 사용하지 않을 때에는 와일드카드로 표시할 수도 있다.
-            //index는 디버깅 때 사용
             let button = UIButton(type: .custom) //버튼 생성
             button.setBackgroundImage(UIImage(named: "LandscapeButton"), for: .normal)
             downloadImage(for: result, andPlaceOn: button)
             button.frame = CGRect(x: x + paddingHorz, y: marginY + CGFloat(row) * itemHeight + paddingVert, width: buttonWidth, height: buttonHeight)
             //코드로 버튼을 생성할 경우에는 frame을 꼭 지정해줘야 한다. CGRect에 사용하는 속성은 모두 CGFloat이다.
+            button.tag = 2000 + index //태그를 통해 어느 인덱스의 버튼인지 식별
+            button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+            //버튼에 이벤트 추가
             
             scrollView.addSubview(button) //스크롤 뷰에 추가
             
@@ -185,6 +197,54 @@ extension LandscapeViewController {
             downloads.append(task) //task 저장
         }
     }
+    
+    private func showSpinner() {
+        let spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge) //스토리보드에서 만들 수도 있다.
+        spinner.center = CGPoint(x: scrollView.bounds.midX + 0.5, y: scrollView.bounds.midY + 0.5)
+        //.whiteLarge spinner는 37pt. 짝수가 아니여서 뷰의 중심에 배치하면 18.5로 분수가 되어버린다.
+        //객체를 분수 좌표에 위치하지 않는 게 좋다. (분수 좌표 시 모서리가 흐리게 보인다는 데 무슨 말인지 모르겠음???)
+        spinner.tag = 1000 //쉽게 삭제하기 위해
+        
+        view.addSubview(spinner)
+        spinner.startAnimating()
+    }
+    
+    private func hideSpinner() {
+        view.viewWithTag(1000)?.removeFromSuperview() //태그로 스피너 찾아 제거
+        //스토리보드에서 @IBOutlet으로 연결해 유지할 수도 있다.
+        //viewWithTag가 nil을 반환할 수 있으므로 optional chain 사용해야 한다.
+    }
+    
+    private func showNothingFoundLabel() {
+        let label = UILabel(frame: CGRect.zero)
+        label.text = "Nothing Found"
+        label.textColor = UIColor.white
+        label.backgroundColor = UIColor.clear
+        label.sizeToFit() //레이블 크기 최적화 //localized string 사용 시 좋다.
+        
+        var rect = label.frame
+        rect.size.width = ceil(rect.size.width / 2) * 2 //ceil 올림 //짝수로 만들어 준다.
+        rect.size.height = ceil(rect.size.height / 2) * 2 
+        label.frame = rect
+        
+        label.center = CGPoint(x: scrollView.bounds.midX, y: scrollView.bounds.midY)
+        
+        view.addSubview(label)
+    }
+}
+
+//MARK: - PublicMethods
+extension LandscapeViewController {
+    func searchResultsReceived() {
+        hideSpinner()
+        
+        switch search.state {
+        case .notSearchedYet, .loading, .noResults:
+            break
+        case .results(let list):
+            tileButtons(list)
+        }
+    }
 }
 
 //MARK: - Actions
@@ -195,6 +255,25 @@ extension LandscapeViewController {
             self.scrollView.contentOffset = CGPoint(x: self.scrollView.bounds.size.width * CGFloat(sender.currentPage), y: 0)
             //페이지 컨트롤을 누른 경우 페이지 업데이트
         }, completion: nil)
+    }
+    
+    @objc func buttonPressed(_ sender: UIButton) { //@IBOutlet은 인테페이스 빌더에서 연결할 때만 필요
+        //#selector를 통해 메서드에 속성 추가하려면 @obj가 있어야 한다.
+        performSegue(withIdentifier: "ShowDetail", sender: sender) //세그 실행
+    }
+}
+
+//MARK: - Navigations
+extension LandscapeViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowDetail" {
+            if case .results(let list) = search.state {
+                let detailViewController = segue.destination as! DetailViewController
+                let searchResult = list[(sender as! UIButton).tag - 2000]
+                //sender 버튼의 태그로 searchResult 찾는다.
+                detailViewController.searchResult = searchResult
+            }
+        }
     }
 }
 

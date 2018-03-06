@@ -16,6 +16,7 @@
 		A4E64AC720493C1400280281 /* SlideOutAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E64AC620493C1400280281 /* SlideOutAnimationController.swift */; };
 		A4E64AC920494B3300280281 /* LandscapeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E64AC820494B3300280281 /* LandscapeViewController.swift */; };
 		EF40EFD0204AAAEB0001B426 /* FadeOutAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF40EFCF204AAAEB0001B426 /* FadeOutAnimationController.swift */; };
+		EF40EFD2204B42CD0001B426 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF40EFD1204B42CD0001B426 /* Search.swift */; };
 		EF8CDBA52048479A00DB3C9F /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8CDBA42048479A00DB3C9F /* DetailViewController.swift */; };
 		EF8CDBA7204854BB00DB3C9F /* DimmingPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8CDBA6204854BB00DB3C9F /* DimmingPresentationController.swift */; };
 		EFC2C83C204793E600A19B80 /* UIImageView+DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC2C83B204793E600A19B80 /* UIImageView+DownloadImage.swift */; };
@@ -36,6 +37,7 @@
 		A4E64AC620493C1400280281 /* SlideOutAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideOutAnimationController.swift; sourceTree = "<group>"; };
 		A4E64AC820494B3300280281 /* LandscapeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandscapeViewController.swift; sourceTree = "<group>"; };
 		EF40EFCF204AAAEB0001B426 /* FadeOutAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeOutAnimationController.swift; sourceTree = "<group>"; };
+		EF40EFD1204B42CD0001B426 /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		EF8CDBA42048479A00DB3C9F /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		EF8CDBA6204854BB00DB3C9F /* DimmingPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimmingPresentationController.swift; sourceTree = "<group>"; };
 		EFC2C83B204793E600A19B80 /* UIImageView+DownloadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadImage.swift"; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 				A4E64AC620493C1400280281 /* SlideOutAnimationController.swift */,
 				EF40EFCF204AAAEB0001B426 /* FadeOutAnimationController.swift */,
 				EFC2C83B204793E600A19B80 /* UIImageView+DownloadImage.swift */,
+				EF40EFD1204B42CD0001B426 /* Search.swift */,
 				A402271C20452FAE0017C371 /* SearchResult.swift */,
 				A402271E204536DB0017C371 /* SearchResultCell.swift */,
 				A4022720204536E70017C371 /* SearchResultCell.xib */,
@@ -174,6 +177,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF40EFD2204B42CD0001B426 /* Search.swift in Sources */,
 				EFC9510320446EAC001E12ED /* SearchViewController.swift in Sources */,
 				EF8CDBA7204854BB00DB3C9F /* DimmingPresentationController.swift in Sources */,
 				EF40EFD0204AAAEB0001B426 /* FadeOutAnimationController.swift in Sources */,
@@ -315,6 +319,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = StoreSearch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = world.hello.StoreSearch;
@@ -329,6 +334,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = StoreSearch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = world.hello.StoreSearch;

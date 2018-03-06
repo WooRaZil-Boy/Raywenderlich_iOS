@@ -38,7 +38,7 @@
                                 <items>
                                     <navigationItem id="5Jj-rW-yw2">
                                         <nil key="title"/>
-                                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="PbI-FN-OC4">
+                                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="PbI-FN-OC4">
                                             <rect key="frame" x="144.5" y="1.5" width="279" height="29"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <segments>
@@ -110,11 +110,12 @@
                     <connections>
                         <outlet property="pageControl" destination="7pt-fh-Q5h" id="T59-59-jmW"/>
                         <outlet property="scrollView" destination="flJ-Pl-s7Q" id="Rse-qk-iKK"/>
+                        <segue destination="Dkb-bv-pf7" kind="presentation" identifier="ShowDetail" id="bIL-7b-7dr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KTh-4u-93D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="39" y="1461"/>
+            <point key="canvasLocation" x="124" y="1448"/>
         </scene>
         <!--Detail-->
         <scene sceneID="UL2-7L-xoy">
@@ -244,4 +245,7 @@
         <image name="CloseButton" width="15" height="15"/>
         <image name="PriceButton" width="11" height="24"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="bIL-7b-7dr"/>
+    </inferredMetricsTieBreakers>
 </document>

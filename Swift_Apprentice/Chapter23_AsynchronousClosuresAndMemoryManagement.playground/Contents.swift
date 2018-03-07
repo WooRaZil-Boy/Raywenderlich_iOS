@@ -15,6 +15,7 @@ class Tutorial {
     lazy var createDescription: () -> String = { //lazy로 선언하면 사용되기 전에는 할당되지 않는다.
         [unowned self] in //캡처 리스트 //Unowned self : self는 값이 있음을 가정
         return "\(self.title) by \(self.author.name)" //클로저는 값을 캡쳐하면서 참조를 만든다.
+        //https://outofbedlam.github.io/swift/2016/01/31/Swift-ARC-Closure-weakself/
     }
     
     init(title: String, author: Author) {

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Dgv-CV-2bL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="gEJ-Wg-MHl">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -13,62 +14,60 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="HitList" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dBJ-wc-M0k">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="AcD-xQ-aIU">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
-                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="BMK-JS-n78"/>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="EBf-pr-dQt"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="CML-6J-k6c"/>
                                 </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="dBJ-wc-M0k" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="4Vu-24-WdK"/>
-                            <constraint firstItem="dBJ-wc-M0k" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="bso-nY-mVV"/>
-                            <constraint firstAttribute="trailing" secondItem="dBJ-wc-M0k" secondAttribute="trailing" id="nmX-FM-sz2"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="dBJ-wc-M0k" secondAttribute="bottom" id="tO6-yn-4s8"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="AcD-xQ-aIU" secondAttribute="trailing" id="8gF-bw-Ka8"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="top" secondItem="AcD-xQ-aIU" secondAttribute="top" constant="116" id="d2J-5g-Xsy"/>
+                            <constraint firstItem="AcD-xQ-aIU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="iNX-Ly-pYd"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="AcD-xQ-aIU" secondAttribute="bottom" id="oNh-9b-H6K"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="dNy-eg-gwa">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="CJy-gZ-yIS">
+                    <navigationItem key="navigationItem" id="NN6-0B-TbB">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Uy2-7Q-Tc2">
                             <connections>
-                                <action selector="addName:" destination="BYZ-38-t0r" id="JmV-lz-EHT"/>
+                                <action selector="addName:" destination="BYZ-38-t0r" id="6a7-vj-eq1"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="tableView" destination="dBJ-wc-M0k" id="sha-5j-lXw"/>
+                        <outlet property="tableView" destination="AcD-xQ-aIU" id="5Nj-GP-3KZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="971.25" y="-560.91549295774644"/>
+            <point key="canvasLocation" x="474.375" y="133.09859154929578"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="3Um-E9-8dL">
+        <scene sceneID="EWF-OG-zs3">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Dgv-CV-2bL" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gEJ-Wg-MHl" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KgF-uK-Z9B">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="uI0-1i-P8Q">
+                        <rect key="frame" x="0.0" y="20" width="320" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="uve-t4-VuS"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="GVr-Db-pbA"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xVS-SK-Hnx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Idp-ab-MIp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="286.875" y="-560.91549295774644"/>
+            <point key="canvasLocation" x="-194" y="134"/>
         </scene>
     </scenes>
 </document>

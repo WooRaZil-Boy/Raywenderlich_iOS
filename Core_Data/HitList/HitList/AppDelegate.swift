@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  HitList
 //
-//  Created by 근성가이 on 2016. 12. 19..
-//  Copyright © 2016년 근성가이. All rights reserved.
+//  Created by 근성가이 on 2018. 3. 7..
+//  Copyright © 2018년 근성가이. All rights reserved.
 //
 
 import UIKit
@@ -90,4 +90,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 }
+
+//Core Data는 OS X, iOS에서 데이터를 저장하고 검색할 수 있지만, MySQL이나 SQLite와 같은 관계형 데이터 베이스는 아니다.
+
+//앱을 만들 때, Use Core Data 박스에 체크하면, AppDelegate에서 NSPersistentContainer 표준 스택을 생성한다.
+//NSPersistentContainer는 CoreData 정보를 저장하고 검색하는 개체 집합으로 구성된다.
+//내부에서 CoreData 상태를 관리하고 데이터 모델을 나눈다.
+//Master - Detail App, Single View App 템플릿만 CoreData 체크 박스가 있다.
 

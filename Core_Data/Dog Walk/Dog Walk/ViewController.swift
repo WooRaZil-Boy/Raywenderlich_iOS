@@ -60,6 +60,7 @@ class ViewController: UIViewController {
     
     do { //Find or Create Pattern
       let results = try managedContext.fetch(dogFetch)
+      //NSFetchRequest로 CoreData의 records를 가져온 후, NSManagedObjectContext로 전달해 작업을 수행
       
       if results.count > 0 {
         //Fido found, use Fido

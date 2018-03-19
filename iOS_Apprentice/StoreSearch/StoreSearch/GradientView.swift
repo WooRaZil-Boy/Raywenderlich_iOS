@@ -2,7 +2,7 @@
 //  GradientView.swift
 //  StoreSearch
 //
-//  Created by IndieCF on 2018. 3. 2..
+//  Created by 근성가이 on 2018. 3. 2..
 //  Copyright © 2018년 근성가이. All rights reserved.
 //
 

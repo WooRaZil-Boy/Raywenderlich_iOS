@@ -2,7 +2,7 @@
 //  AboutViewController.swift
 //  BullsEye
 //
-//  Created by IndieCF on 2017. 12. 26..
+//  Created by 근성가이 on 2017. 12. 26..
 //  Copyright © 2017년 근성가이. All rights reserved.
 //
 

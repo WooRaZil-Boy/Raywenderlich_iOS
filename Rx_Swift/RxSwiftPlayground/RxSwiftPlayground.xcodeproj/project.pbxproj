@@ -26,7 +26,9 @@
 		D200B5561F93BAD700482053 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D200B5591F93BAD700482053 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D200B55B1F93BAD700482053 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D200B5621F93BB3E00482053 /* RxSwiftPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = RxSwiftPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		D200B5621F93BB3E00482053 /* Ch2_Observables.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Ch2_Observables.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		EF6817372066AC7F00499DFA /* Ch5_FilteringOperators.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Ch5_FilteringOperators.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		EF6817382066ACFC00499DFA /* Ch3_Subjects.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Ch3_Subjects.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +54,9 @@
 		D200B5431F93BAD700482053 = {
 			isa = PBXGroup;
 			children = (
-				D200B5621F93BB3E00482053 /* RxSwiftPlayground.playground */,
+				D200B5621F93BB3E00482053 /* Ch2_Observables.playground */,
+				EF6817382066ACFC00499DFA /* Ch3_Subjects.playground */,
+				EF6817372066AC7F00499DFA /* Ch5_FilteringOperators.playground */,
 				D2A3FFE61F964EEC00E33927 /* Supporting Files */,
 				D200B54D1F93BAD700482053 /* Products */,
 				E024B6D102317037C8999D68 /* Pods */,

@@ -25,7 +25,7 @@ import RxSwift
  THE SOFTWARE.
  */
 
-//********** Chapter 5: Ch5_FilteringOperators **********
+//********** Chapter 5: Filtering Operators **********
 
 example(of: "ignoreElements") {
     let strikes = PublishSubject<String>()

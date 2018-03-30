@@ -24,6 +24,7 @@ import RxSwift
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  */
+
 //********** Chapter 2: Observables **********
 
 //observable, sequence, observable sequence, stream 모두 같은 것을 지칭한다.

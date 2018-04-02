@@ -184,7 +184,7 @@ example(of: "combine user choice and value") {
         //그 전에는 결합된 값을 계속 전송한다. 일부 시퀀스가 종료되면 마지막 시퀀스의 값을
         //다른 시퀀스의 새 값과 결합한다. p.186
         let formatter = DateFormatter()
-        formatter.formatter = format
+        formatter.dateStyle = format
         
         return formatter.string(from: when)
     } //이런 식으로 다른 코드의 추가 없이 화면의 값을 자동 업데이트 할 수 있다.
@@ -205,7 +205,7 @@ example(of: "zip") {
     let right = Observable.of("Lisbon", "Copenhagen", "London", "Madrid",
                               "Vienna")
     
-    let observable = observable.zip(left, right) { weather, city in
+    let observable = Observable.zip(left, right) { weather, city in
         //zip으로 각 시퀀스의 요소를 결합한다. p.189
         //각각 내부의 observables가 새로운 값을 emit해 결합하고,
         //어느 한 시퀀스가 완료되면, zip연산자도 종료된다.

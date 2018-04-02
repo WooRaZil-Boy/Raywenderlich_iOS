@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0920"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D200B54B1F93BAD700482053"
-               BuildableName = "RxSwiftPlayground.app"
-               BlueprintName = "RxSwiftPlayground"
-               ReferencedContainer = "container:RxSwiftPlayground.xcodeproj">
+               BlueprintIdentifier = "298889BA0B780283FB476280C9505998"
+               BuildableName = "Pods_RxSwiftPlayground.framework"
+               BlueprintName = "Pods-RxSwiftPlayground"
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -30,15 +30,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D200B54B1F93BAD700482053"
-            BuildableName = "RxSwiftPlayground.app"
-            BlueprintName = "RxSwiftPlayground"
-            ReferencedContainer = "container:RxSwiftPlayground.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -53,16 +44,15 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D200B54B1F93BAD700482053"
-            BuildableName = "RxSwiftPlayground.app"
-            BlueprintName = "RxSwiftPlayground"
-            ReferencedContainer = "container:RxSwiftPlayground.xcodeproj">
+            BlueprintIdentifier = "298889BA0B780283FB476280C9505998"
+            BuildableName = "Pods_RxSwiftPlayground.framework"
+            BlueprintName = "Pods-RxSwiftPlayground"
+            ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -72,16 +62,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D200B54B1F93BAD700482053"
-            BuildableName = "RxSwiftPlayground.app"
-            BlueprintName = "RxSwiftPlayground"
-            ReferencedContainer = "container:RxSwiftPlayground.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

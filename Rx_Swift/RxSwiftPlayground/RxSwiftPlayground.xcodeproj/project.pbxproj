@@ -19,6 +19,11 @@
 		6FAA7737C4D7FAFF92A9E9E7 /* Pods-RxSwiftPlayground.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxSwiftPlayground.release.xcconfig"; path = "Pods/Target Support Files/Pods-RxSwiftPlayground/Pods-RxSwiftPlayground.release.xcconfig"; sourceTree = "<group>"; };
 		747096812AFE4E21151D0E64 /* Pods-RxSwiftPlayground.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxSwiftPlayground.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RxSwiftPlayground/Pods-RxSwiftPlayground.debug.xcconfig"; sourceTree = "<group>"; };
 		7BF590C3B20663FB02E460D5 /* Pods_RxSwiftPlayground.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxSwiftPlayground.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A42A2E9F207208B800A47BB2 /* Ch9_CombiningOperators.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Ch9_CombiningOperators.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		A42A2EA0207208B800A47BB2 /* Ch3_Subjects.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Ch3_Subjects.playground; sourceTree = "<group>"; };
+		A42A2EA1207208B800A47BB2 /* Ch2_Observables.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Ch2_Observables.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		A42A2EA2207208B800A47BB2 /* Ch7_TransformingOperators.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Ch7_TransformingOperators.playground; sourceTree = "<group>"; };
+		A42A2EA3207208B800A47BB2 /* Ch5_FilteringOperators.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Ch5_FilteringOperators.playground; sourceTree = "<group>"; };
 		D200B54C1F93BAD700482053 /* RxSwiftPlayground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxSwiftPlayground.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D200B54F1F93BAD700482053 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D200B5511F93BAD700482053 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -26,11 +31,7 @@
 		D200B5561F93BAD700482053 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D200B5591F93BAD700482053 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D200B55B1F93BAD700482053 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D200B5621F93BB3E00482053 /* Ch2_Observables.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Ch2_Observables.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		EF6817372066AC7F00499DFA /* Ch5_FilteringOperators.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Ch5_FilteringOperators.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		EF6817382066ACFC00499DFA /* Ch3_Subjects.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Ch3_Subjects.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		EFCEE7AB206E6935000AA183 /* Ch7_TransformingOperators.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Ch7_TransformingOperators.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		EFD7013C206FE30D001AE732 /* Ch9_CombiningOperators.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Ch9_CombiningOperators.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		D200B5621F93BB3E00482053 /* Ch11_TimeBasedOperators.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Ch11_TimeBasedOperators.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,11 +57,12 @@
 		D200B5431F93BAD700482053 = {
 			isa = PBXGroup;
 			children = (
-				D200B5621F93BB3E00482053 /* Ch2_Observables.playground */,
-				EF6817382066ACFC00499DFA /* Ch3_Subjects.playground */,
-				EF6817372066AC7F00499DFA /* Ch5_FilteringOperators.playground */,
-				EFCEE7AB206E6935000AA183 /* Ch7_TransformingOperators.playground */,
-				EFD7013C206FE30D001AE732 /* Ch9_CombiningOperators.playground */,
+				A42A2EA1207208B800A47BB2 /* Ch2_Observables.playground */,
+				A42A2EA0207208B800A47BB2 /* Ch3_Subjects.playground */,
+				A42A2EA3207208B800A47BB2 /* Ch5_FilteringOperators.playground */,
+				A42A2EA2207208B800A47BB2 /* Ch7_TransformingOperators.playground */,
+				A42A2E9F207208B800A47BB2 /* Ch9_CombiningOperators.playground */,
+				D200B5621F93BB3E00482053 /* Ch11_TimeBasedOperators.playground */,
 				D2A3FFE61F964EEC00E33927 /* Supporting Files */,
 				D200B54D1F93BAD700482053 /* Products */,
 				E024B6D102317037C8999D68 /* Pods */,
@@ -141,7 +143,7 @@
 				TargetAttributes = {
 					D200B54B1F93BAD700482053 = {
 						CreatedOnToolsVersion = 9.1;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -217,10 +219,12 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-RxSwiftPlayground/Pods-RxSwiftPlayground-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -316,6 +320,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -365,6 +370,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -374,14 +380,13 @@
 			baseConfigurationReference = 747096812AFE4E21151D0E64 /* Pods-RxSwiftPlayground.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = CX893E63R7;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = RxSwiftPlayground/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.raywenderlich.RxSwiftPlayground;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -391,14 +396,13 @@
 			baseConfigurationReference = 6FAA7737C4D7FAFF92A9E9E7 /* Pods-RxSwiftPlayground.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = CX893E63R7;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = RxSwiftPlayground/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.raywenderlich.RxSwiftPlayground;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

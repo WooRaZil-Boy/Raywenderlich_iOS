@@ -19,6 +19,8 @@
 		CB4D696B1DE9AD7C00DC0488 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = CB4D696A1DE9AD7C00DC0488 /* LICENSE */; };
 		CB4D69701DE9C70100DC0488 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4D696E1DE9C70100DC0488 /* Appearance.swift */; };
 		CB4D69711DE9C70100DC0488 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4D696F1DE9C70100DC0488 /* Colors.swift */; };
+		EF9D03652081FA1F009D4D5C /* CLLocationManager+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9D03642081FA1F009D4D5C /* CLLocationManager+Rx.swift */; };
+		EF9D0367208288D3009D4D5C /* MKMapView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9D0366208288D3009D4D5C /* MKMapView+Rx.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		CB4D696A1DE9AD7C00DC0488 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		CB4D696E1DE9C70100DC0488 /* Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 		CB4D696F1DE9C70100DC0488 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		EF9D03642081FA1F009D4D5C /* CLLocationManager+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationManager+Rx.swift"; sourceTree = "<group>"; };
+		EF9D0366208288D3009D4D5C /* MKMapView+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapView+Rx.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +97,7 @@
 			children = (
 				CB4D69671DE9AD5100DC0488 /* Assets */,
 				CB4D69631DE9AD2A00DC0488 /* Controllers */,
+				EF9D03632081F9A9009D4D5C /* Extensions */,
 				CB4D69641DE9AD2A00DC0488 /* Utils */,
 				CB4D69401DE9A7D100DC0488 /* AppDelegate.swift */,
 				CB4D69421DE9A7D100DC0488 /* ViewController.swift */,
@@ -128,6 +133,15 @@
 				CB4D696A1DE9AD7C00DC0488 /* LICENSE */,
 			);
 			path = Assets;
+			sourceTree = "<group>";
+		};
+		EF9D03632081F9A9009D4D5C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				EF9D03642081FA1F009D4D5C /* CLLocationManager+Rx.swift */,
+				EF9D0366208288D3009D4D5C /* MKMapView+Rx.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -269,6 +283,8 @@
 				CB4D69431DE9A7D100DC0488 /* ViewController.swift in Sources */,
 				CB4D69711DE9C70100DC0488 /* Colors.swift in Sources */,
 				CB4D69411DE9A7D100DC0488 /* AppDelegate.swift in Sources */,
+				EF9D0367208288D3009D4D5C /* MKMapView+Rx.swift in Sources */,
+				EF9D03652081FA1F009D4D5C /* CLLocationManager+Rx.swift in Sources */,
 				CB4D69661DE9AD3300DC0488 /* ApiController.swift in Sources */,
 				CB4D69701DE9C70100DC0488 /* Appearance.swift in Sources */,
 			);

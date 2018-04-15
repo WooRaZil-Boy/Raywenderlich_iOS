@@ -24,6 +24,8 @@ import Foundation
 import RxSwift
 import RxCocoa
 import SwiftyJSON
+import CoreLocation
+import MapKit
 
 class ApiController {
 
@@ -32,13 +34,75 @@ class ApiController {
     let temperature: Int
     let humidity: Int
     let icon: String
+    let lat: Double
+    let lon: Double
 
     static let empty = Weather(
       cityName: "Unknown",
       temperature: -1000,
       humidity: 0,
-      icon: iconNameToChar(icon: "e")
+      icon: iconNameToChar(icon: "e"),
+      lat: 0,
+      lon: 0
     )
+    
+    static let dummy = Weather(
+        cityName: "RxCity",
+        temperature: 20,
+        humidity: 90,
+        icon: iconNameToChar(icon: "01d"),
+        lat: 0,
+        lon: 0
+    )
+    
+    var coordinate: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: lat, longitude: lon)
+    }
+    
+    func overlay() -> Overlay { //오버레이로 변환
+        let coordinates: [CLLocationCoordinate2D] = [
+            CLLocationCoordinate2D(latitude: lat - 0.25, longitude: lon - 0.25),
+            CLLocationCoordinate2D(latitude: lat + 0.25, longitude: lon + 0.25)
+        ]
+        let points = coordinates.map { MKMapPointForCoordinate($0) }
+        let rects = points.map { MKMapRect(origin: $0, size: MKMapSize(width: 0, height: 0)) }
+        let fittingRect = rects.reduce(MKMapRectNull, MKMapRectUnion)
+        return Overlay(icon: icon, coordinate: coordinate, boundingMapRect: fittingRect)
+    }
+    
+    public class Overlay: NSObject, MKOverlay { //오버레이 뷰에 전달하여 실제 데이터를 지도에 렌더링할 객체
+        //오버레이를 표현하는 데 필요한 정보(좌표, 직사각형 영역, 아이콘)만 있으면 된다.
+        var coordinate: CLLocationCoordinate2D
+        var boundingMapRect: MKMapRect
+        let icon: String
+        
+        init(icon: String, coordinate: CLLocationCoordinate2D, boundingMapRect: MKMapRect) {
+            self.coordinate = coordinate
+            self.boundingMapRect = boundingMapRect
+            self.icon = icon
+        }
+    }
+    
+    public class OverlayView: MKOverlayRenderer { //오버레이 렌더링 담당
+        //오버레이 인스턴스와 아이콘 문자열로 새 인스턴스 생성
+        var overlayIcon: String
+        
+        init(overlay:MKOverlay, overlayIcon:String) {
+            self.overlayIcon = overlayIcon
+            super.init(overlay: overlay)
+        }
+        
+        public override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
+            let imageReference = imageFromText(text: overlayIcon as NSString, font: UIFont(name: "Flaticon", size: 32.0)!).cgImage
+            //해당 텍스트를 이미지로 변환
+            let theMapRect = overlay.boundingMapRect
+            let theRect = rect(for: theMapRect)
+            
+            context.scaleBy(x: 1.0, y: -1.0)
+            context.translateBy(x: 0.0, y: -theRect.size.height)
+            context.draw(imageReference!, in: theRect)
+        }
+    }
   }
 
   /// The shared instance
@@ -46,7 +110,7 @@ class ApiController {
 
   /// The api key to communicate with openweathermap.org
   /// Create you own on https://home.openweathermap.org/users/sign_up
-  private let apiKey = "5f45591484d2746f630e3c728d56e98f"
+  private let apiKey = ""
 
   /// API base URL
   let baseURL = URL(string: "http://api.openweathermap.org/data/2.5")!
@@ -81,10 +145,26 @@ class ApiController {
                 cityName: json["name"].string ?? "Unknown",
                 temperature: json["main"]["temp"].int ?? -1000,
                 humidity: json["main"]["humidity"].int  ?? 0,
-                icon: iconNameToChar(icon: json["weather"][0]["icon"].string ?? "e")
+                icon: iconNameToChar(icon: json["weather"][0]["icon"].string ?? "e"),
+                lat: json["coord"]["lat"].double ?? 0,
+                lon: json["coord"]["lon"].double ?? 0
             )
         }
   }
+    
+    func currentWeather(lat: Double, lon:Double) -> Observable<Weather> {
+        //위도와 경도로 날씨 가져오는 메서드
+        return buildRequest(pathComponent: "weather", params: [("lat", "\(lat)"), ("lon", "\(lon)")]).map() { json in
+            return Weather(
+                cityName: json["name"].string ?? "Unknown",
+                temperature: json["main"]["temp"].int ?? -1000,
+                humidity: json["main"]["humidity"].int  ?? 0,
+                icon: iconNameToChar(icon: json["weather"][0]["icon"].string ?? "e"),
+                lat: json["coord"]["lat"].double ?? 0,
+                lon: json["coord"]["lon"].double ?? 0
+            )
+        }
+    }
 
   //MARK: - Private Methods
 
@@ -155,4 +235,17 @@ public func iconNameToChar(icon: String) -> String { //JSON의 icon 코드를 UT
   default:
     return "E"
   }
+}
+
+fileprivate func imageFromText(text: NSString, font: UIFont) -> UIImage {
+    
+    let size = text.size(withAttributes: [NSAttributedStringKey.font: font])
+    
+    UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+    text.draw(at: CGPoint(x: 0, y:0), withAttributes: [NSAttributedStringKey.font: font])
+    
+    let image = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    
+    return image ?? UIImage()
 }

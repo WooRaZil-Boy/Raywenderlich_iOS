@@ -19,6 +19,8 @@
 		CB4D696B1DE9AD7C00DC0488 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = CB4D696A1DE9AD7C00DC0488 /* LICENSE */; };
 		CB4D69701DE9C70100DC0488 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4D696E1DE9C70100DC0488 /* Appearance.swift */; };
 		CB4D69711DE9C70100DC0488 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4D696F1DE9C70100DC0488 /* Colors.swift */; };
+		EF2725342084C74A000F904D /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2725322084C74A000F904D /* InfoView.swift */; };
+		EF2725352084C74A000F904D /* InfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF2725332084C74A000F904D /* InfoView.xib */; };
 		EF9D03652081FA1F009D4D5C /* CLLocationManager+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9D03642081FA1F009D4D5C /* CLLocationManager+Rx.swift */; };
 		EF9D0367208288D3009D4D5C /* MKMapView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9D0366208288D3009D4D5C /* MKMapView+Rx.swift */; };
 /* End PBXBuildFile section */
@@ -40,6 +42,8 @@
 		CB4D696A1DE9AD7C00DC0488 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		CB4D696E1DE9C70100DC0488 /* Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 		CB4D696F1DE9C70100DC0488 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		EF2725322084C74A000F904D /* InfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
+		EF2725332084C74A000F904D /* InfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoView.xib; sourceTree = "<group>"; };
 		EF9D03642081FA1F009D4D5C /* CLLocationManager+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationManager+Rx.swift"; sourceTree = "<group>"; };
 		EF9D0366208288D3009D4D5C /* MKMapView+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapView+Rx.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,6 +124,7 @@
 		CB4D69641DE9AD2A00DC0488 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				EF2725312084C735000F904D /* InfoView */,
 				CB4D696E1DE9C70100DC0488 /* Appearance.swift */,
 				CB4D696F1DE9C70100DC0488 /* Colors.swift */,
 			);
@@ -133,6 +138,15 @@
 				CB4D696A1DE9AD7C00DC0488 /* LICENSE */,
 			);
 			path = Assets;
+			sourceTree = "<group>";
+		};
+		EF2725312084C735000F904D /* InfoView */ = {
+			isa = PBXGroup;
+			children = (
+				EF2725322084C74A000F904D /* InfoView.swift */,
+				EF2725332084C74A000F904D /* InfoView.xib */,
+			);
+			path = InfoView;
 			sourceTree = "<group>";
 		};
 		EF9D03632081F9A9009D4D5C /* Extensions */ = {
@@ -209,6 +223,7 @@
 				CB4D696B1DE9AD7C00DC0488 /* LICENSE in Resources */,
 				CB4D694B1DE9A7D100DC0488 /* LaunchScreen.storyboard in Resources */,
 				CB4D69481DE9A7D100DC0488 /* Assets.xcassets in Resources */,
+				EF2725352084C74A000F904D /* InfoView.xib in Resources */,
 				CB4D69611DE9A7F100DC0488 /* Podfile in Resources */,
 				CB4D69461DE9A7D100DC0488 /* Main.storyboard in Resources */,
 				CB4D69691DE9AD6200DC0488 /* weather.ttf in Resources */,
@@ -280,6 +295,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF2725342084C74A000F904D /* InfoView.swift in Sources */,
 				CB4D69431DE9A7D100DC0488 /* ViewController.swift in Sources */,
 				CB4D69711DE9C70100DC0488 /* Colors.swift in Sources */,
 				CB4D69411DE9A7D100DC0488 /* AppDelegate.swift in Sources */,

@@ -28,6 +28,12 @@ import CoreLocation
 import MapKit
 
 class ApiController {
+    
+    enum ApiError: Error { //Custom Error
+        case cityNotFound //404
+        case serverFailure //502
+        case invalidKey //인증 에러
+    }
 
   struct Weather { //JSON 매핑
     let cityName: String
@@ -110,7 +116,7 @@ class ApiController {
 
   /// The api key to communicate with openweathermap.org
   /// Create you own on https://home.openweathermap.org/users/sign_up
-  private let apiKey = ""
+  let apiKey = BehaviorSubject(value: "")
 
   /// API base URL
   let baseURL = URL(string: "http://api.openweathermap.org/data/2.5")!
@@ -172,34 +178,53 @@ class ApiController {
    * Private method to build a request with RxCocoa
    */
   private func buildRequest(method: String = "GET", pathComponent: String, params: [(String, String)]) -> Observable<JSON> {
-
-    let url = baseURL.appendingPathComponent(pathComponent)
-    var request = URLRequest(url: url)
-    let keyQueryItem = URLQueryItem(name: "appid", value: apiKey)
-    let unitsQueryItem = URLQueryItem(name: "units", value: "metric")
-    let urlComponents = NSURLComponents(url: url, resolvingAgainstBaseURL: true)!
-
-    if method == "GET" {
-      var queryItems = params.map { URLQueryItem(name: $0.0, value: $0.1) }
-      queryItems.append(keyQueryItem)
-      queryItems.append(unitsQueryItem)
-      urlComponents.queryItems = queryItems
-    } else {
-      urlComponents.queryItems = [keyQueryItem, unitsQueryItem]
-
-      let jsonData = try! JSONSerialization.data(withJSONObject: params, options: .prettyPrinted)
-      request.httpBody = jsonData
+    
+    let request: Observable<URLRequest> = Observable.create() { observer in
+        let url = self.baseURL.appendingPathComponent(pathComponent)
+        var request = URLRequest(url: url)
+        let keyQueryItem = URLQueryItem(name: "appid", value: try? self.apiKey.value())
+        let unitsQueryItem = URLQueryItem(name: "units", value: "metric")
+        let urlComponents = NSURLComponents(url: url, resolvingAgainstBaseURL: true)!
+        
+        if method == "GET" {
+            var queryItems = params.map { URLQueryItem(name: $0.0, value: $0.1) }
+            queryItems.append(keyQueryItem)
+            queryItems.append(unitsQueryItem)
+            urlComponents.queryItems = queryItems
+        } else {
+            urlComponents.queryItems = [keyQueryItem, unitsQueryItem]
+            
+            let jsonData = try! JSONSerialization.data(withJSONObject: params, options: .prettyPrinted)
+            request.httpBody = jsonData
+        }
+        
+        request.url = urlComponents.url!
+        request.httpMethod = method
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        observer.onNext(request)
+        observer.onCompleted()
+        
+        return Disposables.create()
     }
 
-    request.url = urlComponents.url!
-    request.httpMethod = method
-
-    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
     let session = URLSession.shared
 
-//    return session.rx.data(request: request).map { JSON(data: $0) }
-    return session.rx.data(request: request).map { try! JSON(data: $0) }
+    return request.flatMap() { request in //커스텀 에러를 처리할 수 있다.
+        return session.rx.response(request: request).map() { response, data in
+            if 200 ..< 300 ~= response.statusCode { //200 ~ 300 범위의 상태 코드 : 정상
+                return try JSON(data: data)
+            } else if response.statusCode == 401 { //인증 오류. 401 일때 발생해야 한다. : 에러
+                throw ApiError.invalidKey
+            } else if 400 ..< 500 ~= response.statusCode { //400 ~ 500 범위의 상태 코드 : 에러
+                throw ApiError.cityNotFound
+            } else { //에러
+                throw ApiError.serverFailure
+            }
+        }
+    }
   }
 
 }

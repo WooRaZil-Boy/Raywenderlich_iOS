@@ -88,6 +88,16 @@
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="zj7-Ae-6mV">
                                 <rect key="frame" x="169" y="315" width="37" height="37"/>
                             </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ThZ-CD-usa">
+                                <rect key="frame" x="165" y="612" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="gKG-R2-tRH"/>
+                                    <constraint firstAttribute="width" constant="44" id="q2N-bP-5KR"/>
+                                </constraints>
+                                <state key="normal" image="key">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -99,6 +109,7 @@
                             <constraint firstItem="AVB-Kk-0Up" firstAttribute="top" secondItem="Hxb-qi-lQ7" secondAttribute="bottom" constant="8" id="E7K-Ku-Vbf"/>
                             <constraint firstItem="l9L-eJ-c1O" firstAttribute="top" secondItem="hld-LJ-zLM" secondAttribute="bottom" constant="11" id="G3S-Px-urE"/>
                             <constraint firstItem="d7v-cj-6nj" firstAttribute="top" secondItem="GQR-2F-QCI" secondAttribute="bottom" constant="16" id="Gjk-ek-Nm3"/>
+                            <constraint firstItem="ThZ-CD-usa" firstAttribute="centerY" secondItem="hld-LJ-zLM" secondAttribute="centerY" id="KDI-hv-wcD"/>
                             <constraint firstItem="Hxb-qi-lQ7" firstAttribute="centerX" secondItem="m4a-bo-ZTE" secondAttribute="centerX" id="MGr-rz-qsf"/>
                             <constraint firstItem="l9L-eJ-c1O" firstAttribute="top" secondItem="hoz-ZU-Ovt" secondAttribute="bottom" constant="11" id="NPC-qf-xFg"/>
                             <constraint firstItem="bSK-yl-tCi" firstAttribute="leading" secondItem="m4a-bo-ZTE" secondAttribute="leading" id="Nkx-fh-ENd"/>
@@ -112,6 +123,7 @@
                             <constraint firstItem="bSK-yl-tCi" firstAttribute="top" secondItem="d7v-cj-6nj" secondAttribute="bottom" constant="32" id="cTB-RJ-dh8"/>
                             <constraint firstItem="d7v-cj-6nj" firstAttribute="leading" secondItem="m4a-bo-ZTE" secondAttribute="leadingMargin" id="eiX-rX-cMp"/>
                             <constraint firstItem="Hxb-qi-lQ7" firstAttribute="top" secondItem="TLw-YE-S2h" secondAttribute="bottom" constant="8" id="h2m-ab-gsn"/>
+                            <constraint firstItem="ThZ-CD-usa" firstAttribute="centerX" secondItem="m4a-bo-ZTE" secondAttribute="centerX" id="muw-pp-V2y"/>
                             <constraint firstItem="AVB-Kk-0Up" firstAttribute="centerX" secondItem="Hxb-qi-lQ7" secondAttribute="centerX" id="nQa-Uh-5m9"/>
                             <constraint firstAttribute="trailingMargin" secondItem="d7v-cj-6nj" secondAttribute="trailing" id="pa5-2z-njh"/>
                             <constraint firstItem="Hxb-qi-lQ7" firstAttribute="leading" secondItem="m4a-bo-ZTE" secondAttribute="leading" constant="32" id="xGg-wD-VOz"/>
@@ -123,6 +135,7 @@
                         <outlet property="geoLocationButton" destination="hld-LJ-zLM" id="ssD-0h-cj8"/>
                         <outlet property="humidityLabel" destination="TLw-YE-S2h" id="zgM-9f-IoA"/>
                         <outlet property="iconLabel" destination="Hxb-qi-lQ7" id="Ja3-pQ-svG"/>
+                        <outlet property="keyButton" destination="ThZ-CD-usa" id="7Z1-hN-434"/>
                         <outlet property="mapButton" destination="hoz-ZU-Ovt" id="eW1-bC-OUu"/>
                         <outlet property="mapView" destination="bSK-yl-tCi" id="l9l-E3-hwq"/>
                         <outlet property="searchCityName" destination="d7v-cj-6nj" id="qib-HE-Oto"/>
@@ -135,6 +148,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="key" width="32" height="32"/>
         <image name="map" width="32" height="31"/>
         <image name="place-location" width="24" height="32"/>
     </resources>

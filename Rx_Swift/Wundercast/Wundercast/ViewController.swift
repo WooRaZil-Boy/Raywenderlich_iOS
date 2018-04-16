@@ -26,8 +26,13 @@ import RxCocoa
 import MapKit
 import CoreLocation
 
-class ViewController: UIViewController {
+fileprivate let maxAttempts = 4 //오류 발생 시 재 시도할 최대 횟수
 
+typealias Weather = ApiController.Weather
+
+class ViewController: UIViewController {
+    
+    @IBOutlet weak var keyButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var mapButton: UIButton!
     @IBOutlet weak var geoLocationButton: UIButton!
@@ -40,11 +45,14 @@ class ViewController: UIViewController {
     
     let bag = DisposeBag()
     let locationManager = CLLocationManager()
+    
+    var keyTextField: UITextField?
+    var cache = [String: Weather]() //Weather데이터 캐시. //오류 발생 시 캐시된 데이터를 활용할 수 있다.
 
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view, typically from a nib.
-
+    
     style()
     
     //각 observable의 선언 위치가 중요
@@ -54,16 +62,125 @@ class ViewController: UIViewController {
         .map { self.searchCityName.text } //입력된 문자열 가져오기
         .filter { ($0 ?? "").count > 0 } //텍스트가 비어 있지 않아야 한다.
     
+    let retryHandler: (Observable<Error>) -> Observable<Int> = { e in
+        //retryWhen에 있던 코드와 인증 에러 통합
+        return e.enumerated() //enumerated로 index와 Observable의 값을 가져올 수 있다.
+            .flatMap { (attempt, error) -> Observable<Int> in //이 앱에선 오류가 도착했을 때, index도 수신되어야 한다(시간 차이).
+                if attempt >= maxAttempts - 1 { //maxAttempts 수 만큼 반복 했는데도 오류가 나면
+                    return Observable.error(error) //오류
+                } else if let casted = error as? ApiController.ApiError, casted == .invalidKey { //인증 오류
+                    //날씨 정보 요청 위한 인증 기능(로그인)을 추가한다고 하면, 로그인 여부를 확인할 세션이 생성되고,
+                    //그 세션으로 인증을 처리하게 된다. 세션이 만료된 경우에는 에러나 빈 값을 반환할 수 있다.
+                    //이 경우에 대한 완벽한 해결책은 없지만, 유용한 해결책이 있다.
+                    return ApiController.shared.apiKey
+                        .filter { $0 != "" }
+                        .map { _ in return 1 }
+                }
+                
+                print("== retrying after \(attempt + 1) seconds ==")
+                
+                return Observable<Int>.timer(Double(attempt + 1), scheduler: MainScheduler.instance)
+                //스케줄러(MainScheduler.instance)를 사용하여,
+                //지정된 지연 시간(attempt + 1)이 경과한 후
+                //주기적으로 값을 생성한다. p.294
+                    .take(1)
+            }
+    }
+    
     let textSearch = searchInput
         .flatMap { text in
             //searchCityName.rx의 입력된 text로 currentWeather를 호출해 데이터를 가져온다.
             return ApiController.shared.currentWeather(city: text ?? "Error")
                 //입력된 text로 currentWeather를 호출해 데이터를 가져온다.
-                .catchErrorJustReturn(ApiController.Weather.dummy)
-                //catchErrorJustReturn : 에러가 발생 했을 때 설정해둔 단일 이벤트를 전달한다.
-                //subscribe에서 에러를 감지하는 것이 아닌, Observable에서 에러에 대한 기본 이벤트를 설정하는 연산자.
-                //오류가 발생하면, Observable이 종료 된다. 하지만, 그러면 앱이 더 이상 진행이 안 되기 때문에,
-                //오류가 나더라도 빈 Observable을 반환해 앱이 계속 작동하도록 한다.
+                .do(onNext: { data in
+                    //do 연산자는 Onservable의 각 이벤트에 대한 작업을 호출하고, 메시지를 결과 시퀀스로 전파한다.
+                    //Observable에 영향을 주지 않고 별도의 작업을 수행할 수 있도록해 주는 연산자. (side effect)
+                    //어떤 작업을 추가하더라도 emit하는 이벤트는 변화시키지 않는다.
+                    //이벤트를 다음 연산자로 통과시키지만, do(onNext: )등으로 해당 이벤트 시 핸들러를 추가해 줄 수도 있다.
+                    //ex. never 연산자를 사용 하는 경우 구독을 해도, onNext나 onCompleted의 핸들러가 작동되지 않는다.
+                    //하지만, do(onNext: )연산자를 사용하면, 구독을 해 onNext 이벤트가 발생하면
+                    //do(onNext: )의 핸들러의 내용을 실행한다. never 연산자를 사용한 Observable에는 영향을 끼치지 않으므로
+                    //원본 시퀀스는 그대로 아무 이벤트를 발생 시키지 않고 종료된다.
+                    if let text = text {
+                        self.cache[text] = data //캐싱 //do(onNext: )를 체인에 추가해 캐시에 데이터를 추가한다.
+                    }
+                }, onError: { [weak self] e in //오류 이벤트 시
+                    //보통 오류는 retry나 catch로 처리된다. 하지만 side effect를 발생시키거나 UI 변경(메시지) 등의 작업을 한다면 do 연산자 사용.
+                    //마찬가지로 retryWhen를 사용할 때도 do를 사용할 수 있다.
+                    guard let strongSelf = self else { return }
+                    
+                    DispatchQueue.main.async { //시퀀스가 백그라운드에서 진행되므로 필요하다.
+                        strongSelf.showError(error: e) //오류 메시지 출력
+                    }
+                })
+//                .retry() //오류 발생 시, 다시 성공할 때까지 무제한 반복한다.
+//                .retry(3) //오류 발생 시, 3번 까지 반복한다.
+//                .retryWhen { e in //특정 조건을 만들어 반복한다.
+//                    //여기서는 오류가 발생하면 각각 다른 일정시간(1초, 2초, 3초...) 후에 시도해, 총 4번 재시도를 한다.
+//                    //따라서 오류가 도착했을 때, index도 수신되어야 한다(그래야 시간 차이를 줄 수 있으므로).
+//                    e.enumerated() //enumerated로 index와 Observable의 값을 가져올 수 있다.
+//                        .flatMap { (attempt, error) -> Observable<Int> in
+//                            if attempt >= maxAttempts - 1 { //maxAttempts 수 만큼 반복 했는데도 오류가 나면
+//                                return Observable.error(error) //최종적으로 오류 반환
+//                            }
+//
+//                            print("== retrying after \(attempt + 1) seconds ==")
+//
+//                            return Observable<Int>.timer(Double(attempt + 1), scheduler: MainScheduler.instance)
+//                            //스케줄러(MainScheduler.instance)를 사용하여,
+//                            //지정된 지연 시간(attempt + 1)이 경과한 후
+//                            //주기적으로 값을 생성한다. p.294
+//                                .take(1)
+//                        }
+//                }
+                
+                .retryWhen(retryHandler) //특정 조건을 만들어 반복한다.
+                //여기서는 오류가 발생하면 각각 다른 일정시간(1초, 2초, 3초...) 후에 시도해, 총 4번 재시도를 한다.
+                //인증 오류 시에는 바로 인증 오류를 반환한다.
+                
+                //일반 Swift 코드로 이 구현하려 했다면, GCD를 사용하여 래퍼를 만들고 추상화 하는 등 매우 복잡하다.
+                //내부의 Observable이 어떤 값을 반환해야 하고, 트리거가 어떤 유형이 될 지 미리 고려해야 한다.
+                
+                .catchError { error in
+                    //오류 발생 시 3번 재시도 하고, 그래도 오류가 발생한 경우 catchError에서 처리한다.
+                    //catchErrorJustReturn를 catchError로 대체 한다.
+                    if let text = text, let cachedData = self.cache[text] { //캐싱된 데이터가 있다면
+                        return Observable.just(cachedData) //캐시해둔 데이터를 표시
+                    } else { //캐싱된 데이터가 없다면
+                        return Observable.just(ApiController.Weather.empty) //더미 데이터 반환
+                    }
+                }
+            
+                //RxSwift에서 오류 처리는 Catch, Retry 두 가지 방법이 있다. p.286
+                //• Catch : defaultValue로 error 복구
+                //  Catch는 Swift의 do-try-catch와 유사하며 RxSwift의 Catch에는 두 가지의 주요 연산자가 있다.
+                //  1. func catchError(_ handler:) -> RxSwift.Observable<Self.E> p.287
+                //  이 연산자는 클로저를 파라미터로 해서, Observable을 반환한다.
+                //  이전의 오류 없던 더 이상 사용할 수 없는 값을 반환.
+                //  2. func catchErrorJustReturn(_ element:) -> RxSwift.Observable<Self.E> p.289
+                //  이 연산자는 오류를 무시하고 미리 정의해 둔 default 값을 반환한다.
+                //  오류가 무엇이든 동일한 값이 반환하므로 이전 연산자보다 제한적이다.
+                //• Retry : 제한적으로(혹은 무제한적으로) 반복 시도 하기. p.290
+                //  Retry에는 3가지 유형의 연산자가 있다.
+                //  1. func retry() -> RxSwift.Observable<Self.E>
+                //  이 연산자는 반환이 성공할 때까지 무제한 반복 시도한다. 리소스 소모가 심하므로 횟수에 제한을 두는 것이 좋다.
+                //  2. func retry(_ maxAttemptCount:) -> Observable<E>
+                //  이 연산자는 지정된 횟수만큼 반복 시도한다.
+                //  3. func retryWhen(_ notificationHandler:) -> Observable<E>
+                //  notificationHandler는 Observable이거나 Subject이 될 수 있므며, 임의의 시간에 재시도 하는 트리거이다.
+                //  이 연산자는 특정 조건을 만들어 반복 시도한다.
+                //지금까지는 catchErrorJustReturn으로 간단히 처리했었다. 하지만 앱이 더 복잡해지면 에러 관리가 꼭 필요.
+                //Catch와 Retry를 혼합해 오류 처리를 해 줄 수도 있다.
+            
+                //오류도 Observable chain에서 전파되므로 따로 처리해 주지 않으면,
+                //시작 부분에서 오류가 발생해도 그것이 최종 구독으로 전달된다.
+                //Observable이 오류를 발생 시키면, Observable이 종료되고, 다음 이벤트는 모두 무시된다. p.288
+            
+//                .catchErrorJustReturn(ApiController.Weather.dummy)
+//                //catchErrorJustReturn : 에러가 발생 했을 때 설정해둔 단일 이벤트를 전달한다.
+//                //subscribe에서 에러를 감지하는 것이 아닌, Observable에서 에러에 대한 기본 이벤트를 설정하는 연산자.
+//                //오류가 발생하면, Observable이 종료 된다. 하지만, 그러면 앱이 더 이상 진행이 안 되기 때문에,
+//                //오류가 나더라도 빈 Observable을 반환해 앱이 계속 작동하도록 한다.
         }
     
     let mapInput = mapView.rx.regionDidChangeAnimated //지도에서 이벤트 발생한 경우
@@ -90,8 +207,13 @@ class ViewController: UIViewController {
         //버튼을 클릭하면, 유저의 위치로 API를 호출하고 바인딩해 업데이트 한다. p.270
         //사용자의 위치를 반환하는 Observable이 필요하므로 asObservable()
         .do(onNext: {
+            //do 연산자는 Onservable의 각 이벤트에 대한 작업을 호출하고, 메시지를 결과 시퀀스로 전파한다.
+            //Observable에 영향을 주지 않고 별도의 작업을 수행할 수 있도록해 주는 연산자.
+            //어떤 작업을 추가하더라도 emit하는 이벤트는 변화시키지 않는다.
+            //이벤트를 다음 연산자로 통과시키지만, do(onNext: )등으로 해당 이벤트 시 핸들러를 추가해 줄 수도 있다.
             self.locationManager.requestWhenInUseAuthorization() //권한요청
             self.locationManager.startUpdatingLocation() //위치 업데이트
+            //do(onNext: )를 체인에 추가해 권한을 받고 위치를 업데이트 한다.
         })
     
     let geoLocation = geoInput.flatMap {
@@ -189,13 +311,33 @@ class ViewController: UIViewController {
     mapView.rx.setDelegate(self) //RxProxy에서 호출되지 않은 기본 delegate를 받을 대리자 설정
         .disposed(by: bag)
     
+    keyButton.rx.tap
+        .subscribe(onNext: {
+            self.requestKey()
+        })
+        .disposed(by:bag)
+    
     search.map { [$0.overlay()] } //Weather를 오버레이로 변환.
         .drive(mapView.rx.overlays)
         .disposed(by: bag)
     
-    
-    
-    
+    search.map { "\($0.temperature)° C" }
+      .drive(tempLabel.rx.text) //bind를 drive로 바꿔 준다. 메인 스레드에서만 호출할 수 있다.
+        //드라이버의 기능을 활용하면서 올바른 UI 업데이트가 보장된다. bind(to: )와 매우 비슷하다.
+      .disposed(by:bag)
+
+    search.map { $0.icon }
+      .drive(iconLabel.rx.text)
+      .disposed(by:bag)
+
+    search.map { "\($0.humidity)%" }
+      .drive(humidityLabel.rx.text)
+      .disposed(by:bag)
+
+    search.map { $0.cityName }
+      .drive(cityNameLabel.rx.text)
+      .disposed(by:bag)
+
     
     
     
@@ -445,6 +587,41 @@ class ViewController: UIViewController {
     iconLabel.textColor = UIColor.cream
     cityNameLabel.textColor = UIColor.cream
   }
+    
+    func requestKey() {
+        func configurationTextField(textField: UITextField!) {
+            self.keyTextField = textField
+        }
+        
+        let alert = UIAlertController(title: "Api Key",
+                                      message: "Add the api key:",
+                                      preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addTextField(configurationHandler: configurationTextField)
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler:{ (UIAlertAction) in
+            ApiController.shared.apiKey.onNext(self.keyTextField?.text ?? "")
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive))
+        
+        self.present(alert, animated: true)
+    }
+    
+    func showError(error e: Error) { //오류 별로 다른 메시지 출력
+        if let e = e as? ApiController.ApiError {
+            switch e {
+            case .cityNotFound:
+                InfoView.showIn(viewController: self, message: "City Name is invalid")
+            case .serverFailure:
+                InfoView.showIn(viewController: self, message: "Server error")
+            case .invalidKey:
+                InfoView.showIn(viewController: self, message: "Key is invalid")
+            }
+        } else {
+            InfoView.showIn(viewController: self, message: "An error occurred")
+        }
+    }
 }
 
 extension ViewController: MKMapViewDelegate {
@@ -496,3 +673,23 @@ extension ViewController: MKMapViewDelegate {
 //• Trait로 코드를 안전하게 보호할 수 있다.
 //• Bind와 Drive를 함께 쉽게 사용할 수 있다.
 //• Custom extension의 모든 메커니즘을 제공한다.
+
+//때로는 오류 처리 시에, 오류가 난 시퀀스를 디버깅해야 할 수도 있다.
+//혹은 서드파티 프레임워크를 사용할 때처럼 시퀀스 제어가 제한되거나 불가능해 오류가 발생할 수도 있다.
+//RxSwift는 이런 경우, materialize와 dematerialize를 사용해 해결할 수 있다.
+//• materialize는 어떤 시퀀스든 Event<T> eunm sequence로 변환한다. p.301
+//(Rx의 Event<T> enum에는 next, completed, error의 세 가지 이벤트가 있다.)
+//• demeterialize는 notification sequence를 일반 Observable로 변환한다. p.301
+//이 두 연산자를 결합 해 사용자 지정 이벤트 로그를 만들 수 있다.
+//observableToLog.materialize()
+//    .do(onNext: { (event) in
+//        myAdvancedLogEvent(event)
+//    })
+//    .dematerialize()
+
+//materialize와 dematerialize는 보통 함께 쓰인다. 이 둘을 써서 원본 observable을 완전히 분해할 수 있다.
+//다만, 특정 상황을 처리할 수 있는 다른 옵션이 없을 때만 신중하게 사용해야 한다.
+
+
+
+

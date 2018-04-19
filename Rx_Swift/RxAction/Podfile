@@ -1,0 +1,7 @@
+use_frameworks!
+
+target 'RxAction' do
+    pod 'RxSwift', '~> 4.0.0'
+    pod 'RxCocoa', '~> 4.0.0'
+    pod 'Action'
+end

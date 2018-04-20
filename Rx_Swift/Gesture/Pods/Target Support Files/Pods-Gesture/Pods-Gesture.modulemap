@@ -1,0 +1,6 @@
+framework module Pods_Gesture {
+  umbrella header "Pods-Gesture-umbrella.h"
+
+  export *
+  module * { export * }
+}

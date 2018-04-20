@@ -1,0 +1,5 @@
+use_frameworks!
+
+target 'Gesture' do
+    pod 'RxGesture'
+end

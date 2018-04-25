@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Launch Screen-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" userLabel="Launch Screen" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rwdevcon-bg" translatesAutoresizingMaskIntoConstraints="NO" id="nDW-2k-mV9" userLabel="BG">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rw-logo" translatesAutoresizingMaskIntoConstraints="NO" id="NSB-mf-JWq" userLabel="RWLogo">
+                                <rect key="frame" x="16" y="172" width="343" height="343"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="NSB-mf-JWq" secondAttribute="height" multiplier="1:1" id="2Fi-5M-hsI"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="nDW-2k-mV9" secondAttribute="bottom" id="0Vq-jT-74z"/>
+                            <constraint firstAttribute="top" secondItem="nDW-2k-mV9" secondAttribute="top" id="6qw-qs-XaK"/>
+                            <constraint firstItem="NSB-mf-JWq" firstAttribute="leading" secondItem="cVJ-b1-HWd" secondAttribute="leading" constant="16" id="BHA-8N-gZC"/>
+                            <constraint firstItem="nDW-2k-mV9" firstAttribute="leading" secondItem="cVJ-b1-HWd" secondAttribute="leading" id="CTP-1T-qoL"/>
+                            <constraint firstItem="cVJ-b1-HWd" firstAttribute="trailing" secondItem="NSB-mf-JWq" secondAttribute="trailing" constant="16" id="Pty-Lc-Xhd"/>
+                            <constraint firstItem="NSB-mf-JWq" firstAttribute="centerX" secondItem="cVJ-b1-HWd" secondAttribute="centerX" id="R7B-pm-2Re"/>
+                            <constraint firstItem="NSB-mf-JWq" firstAttribute="centerY" secondItem="cVJ-b1-HWd" secondAttribute="centerY" id="bAt-10-7mw"/>
+                            <constraint firstItem="cVJ-b1-HWd" firstAttribute="trailing" secondItem="nDW-2k-mV9" secondAttribute="trailing" id="m7O-uu-N5M"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="cVJ-b1-HWd"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="rw-logo" width="512" height="512"/>
+        <image name="rwdevcon-bg" width="1104" height="1104"/>
+    </resources>
+</document>

@@ -1,0 +1,8 @@
+use_frameworks!
+inhibit_all_warnings!
+platform :ios, '11.3'
+pod 'RealmSwift', '3.3.0'
+
+target 'FlashCards'
+target 'FlashCardsTodayExt'
+target 'FlashCardsTests'

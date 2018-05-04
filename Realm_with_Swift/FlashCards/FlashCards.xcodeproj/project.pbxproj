@@ -1,0 +1,1024 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		234D0BABA9B07042E327C4D4 /* Pods_FlashCards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B51560588D78B74B62C05590 /* Pods_FlashCards.framework */; };
+		417336B073C3D293298F7BFE /* Pods_FlashCardsTodayExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F06067F2650A9CBBF624F7 /* Pods_FlashCardsTodayExt.framework */; };
+		9C21A4892011EB5100F79C05 /* WordOfTodayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C21A4882011EB5100F79C05 /* WordOfTodayViewModelTests.swift */; };
+		9C21A4BF2011F86A00F79C05 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C21A4BE2011F86900F79C05 /* Tools.swift */; };
+		9C6F51BD200E06360083154F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F51BC200E06360083154F /* AppDelegate.swift */; };
+		9C6F51BF200E06360083154F /* SetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F51BE200E06360083154F /* SetsViewController.swift */; };
+		9C6F51C2200E06360083154F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C6F51C0200E06360083154F /* Main.storyboard */; };
+		9C6F51C4200E06360083154F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C6F51C3200E06360083154F /* Assets.xcassets */; };
+		9C6F51C7200E06360083154F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C6F51C5200E06360083154F /* LaunchScreen.storyboard */; };
+		9C6F51D1200E07CE0083154F /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F51D0200E07CE0083154F /* CardsViewController.swift */; };
+		9C6F51D5200E0BBD0083154F /* SetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F51D4200E0BBD0083154F /* SetTableViewCell.swift */; };
+		9C6F51D7200E10F10083154F /* CardsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F51D6200E10F10083154F /* CardsAPI.swift */; };
+		9C6F51D9200E16540083154F /* RealmProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F51D8200E16540083154F /* RealmProvider.swift */; };
+		9C6F51DC200E170B0083154F /* UITableView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F51DA200E170B0083154F /* UITableView+Ext.swift */; };
+		9C6F51DD200E170B0083154F /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F51DB200E170B0083154F /* Path.swift */; };
+		9CEF91A7200F575F003102AA /* bundledSets.realm in Resources */ = {isa = PBXBuildFile; fileRef = 9CEF91A6200F575F003102AA /* bundledSets.realm */; };
+		9CEF91A9200F58D4003102AA /* UIAlertController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF91A8200F58D4003102AA /* UIAlertController+Ext.swift */; };
+		9CEF91B2200F6546003102AA /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CEF91B1200F6546003102AA /* NotificationCenter.framework */; };
+		9CEF91B5200F6546003102AA /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF91B4200F6546003102AA /* TodayViewController.swift */; };
+		9CEF91B8200F6546003102AA /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CEF91B6200F6546003102AA /* MainInterface.storyboard */; };
+		9CEF91BC200F6546003102AA /* FlashCardsTodayExt.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 9CEF91B0200F6546003102AA /* FlashCardsTodayExt.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9CEF91C2200F6ADB003102AA /* RealmProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F51D8200E16540083154F /* RealmProvider.swift */; };
+		9CEF91C3200F6AE2003102AA /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F51DB200E170B0083154F /* Path.swift */; };
+		9CEF91C5200F6B5D003102AA /* WordOfDayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF91C4200F6B5D003102AA /* WordOfDayModel.swift */; };
+		9CEF91C6200F6B6F003102AA /* WordOfDayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF91C4200F6B5D003102AA /* WordOfDayModel.swift */; };
+		9CEF91C8200F742A003102AA /* WordOfDayTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF91C7200F742A003102AA /* WordOfDayTableViewController.swift */; };
+		9CEF91CF200FBF0D003102AA /* bundledWords.realm in Resources */ = {isa = PBXBuildFile; fileRef = 9CEF91CE200FBF0D003102AA /* bundledWords.realm */; };
+		9CEF91D22010998B003102AA /* WordOfDayList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF91D12010998B003102AA /* WordOfDayList.swift */; };
+		9CEF91D4201099A3003102AA /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF91D3201099A3003102AA /* Entry.swift */; };
+		9CEF91D6201099C2003102AA /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF91D5201099C2003102AA /* Settings.swift */; };
+		9CEF91DB201099FA003102AA /* FlashCardSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF91DA201099FA003102AA /* FlashCardSet.swift */; };
+		9CEF91DD20109A19003102AA /* FlashCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF91DC20109A19003102AA /* FlashCard.swift */; };
+		9CEF91E120109A5B003102AA /* WordOfDayList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF91D12010998B003102AA /* WordOfDayList.swift */; };
+		9CEF91E220109A5B003102AA /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF91D3201099A3003102AA /* Entry.swift */; };
+		9CEF91E320109A5B003102AA /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF91D5201099C2003102AA /* Settings.swift */; };
+		9CEF91E420109A5B003102AA /* FlashCardSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF91DA201099FA003102AA /* FlashCardSet.swift */; };
+		9CEF91E520109A5B003102AA /* FlashCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF91DC20109A19003102AA /* FlashCard.swift */; };
+		9CEF91F220109F06003102AA /* CardsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF91F120109F06003102AA /* CardsModel.swift */; };
+		9CEF91F42010A019003102AA /* SetsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF91F32010A019003102AA /* SetsViewModel.swift */; };
+		9CEF92082010A61E003102AA /* TestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF92072010A61E003102AA /* TestExtensions.swift */; };
+		9CEF92102010A75F003102AA /* SetsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF920F2010A75F003102AA /* SetsViewModelTests.swift */; };
+		9CEF92112010A7B6003102AA /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F51DB200E170B0083154F /* Path.swift */; };
+		9CEF921B2010B97B003102AA /* CardsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF921A2010B97B003102AA /* CardsViewModel.swift */; };
+		9CEF921D2010BA12003102AA /* UIStoryboard+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF921C2010BA12003102AA /* UIStoryboard+Ext.swift */; };
+		9CEF921F2010BE61003102AA /* CardsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF921E2010BE61003102AA /* CardsViewModelTests.swift */; };
+		9CEF92212010C070003102AA /* WordOfTodayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF92202010C070003102AA /* WordOfTodayViewModel.swift */; };
+		9CEF92232010C627003102AA /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF92222010C627003102AA /* SettingsModel.swift */; };
+		B8A1DDBB5BF08FB9A2B62DC6 /* Pods_FlashCardsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3134170AB78436C9B5DE872 /* Pods_FlashCardsTests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9CEF91BA200F6546003102AA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9C6F51B1200E06360083154F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9CEF91AF200F6546003102AA;
+			remoteInfo = FlashCardsTodayExt;
+		};
+		9CEF92002010A577003102AA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9C6F51B1200E06360083154F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9C6F51B8200E06360083154F;
+			remoteInfo = FlashCards;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9CEF91C0200F6546003102AA /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				9CEF91BC200F6546003102AA /* FlashCardsTodayExt.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0889E850B2E9395D0BFBA1CF /* Pods-FlashCards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlashCards.release.xcconfig"; path = "Pods/Target Support Files/Pods-FlashCards/Pods-FlashCards.release.xcconfig"; sourceTree = "<group>"; };
+		15F7042F8FD9D487A4BC82CB /* Pods-FlashCardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlashCardsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FlashCardsTests/Pods-FlashCardsTests.release.xcconfig"; sourceTree = "<group>"; };
+		5AC6AD315D50A420219940EA /* Pods-FlashCardsTodayExt.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlashCardsTodayExt.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FlashCardsTodayExt/Pods-FlashCardsTodayExt.debug.xcconfig"; sourceTree = "<group>"; };
+		84448458C1729DF079031EC7 /* Pods-FlashCardsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlashCardsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FlashCardsTests/Pods-FlashCardsTests.debug.xcconfig"; sourceTree = "<group>"; };
+		8D4F0CAC3A60D6178C333CC1 /* Pods-FlashCards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlashCards.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FlashCards/Pods-FlashCards.debug.xcconfig"; sourceTree = "<group>"; };
+		9C21A4872011EA0C00F79C05 /* RealmsSchema.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = RealmsSchema.pdf; sourceTree = "<group>"; };
+		9C21A4882011EB5100F79C05 /* WordOfTodayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordOfTodayViewModelTests.swift; sourceTree = "<group>"; };
+		9C21A4BE2011F86900F79C05 /* Tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
+		9C247910200F415900399102 /* FlashCards.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FlashCards.entitlements; sourceTree = "<group>"; };
+		9C6F51B9200E06360083154F /* FlashCards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlashCards.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C6F51BC200E06360083154F /* AppDelegate.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; tabWidth = 2; };
+		9C6F51BE200E06360083154F /* SetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetsViewController.swift; sourceTree = "<group>"; };
+		9C6F51C1200E06360083154F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9C6F51C3200E06360083154F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9C6F51C6200E06360083154F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9C6F51C8200E06360083154F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9C6F51D0200E07CE0083154F /* CardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
+		9C6F51D4200E0BBD0083154F /* SetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTableViewCell.swift; sourceTree = "<group>"; };
+		9C6F51D6200E10F10083154F /* CardsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsAPI.swift; sourceTree = "<group>"; };
+		9C6F51D8200E16540083154F /* RealmProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmProvider.swift; sourceTree = "<group>"; };
+		9C6F51DA200E170B0083154F /* UITableView+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Ext.swift"; sourceTree = "<group>"; };
+		9C6F51DB200E170B0083154F /* Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
+		9CEF91A6200F575F003102AA /* bundledSets.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = bundledSets.realm; sourceTree = "<group>"; };
+		9CEF91A8200F58D4003102AA /* UIAlertController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Ext.swift"; sourceTree = "<group>"; };
+		9CEF91B0200F6546003102AA /* FlashCardsTodayExt.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FlashCardsTodayExt.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CEF91B1200F6546003102AA /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		9CEF91B4200F6546003102AA /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
+		9CEF91B7200F6546003102AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		9CEF91B9200F6546003102AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9CEF91C1200F654F003102AA /* FlashCardsTodayExt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FlashCardsTodayExt.entitlements; sourceTree = "<group>"; };
+		9CEF91C4200F6B5D003102AA /* WordOfDayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordOfDayModel.swift; sourceTree = "<group>"; };
+		9CEF91C7200F742A003102AA /* WordOfDayTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordOfDayTableViewController.swift; sourceTree = "<group>"; };
+		9CEF91CE200FBF0D003102AA /* bundledWords.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = bundledWords.realm; sourceTree = "<group>"; };
+		9CEF91D12010998B003102AA /* WordOfDayList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordOfDayList.swift; sourceTree = "<group>"; };
+		9CEF91D3201099A3003102AA /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
+		9CEF91D5201099C2003102AA /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		9CEF91DA201099FA003102AA /* FlashCardSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashCardSet.swift; sourceTree = "<group>"; };
+		9CEF91DC20109A19003102AA /* FlashCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashCard.swift; sourceTree = "<group>"; };
+		9CEF91F120109F06003102AA /* CardsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsModel.swift; sourceTree = "<group>"; };
+		9CEF91F32010A019003102AA /* SetsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetsViewModel.swift; sourceTree = "<group>"; };
+		9CEF91FB2010A577003102AA /* FlashCardsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlashCardsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CEF91FF2010A577003102AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9CEF92072010A61E003102AA /* TestExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestExtensions.swift; sourceTree = "<group>"; };
+		9CEF920F2010A75F003102AA /* SetsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetsViewModelTests.swift; sourceTree = "<group>"; };
+		9CEF921A2010B97B003102AA /* CardsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsViewModel.swift; sourceTree = "<group>"; };
+		9CEF921C2010BA12003102AA /* UIStoryboard+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+Ext.swift"; sourceTree = "<group>"; };
+		9CEF921E2010BE61003102AA /* CardsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsViewModelTests.swift; sourceTree = "<group>"; };
+		9CEF92202010C070003102AA /* WordOfTodayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordOfTodayViewModel.swift; sourceTree = "<group>"; };
+		9CEF92222010C627003102AA /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
+		A3134170AB78436C9B5DE872 /* Pods_FlashCardsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlashCardsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A57B397BF4B07910CD1BE432 /* Pods-FlashCardsTodayExt.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlashCardsTodayExt.release.xcconfig"; path = "Pods/Target Support Files/Pods-FlashCardsTodayExt/Pods-FlashCardsTodayExt.release.xcconfig"; sourceTree = "<group>"; };
+		B51560588D78B74B62C05590 /* Pods_FlashCards.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlashCards.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5F06067F2650A9CBBF624F7 /* Pods_FlashCardsTodayExt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlashCardsTodayExt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9C6F51B6200E06360083154F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				234D0BABA9B07042E327C4D4 /* Pods_FlashCards.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9CEF91AD200F6546003102AA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9CEF91B2200F6546003102AA /* NotificationCenter.framework in Frameworks */,
+				417336B073C3D293298F7BFE /* Pods_FlashCardsTodayExt.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9CEF91F82010A577003102AA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B8A1DDBB5BF08FB9A2B62DC6 /* Pods_FlashCardsTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4F5D7BC925F92EC488FFE08D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8D4F0CAC3A60D6178C333CC1 /* Pods-FlashCards.debug.xcconfig */,
+				0889E850B2E9395D0BFBA1CF /* Pods-FlashCards.release.xcconfig */,
+				84448458C1729DF079031EC7 /* Pods-FlashCardsTests.debug.xcconfig */,
+				15F7042F8FD9D487A4BC82CB /* Pods-FlashCardsTests.release.xcconfig */,
+				5AC6AD315D50A420219940EA /* Pods-FlashCardsTodayExt.debug.xcconfig */,
+				A57B397BF4B07910CD1BE432 /* Pods-FlashCardsTodayExt.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		68C6DF4875C2B1F4CA02EBDE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9CEF91B1200F6546003102AA /* NotificationCenter.framework */,
+				B51560588D78B74B62C05590 /* Pods_FlashCards.framework */,
+				A3134170AB78436C9B5DE872 /* Pods_FlashCardsTests.framework */,
+				C5F06067F2650A9CBBF624F7 /* Pods_FlashCardsTodayExt.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		786A9E2D202797DF00B927D7 /* Realms */ = {
+			isa = PBXGroup;
+			children = (
+				9CEF91A6200F575F003102AA /* bundledSets.realm */,
+				9CEF91CE200FBF0D003102AA /* bundledWords.realm */,
+			);
+			path = Realms;
+			sourceTree = "<group>";
+		};
+		9C21A4BD2011F86900F79C05 /* FlashCardsTooling */ = {
+			isa = PBXGroup;
+			children = (
+				9C21A4BE2011F86900F79C05 /* Tools.swift */,
+			);
+			path = FlashCardsTooling;
+			sourceTree = "<group>";
+		};
+		9C6F51B0200E06360083154F = {
+			isa = PBXGroup;
+			children = (
+				786A9E2D202797DF00B927D7 /* Realms */,
+				9C6F51BB200E06360083154F /* FlashCards */,
+				9CEF91B3200F6546003102AA /* FlashCardsTodayExt */,
+				9CEF91FC2010A577003102AA /* FlashCardsTests */,
+				9C21A4BD2011F86900F79C05 /* FlashCardsTooling */,
+				9C6F51BA200E06360083154F /* Products */,
+				68C6DF4875C2B1F4CA02EBDE /* Frameworks */,
+				4F5D7BC925F92EC488FFE08D /* Pods */,
+			);
+			indentWidth = 2;
+			sourceTree = "<group>";
+			tabWidth = 2;
+		};
+		9C6F51BA200E06360083154F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9C6F51B9200E06360083154F /* FlashCards.app */,
+				9CEF91B0200F6546003102AA /* FlashCardsTodayExt.appex */,
+				9CEF91FB2010A577003102AA /* FlashCardsTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9C6F51BB200E06360083154F /* FlashCards */ = {
+			isa = PBXGroup;
+			children = (
+				9CEF91EF20109D00003102AA /* Assets */,
+				9CEF91D020109970003102AA /* Entities */,
+				9CEF91EE20109CC0003102AA /* Models */,
+				9CEF91EA20109C5C003102AA /* Scenes */,
+				9CEF91E920109C05003102AA /* Network */,
+				9CEF91E620109BAC003102AA /* Extensions */,
+				9C6F51BC200E06360083154F /* AppDelegate.swift */,
+			);
+			path = FlashCards;
+			sourceTree = "<group>";
+		};
+		9CEF91B3200F6546003102AA /* FlashCardsTodayExt */ = {
+			isa = PBXGroup;
+			children = (
+				9CEF91C1200F654F003102AA /* FlashCardsTodayExt.entitlements */,
+				9CEF91B4200F6546003102AA /* TodayViewController.swift */,
+				9CEF91B6200F6546003102AA /* MainInterface.storyboard */,
+				9CEF91B9200F6546003102AA /* Info.plist */,
+			);
+			path = FlashCardsTodayExt;
+			sourceTree = "<group>";
+		};
+		9CEF91D020109970003102AA /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				9CEF91D12010998B003102AA /* WordOfDayList.swift */,
+				9CEF91D3201099A3003102AA /* Entry.swift */,
+				9CEF91D5201099C2003102AA /* Settings.swift */,
+				9CEF91DA201099FA003102AA /* FlashCardSet.swift */,
+				9CEF91DC20109A19003102AA /* FlashCard.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		9CEF91E620109BAC003102AA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9CEF91A8200F58D4003102AA /* UIAlertController+Ext.swift */,
+				9C6F51DA200E170B0083154F /* UITableView+Ext.swift */,
+				9CEF921C2010BA12003102AA /* UIStoryboard+Ext.swift */,
+				9C6F51DB200E170B0083154F /* Path.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		9CEF91E920109C05003102AA /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				9C6F51D6200E10F10083154F /* CardsAPI.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		9CEF91EA20109C5C003102AA /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				9CEF91EB20109C61003102AA /* FlashCardsSets */,
+				9CEF91EC20109C6C003102AA /* FlashCards */,
+				9CEF91ED20109C73003102AA /* WordOfToday */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		9CEF91EB20109C61003102AA /* FlashCardsSets */ = {
+			isa = PBXGroup;
+			children = (
+				9CEF91F32010A019003102AA /* SetsViewModel.swift */,
+				9C6F51BE200E06360083154F /* SetsViewController.swift */,
+				9C6F51D4200E0BBD0083154F /* SetTableViewCell.swift */,
+			);
+			path = FlashCardsSets;
+			sourceTree = "<group>";
+		};
+		9CEF91EC20109C6C003102AA /* FlashCards */ = {
+			isa = PBXGroup;
+			children = (
+				9C6F51D0200E07CE0083154F /* CardsViewController.swift */,
+				9CEF921A2010B97B003102AA /* CardsViewModel.swift */,
+			);
+			path = FlashCards;
+			sourceTree = "<group>";
+		};
+		9CEF91ED20109C73003102AA /* WordOfToday */ = {
+			isa = PBXGroup;
+			children = (
+				9CEF91C7200F742A003102AA /* WordOfDayTableViewController.swift */,
+				9CEF92202010C070003102AA /* WordOfTodayViewModel.swift */,
+			);
+			path = WordOfToday;
+			sourceTree = "<group>";
+		};
+		9CEF91EE20109CC0003102AA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9C6F51D8200E16540083154F /* RealmProvider.swift */,
+				9CEF91C4200F6B5D003102AA /* WordOfDayModel.swift */,
+				9CEF92222010C627003102AA /* SettingsModel.swift */,
+				9CEF91F120109F06003102AA /* CardsModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9CEF91EF20109D00003102AA /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				9C21A4872011EA0C00F79C05 /* RealmsSchema.pdf */,
+				9C247910200F415900399102 /* FlashCards.entitlements */,
+				9C6F51C0200E06360083154F /* Main.storyboard */,
+				9C6F51C3200E06360083154F /* Assets.xcassets */,
+				9C6F51C5200E06360083154F /* LaunchScreen.storyboard */,
+				9C6F51C8200E06360083154F /* Info.plist */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		9CEF91FC2010A577003102AA /* FlashCardsTests */ = {
+			isa = PBXGroup;
+			children = (
+				9CEF91FF2010A577003102AA /* Info.plist */,
+				9CEF92072010A61E003102AA /* TestExtensions.swift */,
+				9CEF920F2010A75F003102AA /* SetsViewModelTests.swift */,
+				9CEF921E2010BE61003102AA /* CardsViewModelTests.swift */,
+				9C21A4882011EB5100F79C05 /* WordOfTodayViewModelTests.swift */,
+			);
+			path = FlashCardsTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9C6F51B8200E06360083154F /* FlashCards */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9C6F51CB200E06360083154F /* Build configuration list for PBXNativeTarget "FlashCards" */;
+			buildPhases = (
+				3052C662D1685E578B002FFF /* [CP] Check Pods Manifest.lock */,
+				9C6F51B5200E06360083154F /* Sources */,
+				9C6F51B6200E06360083154F /* Frameworks */,
+				9C6F51B7200E06360083154F /* Resources */,
+				9CEF91C0200F6546003102AA /* Embed App Extensions */,
+				3814AA8D043614803CB4DFFB /* [CP] Embed Pods Frameworks */,
+				F6E7EC36A4EA100E04ACDAC4 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9CEF91BB200F6546003102AA /* PBXTargetDependency */,
+			);
+			name = FlashCards;
+			productName = FlashCards;
+			productReference = 9C6F51B9200E06360083154F /* FlashCards.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9CEF91AF200F6546003102AA /* FlashCardsTodayExt */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9CEF91BD200F6546003102AA /* Build configuration list for PBXNativeTarget "FlashCardsTodayExt" */;
+			buildPhases = (
+				ABCAD69471AAE9B0F4FB7847 /* [CP] Check Pods Manifest.lock */,
+				9CEF91AC200F6546003102AA /* Sources */,
+				9CEF91AD200F6546003102AA /* Frameworks */,
+				9CEF91AE200F6546003102AA /* Resources */,
+				964F6E922594E084E68A4E42 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FlashCardsTodayExt;
+			productName = FlashCardsTodayExt;
+			productReference = 9CEF91B0200F6546003102AA /* FlashCardsTodayExt.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		9CEF91FA2010A577003102AA /* FlashCardsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9CEF92022010A577003102AA /* Build configuration list for PBXNativeTarget "FlashCardsTests" */;
+			buildPhases = (
+				9728F40ED5F1FB506A1BE10F /* [CP] Check Pods Manifest.lock */,
+				9CEF91F72010A577003102AA /* Sources */,
+				9CEF91F82010A577003102AA /* Frameworks */,
+				9CEF91F92010A577003102AA /* Resources */,
+				5681959402317AE686CF85C1 /* [CP] Embed Pods Frameworks */,
+				786A9D4D30510119A31CF301 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9CEF92012010A577003102AA /* PBXTargetDependency */,
+			);
+			name = FlashCardsTests;
+			productName = FlashCardsTests;
+			productReference = 9CEF91FB2010A577003102AA /* FlashCardsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9C6F51B1200E06360083154F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0920;
+				LastUpgradeCheck = 0930;
+				ORGANIZATIONNAME = "Ray Wenderlich";
+				TargetAttributes = {
+					9C6F51B8200E06360083154F = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					9CEF91AF200F6546003102AA = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					9CEF91FA2010A577003102AA = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 9C6F51B8200E06360083154F;
+					};
+				};
+			};
+			buildConfigurationList = 9C6F51B4200E06360083154F /* Build configuration list for PBXProject "FlashCards" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9C6F51B0200E06360083154F;
+			productRefGroup = 9C6F51BA200E06360083154F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9C6F51B8200E06360083154F /* FlashCards */,
+				9CEF91AF200F6546003102AA /* FlashCardsTodayExt */,
+				9CEF91FA2010A577003102AA /* FlashCardsTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9C6F51B7200E06360083154F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C6F51C7200E06360083154F /* LaunchScreen.storyboard in Resources */,
+				9CEF91A7200F575F003102AA /* bundledSets.realm in Resources */,
+				9C6F51C4200E06360083154F /* Assets.xcassets in Resources */,
+				9CEF91CF200FBF0D003102AA /* bundledWords.realm in Resources */,
+				9C6F51C2200E06360083154F /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9CEF91AE200F6546003102AA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9CEF91B8200F6546003102AA /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9CEF91F92010A577003102AA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3052C662D1685E578B002FFF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FlashCards-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3814AA8D043614803CB4DFFB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-FlashCards/Pods-FlashCards-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FlashCards/Pods-FlashCards-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5681959402317AE686CF85C1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-FlashCardsTests/Pods-FlashCardsTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FlashCardsTests/Pods-FlashCardsTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		786A9D4D30510119A31CF301 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FlashCardsTests/Pods-FlashCardsTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		964F6E922594E084E68A4E42 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FlashCardsTodayExt/Pods-FlashCardsTodayExt-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9728F40ED5F1FB506A1BE10F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FlashCardsTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ABCAD69471AAE9B0F4FB7847 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FlashCardsTodayExt-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F6E7EC36A4EA100E04ACDAC4 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FlashCards/Pods-FlashCards-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9C6F51B5200E06360083154F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C6F51D5200E0BBD0083154F /* SetTableViewCell.swift in Sources */,
+				9CEF91A9200F58D4003102AA /* UIAlertController+Ext.swift in Sources */,
+				9CEF92232010C627003102AA /* SettingsModel.swift in Sources */,
+				9CEF91DD20109A19003102AA /* FlashCard.swift in Sources */,
+				9CEF91D4201099A3003102AA /* Entry.swift in Sources */,
+				9C6F51BF200E06360083154F /* SetsViewController.swift in Sources */,
+				9C21A4BF2011F86A00F79C05 /* Tools.swift in Sources */,
+				9CEF91D6201099C2003102AA /* Settings.swift in Sources */,
+				9CEF921D2010BA12003102AA /* UIStoryboard+Ext.swift in Sources */,
+				9CEF91C8200F742A003102AA /* WordOfDayTableViewController.swift in Sources */,
+				9C6F51DD200E170B0083154F /* Path.swift in Sources */,
+				9CEF91D22010998B003102AA /* WordOfDayList.swift in Sources */,
+				9CEF91F220109F06003102AA /* CardsModel.swift in Sources */,
+				9CEF91DB201099FA003102AA /* FlashCardSet.swift in Sources */,
+				9C6F51D9200E16540083154F /* RealmProvider.swift in Sources */,
+				9C6F51DC200E170B0083154F /* UITableView+Ext.swift in Sources */,
+				9C6F51BD200E06360083154F /* AppDelegate.swift in Sources */,
+				9CEF921B2010B97B003102AA /* CardsViewModel.swift in Sources */,
+				9CEF91C5200F6B5D003102AA /* WordOfDayModel.swift in Sources */,
+				9C6F51D1200E07CE0083154F /* CardsViewController.swift in Sources */,
+				9CEF92212010C070003102AA /* WordOfTodayViewModel.swift in Sources */,
+				9C6F51D7200E10F10083154F /* CardsAPI.swift in Sources */,
+				9CEF91F42010A019003102AA /* SetsViewModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9CEF91AC200F6546003102AA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9CEF91E220109A5B003102AA /* Entry.swift in Sources */,
+				9CEF91E420109A5B003102AA /* FlashCardSet.swift in Sources */,
+				9CEF91C2200F6ADB003102AA /* RealmProvider.swift in Sources */,
+				9CEF91E520109A5B003102AA /* FlashCard.swift in Sources */,
+				9CEF91C3200F6AE2003102AA /* Path.swift in Sources */,
+				9CEF91B5200F6546003102AA /* TodayViewController.swift in Sources */,
+				9CEF91E320109A5B003102AA /* Settings.swift in Sources */,
+				9CEF91E120109A5B003102AA /* WordOfDayList.swift in Sources */,
+				9CEF91C6200F6B6F003102AA /* WordOfDayModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9CEF91F72010A577003102AA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9CEF921F2010BE61003102AA /* CardsViewModelTests.swift in Sources */,
+				9CEF92082010A61E003102AA /* TestExtensions.swift in Sources */,
+				9CEF92102010A75F003102AA /* SetsViewModelTests.swift in Sources */,
+				9CEF92112010A7B6003102AA /* Path.swift in Sources */,
+				9C21A4892011EB5100F79C05 /* WordOfTodayViewModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9CEF91BB200F6546003102AA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9CEF91AF200F6546003102AA /* FlashCardsTodayExt */;
+			targetProxy = 9CEF91BA200F6546003102AA /* PBXContainerItemProxy */;
+		};
+		9CEF92012010A577003102AA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9C6F51B8200E06360083154F /* FlashCards */;
+			targetProxy = 9CEF92002010A577003102AA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		9C6F51C0200E06360083154F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9C6F51C1200E06360083154F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		9C6F51C5200E06360083154F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9C6F51C6200E06360083154F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		9CEF91B6200F6546003102AA /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9CEF91B7200F6546003102AA /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		9C6F51C9200E06360083154F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		9C6F51CA200E06360083154F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9C6F51CC200E06360083154F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8D4F0CAC3A60D6178C333CC1 /* Pods-FlashCards.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = FlashCards/Assets/FlashCards.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SPN35K2MR2;
+				INFOPLIST_FILE = FlashCards/Assets/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.FlashCards;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		9C6F51CD200E06360083154F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0889E850B2E9395D0BFBA1CF /* Pods-FlashCards.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = FlashCards/Assets/FlashCards.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SPN35K2MR2;
+				INFOPLIST_FILE = FlashCards/Assets/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.FlashCards;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		9CEF91BE200F6546003102AA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5AC6AD315D50A420219940EA /* Pods-FlashCardsTodayExt.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = FlashCardsTodayExt/FlashCardsTodayExt.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SPN35K2MR2;
+				INFOPLIST_FILE = FlashCardsTodayExt/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.FlashCards.FlashCardsTodayExt;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9CEF91BF200F6546003102AA /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A57B397BF4B07910CD1BE432 /* Pods-FlashCardsTodayExt.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = FlashCardsTodayExt/FlashCardsTodayExt.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SPN35K2MR2;
+				INFOPLIST_FILE = FlashCardsTodayExt/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.FlashCards.FlashCardsTodayExt;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		9CEF92032010A577003102AA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 84448458C1729DF079031EC7 /* Pods-FlashCardsTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SPN35K2MR2;
+				INFOPLIST_FILE = FlashCardsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.raywenderlich.FlashCardsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FlashCards.app/FlashCards";
+			};
+			name = Debug;
+		};
+		9CEF92042010A577003102AA /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 15F7042F8FD9D487A4BC82CB /* Pods-FlashCardsTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SPN35K2MR2;
+				INFOPLIST_FILE = FlashCardsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.raywenderlich.FlashCardsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FlashCards.app/FlashCards";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9C6F51B4200E06360083154F /* Build configuration list for PBXProject "FlashCards" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9C6F51C9200E06360083154F /* Debug */,
+				9C6F51CA200E06360083154F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9C6F51CB200E06360083154F /* Build configuration list for PBXNativeTarget "FlashCards" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9C6F51CC200E06360083154F /* Debug */,
+				9C6F51CD200E06360083154F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9CEF91BD200F6546003102AA /* Build configuration list for PBXNativeTarget "FlashCardsTodayExt" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9CEF91BE200F6546003102AA /* Debug */,
+				9CEF91BF200F6546003102AA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9CEF92022010A577003102AA /* Build configuration list for PBXNativeTarget "FlashCardsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9CEF92032010A577003102AA /* Debug */,
+				9CEF92042010A577003102AA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9C6F51B1200E06360083154F /* Project object */;
+}

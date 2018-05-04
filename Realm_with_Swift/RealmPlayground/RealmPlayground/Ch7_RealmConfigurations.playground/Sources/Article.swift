@@ -26,20 +26,17 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import UIKit
+import Foundation
+import RealmSwift
 
-class ToDoTableViewCell: UITableViewCell {
-  var didToggleCompleted: (()->())?
+@objcMembers public class Article: Object {
+  public dynamic var id = UUID().uuidString
+  public dynamic var title: String?
+  public let people = List<Person>()
+  public dynamic var author: Person?
+  public dynamic var date: Date?
 
-  @IBOutlet private var label: UILabel!
-  @IBOutlet private var button: UIButton!
-  @IBAction private func toggleCompleted() {
-    didToggleCompleted?()
-  }
-
-  func update(with item: ToDoItem) {
-    label.attributedText = NSAttributedString(string: item.text,
-                                              attributes: item.isCompleted ? [.strikethroughStyle: true] : [:])
-    button.setTitle(item.isCompleted ? "☑️": "⏺", for: .normal)
+  public override static func primaryKey() -> String? {
+    return "id"
   }
 }

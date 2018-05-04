@@ -26,20 +26,20 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import UIKit
+import Foundation
 
-class ToDoTableViewCell: UITableViewCell {
-  var didToggleCompleted: (()->())?
+extension String {
 
-  @IBOutlet private var label: UILabel!
-  @IBOutlet private var button: UIButton!
-  @IBAction private func toggleCompleted() {
-    didToggleCompleted?()
-  }
+  /// Uses CommonCrypto framework to generate sha512 of the current string
+  var sha512: Data? {
+    let stringData = data(using: String.Encoding.utf8)!
+    var result = Data(count: Int(CC_SHA512_DIGEST_LENGTH))
+    _ = result.withUnsafeMutableBytes { resultBytes in
+      stringData.withUnsafeBytes { stringBytes in
+        CC_SHA512(stringBytes, CC_LONG(stringData.count), resultBytes)
+      }
+    }
 
-  func update(with item: ToDoItem) {
-    label.attributedText = NSAttributedString(string: item.text,
-                                              attributes: item.isCompleted ? [.strikethroughStyle: true] : [:])
-    button.setTitle(item.isCompleted ? "☑️": "⏺", for: .normal)
+    return result
   }
 }

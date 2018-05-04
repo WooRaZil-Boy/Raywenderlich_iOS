@@ -26,20 +26,20 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import UIKit
+import Foundation
 
-class ToDoTableViewCell: UITableViewCell {
-  var didToggleCompleted: (()->())?
+public class Example {
+  public static var beforeEach: (()->Void)? = nil
 
-  @IBOutlet private var label: UILabel!
-  @IBOutlet private var button: UIButton!
-  @IBAction private func toggleCompleted() {
-    didToggleCompleted?()
+  public static func of(_ description: String, action: ()->Void) {
+    beforeEach?()
+    printHeader(description)
+    action()
   }
 
-  func update(with item: ToDoItem) {
-    label.attributedText = NSAttributedString(string: item.text,
-                                              attributes: item.isCompleted ? [.strikethroughStyle: true] : [:])
-    button.setTitle(item.isCompleted ? "☑️": "⏺", for: .normal)
+  private static func printHeader(_ message: String) {
+    print("\nℹ️ \(message):")
+    let length = Float(message.count + 3) * 1.2
+    print(String(repeating: "—", count: Int(length)))
   }
 }

@@ -30,27 +30,30 @@ import UIKit
 import RealmSwift
 
 class ToDoListController: UITableViewController {
-
   private var items: Results<ToDoItem>? //Realm에서 fetch해 온 결과. 실패하거나 없을 수 있으므로 optional
   private var itemsToken: NotificationToken? //변경 알림 구독에 대한 참조를 유지
 
-  // MARK: - ViewController life-cycle
+  // MARK: - View controller life-cycle
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     items = ToDoItem.all() //Realm에서 fetch
+    
+    if Realm.Configuration.defaultConfiguration.encryptionKey != nil {
+      navigationItem.leftBarButtonItem = nil
+    }
   }
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    
-    itemsToken = items?.observe { [weak tableView] changes in //Realm의 observe 메서드
-      //observe 해 주면, 콜렉션(Results)이 변경될 때 마다 Realm이 블록을 호출해 실행한다.
-      //클로저는 구독을 생성한 스레드에서 호출된다. viewWillAppear(_)에서 구독되므로
-      //UI 업데이트를 안전하게 할 수 있다.
+
+    // Set up a changes observer and act on changes to the Realm data
+    itemsToken = items!.observe { [weak tableView] changes in //Realm의 observe 메서드
+        //observe 해 주면, 콜렉션(Results)이 변경될 때 마다 Realm이 블록을 호출해 실행한다.
+        //클로저는 구독을 생성한 스레드에서 호출된다. viewWillAppear(_)에서 구독되므로
+        //UI 업데이트를 안전하게 할 수 있다.
       guard let tableView = tableView else { return }
-      
+
       switch changes {
       case .initial:
         tableView.reloadData()
@@ -58,8 +61,7 @@ class ToDoListController: UITableViewController {
         //삭제, 삽입, 업데이트 될 때
         tableView.applyChanges(deletions: deletions, insertions: insertions, updates: updates)
         //해당 부분만 업데이트 해 준다. //helper method
-      case .error:
-        break
+      case .error: break
       }
     }
     //데이터 변경을 업데이트 하는 방법은 tableView를 새로 고치는 방법이 있다.
@@ -75,7 +77,8 @@ class ToDoListController: UITableViewController {
 
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-    
+
+    // Invalidate the Observer so we don't keep getting updates
     itemsToken?.invalidate() //구독 해제하고 토큰 무효화
   }
 
@@ -86,17 +89,35 @@ class ToDoListController: UITableViewController {
       ToDoItem.add(text: text) //Realm DB에 추가
     }
   }
-  
-  func toggleItem(_ item: ToDoItem) { //체크 / 언 체크
+
+  func toggleItem(_ item: ToDoItem) {  //체크 / 언 체크
     item.toggleCompleted()
   }
-  
-  func deleteItem(_ item: ToDoItem) {
+
+  func deleteItem(item: ToDoItem) {
     item.delete()
+  }
+
+  @IBAction func encryptRealm() {
+    showSetPassword()
+  }
+
+  // MARK: - Navigation
+  func showSetPassword() {
+    let list = storyboard!.instantiateViewController(withIdentifier: "SetupViewController") as! SetupViewController
+    list.setPassword = true
+
+    UIView.transition(with: view.window!,
+                      duration: 0.33,
+                      options: .transitionFlipFromRight,
+                      animations: {
+                        self.view.window!.rootViewController = list
+                      },
+                      completion: nil)
   }
 }
 
-// MARK: - Table View Data Source
+// MARK: - Table Data Source
 
 extension ToDoListController {
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -104,21 +125,21 @@ extension ToDoListController {
   }
 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? ToDoTableViewCell,
-          let item = items?[indexPath.row] else {
-        return ToDoTableViewCell(frame: .zero)
-    }
+    let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ToDoTableViewCell
 
-    cell.configureWith(item) { [weak self] item in
-      self?.toggleItem(item)
-    } //변경된 사항이 알림으로 전파되고, Table View는 최신 데이터가 반영된다.
-    //또한, Realm 클래스가 객체를 재정렬하기 때문에, 변경 사항에 따라 자동으로 정렬되 업데이트 된다.
+    if let item = items?[indexPath.row] {
+      cell.update(with: item)
+      cell.didToggleCompleted = { [weak self] in
+        self?.toggleItem(item)
+        } //변경된 사항이 알림으로 전파되고, Table View는 최신 데이터가 반영된다.
+        //또한, Realm 클래스가 객체를 재정렬하기 때문에, 변경 사항에 따라 자동으로 정렬되어 업데이트 된다.
+    }
 
     return cell
   }
 }
 
-// MARK: - Table View Delegate
+// MARK: - Table Delegate
 
 extension ToDoListController {
   override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -126,9 +147,11 @@ extension ToDoListController {
   }
 
   override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-    guard let item = items?[indexPath.row],
-          editingStyle == .delete else { return }
-    deleteItem(item) //삭제
+    guard editingStyle == .delete else { return }
+
+    if let item = items?[indexPath.row] {
+      deleteItem(item: item) //삭제
+    }
   }
 }
 

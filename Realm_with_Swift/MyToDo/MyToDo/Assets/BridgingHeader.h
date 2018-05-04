@@ -26,20 +26,9 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import UIKit
+#ifndef BridgingHeader_h
+#define BridgingHeader_h
 
-class ToDoTableViewCell: UITableViewCell {
-  var didToggleCompleted: (()->())?
+#import <CommonCrypto/CommonCrypto.h>
 
-  @IBOutlet private var label: UILabel!
-  @IBOutlet private var button: UIButton!
-  @IBAction private func toggleCompleted() {
-    didToggleCompleted?()
-  }
-
-  func update(with item: ToDoItem) {
-    label.attributedText = NSAttributedString(string: item.text,
-                                              attributes: item.isCompleted ? [.strikethroughStyle: true] : [:])
-    button.setTitle(item.isCompleted ? "☑️": "⏺", for: .normal)
-  }
-}
+#endif /* BridgingHeader_h */

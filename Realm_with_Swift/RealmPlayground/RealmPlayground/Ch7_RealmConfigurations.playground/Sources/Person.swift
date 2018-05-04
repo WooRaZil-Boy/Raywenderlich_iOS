@@ -26,20 +26,36 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import UIKit
+import Foundation
+import RealmSwift
 
-class ToDoTableViewCell: UITableViewCell {
-  var didToggleCompleted: (()->())?
+// MARK: - Person Realm Object
 
-  @IBOutlet private var label: UILabel!
-  @IBOutlet private var button: UIButton!
-  @IBAction private func toggleCompleted() {
-    didToggleCompleted?()
+public class Person: Object {
+  // object properties
+  @objc public dynamic var firstName = ""
+  @objc public dynamic var lastName: String?
+
+  public var fullName: String {
+    guard let last = lastName else {
+      return firstName
+    }
+    return "\(firstName) \(last)"
   }
 
-  func update(with item: ToDoItem) {
-    label.attributedText = NSAttributedString(string: item.text,
-                                              attributes: item.isCompleted ? [.strikethroughStyle: true] : [:])
-    button.setTitle(item.isCompleted ? "☑️": "⏺", for: .normal)
+  // required vs. optional properties, default values, and required to override
+  public convenience init(firstName: String) {
+    self.init()
+    self.firstName = firstName
+  }
+
+  // primary key (primary vs. auto-increment)
+  @objc public dynamic var key = UUID().uuidString
+  public override static func primaryKey() -> String? {
+    return "key"
+  }
+
+  public override var description: String {
+    return "(Person) \"\(fullName)\""
   }
 }

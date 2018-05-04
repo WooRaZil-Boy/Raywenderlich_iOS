@@ -26,20 +26,40 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import UIKit
+import Foundation
 
-class ToDoTableViewCell: UITableViewCell {
-  var didToggleCompleted: (()->())?
+enum PathError: Error, LocalizedError {
+  case notFound
 
-  @IBOutlet private var label: UILabel!
-  @IBOutlet private var button: UIButton!
-  @IBAction private func toggleCompleted() {
-    didToggleCompleted?()
+  var errorDescription: String? {
+    switch self {
+      case .notFound: return "Resource not found"
+    }
+  }
+}
+
+class Path {
+  static func inLibary(_ name: String) throws -> URL {
+    return try FileManager.default
+      .url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+      .appendingPathComponent(name)
   }
 
-  func update(with item: ToDoItem) {
-    label.attributedText = NSAttributedString(string: item.text,
-                                              attributes: item.isCompleted ? [.strikethroughStyle: true] : [:])
-    button.setTitle(item.isCompleted ? "☑️": "⏺", for: .normal)
+  static func inDocuments(_ name: String) throws -> URL {
+    return try FileManager.default
+      .url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+      .appendingPathComponent(name)
+  }
+
+  static func inBundle(_ name: String) throws -> URL {
+    guard let url = Bundle.main.url(forResource: name, withExtension: nil) else {
+      throw PathError.notFound
+    }
+    return url
+  }
+
+  static func documents() throws -> URL {
+    return try FileManager.default
+      .url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
   }
 }

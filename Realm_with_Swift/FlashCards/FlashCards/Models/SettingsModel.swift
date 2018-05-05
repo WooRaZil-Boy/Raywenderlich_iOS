@@ -30,8 +30,15 @@ import Foundation
 import RealmSwift
 
 class SettingsModel {
+  private let provider: RealmProvider //DI
+  
+  init(provider: RealmProvider = .settings) {
+    self.provider = provider
+  }
+  
   var appSettings: Settings {
-    let realm = try! Realm()
-    return realm.objects(Settings.self).first ?? Settings()
+//    let realm = try! Realm()
+    return provider.realm.objects(Settings.self).first ?? Settings()
+    //DI된 provider를 대신 사용한다.
   }
 }

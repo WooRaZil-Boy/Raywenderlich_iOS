@@ -30,17 +30,25 @@ import Foundation
 import RealmSwift
 
 class WordOfDayModel {
+  private let wordOfDay: RealmProvider
+  private let settings: RealmProvider
+  //두 개의 DI가 필요하다.
+  
+  init(wordOfDay: RealmProvider = .wordOfDay, settings: RealmProvider = .settings) {
+    self.wordOfDay = wordOfDay
+    self.settings = settings
+  }
 
   func words() -> List<Entry> {
 //    return List<Entry>() // mock code
-    let wordOfDay = RealmProvider.wordOfDay
+//    let wordOfDay = RealmProvider.wordOfDay
     //RealmProvider를 이용해 각각의 Realm 모델에 쉽게 연결할 수 있다.
     
     return wordOfDay.realm.objects(WordOfDayList.self).first!.list
   }
 
   func updateWordOfDay(word: Entry) {
-    let settings = RealmProvider.settings
+//    let settings = RealmProvider.settings
     
     guard let appSettings = Settings.in(realm: settings.realm) else { return }
     //setting을 반환한다.

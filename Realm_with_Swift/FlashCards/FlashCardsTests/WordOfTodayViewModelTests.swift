@@ -37,6 +37,27 @@ class WordOfTodayViewModelTests: XCTestCase {
   }
 
   func test_correctCurrentWord_whenWordUpdated() {
-
+    let testWOD = RealmProvider.wordOfDay.copyForTesting()
+    
+    testWOD.realm.addForTesting(objects: [WordOfDayList(list: [Entry(word: "word1", entry: "entry1")])])
+    
+    let testSettings = RealmProvider.settings.copyForTesting()
+    let appSettings = Settings()
+    
+    testSettings.realm.addForTesting(objects: [appSettings])
+    
+    let vm = WordOfTodayViewModel(wordOfDay: testWOD, settings: testSettings)
+    
+    XCTAssertEqual(appSettings.lastTimeWODChanged, Date.distantPast)
+    XCTAssertNil(appSettings.wordOfTheDay)
+    //초기 설정이 실제로 Settings 클래스의 wordOfTheDay, lastTimeWODChanged에 대해 수정되지 않은 기본값임을 확인
+    
+    let testWord = testWOD.realm.objects(WordOfDayList.self)[0].list[0]
+    vm.updateWord(to: testWord) //해당 날짜의 현재 단어 설정
+    //View Model이 settings Realm에 저장된 날짜를 즉시 업데이트 한다.
+    
+    XCTAssertEqual(appSettings.wordOfTheDay?.word, testWord.word)
+    XCTAssertEqual(appSettings.lastTimeWODChanged.timeIntervalSinceReferenceDate, Date().timeIntervalSinceReferenceDate, accuracy: 0.5)
+    //초기화한 값과 비교
   }
 }

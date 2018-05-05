@@ -33,7 +33,8 @@ class SetsViewModel {
   private var _sets: Results<FlashCardSet>?
   private var _setsToken: NotificationToken?
 
-  private let model = CardsModel()
+  private let model: CardsModel
+  //속성을 클래스가 초기화될 때 바로 생성하는 대신 생성자로 초기화한다.
   private let api: CardsAPI
 
   var sets: [FlashCardSet] {
@@ -41,7 +42,10 @@ class SetsViewModel {
     return Array(sets)
   }
 
-  init(api: CardsAPI) {
+  init(cards: RealmProvider = .cards, api: CardsAPI) {
+    model = CardsModel(provider: cards)
+    //Realm과 직접 상호작용하지 않기 때문에 provider를 View Model 자체에 저장할 필요 없다(Model에서 할 일).
+    //각 상황 별로(ex. 테스트) 필요한 Realm 파일의 Model을 생성할 수 있다.
     self.api = api
     _sets = model.sets()
   }

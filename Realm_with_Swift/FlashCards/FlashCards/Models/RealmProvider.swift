@@ -113,3 +113,6 @@ struct RealmProvider {
 }
 
 //최종 완성된 앱은 6개의 Realm 파일로 작동한다. 첫 프로젝트(Ch8)에서는 4개만 사용. p.160
+
+//특정 종속성의 추상화해 central provider structure(RealmProvider)를 사용하면,
+//코드 관리와 테스트 시에 유용하다.

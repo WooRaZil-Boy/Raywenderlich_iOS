@@ -33,7 +33,7 @@ class WordOfTodayViewModel {
 
   private let list: List<Entry>
   private let appSettings: Settings
-  private let model = WordOfDayModel()
+  private let model: WordOfDayModel
 
   var wordCount: Int {
     return list.count
@@ -43,9 +43,10 @@ class WordOfTodayViewModel {
     return list[index]
   }
 
-  init() {
+  init(wordOfDay: RealmProvider = .wordOfDay, settings: RealmProvider = .settings) {
+    model = WordOfDayModel(wordOfDay: wordOfDay, settings: settings) //DI
     list = model.words()
-    appSettings = SettingsModel().appSettings
+    appSettings = SettingsModel(provider: settings).appSettings
   }
 
   func updateWord(to word: Entry) {

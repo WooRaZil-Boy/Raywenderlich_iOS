@@ -1,0 +1,510 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		18C1D9C0ECB6172218AC15FA /* Pods_Sensors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E3AF6C09CB30CEB8A5D412A /* Pods_Sensors.framework */; };
+		9CDC77FA203CA3F200DE2B67 /* DataWriterDedicatedThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDC77F6203CA3F200DE2B67 /* DataWriterDedicatedThread.swift */; };
+		9CDC77FB203CA3F200DE2B67 /* DataWriterGCD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDC77F7203CA3F200DE2B67 /* DataWriterGCD.swift */; };
+		9CDC77FC203CA3F200DE2B67 /* DataWriterMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDC77F8203CA3F200DE2B67 /* DataWriterMain.swift */; };
+		9CDC77FD203CA3F200DE2B67 /* DataWriterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDC77F9203CA3F200DE2B67 /* DataWriterType.swift */; };
+		9CE94C88203C18B700AED5CF /* StrategyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE94C87203C18B700AED5CF /* StrategyViewController.swift */; };
+		9CEB825F203ACBE0002D9247 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEB825E203ACBE0002D9247 /* AppDelegate.swift */; };
+		9CEB8261203ACBE0002D9247 /* SensorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEB8260203ACBE0002D9247 /* SensorsViewController.swift */; };
+		9CEB8264203ACBE0002D9247 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CEB8262203ACBE0002D9247 /* Main.storyboard */; };
+		9CEB8266203ACBE0002D9247 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CEB8265203ACBE0002D9247 /* Assets.xcassets */; };
+		9CEB8269203ACBE0002D9247 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CEB8267203ACBE0002D9247 /* LaunchScreen.storyboard */; };
+		9CEB8276203AD3C2002D9247 /* Sensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEB8275203AD3C2002D9247 /* Sensor.swift */; };
+		9CEB8278203AD3D5002D9247 /* Reading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEB8277203AD3D5002D9247 /* Reading.swift */; };
+		9CEB827B203AD3F8002D9247 /* SensorAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEB827A203AD3F8002D9247 /* SensorAPI.swift */; };
+		9CEB827D203AD43C002D9247 /* RealmProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEB827C203AD43C002D9247 /* RealmProvider.swift */; };
+		9CEB8280203AD8EE002D9247 /* SensorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEB827F203AD8EE002D9247 /* SensorsViewModel.swift */; };
+		9CEB8283203AD92E002D9247 /* ReadingStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEB8282203AD92E002D9247 /* ReadingStats.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		507F3F4F8C2142864DBE6DE5 /* Pods-Sensors.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sensors.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sensors/Pods-Sensors.debug.xcconfig"; sourceTree = "<group>"; };
+		7E3AF6C09CB30CEB8A5D412A /* Pods_Sensors.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sensors.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CDC77F6203CA3F200DE2B67 /* DataWriterDedicatedThread.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataWriterDedicatedThread.swift; sourceTree = "<group>"; };
+		9CDC77F7203CA3F200DE2B67 /* DataWriterGCD.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = DataWriterGCD.swift; sourceTree = "<group>"; tabWidth = 2; };
+		9CDC77F8203CA3F200DE2B67 /* DataWriterMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataWriterMain.swift; sourceTree = "<group>"; };
+		9CDC77F9203CA3F200DE2B67 /* DataWriterType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataWriterType.swift; sourceTree = "<group>"; };
+		9CE94C87203C18B700AED5CF /* StrategyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrategyViewController.swift; sourceTree = "<group>"; };
+		9CEB825B203ACBE0002D9247 /* Sensors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sensors.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CEB825E203ACBE0002D9247 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9CEB8260203ACBE0002D9247 /* SensorsViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SensorsViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
+		9CEB8263203ACBE0002D9247 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9CEB8265203ACBE0002D9247 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9CEB8268203ACBE0002D9247 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9CEB826A203ACBE0002D9247 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9CEB8275203AD3C2002D9247 /* Sensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sensor.swift; sourceTree = "<group>"; };
+		9CEB8277203AD3D5002D9247 /* Reading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reading.swift; sourceTree = "<group>"; };
+		9CEB827A203AD3F8002D9247 /* SensorAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorAPI.swift; sourceTree = "<group>"; };
+		9CEB827C203AD43C002D9247 /* RealmProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmProvider.swift; sourceTree = "<group>"; };
+		9CEB827F203AD8EE002D9247 /* SensorsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorsViewModel.swift; sourceTree = "<group>"; };
+		9CEB8282203AD92E002D9247 /* ReadingStats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingStats.swift; sourceTree = "<group>"; };
+		C1D6DD66A6738046450C6C54 /* Pods-Sensors.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sensors.release.xcconfig"; path = "Pods/Target Support Files/Pods-Sensors/Pods-Sensors.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9CEB8258203ACBE0002D9247 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18C1D9C0ECB6172218AC15FA /* Pods_Sensors.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5BCDE4D9FF0DC564A221C7CD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7E3AF6C09CB30CEB8A5D412A /* Pods_Sensors.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9CDC77F5203CA3F200DE2B67 /* DataWriter */ = {
+			isa = PBXGroup;
+			children = (
+				9CDC77F6203CA3F200DE2B67 /* DataWriterDedicatedThread.swift */,
+				9CDC77F7203CA3F200DE2B67 /* DataWriterGCD.swift */,
+				9CDC77F8203CA3F200DE2B67 /* DataWriterMain.swift */,
+				9CDC77F9203CA3F200DE2B67 /* DataWriterType.swift */,
+			);
+			path = DataWriter;
+			sourceTree = "<group>";
+		};
+		9CEB8252203ACBE0002D9247 = {
+			isa = PBXGroup;
+			children = (
+				9CEB825D203ACBE0002D9247 /* Sensors */,
+				9CEB825C203ACBE0002D9247 /* Products */,
+				FA87BAE1DCE51650C41BF077 /* Pods */,
+				5BCDE4D9FF0DC564A221C7CD /* Frameworks */,
+			);
+			indentWidth = 2;
+			sourceTree = "<group>";
+			tabWidth = 2;
+		};
+		9CEB825C203ACBE0002D9247 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9CEB825B203ACBE0002D9247 /* Sensors.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9CEB825D203ACBE0002D9247 /* Sensors */ = {
+			isa = PBXGroup;
+			children = (
+				9CEB8279203AD3EF002D9247 /* API */,
+				9CEB8281203AD926002D9247 /* Models */,
+				9CEB8274203AD3B4002D9247 /* Entities */,
+				9CEB8273203AD35B002D9247 /* Scenes */,
+				9CEB8272203AD2E4002D9247 /* Assets */,
+				9CEB825E203ACBE0002D9247 /* AppDelegate.swift */,
+			);
+			path = Sensors;
+			sourceTree = "<group>";
+		};
+		9CEB8272203AD2E4002D9247 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				9CEB8265203ACBE0002D9247 /* Assets.xcassets */,
+				9CEB8267203ACBE0002D9247 /* LaunchScreen.storyboard */,
+				9CEB826A203ACBE0002D9247 /* Info.plist */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		9CEB8273203AD35B002D9247 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				9CEB8262203ACBE0002D9247 /* Main.storyboard */,
+				9CE94C87203C18B700AED5CF /* StrategyViewController.swift */,
+				9CEB8260203ACBE0002D9247 /* SensorsViewController.swift */,
+				9CEB827F203AD8EE002D9247 /* SensorsViewModel.swift */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		9CEB8274203AD3B4002D9247 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				9CEB8275203AD3C2002D9247 /* Sensor.swift */,
+				9CEB8277203AD3D5002D9247 /* Reading.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		9CEB8279203AD3EF002D9247 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				9CEB827A203AD3F8002D9247 /* SensorAPI.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		9CEB8281203AD926002D9247 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9CDC77F5203CA3F200DE2B67 /* DataWriter */,
+				9CEB827C203AD43C002D9247 /* RealmProvider.swift */,
+				9CEB8282203AD92E002D9247 /* ReadingStats.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		FA87BAE1DCE51650C41BF077 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				507F3F4F8C2142864DBE6DE5 /* Pods-Sensors.debug.xcconfig */,
+				C1D6DD66A6738046450C6C54 /* Pods-Sensors.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9CEB825A203ACBE0002D9247 /* Sensors */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9CEB826D203ACBE0002D9247 /* Build configuration list for PBXNativeTarget "Sensors" */;
+			buildPhases = (
+				D3C116205919DF92744FEBB3 /* [CP] Check Pods Manifest.lock */,
+				9CEB8257203ACBE0002D9247 /* Sources */,
+				9CEB8258203ACBE0002D9247 /* Frameworks */,
+				9CEB8259203ACBE0002D9247 /* Resources */,
+				42B8FB826431489EEA420F7B /* [CP] Embed Pods Frameworks */,
+				F49758E54BBEBBE6433F59C0 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Sensors;
+			productName = Sensors;
+			productReference = 9CEB825B203ACBE0002D9247 /* Sensors.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9CEB8253203ACBE0002D9247 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0920;
+				LastUpgradeCheck = 0930;
+				ORGANIZATIONNAME = "Ray Wenderlich";
+				TargetAttributes = {
+					9CEB825A203ACBE0002D9247 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 9CEB8256203ACBE0002D9247 /* Build configuration list for PBXProject "Sensors" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9CEB8252203ACBE0002D9247;
+			productRefGroup = 9CEB825C203ACBE0002D9247 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9CEB825A203ACBE0002D9247 /* Sensors */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9CEB8259203ACBE0002D9247 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9CEB8269203ACBE0002D9247 /* LaunchScreen.storyboard in Resources */,
+				9CEB8266203ACBE0002D9247 /* Assets.xcassets in Resources */,
+				9CEB8264203ACBE0002D9247 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		42B8FB826431489EEA420F7B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Sensors/Pods-Sensors-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Sensors/Pods-Sensors-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D3C116205919DF92744FEBB3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Sensors-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F49758E54BBEBBE6433F59C0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Sensors/Pods-Sensors-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9CEB8257203ACBE0002D9247 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9CDC77FB203CA3F200DE2B67 /* DataWriterGCD.swift in Sources */,
+				9CEB8261203ACBE0002D9247 /* SensorsViewController.swift in Sources */,
+				9CEB8280203AD8EE002D9247 /* SensorsViewModel.swift in Sources */,
+				9CEB8276203AD3C2002D9247 /* Sensor.swift in Sources */,
+				9CEB827D203AD43C002D9247 /* RealmProvider.swift in Sources */,
+				9CDC77FD203CA3F200DE2B67 /* DataWriterType.swift in Sources */,
+				9CEB8278203AD3D5002D9247 /* Reading.swift in Sources */,
+				9CEB825F203ACBE0002D9247 /* AppDelegate.swift in Sources */,
+				9CDC77FC203CA3F200DE2B67 /* DataWriterMain.swift in Sources */,
+				9CDC77FA203CA3F200DE2B67 /* DataWriterDedicatedThread.swift in Sources */,
+				9CEB8283203AD92E002D9247 /* ReadingStats.swift in Sources */,
+				9CEB827B203AD3F8002D9247 /* SensorAPI.swift in Sources */,
+				9CE94C88203C18B700AED5CF /* StrategyViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		9CEB8262203ACBE0002D9247 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9CEB8263203ACBE0002D9247 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		9CEB8267203ACBE0002D9247 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9CEB8268203ACBE0002D9247 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		9CEB826B203ACBE0002D9247 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		9CEB826C203ACBE0002D9247 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9CEB826E203ACBE0002D9247 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 507F3F4F8C2142864DBE6DE5 /* Pods-Sensors.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SPN35K2MR2;
+				INFOPLIST_FILE = Sensors/Assets/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.Sensors;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		9CEB826F203ACBE0002D9247 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C1D6DD66A6738046450C6C54 /* Pods-Sensors.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SPN35K2MR2;
+				INFOPLIST_FILE = Sensors/Assets/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.Sensors;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9CEB8256203ACBE0002D9247 /* Build configuration list for PBXProject "Sensors" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9CEB826B203ACBE0002D9247 /* Debug */,
+				9CEB826C203ACBE0002D9247 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9CEB826D203ACBE0002D9247 /* Build configuration list for PBXNativeTarget "Sensors" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9CEB826E203ACBE0002D9247 /* Debug */,
+				9CEB826F203ACBE0002D9247 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9CEB8253203ACBE0002D9247 /* Project object */;
+}

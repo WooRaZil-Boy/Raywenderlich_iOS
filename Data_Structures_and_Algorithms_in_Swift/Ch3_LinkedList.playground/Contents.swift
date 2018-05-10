@@ -1,3 +1,6 @@
+// Copyright (c) 2018 Razeware LLC
+// For full license & permission details, see LICENSE.markdown.
+
 //Node
 example(of: "creating and linking nodes") { //p.25
     let node1 = Node(value: 1)

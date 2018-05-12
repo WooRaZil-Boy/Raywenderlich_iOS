@@ -48,6 +48,18 @@ class NASAViewController: UIViewController {
                                                     })
   }
   
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    guard
+      let indexPath = self.tableView.indexPathForSelectedRow,
+      let rover = self.rovers?[indexPath.row],
+      let destination = segue.destination as? PhotoViewController else {
+        return
+    }
+    
+    tableView.deselectRow(at: indexPath, animated: true)
+    destination.currentRover = rover
+  }
+  
   private func loadCompleted() {
     self.task = nil
     self.tableView.refreshControl?.endRefreshing()
@@ -91,13 +103,4 @@ extension NASAViewController: UITableViewDataSource {
 
 //MARK: - Table View Delegate
 
-extension NASAViewController: UITableViewDelegate {
-  
-  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let rover = self.rovers![indexPath.row]
-    tableView.deselectRow(at: indexPath, animated: true)
-    NSLog("Picked \(rover.name)")
-  }
-  
-}
-
+extension NASAViewController: UITableViewDelegate {}

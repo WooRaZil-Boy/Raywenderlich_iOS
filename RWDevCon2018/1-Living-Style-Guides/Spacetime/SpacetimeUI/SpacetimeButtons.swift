@@ -79,40 +79,40 @@ public enum SpacetimeButtonStyle: String {
 }
 
 extension SpacetimeButtonStyle: StyleGuideViewable {
-    public var view: UIView {
-        let buttonsStack = UIStackView()
-        buttonsStack.axis = .vertical
-        buttonsStack.distribution = .fillEqually
-        buttonsStack.spacing = 4
-        
-        let states: [UIControlState] = [
-            .normal,
-            .highlighted,
-            .selected,
-            ]
-        
-        for state in states {
-            let button = SpacetimeBaseButton()
-            button.buttonStyle = self
-            
-            button.setTitle("Normal", for: .normal)
-            button.setTitle("Highlighted", for: .highlighted)
-            button.setTitle("Selected", for: .selected)
-            
-            switch state {
-            case .selected:
-                button.isSelected = true
-            case .highlighted:
-                button.isHighlighted = true
-            default:
-                break
-            }
-            
-            buttonsStack.addArrangedSubview(button)
-        }
-        
-        return buttonsStack
+
+  public var view: UIView {
+    let buttonsStack = UIStackView()
+    buttonsStack.axis = .vertical
+    buttonsStack.distribution = .fillEqually
+    buttonsStack.spacing = 4
+    
+    let states: [UIControlState] = [
+      .normal,
+      .highlighted,
+      .selected,
+    ]
+
+    for state in states {
+      let button = SpacetimeBaseButton()
+      button.buttonStyle = self
+      
+      button.setTitle("Normal", for: .normal)
+      button.setTitle("Highlighted", for: .highlighted)
+      button.setTitle("Selected", for: .selected)
+
+      switch state {
+      case .selected:
+        button.isSelected = true
+      case .highlighted:
+        button.isHighlighted = true
+      default:
+        break
+      }
+      buttonsStack.addArrangedSubview(button)
     }
+    
+    return buttonsStack
+  }
 }
 
 @IBDesignable

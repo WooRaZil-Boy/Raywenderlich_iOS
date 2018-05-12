@@ -12,7 +12,7 @@ import UIKit
  Good resource for fonts and their font names available on iOS:
  http://iosfonts.com/
  */
-public enum SpacetimeFont: String, StyleGuideViewable {
+public enum SpacetimeFont: String {
     //아래에서 글꼴의 크기를 제한한 것처럼, 글꼴 유형에 대한 제한도 할 수 있다.
   case
   standard,
@@ -37,14 +37,15 @@ public enum SpacetimeFont: String, StyleGuideViewable {
 //        //기본 값으로 전혀 다른 폰트를 주고, 잘못 코딩했을 때 쉽게 알 수 있다.
     }
   }
-    
+}
+
+extension SpacetimeFont: StyleGuideViewable {
     public var view: UIView { //샘플 뷰에 해당 style을 적용한다.
-        let label = UILabel()
-        label.font = self.of(size: .normal)
-        label.text = label.font.fontName
-        
-        return label
-    }
+    let label = UILabel()
+    label.font = self.of(size: .normal)
+    label.text = label.font.fontName
+    return label
+  }
 }
 
 public enum SpacetimeFontSize: String {
@@ -55,14 +56,14 @@ public enum SpacetimeFontSize: String {
   small,
   medium,
   normal
-
+  
   var value: CGFloat {
     //이 값은 내부에서만 사용되기 때문에 public이 아니어도 된다.
     switch self {
     case .tiny:
       return 10
     case .small:
-      return 14
+      return 14 
     case .medium:
       return 16
     case .normal:
@@ -72,13 +73,13 @@ public enum SpacetimeFontSize: String {
 }
 
 extension SpacetimeFontSize: StyleGuideViewable {
-    public var view: UIView {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: self.value)
-        label.text = "\(self.value) pt"
-        return label
-    }
+  public var view: UIView {
+    let label = UILabel()
+    label.font = UIFont.systemFont(ofSize: self.value)
+    label.text = "\(self.value) pt"
+    return label
+  }
 }
-//계속해서 protocol을 확장하면서 필요한 기능을 입력한다.
-//이 경우, protocol 요구사항의 일부인 경우와 초기 선언의 일부인 경우를 구분해 주는 것이 더 적절하다.
-//따라서 위에서, StyleGuideViewable를 떼어내어 따로 extension해 준다.
+
+//protocol 요구사항의 일부인 경우와 초기 선언의 일부인 경우를 구분해 주는 것이 더 적절하다.
+//따라서 StyleGuideViewable를 떼어내어 따로 extension해 준다.

@@ -8,7 +8,7 @@
 
 import UIKit
 
-public enum SpacetimeColor: String, StyleGuideViewable {
+public enum SpacetimeColor: String {
     //응용 프로그램에서 사용하려는 프레임워크의 코드는 public으로 선언되어야 가져올 수 있다.
     
     //StyleGuideViewable프로토콜을 추가하면, string유형의 rawValue가 없다는 에러가 난다.
@@ -26,7 +26,8 @@ public enum SpacetimeColor: String, StyleGuideViewable {
   defaultText,
   buttonBackground,
   buttonBorder,
-  buttonText
+  buttonText,
+    secondaryText //색상 추가
     //• 실제 기본 색상보다는 색상의 용도로 이름을 나타내어 위치를 쉽게 알 수 있다.
     //• success, failure은 이미지, 버튼, 텍스트 등 여러 곳에서 사용할 수 있으므로 유형별로 구별하지 않는다.
     //• default의 경우, 접두사를 지정해 주는 것이 좋다.
@@ -49,18 +50,21 @@ public enum SpacetimeColor: String, StyleGuideViewable {
       return .darkText
     case .buttonBackground:
       return .black
+    case .secondaryText:
+        return .darkGray
     }
     //UIColor+RGB.swift 파일을 옮기면서 오류난 부분을 살펴보며 switch의 case를 업데이트 한다.
     //프레임워크 번들에 직접 색상을 추가할 수도 있지만, UIColor(:in :compatibleWith) 생성자를 사용해
     //제대로 로드되었는지 확인하고 통과해야 한다.
   }
-    
-    public var view: UIView { //샘플 뷰에 해당 style을 적용한다.
-        let view = UIView()
-        view.backgroundColor = self.color
-        
-        return view
-    }
+}
+
+extension SpacetimeColor: StyleGuideViewable {
+  public var view: UIView { //샘플 뷰에 해당 style을 적용한다.
+    let view = UIView()
+    view.backgroundColor = self.color
+    return view
+  }
 }
 
 //이 앱은 두 개의 탭으로 나눠져 있는데, 같거나 비슷한 요소들이 많이 있다(색, 폰트, placeholder 이미지 등).

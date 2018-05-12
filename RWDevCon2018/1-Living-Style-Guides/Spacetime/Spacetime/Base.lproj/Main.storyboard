@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -26,11 +26,11 @@
                                         <rect key="frame" x="0.0" y="28" width="414" height="86"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="p1d-YM-syP" id="5Id-Vy-ztM">
-                                            <rect key="frame" x="0.0" y="0.0" width="381" height="85.666666666666671"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="376" height="85.666666666666671"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="MVP-hI-ekq">
-                                                    <rect key="frame" x="16" y="8" width="316.33333333333331" height="69.666666666666671"/>
+                                                    <rect key="frame" x="16" y="8" width="311.33333333333331" height="69.666666666666671"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Rover Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tmo-t6-ghL" customClass="CellTitleLabel" customModule="SpacetimeUI">
                                                             <rect key="frame" x="0.0" y="0.0" width="114.33333333333333" height="22.333333333333332"/>
@@ -53,7 +53,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sKH-dB-m0J" customClass="CalloutLabel" customModule="SpacetimeUI">
-                                                    <rect key="frame" x="340.33333333333331" y="32.333333333333336" width="32.666666666666686" height="20.666666666666664"/>
+                                                    <rect key="frame" x="335.33333333333331" y="33.333333333333336" width="32.666666666666686" height="20.666666666666664"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -73,6 +73,7 @@
                                             <outlet property="launchDateLabel" destination="5re-KT-CAG" id="aty-7Z-MeS"/>
                                             <outlet property="nameLabel" destination="tmo-t6-ghL" id="hDd-8q-sMh"/>
                                             <outlet property="statusLabel" destination="sKH-dB-m0J" id="Lnt-o3-Nl4"/>
+                                            <segue destination="oBw-GM-h8m" kind="show" id="ujP-uz-gmR"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -119,6 +120,71 @@
             </objects>
             <point key="canvasLocation" x="1517.5999999999999" y="-321.58920539730138"/>
         </scene>
+        <!--Photo View Controller-->
+        <scene sceneID="aLT-PK-raa">
+            <objects>
+                <viewController id="oBw-GM-h8m" customClass="PhotoViewController" customModule="Spacetime" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pU9-Dj-dyC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rover's most recent photo" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ifp-dJ-yAi" customClass="ExplanationLabel" customModule="SpacetimeUI">
+                                <rect key="frame" x="20" y="72" width="374" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ova-wK-7tK">
+                                <rect key="frame" x="0.0" y="101" width="414" height="300"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="sf5-D2-wCv"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Earth Date (Sol)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ut6-5u-dl2" customClass="DetailLabel" customModule="SpacetimeUI">
+                                <rect key="frame" x="20" y="409" width="374" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="mAn-IK-rlh">
+                                <rect key="frame" x="197" y="241" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="rSq-VJ-kI6">
+                                <rect key="frame" x="20" y="434" width="374" height="249"/>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="mAn-IK-rlh" firstAttribute="centerY" secondItem="ova-wK-7tK" secondAttribute="centerY" id="0ts-Mv-mQI"/>
+                            <constraint firstItem="ifp-dJ-yAi" firstAttribute="top" secondItem="EGR-Dc-WJV" secondAttribute="top" constant="8" id="Kf1-TJ-4hA"/>
+                            <constraint firstItem="ut6-5u-dl2" firstAttribute="top" secondItem="ova-wK-7tK" secondAttribute="bottom" constant="8" id="OsA-pi-p1u"/>
+                            <constraint firstItem="ova-wK-7tK" firstAttribute="top" secondItem="ifp-dJ-yAi" secondAttribute="bottom" constant="8" id="QJd-RA-oKW"/>
+                            <constraint firstItem="ut6-5u-dl2" firstAttribute="leading" secondItem="EGR-Dc-WJV" secondAttribute="leading" constant="20" id="Vet-iE-xcw"/>
+                            <constraint firstItem="EGR-Dc-WJV" firstAttribute="bottom" secondItem="rSq-VJ-kI6" secondAttribute="bottom" constant="4" id="W1N-10-gbo"/>
+                            <constraint firstItem="ova-wK-7tK" firstAttribute="trailing" secondItem="EGR-Dc-WJV" secondAttribute="trailing" id="X9A-c8-8aY"/>
+                            <constraint firstItem="mAn-IK-rlh" firstAttribute="centerX" secondItem="ova-wK-7tK" secondAttribute="centerX" id="cbK-2x-0ea"/>
+                            <constraint firstItem="EGR-Dc-WJV" firstAttribute="trailing" secondItem="rSq-VJ-kI6" secondAttribute="trailing" constant="20" id="mSo-dK-KHd"/>
+                            <constraint firstItem="ifp-dJ-yAi" firstAttribute="leading" secondItem="EGR-Dc-WJV" secondAttribute="leading" constant="20" id="msF-Pi-1Cg"/>
+                            <constraint firstItem="EGR-Dc-WJV" firstAttribute="trailing" secondItem="ifp-dJ-yAi" secondAttribute="trailing" constant="20" id="okf-i2-PH7"/>
+                            <constraint firstItem="rSq-VJ-kI6" firstAttribute="top" secondItem="ut6-5u-dl2" secondAttribute="bottom" constant="8" id="p1z-8E-8v4"/>
+                            <constraint firstItem="ova-wK-7tK" firstAttribute="leading" secondItem="EGR-Dc-WJV" secondAttribute="leading" id="rbx-mv-vsl"/>
+                            <constraint firstItem="EGR-Dc-WJV" firstAttribute="trailing" secondItem="ut6-5u-dl2" secondAttribute="trailing" constant="20" id="y3Z-Wz-08F"/>
+                            <constraint firstItem="rSq-VJ-kI6" firstAttribute="leading" secondItem="EGR-Dc-WJV" secondAttribute="leading" constant="20" id="yXr-tx-FSC"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="EGR-Dc-WJV"/>
+                    </view>
+                    <connections>
+                        <outlet property="cameraStackView" destination="rSq-VJ-kI6" id="BY4-iC-Iro"/>
+                        <outlet property="dateLabel" destination="ut6-5u-dl2" id="vMh-MD-Ner"/>
+                        <outlet property="descriptionLabel" destination="ifp-dJ-yAi" id="9gl-qB-2tr"/>
+                        <outlet property="loadingView" destination="mAn-IK-rlh" id="Fv1-Ss-UVd"/>
+                        <outlet property="photoImageView" destination="ova-wK-7tK" id="7fg-GU-ZUy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Eg2-pF-2q4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2266.666666666667" y="-321.19565217391306"/>
+        </scene>
         <!--SpaceX View Controller-->
         <scene sceneID="wg7-f3-ORb">
             <objects>
@@ -159,7 +225,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="djw-b4-pH7">
-                                                    <rect key="frame" x="122" y="8.6666666666666643" width="261" height="89"/>
+                                                    <rect key="frame" x="122" y="8.6666666666666643" width="256" height="89"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Flight #: Rocket Name " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0PL-6N-BEJ" customClass="CellTitleLabel" customModule="SpacetimeUI">
                                                             <rect key="frame" x="0.0" y="0.0" width="206.66666666666666" height="22.333333333333332"/>

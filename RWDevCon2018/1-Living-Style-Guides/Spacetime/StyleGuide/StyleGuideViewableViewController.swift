@@ -17,7 +17,7 @@ public class StyleGuideViewableViewController: UITableViewController {
   public init(styles: [StyleGuideViewable], title: String) {
     self.styles = styles
     super.init(nibName: nil, bundle: nil)
-    self.title = title
+    self.title = title 
     self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: self.cellIdentifier)
   }
   
@@ -43,8 +43,6 @@ public class StyleGuideViewableViewController: UITableViewController {
     let cell = tableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath)
     
     let style = self.styles[indexPath.section]
-    
-    // TODO: Show Style
     cell.replaceContentViewSubviewsWith(style.view)
     
     return cell
@@ -52,4 +50,3 @@ public class StyleGuideViewableViewController: UITableViewController {
 }
 
 //StyleGuideViewable 객체 배열을 가져와 UITableView에 표시한다.
-

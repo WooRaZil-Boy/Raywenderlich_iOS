@@ -21,11 +21,12 @@ public enum SpacetimeLabelStyle: String {
     //switch로 각 상황에 맞춘 색상을 반환한다.
     switch self {
     case .calloutText,
-         .cellSubtitle,
          .cellTitle,
-         .detailText,
          .explanationText:
       return .defaultText
+    case .cellSubtitle,
+         .detailText:
+        return .secondaryText
     }
   }
   
@@ -64,26 +65,29 @@ public enum SpacetimeLabelStyle: String {
     return self.fontType.of(size: self.fontSize)
   }
 }
+
 //스타일 설정에는 폰트와 색상이 있다. 이전과 같이 간단한 것(색상)부터 시작하는 것이 좋다.
 
 extension SpacetimeLabelStyle: StyleGuideViewable {
-    public var view: UIView {
-        let label = SpacetimeBaseLabel()
-        label.labelStyle = self
-        label.numberOfLines = 0
-        label.text =
-        """
-        Font: \(label.font.fontName)
-        Size: \(label.font.pointSize) pt
-        Color: \(self.textColor.itemName)
-        """
-        
-        return label
-    }
+  public var view: UIView {
+    let label = SpacetimeBaseLabel()
+    label.labelStyle = self
+    label.numberOfLines = 0
+    label.text =
+    """
+    Font: \(label.font.fontName)
+    Size: \(label.font.pointSize) pt
+    Color: \(self.textColor.itemName)
+    """
+
+    return label
+  }
 }
 
 @IBDesignable
-//CustomView를 만들었을 때, 그 View를 StoryBoard에서도 보고 싶을 때 선언한다.
+//CustomView를 만들었을 때, 그 View를 StoryBoard에서도 볼 수 있다.
+//인터페이스 빌더에 렌더링 코드를 제공하여 화면에 표시될 내용에 가깝게 뷰를 그려준다.
+//렌더링을 실제로 수행하는 곳은 prepareForInterfaceBuilder()에 있다.
 //@IBInsepectable로 속성을 설정해 주면, 스토리보드에서 값을 할당해 줄 수 있다.
 //http://gogorchg.tistory.com/entry/iOS-IBDesignable-IBInspectable-%ED%99%9C%EC%9A%A9
 public class SpacetimeBaseLabel: UILabel {
@@ -104,6 +108,7 @@ public class SpacetimeBaseLabel: UILabel {
   }
   
   override public init(frame: CGRect) {
+    //코드로 생성될 때 호출
     super.init(frame: frame)
     self.commonSetup()
   }
@@ -115,8 +120,9 @@ public class SpacetimeBaseLabel: UILabel {
   }
   
   override public func prepareForInterfaceBuilder() {
+    //인터페이스 빌더에서 객체가 생성되면 호출된다. @IBDesignable로 인스턴스화할 때 이 메서드가 호출된다.
     super.prepareForInterfaceBuilder()
-    self.commonSetup()
+    self.commonSetup() //init에서 호출하는 메서드. 생성자로 생성한 것과 같아진다.
   }
 }
 
@@ -154,3 +160,7 @@ public class CalloutLabel: SpacetimeBaseLabel {
     self.labelStyle = .calloutText
   }
 }
+
+//SpacetimeBaseLabel의 하위 객체들은 commonSetup 메서드를 오버라이드하여, 스타일을 설정한다.
+//클래스를 바꿔줬다고 해서 스토리보드에서, outlet에 연결된 객체를 바꿀 필요는 없다.
+//위 사용자 정의 클래스는 모두 UILabel를 상속하므로, 꼭 필요한 경우가 아니라면, 그대로 UILabel로 둬도 상관없다.

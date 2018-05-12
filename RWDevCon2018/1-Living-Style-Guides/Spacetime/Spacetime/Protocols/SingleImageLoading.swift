@@ -6,6 +6,7 @@
 //  Copyright © 2017 RayWenderlich.com. All rights reserved.
 //
 
+import SpacetimeUI
 import UIKit
 
 protocol SingleImageLoading: class {
@@ -23,7 +24,7 @@ extension SingleImageLoading {
                                                errorCompletion: {
                                                 [weak self]
                                                 _ in
-                                                self?.targetImageView.tintColor = UIColor.spc_from(r: 135, g: 20, b: 12)
+                                                self?.targetImageView.tintColor = SpacetimeColor.failure.color
                                                 self?.imageLoadCompleted(image: nil)
                                                },
                                                successCompletion: {

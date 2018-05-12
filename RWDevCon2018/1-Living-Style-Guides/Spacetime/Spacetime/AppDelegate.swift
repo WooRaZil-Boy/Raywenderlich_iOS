@@ -6,8 +6,8 @@
 //  Copyright © 2017 RayWenderlich.com. All rights reserved.
 //
 
-import UIKit
 import SpacetimeUI //프레임워크
+import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,22 +22,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UITabBar.appearance().tintColor = SpacetimeColor.tabBarContent.color
     //SpacetimeColor의 enum에서 색상을 가져온다.
     UITabBarItem.appearance().setTitleTextAttributes([
-      .font: UIFont.spc_standard(size: 10),
+      .font: SpacetimeFont.standard.of(size: .tiny),
       ], for: .normal)
     
     UINavigationBar.appearance().barTintColor = SpacetimeColor.navigationBarBackground.color
-     //SpacetimeColor의 enum에서 색상을 가져온다.
+    //SpacetimeColor의 enum에서 색상을 가져온다.
     UINavigationBar.appearance().titleTextAttributes = [
-      .foregroundColor: UIColor.white,
+      .foregroundColor: SpacetimeColor.navigationBarContent.color,
 //      .font: UIFont.spc_bold(size: .normal),
-        .font: SpacetimeFont.bold.of(size: .normal),
+      .font: SpacetimeFont.bold.of(size: .normal),
       //SpacetimeFonts의 enum에서 폰트를 가져온다.
     ]
     
-    UIBarButtonItem.appearance().tintColor = .white
+    UIBarButtonItem.appearance().tintColor = SpacetimeColor.navigationBarContent.color
     UIBarButtonItem.appearance().setTitleTextAttributes([
-      .font: UIFont.spc_standard(size: 16),
+      .font: SpacetimeFont.standard.of(size: .medium),
     ], for: .normal)
   }
 }
-

@@ -6,15 +6,16 @@
 //  Copyright © 2017 RayWenderlich.com. All rights reserved.
 //
 
+import SpacetimeUI
 import UIKit
 
 extension UILabel {
   
   func spc_configureForSuccess(_ success: Bool) {
     if success {
-      self.textColor = UIColor.spc_from(r: 3, g: 91, b: 18)
+      self.textColor = SpacetimeColor.success.color
     } else {
-      self.textColor = UIColor.spc_from(r: 135, g: 20, b: 12)
+      self.textColor = SpacetimeColor.failure.color
     }
   }
 }

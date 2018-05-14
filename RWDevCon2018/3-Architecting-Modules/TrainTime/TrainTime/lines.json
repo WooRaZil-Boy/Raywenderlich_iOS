@@ -1,0 +1,22 @@
+{
+  "lines": [
+    {
+      "lineId": 1300,
+      "color": "red",
+      "name": "Hurley-Burley",
+      "fare": 7.25
+    },
+    {
+      "lineId": 1700,
+      "color": "blue",
+      "name": "West Eastown",
+      "fare": 3.87
+    },
+    {
+      "lineId": 2800,
+      "color": "green",
+      "name": "Vineyard On Potomac",
+      "fare": 6.50
+    }
+  ]
+}

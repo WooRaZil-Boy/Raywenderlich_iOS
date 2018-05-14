@@ -1,0 +1,79 @@
+{
+  "lines": [
+    {
+      "lineId": 1300,
+      "schedule": [
+        {
+          "train": 1301,
+          "departs": "10:20AM",
+          "arrives": "11:03AM"
+        },
+        {
+          "train": 1302,
+          "departs": "11:00AM",
+          "arrives": "11:43AM"
+        },
+        {
+          "train": 1303,
+          "departs": "11:30AM",
+          "arrives": "12:15PM"
+        },
+        {
+          "train": 1399,
+          "departs": "11:46PM",
+          "arrives": "12:36AM"
+        }
+      ]
+    },
+    {
+      "lineId": 1700,
+      "schedule": [
+        {
+          "train": 1701,
+          "departs": "6:03AM",
+          "arrives": "6:33AM"
+        },
+        {
+          "train": 1702,
+          "departs": "8:00AM",
+          "arrives": "8:30AM"
+        },
+        {
+          "train": 1703,
+          "departs": "11:00AM",
+          "arrives": "11:31AM"
+        },
+        {
+          "train": 1711,
+          "departs": "2:03PM",
+          "arrives": "2:36PM"
+        }
+      ]
+    },
+    {
+      "lineId": 2800,
+      "schedule": [
+        {
+          "train": 2801,
+          "departs": "10:20AM",
+          "arrives": "11:30AM"
+        },
+        {
+          "train": 2802,
+          "departs": "11:00AM",
+          "arrives": "12:30PM"
+        },
+        {
+          "train": 2803,
+          "departs": "11:30AM",
+          "arrives": "1:00PM"
+        },
+        {
+          "train": 2840,
+          "departs": "5:17PM",
+          "arrives": "6:15PM"
+        }
+      ]
+    }
+  ]
+}

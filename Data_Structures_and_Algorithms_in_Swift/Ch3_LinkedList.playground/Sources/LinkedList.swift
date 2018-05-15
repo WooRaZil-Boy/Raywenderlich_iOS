@@ -11,7 +11,7 @@ public struct LinkedList<Value> { //p.26
 }
 
 extension LinkedList: CustomStringConvertible {
-    //CustomStringConvertible을 구현해, String으로 변환하거나 print 함수 사용시 반환할 값을 지정해 준다
+    //CustomStringConvertible을 구현해, String으로 변환하거나 print 함수 사용시 반환할 값을 지정해 준다.
     public var description: String {
         //description 변수를 설정하면 CustomStringConvertible이 구현된다.
         guard let head = head else {

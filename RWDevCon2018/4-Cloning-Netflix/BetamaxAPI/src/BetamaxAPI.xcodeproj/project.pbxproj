@@ -1,0 +1,160 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		22318206203C4D51002D4A3B /* CarthageDependencies */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 22318207203C4D51002D4A3B /* Build configuration list for PBXAggregateTarget "CarthageDependencies" */;
+			buildPhases = (
+				2231820A203C4D5C002D4A3B /* [Carthage] Copy Frameworks */,
+			);
+			dependencies = (
+			);
+			name = CarthageDependencies;
+			productName = CarthageDependencies;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXFileReference section */
+		22318205203C4D2C002D4A3B /* BetamaxAPI.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = BetamaxAPI.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		225836962049491D00CE1E04 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		2239CF29203C86C500B226DC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		225836952049491C00CE1E04 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				225836962049491D00CE1E04 /* Security.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2266E730203C4CE900CA99CA = {
+			isa = PBXGroup;
+			children = (
+				22318205203C4D2C002D4A3B /* BetamaxAPI.playground */,
+				2239CF29203C86C500B226DC /* Products */,
+				225836952049491C00CE1E04 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		2266E731203C4CE900CA99CA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0930;
+				LastUpgradeCheck = 0930;
+				TargetAttributes = {
+					22318206203C4D51002D4A3B = {
+						CreatedOnToolsVersion = 9.3;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 2266E734203C4CE900CA99CA /* Build configuration list for PBXProject "BetamaxAPI" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2266E730203C4CE900CA99CA;
+			productRefGroup = 2239CF29203C86C500B226DC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				22318206203C4D51002D4A3B /* CarthageDependencies */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2231820A203C4D5C002D4A3B /* [Carthage] Copy Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[Carthage] Copy Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo \"Copying Carthage Frameworks\"\ncp -rv \"${PROJECT_DIR}/../../Shared/Carthage/Build/iOS\" \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		22318208203C4D51002D4A3B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KFCNEC27GU;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+			};
+			name = Debug;
+		};
+		22318209203C4D51002D4A3B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KFCNEC27GU;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+			};
+			name = Release;
+		};
+		2266E735203C4CE900CA99CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		2266E736203C4CE900CA99CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		22318207203C4D51002D4A3B /* Build configuration list for PBXAggregateTarget "CarthageDependencies" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				22318208203C4D51002D4A3B /* Debug */,
+				22318209203C4D51002D4A3B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2266E734203C4CE900CA99CA /* Build configuration list for PBXProject "BetamaxAPI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2266E735203C4CE900CA99CA /* Debug */,
+				2266E736203C4CE900CA99CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2266E731203C4CE900CA99CA /* Project object */;
+}

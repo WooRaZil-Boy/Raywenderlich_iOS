@@ -28,25 +28,32 @@
  * THE SOFTWARE.
  */
 
-import UIKit
-import InfoServiceStatic
+import Foundation
 
-class LoginViewController: UIViewController {
+public struct LineSchedule: Codable {
 
-  @IBOutlet weak var usernameField: UITextField!
-  @IBOutlet weak var passwordField: UITextField!
+  public struct Run: Codable {
+    public let train: Int
+    public let departs: Date
+    public let arrives: Date
 
-  @IBAction func attemptLogin(_ sender: Any) {
-    AppDelegate.sharedUserModel.login(username: usernameField.text ?? "", password: passwordField.text ?? "") { success, error in
-      DispatchQueue.main.async { [unowned self] in
-        if success {
-          self.navigationController?.popViewController(animated: true)
-        } else {
-          let alert = UIAlertController(title: "Error Logging In", message: error?.localizedDescription ?? "", preferredStyle: .alert)
-          alert.addAction(UIAlertAction(title: "Dismiss", style: .default))
-          self.present(alert, animated: true)
-        }
-      }
+    public init(from decoder: Decoder) throws {
+      let values = try decoder.container(keyedBy: CodingKeys.self)
+      train = try values.decode(Int.self, forKey: .train)
+
+      //custom decoding to get basic date string into right NSDate
+      departs = try Run.convertDate(values, key: .departs)
+      arrives = try Run.convertDate(values, key: .arrives)
+    }
+
+    private static func convertDate(_ values: KeyedDecodingContainer<LineSchedule.Run.CodingKeys>, key: CodingKeys) throws -> Date {
+      let hms = try values.decode(Date.self, forKey: key)
+      var components = Calendar.current.dateComponents([.minute, .hour], from: hms)
+      components.timeZone = TimeZone.current
+      return Calendar.current.date(bySettingHour: components.hour!, minute: components.minute!, second: 0, of: Date())!
     }
   }
+
+  public let lineId: Int
+  public let schedule: [Run]
 }

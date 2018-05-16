@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EFAE9B3820A9E50F009702E4"
+               BlueprintIdentifier = "4C7C2ABC1F9EF2C6000FA14A"
                BuildableName = "TrainServiceTests.xctest"
                BlueprintName = "TrainServiceTests"
                ReferencedContainer = "container:TrainTime.xcodeproj">
@@ -75,6 +75,11 @@
          <EnvironmentVariable
             key = "OS_ACTIVITY_MODE"
             value = "disable"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "DYLD_PRINT_STATISTICS"
+            value = "1"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>

@@ -1,4 +1,4 @@
-///// Copyright (c) 2018년 Razeware LLC
+///// Copyright (c) 2017 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -28,12 +28,12 @@
 
 #import <UIKit/UIKit.h>
 
-//! Project version number for TrainService.
-FOUNDATION_EXPORT double TrainServiceVersionNumber;
+//! Project version number for InfoService.
+FOUNDATION_EXPORT double InfoServiceVersionNumber;
 
-//! Project version string for TrainService.
-FOUNDATION_EXPORT const unsigned char TrainServiceVersionString[];
+//! Project version string for InfoService.
+FOUNDATION_EXPORT const unsigned char InfoServiceVersionString[];
 
-// In this header, you should import all the public headers of your framework using statements like #import <TrainService/PublicHeader.h>
+// In this header, you should import all the public headers of your framework using statements like #import <InfoService/PublicHeader.h>
 
 

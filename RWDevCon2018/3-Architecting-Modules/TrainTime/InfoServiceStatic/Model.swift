@@ -29,12 +29,15 @@
  */
 
 import Foundation
+import HelpersStatic
 
 public class Model {
-  private let api = API()
+
+  private let api: API
   public var lines: [TrainLine] = []
 
-  public init() {
+  public init(api: API = API()) {
+    self.api = api
     api.loadTrainLines { result in
       guard let lines = result.value else { return }
 
@@ -79,37 +82,3 @@ public class Model {
   }
 }
 
-public class UserModel {
-  public var wallet: Wallet?
-  private let api = UserAPI()
-  
-  public init() {} //응용 프로그램에서 클래스를 사용할 수 있도록 생성자 추가
-  
-  public func login(username: String, password: String, completion: @escaping (Bool, NSError?) -> Void) {
-    api.logIn(username: username, password: password) { result in
-      switch result {
-      case .success(let value):
-        self.wallet = value
-        completion(true, nil)
-      case .failure(let error):
-        completion(false, error)
-      }
-    }
-  }
-
-  public func buyTicket(line: TrainLine, completion: @escaping (Bool, NSError?) -> Void) {
-    guard let wallet = wallet else { return }
-
-    api.buyTicket(lineId: line.lineId, cost: line.fare, wallet: wallet) { result in
-      switch result {
-      case .success(let value):
-        self.wallet = value
-        completion(true, nil)
-      case .failure(let error):
-        completion(false, error)
-      }
-    }
-  }
-}
-
-//public으로 설정해야 모듈을 다른 어플리케이션에서 import할 수 있다.

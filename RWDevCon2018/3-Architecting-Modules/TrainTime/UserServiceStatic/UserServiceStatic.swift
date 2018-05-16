@@ -26,31 +26,19 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import XCTest
-@testable import TrainService
+class UserServiceStatic {
 
-class TrainServiceTests: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-    
 }
+
+//Create a static User Service Library
+//동적 프레임워크를 정적 프레임워크로 변환한다.
+//Project Editor에서 "+" 버튼을 눌러 새 target을 설정한다.
+//iOS > Framework & Library > Cocoa Touch Static Library
+//해당 라이브러리(UserService)에서 필요한 파일들을 이전의 동적 라이브러리 폴더에서 Drag & Drop으로 가져온다.
+//target이 맞게 설정되었는지 다시 확인해볼 것
+//이전의 동적 라이브러리(UserService)는 사용하지 않으므로 Project Editor에서 "-" 버튼을 눌러 삭제해 준다.
+//UserServiceStatic을 선택하고, Build Phases > Target Dependencies에서
+//이전 동적 라이브러리에서 의존하던 라이브러리(Helpers)를 똑같이 추가해 준다.
+//TrainTime(메인 앱)을 선택하고, General > Linked Frameworks and Libraries에서 정적 라이브러리를 추가해 준다.
+//UserService에서 UserServiceStatic으로 바뀌었다. 코드에서 UserService로 쓴 부분을 고쳐준다.
+//Clean & Build

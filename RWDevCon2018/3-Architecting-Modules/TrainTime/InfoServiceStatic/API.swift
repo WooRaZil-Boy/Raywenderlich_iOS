@@ -29,8 +29,11 @@
  */
 
 import Foundation
+import HelpersStatic
 
-class API {
+public class API {
+
+  public init() {}
 
   func loadTrainLines(_ completion: @escaping (Result<[TrainLine], NSError>) -> Void) {
     loadResponse(file: "lines") { result in
@@ -40,7 +43,7 @@ class API {
     }
   }
 
-  func loadLineGeography(_ completion: @escaping (Result<[TrainLineGeography], NSError>) -> Void) {
+  public func loadLineGeography(_ completion: @escaping (Result<[TrainLineGeography], NSError>) -> Void) {
     loadResponse(file: "geography") { result in
       completion(result.map { (response: GeographyResponse) in
         return response.lines
@@ -74,45 +77,7 @@ class API {
   }
 }
 
-class UserAPI {
-
-  func logIn(username: String, password: String, completion: @escaping (Result<Wallet, NSError>) -> Void) {
-    let wallet = Wallet(username: username, balance: 16.00, tickets: [])
-    DispatchQueue.global().async {
-      completion(Result(value: wallet))
-    }
-  }
-
-  func buyTicket(lineId: Int, cost: Double, wallet: Wallet, completion: @escaping (Result<Wallet, NSError>) -> Void) {
-    guard wallet.balance >= cost else {
-      DispatchQueue.global().async {
-        completion(Result(error: NSError(domain: "Train", code: 1, userInfo: [NSLocalizedDescriptionKey : "Not enough money"])))
-      }
-      return
-    }
-
-    let ticket = Ticket(cost: cost, lineId: lineId, ticketId: UUID(), activatedDate: nil, activated: false)
-    var wallet = wallet
-    wallet.tickets.append(ticket)
-    wallet.balance -= cost
-    DispatchQueue.global().async {
-      completion(Result(value: wallet))
-    }
-  }
-
-  func useTicket(ticket: Ticket, wallet: Wallet, completion: @escaping (Result<Wallet, NSError>) -> Void) {
-    var ticket = ticket
-    ticket.activated = true
-    ticket.activatedDate = Date()
-    var wallet = wallet
-    if let ticketIndex = wallet.tickets.index(of: ticket) {
-      wallet.tickets.replaceSubrange(ticketIndex...ticketIndex + 1, with: [ticket])
-    }
-
-    DispatchQueue.global().async {
-      completion(Result(value: wallet))
-    }
-  }
-}
-
 //train schedule과 ticketing을 분리한다.
+
+
+

@@ -1,15 +1,15 @@
-/// Copyright (c) 2017 Razeware LLC
-///
+///// Copyright (c) 2018년 Razeware LLC
+/// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-///
+/// 
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-///
+/// 
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-///
+/// 
 /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 /// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,37 +26,31 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import UIKit
-import UserService
+import XCTest
+@testable import PersistenceFacade
 
-class TicketViewController: UIViewController {
-
-  var ticket: Ticket?
-
-  @IBOutlet weak var codeImageView: UIImageView!
-  @IBOutlet weak var titleLabel: UILabel!
-  @IBOutlet weak var backgroundView: UIView!
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-
-    guard let ticket = self.ticket else {
-      return
+class PersistenceFacadeTests: XCTestCase {
+    
+    override func setUp() {
+        super.setUp()
+        // Put setup code here. This method is called before the invocation of each test method in the class.
     }
-
-    let line = AppDelegate.sharedModel.line(forId: ticket.lineId)
-    titleLabel.text = "\(line?.name ?? "")"
-    backgroundView.backgroundColor = line?.associatedColor.withAlphaComponent(0.5)
-
-    setTicketImage(ticket: ticket)
-  }
-
-  private func setTicketImage(ticket: Ticket) {
-    let data = ticket.ticketId.uuidString.data(using: .utf8)!
-    let descriptor = CIAztecCodeDescriptor(payload: data, isCompact: false, layerCount: 15, dataCodewordCount: 2)!
-    let params = ["inputBarcodeDescriptor": descriptor]
-    let filter = CIFilter(name: "CIBarcodeGenerator", withInputParameters: params)!
-    let ciImage = filter.outputImage!
-    codeImageView.image = UIImage(ciImage: ciImage)
-  }
+    
+    override func tearDown() {
+        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        super.tearDown()
+    }
+    
+    func testExample() {
+        // This is an example of a functional test case.
+        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    }
+    
+    func testPerformanceExample() {
+        // This is an example of a performance test case.
+        self.measure {
+            // Put the code you want to measure the time of here.
+        }
+    }
+    
 }

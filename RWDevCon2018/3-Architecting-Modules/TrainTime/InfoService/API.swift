@@ -26,37 +26,52 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import UIKit
-import UserService
+import Foundation
+import Helpers
 
-class TicketViewController: UIViewController {
+public class API {
 
-  var ticket: Ticket?
-
-  @IBOutlet weak var codeImageView: UIImageView!
-  @IBOutlet weak var titleLabel: UILabel!
-  @IBOutlet weak var backgroundView: UIView!
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-
-    guard let ticket = self.ticket else {
-      return
-    }
-
-    let line = AppDelegate.sharedModel.line(forId: ticket.lineId)
-    titleLabel.text = "\(line?.name ?? "")"
-    backgroundView.backgroundColor = line?.associatedColor.withAlphaComponent(0.5)
-
-    setTicketImage(ticket: ticket)
+  public init() {
   }
 
-  private func setTicketImage(ticket: Ticket) {
-    let data = ticket.ticketId.uuidString.data(using: .utf8)!
-    let descriptor = CIAztecCodeDescriptor(payload: data, isCompact: false, layerCount: 15, dataCodewordCount: 2)!
-    let params = ["inputBarcodeDescriptor": descriptor]
-    let filter = CIFilter(name: "CIBarcodeGenerator", withInputParameters: params)!
-    let ciImage = filter.outputImage!
-    codeImageView.image = UIImage(ciImage: ciImage)
+  func loadTrainLines(_ completion: @escaping (Result<[TrainLine], NSError>) -> Void) {
+    loadResponse(file: "lines") { result in
+      completion(result.map { (response: LineResponse) in
+        response.lines
+      })
+    }
+  }
+
+  public func loadLineGeography(_ completion: @escaping (Result<[TrainLineGeography], NSError>) -> Void) {
+    loadResponse(file: "geography") { result in
+      completion(result.map { (response: GeographyResponse) in
+        response.lines
+      })
+    }
+  }
+
+  func loadSchedule(_ completion: @escaping (Result<[LineSchedule], NSError>) -> Void) {
+    loadResponse(file: "schedule") { result in
+      completion(result.map { (response: ScheudleResponse) in
+        response.lines
+      })
+    }
+  }
+
+  private func loadResponse<T: Codable>(file: String, _ completion: @escaping (Result<T, NSError>) -> Void) {
+    DispatchQueue.global().async {
+      let trainURL = Bundle.main.url(forResource: file, withExtension: "json")!
+      do {
+        let jsonData = try Data(contentsOf: trainURL)
+        let decoder = JSONDecoder()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "h:mma"
+        decoder.dateDecodingStrategy = .formatted(dateFormatter)
+        let response = try decoder.decode(T.self, from: jsonData)
+        completion(Result(value: response))
+      } catch (let error as NSError) {
+        completion(Result(error: error))
+      }
+    }
   }
 }

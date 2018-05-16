@@ -1,15 +1,15 @@
-///// Copyright (c) 2018년 Razeware LLC
-/// 
+/// Copyright (c) 2017 Razeware LLC
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 /// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,19 +26,49 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-class InfoServiceStatic {
+import Foundation
 
+public class UserModel {
+  let api: API
+  public var wallet: Wallet?
+
+  public init(api: API) { //응용 프로그램에서 클래스를 사용할 수 있도록 생성자 추가
+    self.api = api
+  }
+
+  public func login(username: String, password: String, completion: @escaping (Bool, NSError?) -> Void) {
+    api.logIn(username: username, password: password) { [weak self] result in
+      guard let strongSelf = self else {
+        return
+      }
+
+      switch result {
+      case .success(let value):
+        strongSelf.wallet = value
+        completion(true, nil)
+      case .failure(let error):
+        completion(false, error)
+      }
+    }
+  }
+
+  public func buyTicket(lineId: Int, fare: Double, completion: @escaping (Bool, NSError?) -> Void) {
+    guard let wallet = wallet else { return }
+
+    api.buyTicket(lineId: lineId, cost: fare, wallet: wallet) { [weak self] result in
+      guard let strongSelf = self else {
+        return
+      }
+
+      switch result {
+      case .success(let value):
+        strongSelf.wallet = value
+        completion(true, nil)
+      case .failure(let error):
+        completion(false, error)
+      }
+    }
+  }
 }
 
-//Create a static Info Service library
-//동적 프레임워크를 정적 프레임워크로 변환한다.
-//Project Editor에서 "+" 버튼을 눌러 새 target을 설정한다.
-//iOS > Framework & Library > Cocoa Touch Static Library
-//해당 라이브러리(InfoService)에서 필요한 파일들을 이전의 동적 라이브러리 폴더에서 Drag & Drop으로 가져온다.
-//target이 맞게 설정되었는지 다시 확인해볼 것
-//이전의 동적 라이브러리(InfoService)는 사용하지 않으므로 Project Editor에서 "-" 버튼을 눌러 삭제해 준다.
-//InfoServiceStatic을 선택하고, Build Phases > Target Dependencies에서
-//이전 동적 라이브러리에서 의존하던 라이브러리(Helpers)를 똑같이 추가해 준다.
-//TrainTime(메인 앱)을 선택하고, General > Linked Frameworks and Libraries에서 정적 라이브러리를 추가해 준다.
-//InfoService에서 InfoServiceStatic으로 바뀌었다. 코드에서 InfoService로 쓴 부분을 고쳐준다.
-//Clean & Build
+//public으로 설정해야 모듈을 다른 어플리케이션에서 import할 수 있다.

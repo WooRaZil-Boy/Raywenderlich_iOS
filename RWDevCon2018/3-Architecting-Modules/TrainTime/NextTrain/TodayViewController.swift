@@ -1,15 +1,15 @@
-///// Copyright (c) 2018년 Razeware LLC
-/// 
+/// Copyright (c) 2017 Razeware LLC
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 /// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -31,16 +31,59 @@ import NotificationCenter
 import InfoService
 
 class TodayViewController: UIViewController, NCWidgetProviding {
-    @IBOutlet weak var label: UILabel! //MainInterface에서 추가
+  
+  @IBOutlet weak var label: UILabel!
+
   let model = Model()
   var nextRun: (TrainLine, LineSchedule.Run)? = nil
-  
-  func updateLabel() { //위젯 업데이트 함수
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    model.lines.forEach { line in
+      model.schedule(forId: line.lineId, completion: { [weak self] schedule in
+        guard let strongSelf = self else {
+          return
+        }
+
+        schedule.schedule.forEach { run in
+          strongSelf.checkRunIfItsNext(run, line: line)
+        }
+      })
+    }
+  }
+
+  func checkRunIfItsNext(_ run: LineSchedule.Run, line: TrainLine) {
+    guard run.departs > Date() else {
+      return
+    }
+
+    guard let latestRun = self.nextRun else {
+      self.nextRun = (line, run)
+      self.updateOnMain()
+      return
+    }
+
+    if run.departs < latestRun.1.departs {
+      self.nextRun = (line, run)
+      self.updateOnMain()
+    }
+  }
+
+  func updateOnMain() {
+    DispatchQueue.main.async { [weak self] in
+      guard let strongSelf = self else {
+        return
+      }
+
+      strongSelf.updateLabel()
+    }
+  }
+
+  func updateLabel() {
     if let (line, run) = nextRun {
       let formatter = DateFormatter()
       formatter.dateStyle = .none
       formatter.timeStyle = .short
-      
       let time = formatter.string(from: run.departs)
       let train = line.name
       self.label.text = "Next train: \(train) (\(run.train)): @ \(time)"
@@ -48,61 +91,16 @@ class TodayViewController: UIViewController, NCWidgetProviding {
       self.label.text = "No train information at this time."
     }
   }
-  
-  func updateOnMain() {
-    DispatchQueue.main.async { //메인 스레드에서 위젯 업데이트 하도록
-      self.updateLabel()
-    }
+
+  func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
+    // Perform any setup necessary in order to update the view.
+    
+    // If an error is encountered, use NCUpdateResult.Failed
+    // If there's no update required, use NCUpdateResult.NoData
+    // If there's an update, use NCUpdateResult.NewData
+    
+    completionHandler(NCUpdateResult.newData)
   }
-  
-  func checkRunIfItsNext(_ run: LineSchedule.Run, line: TrainLine) {
-    //다음 스케줄 있으면 업데이트
-    guard run.departs > Date() else { return } //지금 시간보다 뒤의 스케쥴이 있어야 한다. 없으면 종료
-    guard let latestRun = self.nextRun else { //그 중 가장 빠른 스케줄을 가져온다.
-      self.nextRun = (line, run) //가져오지 못한다면, 파라미터로 들어온 값들을 nextRun으로 지정해 주고
-      self.updateOnMain() //메인 스레드에서 위젯 업데이트
-      
-      return
-    }
-    
-    if run.departs < latestRun.1.departs {
-      self.nextRun = (line, run) //가장 빠른 스케줄로 nextRun 지정해 주고
-      self.updateOnMain() //메인 스레드에서 위젯 업데이트
-    }
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    
-    model.lines.forEach { line in
-      model.schedule(forId: line.lineId, completion: { schedule in
-        schedule.schedule.forEach { run in //loop를 돌면서 위젯 업데이트
-          self.checkRunIfItsNext(run, line: line)
-        }
-      })
-    }
-  }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view from its nib.
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
-        // Perform any setup necessary in order to update the view.
-        
-        // If an error is encountered, use NCUpdateResult.Failed
-        // If there's no update required, use NCUpdateResult.NoData
-        // If there's an update, use NCUpdateResult.NewData
-        
-        completionHandler(NCUpdateResult.newData)
-    }
-    
 }
 
 //extension을 만들어 다양한 기능을 추가할 수 있다(위젯 등).

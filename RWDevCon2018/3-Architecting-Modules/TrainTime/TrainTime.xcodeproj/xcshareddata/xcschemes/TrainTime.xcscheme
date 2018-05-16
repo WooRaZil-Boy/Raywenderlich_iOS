@@ -38,6 +38,16 @@
                ReferencedContainer = "container:TrainTime.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "EF5B0F9520AC0B7700C5B4F5"
+               BuildableName = "PersistenceFacadeTests.xctest"
+               BlueprintName = "PersistenceFacadeTests"
+               ReferencedContainer = "container:TrainTime.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
@@ -75,11 +85,6 @@
          <EnvironmentVariable
             key = "OS_ACTIVITY_MODE"
             value = "disable"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-         <EnvironmentVariable
-            key = "DYLD_PRINT_STATISTICS"
-            value = "1"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>

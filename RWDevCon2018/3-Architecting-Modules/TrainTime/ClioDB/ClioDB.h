@@ -26,37 +26,12 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import UIKit
-import UserService
+#import <UIKit/UIKit.h>
 
-class TicketViewController: UIViewController {
+//! Project version number for ClioDB.
+FOUNDATION_EXPORT double ClioDBVersionNumber;
 
-  var ticket: Ticket?
+//! Project version string for ClioDB.
+FOUNDATION_EXPORT const unsigned char ClioDBVersionString[];
 
-  @IBOutlet weak var codeImageView: UIImageView!
-  @IBOutlet weak var titleLabel: UILabel!
-  @IBOutlet weak var backgroundView: UIView!
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-
-    guard let ticket = self.ticket else {
-      return
-    }
-
-    let line = AppDelegate.sharedModel.line(forId: ticket.lineId)
-    titleLabel.text = "\(line?.name ?? "")"
-    backgroundView.backgroundColor = line?.associatedColor.withAlphaComponent(0.5)
-
-    setTicketImage(ticket: ticket)
-  }
-
-  private func setTicketImage(ticket: Ticket) {
-    let data = ticket.ticketId.uuidString.data(using: .utf8)!
-    let descriptor = CIAztecCodeDescriptor(payload: data, isCompact: false, layerCount: 15, dataCodewordCount: 2)!
-    let params = ["inputBarcodeDescriptor": descriptor]
-    let filter = CIFilter(name: "CIBarcodeGenerator", withInputParameters: params)!
-    let ciImage = filter.outputImage!
-    codeImageView.image = UIImage(ciImage: ciImage)
-  }
-}
+// In this header, you should import all the public headers of your framework using statements like #import <ClioDB/PublicHeader.h>

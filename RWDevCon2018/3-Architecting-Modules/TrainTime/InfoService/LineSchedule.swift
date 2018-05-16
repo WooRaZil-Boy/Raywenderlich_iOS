@@ -26,37 +26,32 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import UIKit
-import UserService
+import Foundation
 
-class TicketViewController: UIViewController {
+public struct LineSchedule: Codable {
 
-  var ticket: Ticket?
+  public struct Run: Codable {
+    public let train: Int
+    public let departs: Date
+    public let arrives: Date
 
-  @IBOutlet weak var codeImageView: UIImageView!
-  @IBOutlet weak var titleLabel: UILabel!
-  @IBOutlet weak var backgroundView: UIView!
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
+    public init(from decoder: Decoder) throws {
+      let values = try decoder.container(keyedBy: CodingKeys.self)
+      train = try values.decode(Int.self, forKey: .train)
 
-    guard let ticket = self.ticket else {
-      return
+      //custom decoding to get basic date string into right NSDate
+      departs = try Run.convertDate(values, key: .departs)
+      arrives = try Run.convertDate(values, key: .arrives)
     }
 
-    let line = AppDelegate.sharedModel.line(forId: ticket.lineId)
-    titleLabel.text = "\(line?.name ?? "")"
-    backgroundView.backgroundColor = line?.associatedColor.withAlphaComponent(0.5)
-
-    setTicketImage(ticket: ticket)
+    private static func convertDate(_ values: KeyedDecodingContainer<LineSchedule.Run.CodingKeys>, key: CodingKeys) throws -> Date {
+      let hms = try values.decode(Date.self, forKey: key)
+      var components = Calendar.current.dateComponents([.minute, .hour], from: hms)
+      components.timeZone = TimeZone.current
+      return Calendar.current.date(bySettingHour: components.hour!, minute: components.minute!, second: 0, of: Date())!
+    }
   }
-
-  private func setTicketImage(ticket: Ticket) {
-    let data = ticket.ticketId.uuidString.data(using: .utf8)!
-    let descriptor = CIAztecCodeDescriptor(payload: data, isCompact: false, layerCount: 15, dataCodewordCount: 2)!
-    let params = ["inputBarcodeDescriptor": descriptor]
-    let filter = CIFilter(name: "CIBarcodeGenerator", withInputParameters: params)!
-    let ciImage = filter.outputImage!
-    codeImageView.image = UIImage(ciImage: ciImage)
-  }
+  
+  public let lineId: Int
+  public let schedule: [Run]
 }

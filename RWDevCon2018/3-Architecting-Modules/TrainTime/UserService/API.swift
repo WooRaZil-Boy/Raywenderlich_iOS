@@ -26,37 +26,48 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import UIKit
-import UserService
+import Foundation
+import Helpers
 
-class TicketViewController: UIViewController {
+public class API {
 
-  var ticket: Ticket?
+  public init() {}
 
-  @IBOutlet weak var codeImageView: UIImageView!
-  @IBOutlet weak var titleLabel: UILabel!
-  @IBOutlet weak var backgroundView: UIView!
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
+  func logIn(username: String, password: String, completion: @escaping (Result<Wallet, NSError>) -> Void) {
+    let wallet = Wallet(username: username, balance: 16.00, tickets: [])
+    DispatchQueue.global().async {
+      completion(Result(value: wallet))
+    }
+  }
 
-    guard let ticket = self.ticket else {
+  func buyTicket(lineId: Int, cost: Double, wallet: Wallet, completion: @escaping (Result<Wallet, NSError>) -> Void) {
+    guard wallet.balance >= cost else {
+      DispatchQueue.global().async {
+        completion(Result(error: NSError(domain: "Train", code: 1, userInfo: [NSLocalizedDescriptionKey : "Not enough money"])))
+      }
       return
     }
 
-    let line = AppDelegate.sharedModel.line(forId: ticket.lineId)
-    titleLabel.text = "\(line?.name ?? "")"
-    backgroundView.backgroundColor = line?.associatedColor.withAlphaComponent(0.5)
+    let ticket = Ticket(cost: cost, lineId: lineId, ticketId: UUID(), activatedDate: nil, activated: false)
+    var wallet = wallet
+    wallet.tickets.append(ticket)
+    wallet.balance -= cost
+    DispatchQueue.global().async {
+      completion(Result(value: wallet))
+    }
 
-    setTicketImage(ticket: ticket)
   }
 
-  private func setTicketImage(ticket: Ticket) {
-    let data = ticket.ticketId.uuidString.data(using: .utf8)!
-    let descriptor = CIAztecCodeDescriptor(payload: data, isCompact: false, layerCount: 15, dataCodewordCount: 2)!
-    let params = ["inputBarcodeDescriptor": descriptor]
-    let filter = CIFilter(name: "CIBarcodeGenerator", withInputParameters: params)!
-    let ciImage = filter.outputImage!
-    codeImageView.image = UIImage(ciImage: ciImage)
+  func useTicket(ticket: Ticket, wallet: Wallet, completion: @escaping (Result<Wallet, NSError>) -> Void) {
+    var ticket = ticket
+    ticket.activated = true
+    ticket.activatedDate = Date()
+    var wallet = wallet
+    if let ticketIndex = wallet.tickets.index(of: ticket) {
+      wallet.tickets.replaceSubrange(ticketIndex...ticketIndex + 1, with: [ticket])
+    }
+    DispatchQueue.global().async {
+      completion(Result(value: wallet))
+    }
   }
 }

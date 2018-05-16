@@ -26,37 +26,27 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import UIKit
-import UserService
+import Foundation
 
-class TicketViewController: UIViewController {
+public class ClioBase {
 
-  var ticket: Ticket?
-
-  @IBOutlet weak var codeImageView: UIImageView!
-  @IBOutlet weak var titleLabel: UILabel!
-  @IBOutlet weak var backgroundView: UIView!
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-
-    guard let ticket = self.ticket else {
-      return
-    }
-
-    let line = AppDelegate.sharedModel.line(forId: ticket.lineId)
-    titleLabel.text = "\(line?.name ?? "")"
-    backgroundView.backgroundColor = line?.associatedColor.withAlphaComponent(0.5)
-
-    setTicketImage(ticket: ticket)
+  private func path(table: String) -> URL {
+    return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("cliodb.\(table).json")
   }
 
-  private func setTicketImage(ticket: Ticket) {
-    let data = ticket.ticketId.uuidString.data(using: .utf8)!
-    let descriptor = CIAztecCodeDescriptor(payload: data, isCompact: false, layerCount: 15, dataCodewordCount: 2)!
-    let params = ["inputBarcodeDescriptor": descriptor]
-    let filter = CIFilter(name: "CIBarcodeGenerator", withInputParameters: params)!
-    let ciImage = filter.outputImage!
-    codeImageView.image = UIImage(ciImage: ciImage)
+  public init() {
+  }
+
+  public func saveTable<T: Encodable>(table: String, rows: [T]) throws {
+    let coder = JSONEncoder()
+    let data = try coder.encode(rows)
+    try data.write(to: path(table: table))
+  }
+
+  public func loadTable<T:Decodable>(table: String) throws -> [T]? {
+    let decoder = JSONDecoder()
+    let data = try Data(contentsOf: path(table: table))
+    let rows = try decoder.decode(Array<T>.self, from: data)
+    return rows
   }
 }

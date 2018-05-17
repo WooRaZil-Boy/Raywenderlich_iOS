@@ -1,0 +1,35 @@
+<UIView
+  top="0"
+  left="0"
+  width="100%"
+  height="100%"
+  backgroundColor="white">
+  <UIView
+    center.x="parent.center.x"
+    center.y="parent.center.y"
+    width="80%"
+    height="auto">
+    <UIImageView
+      image="razeware_logo"
+      width="150"
+      height="150"
+      center.x="parent.center.x"
+      top="0" />
+
+    <UILabel
+      numberOfLines="0"
+      center.x="parent.center.x"
+      preferredMaxLayoutWidth="parent.width"
+      top="previous.bottom + sizes.spacing.vertical">
+      <h1>Welcome to raywenderlich.com</h1>
+      <p>In order to use the app and access video playback, please log in with your raywenderlich.com account</p>
+    </UILabel>
+
+    <UIButton
+      top="previous.bottom + sizes.spacing.vertical"
+      center.x="parent.center.x"
+      touchUpInside="handleLoginPressed">
+      Login
+    </UIButton>
+  </UIView>
+</UIView>

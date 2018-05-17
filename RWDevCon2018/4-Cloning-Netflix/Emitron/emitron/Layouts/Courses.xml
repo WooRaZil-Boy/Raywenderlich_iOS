@@ -1,0 +1,43 @@
+<UICollectionView
+  outlet="shelvesCollectionView"
+  backgroundColor="white"
+  collectionViewLayout.itemSize.width="100%"
+  collectionViewLayout.itemSize.height="sizes.collectionTileWidth / 4 * 3 + 30 + 60"
+  collectionViewLayout.minimumInteritemSpacing="sizes.spacing.vertical"
+  collectionViewLayout.scrollDirection="vertical"
+  contentInset.top="sizes.margin.vertical"
+  contentInset.bottom="sizes.margin.vertical">
+
+  <macro name="TILE_LABEL_HEIGHT" value="30" />
+  <macro name="TILE_IMAGE_HEIGHT" value="sizes.collectionTileWidth / 4 * 3" />
+  <macro name="TILE_HEIGHT" value="TILE_IMAGE_HEIGHT + TILE_LABEL_HEIGHT" />
+  
+  <ShelfCollectionViewCell
+    reuseIdentifier="ShelfCell">
+
+    <UILabel 
+      top="0"
+      text="{title}"
+      font="24 bold"
+      left="sizes.margin.horizontal" />
+    <UIView 
+      backgroundColor="lightText"
+      width="100% - 2 * sizes.margin.horizontal"
+      left="sizes.margin.horizontal"
+      height="0.5"
+      top="previous.bottom + sizes.spacing.vertical / 2" />
+    <UICollectionView
+      top="previous.bottom + sizes.spacing.vertical"
+      width="100%"
+      outlet="collectionView"
+      backgroundColor="white"
+      height="sizes.collectionTileWidth / 4 * 3 + 30"
+      collectionViewLayout.itemSize.height="sizes.collectionTileWidth / 4 * 3 + 30"
+      collectionViewLayout.itemSize.width="sizes.collectionTileWidth"
+      collectionViewLayout.minimumInteritemSpacing="sizes.spacing.horizontal"
+      collectionViewLayout.scrollDirection="horizontal"
+      contentInset.left="sizes.margin.horizontal"
+      contentInset.right="sizes.margin.horizontal"
+      showsHorizontalScrollIndicator="false" />
+  </ShelfCollectionViewCell>
+</UICollectionView>

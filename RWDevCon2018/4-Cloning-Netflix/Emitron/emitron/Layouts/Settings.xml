@@ -1,0 +1,9 @@
+<UIView
+  backgroundColor="white">
+  <UIButton
+    center.x="parent.center.x"
+    center.y="parent.center.y"
+    touchUpInside="handleLogoutPressed">
+    Logout
+  </UIButton>
+</UIView>

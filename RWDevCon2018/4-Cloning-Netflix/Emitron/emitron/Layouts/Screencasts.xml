@@ -1,0 +1,14 @@
+<UICollectionView
+  outlet="collectionView"
+  backgroundColor="white"
+  width="100%"
+  height="100%"
+  collectionViewLayout.itemSize.width="sizes.collectionTileWidth"
+  collectionViewLayout.itemSize.height="sizes.collectionTileWidth / 16 * 9 + 30"
+  collectionViewLayout.minimumInteritemSpacing="sizes.spacing.horizontal"
+  collectionViewLayout.minimumLineSpacing = "sizes.spacing.vertical"
+  collectionViewLayout.scrollDirection="vertical"
+  contentInset.top="sizes.margin.vertical"
+  contentInset.bottom="sizes.margin.vertical"
+  contentInset.left="sizes.margin.horizontal"
+  contentInset.right="sizes.margin.horizontal" />

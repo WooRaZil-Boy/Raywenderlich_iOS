@@ -1,0 +1,18 @@
+<UIView
+  layer.cornerRadius="cornerRadius"
+  width="auto + padding"
+  height="auto + padding">
+  <param name="text" type="String" />
+  <param name="foregroundColor" type="UIColor" />
+  <param name="padding" type="CGFloat" />
+  <param name="cornerRadius" type="CGFloat" />
+
+  <UILabel
+    text="{text}"
+    textColor="foregroundColor"
+    width="auto"
+    height="auto"
+    top="padding"
+    left="padding"
+    font="bold 10" />
+</UIView>

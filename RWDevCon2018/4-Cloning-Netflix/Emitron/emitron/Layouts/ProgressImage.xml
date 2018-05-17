@@ -1,0 +1,52 @@
+<UIView>
+  <param name="labelText" type="String" />
+  <param name="proportionComplete" type="CGFloat" />
+  <param name="complete" type="Bool" />
+
+  <UIImageView
+    clipsToBounds="true"
+    outlet="imageView"
+    contentMode="scaleAspectFill"
+    left="0"
+    top="0"
+    height="100%"
+    width="100%"
+    layer.cornerRadius="5" />
+
+  <UIView
+    template="RoundedLabel.xml"
+    text="{labelText}"
+    top="5"
+    left="5"
+    backgroundColor="white"
+    foregroundColor="tint"
+    padding="4"
+    cornerRadius="5"
+    isHidden="labelText == '' ? true : false" />
+
+  <UIImageView
+    image="checked_symbol"
+    right="100% - 5"
+    top="5"
+    tintColor="checkmark"
+    width="30"
+    height="30"
+    isHidden="complete ? false : true" />
+
+  <UIView
+    top="100% - sizes.progressBarHeight"
+    left="0"
+    height="sizes.progressBarHeight"
+    backgroundColor="transparentTint"
+    layer.cornerRadius="5"
+    width="100%">
+    <UIView
+      height="100%"
+      left="0"
+      top="0"
+      width="proportionComplete * parent.width"
+      layer.cornerRadius="5"
+      backgroundColor="tint" />
+  </UIView>
+</UIView>
+

@@ -1,0 +1,151 @@
+<UIScrollView
+  backgroundColor="white"
+  width="100%"
+  top="0"
+  left="0"
+  height="100%"
+  contentSize.height="auto + sizes.margin.vertical"
+  contentSize.width="100%">
+
+  <macro name="VPADDING" value="sizes.spacing.vertical"/>
+  <macro name="HPADDING" value="sizes.spacing.horizontal"/>
+  <macro name="VSPACING" value="previous.bottom + VPADDING"/>
+
+  <UIView
+    top="sizes.margin.vertical"
+    left="sizes.margin.horizontal"
+    width="100% - sizes.margin.horizontal * 2"
+    height="auto">
+
+    <UILabel 
+      text="{title}"
+      font="bold 32"
+      top="layoutMargins.top"
+      left="layoutMargins.left" />
+
+    <UIView
+      height="0.5"
+      backgroundColor="lightText"
+      width="100%"
+      top="VSPACING" />
+
+    <UIView
+      top="VSPACING"
+      width="100%"
+      height="auto">
+
+      <UIView 
+        width="300"
+        left="0"
+        top="0"
+        height="auto">
+
+        <UIView
+          template="ProgressImage.xml"
+          width="300"
+          height="300/4 * 3"
+          layer.cornerRadius="5"
+          left="0"
+          top="0"
+          complete="complete"
+          labelText="{labelText}"
+          proportionComplete="proportionComplete" />
+
+        <UIView
+          height="0.5"
+          backgroundColor="lightText"
+          width="100%"
+          top="VSPACING" />
+        <UIButton
+          top="previous.bottom + 3"
+          title="{ proportionComplete == 0 ? 'Begin Course' : 'Resume Course'}"
+          touchUpInside="handleResumeCourse"
+          titleColor="tint" />
+        <UIView
+          height="0.5"
+          backgroundColor="lightText"
+          width="100%"
+          top="previous.bottom + 3" />
+        <UIButton
+          top="previous.bottom + 3"
+          title="Download Course"
+          titleColor="tint" />
+        <UIView
+          height="0.5"
+          backgroundColor="lightText"
+          width="100%"
+          top="previous.bottom + 3" />
+        <UIButton
+          top="previous.bottom + 3"
+          title="Download Materials"
+          titleColor="tint" />
+        <UIView
+          height="0.5"
+          backgroundColor="lightText"
+          width="100%"
+          top="previous.bottom + 3" />
+      </UIView>
+
+      <UIView
+        left="previous.right + HPADDING"
+        top="0"
+        right="parent.right - HPADDING"
+        height="auto" >
+        <UILabel
+          text="{releaseDuration}"
+          top="0"
+          font="thin 17"
+          textColor="lightText" />
+        <UILabel
+          text="{difficulty}"
+          font="thin 17"
+          top="previous.top" 
+          right="parent.right"
+          textAlignment="right" />
+        <UILabel
+          text="{categories}"
+          top="previous.bottom + VPADDING / 2"
+          font="thin 17"
+          textColor="tint" />
+        <UILabel
+          top="VSPACING"
+          font="thin 17"
+          numberOfLines="0"
+          lineBreakMode="byWordWrapping"
+          preferredMaxLayoutWidth="parent.width">
+          {formattedDescription}
+        </UILabel>
+        <UILabel
+          text="{technology}"
+          font="thin 17"
+          top="VSPACING" />
+      </UIView>
+    </UIView>
+  </UIView>
+
+  <UILabel 
+      text="Videos"
+      font="bold 24"
+      top="VSPACING"
+      left="sizes.margin.horizontal" />
+
+  <UIView
+      height="0.5"
+      backgroundColor="lightText"
+      width="100% - 2 * sizes.margin.horizontal"
+      left="sizes.margin.horizontal"
+      top="previous.bottom + VPADDING / 2" />
+
+  <UICollectionView
+    top="previous.bottom + VPADDING / 2"
+    outlet="videosCollectionView"
+    backgroundColor="white"
+    height="sizes.videoTileWidth / 16 * 9 + 30"
+    collectionViewLayout.itemSize.width="sizes.videoTileWidth"
+    collectionViewLayout.itemSize.height="sizes.videoTileWidth / 16 * 9 + 30"
+    collectionViewLayout.minimumInteritemSpacing="sizes.spacing.horizontal"
+    collectionViewLayout.scrollDirection="horizontal"
+    contentInset.right="sizes.margin.horizontal"
+    contentInset.left="sizes.margin.horizontal"
+    showsHorizontalScrollIndicator="false" />
+</UIScrollView>

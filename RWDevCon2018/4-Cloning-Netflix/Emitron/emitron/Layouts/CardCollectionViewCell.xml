@@ -1,0 +1,22 @@
+<CardCollectionViewCell
+  clipsToBounds="true"
+  reuseIdentifier="CardCell">
+  
+  <UIView
+    template="ProgressImage.xml"
+    height="imageHeight"
+    labelText="{labelText}"
+    proportionComplete="proportionComplete"
+    complete="complete"
+    top="0"
+    left="0" />
+  
+  <UILabel
+    text="{title}"
+    top="previous.bottom"
+    width="95%"
+    center.x="parent.center.x"
+    height="30"
+    font="light 18" />
+  
+</CardCollectionViewCell>

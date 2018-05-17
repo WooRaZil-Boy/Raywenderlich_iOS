@@ -65,7 +65,12 @@ class VideoPlayer: NSObject {
     if let existingPlayer = controller.player {
       // Already have a player—just need to update its item, and time callback
       player = existingPlayer
-      
+      if let timeObservationToken = timeObservationToken {
+        // TODO: Remove observer
+        player.removeTimeObserver(timeObservationToken)
+        self.timeObservationToken = .none
+        //비디오 스트림이 변경될 때마다 옵저버 제거
+      }
       // Create an item with the new URL
       let avPlayerItem = AVPlayerItem(url: url)
       // Hot-swap it
@@ -74,6 +79,18 @@ class VideoPlayer: NSObject {
       //  Create an AVPlayer, passing it the HTTP Live Streaming URL.
       player = AVPlayer(url: url)
     }
+    
+    // TODO: Add an time observer
+    let interval = CMTime(seconds: 5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+    timeObservationToken = player.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main) { [weak self] time in
+      self?.store.updateProgressFor(viewing: viewing, time: Int(time.seconds))
+    }
+    //프로그레스 바를 실시간으로 업데이트 하진 않는다. 옵저버를 추가해 주기적으로 업데이트한다.
+    
+    // TODO: Jump to the correct start point
+    let startPoint = CMTime(seconds: Double(viewing.time), preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+    player.seek(to: startPoint)
+    //최근 시간에서 비디오 이어서 재생
   
     // Pass the player over to the view controller
     controller.player = player

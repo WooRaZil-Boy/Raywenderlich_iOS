@@ -83,18 +83,18 @@
 		22F71B1E2026258E002688BE /* Realm+Viewing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F71B1D2026258E002688BE /* Realm+Viewing.swift */; };
 		22F71B2020276332002688BE /* RoundedLabel.xml in Resources */ = {isa = PBXBuildFile; fileRef = 22F71B1F20276332002688BE /* RoundedLabel.xml */; };
 		22FF9D642027A63E00EFEBBB /* ProgressImage.xml in Resources */ = {isa = PBXBuildFile; fileRef = 22FF9D632027A63E00EFEBBB /* ProgressImage.xml */; };
-		EF5B0FC320AC93A400C5B4F5 /* GuardpostKit.h in Headers */ = {isa = PBXBuildFile; fileRef = EF5B0FB420AC93A400C5B4F5 /* GuardpostKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EF5B0FC420AC93A400C5B4F5 /* Data+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5B0FB620AC93A400C5B4F5 /* Data+Hex.swift */; };
-		EF5B0FC520AC93A400C5B4F5 /* RandomString.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5B0FB720AC93A400C5B4F5 /* RandomString.swift */; };
-		EF5B0FC620AC93A400C5B4F5 /* String+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5B0FB820AC93A400C5B4F5 /* String+Base64.swift */; };
-		EF5B0FC720AC93A400C5B4F5 /* String+HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5B0FB920AC93A400C5B4F5 /* String+HMAC.swift */; };
-		EF5B0FC820AC93A400C5B4F5 /* Guardpost.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5B0FBA20AC93A400C5B4F5 /* Guardpost.swift */; };
-		EF5B0FC920AC93A400C5B4F5 /* SingleSignOnResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5B0FBC20AC93A400C5B4F5 /* SingleSignOnResponse.swift */; };
-		EF5B0FCA20AC93A400C5B4F5 /* SingleSignOnUser+Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5B0FBD20AC93A400C5B4F5 /* SingleSignOnUser+Keychain.swift */; };
-		EF5B0FCB20AC93A400C5B4F5 /* SingleSignOnRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5B0FBE20AC93A400C5B4F5 /* SingleSignOnRequest.swift */; };
-		EF5B0FCC20AC93A400C5B4F5 /* SingleSignOnUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5B0FBF20AC93A400C5B4F5 /* SingleSignOnUser.swift */; };
-		EF5B0FCD20AC93A400C5B4F5 /* KeychainSwiftDistrib.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5B0FC120AC93A400C5B4F5 /* KeychainSwiftDistrib.swift */; };
-		EF5B0FD220AC94D700C5B4F5 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5B0FC220AC93A400C5B4F5 /* Info.plist */; };
+		EF6FCFEA20AE016E002613C9 /* GuardpostKit.h in Headers */ = {isa = PBXBuildFile; fileRef = EF6FCFDB20AE016E002613C9 /* GuardpostKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EF6FCFEB20AE016E002613C9 /* Data+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6FCFDD20AE016E002613C9 /* Data+Hex.swift */; };
+		EF6FCFEC20AE016E002613C9 /* RandomString.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6FCFDE20AE016E002613C9 /* RandomString.swift */; };
+		EF6FCFED20AE016E002613C9 /* String+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6FCFDF20AE016E002613C9 /* String+Base64.swift */; };
+		EF6FCFEE20AE016E002613C9 /* String+HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6FCFE020AE016E002613C9 /* String+HMAC.swift */; };
+		EF6FCFEF20AE016E002613C9 /* Guardpost.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6FCFE120AE016E002613C9 /* Guardpost.swift */; };
+		EF6FCFF020AE016E002613C9 /* SingleSignOnResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6FCFE320AE016E002613C9 /* SingleSignOnResponse.swift */; };
+		EF6FCFF120AE016E002613C9 /* SingleSignOnUser+Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6FCFE420AE016E002613C9 /* SingleSignOnUser+Keychain.swift */; };
+		EF6FCFF220AE016E002613C9 /* SingleSignOnRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6FCFE520AE016E002613C9 /* SingleSignOnRequest.swift */; };
+		EF6FCFF320AE016E002613C9 /* SingleSignOnUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6FCFE620AE016E002613C9 /* SingleSignOnUser.swift */; };
+		EF6FCFF420AE016E002613C9 /* KeychainSwiftDistrib.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6FCFE820AE016E002613C9 /* KeychainSwiftDistrib.swift */; };
+		EF6FCFF520AE016E002613C9 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF6FCFE920AE016E002613C9 /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -207,18 +207,18 @@
 		22F71B1D2026258E002688BE /* Realm+Viewing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Realm+Viewing.swift"; sourceTree = "<group>"; };
 		22F71B1F20276332002688BE /* RoundedLabel.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = RoundedLabel.xml; sourceTree = "<group>"; };
 		22FF9D632027A63E00EFEBBB /* ProgressImage.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ProgressImage.xml; sourceTree = "<group>"; };
-		EF5B0FB420AC93A400C5B4F5 /* GuardpostKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuardpostKit.h; sourceTree = "<group>"; };
-		EF5B0FB620AC93A400C5B4F5 /* Data+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Hex.swift"; sourceTree = "<group>"; };
-		EF5B0FB720AC93A400C5B4F5 /* RandomString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomString.swift; sourceTree = "<group>"; };
-		EF5B0FB820AC93A400C5B4F5 /* String+Base64.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Base64.swift"; sourceTree = "<group>"; };
-		EF5B0FB920AC93A400C5B4F5 /* String+HMAC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+HMAC.swift"; sourceTree = "<group>"; };
-		EF5B0FBA20AC93A400C5B4F5 /* Guardpost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Guardpost.swift; sourceTree = "<group>"; };
-		EF5B0FBC20AC93A400C5B4F5 /* SingleSignOnResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleSignOnResponse.swift; sourceTree = "<group>"; };
-		EF5B0FBD20AC93A400C5B4F5 /* SingleSignOnUser+Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SingleSignOnUser+Keychain.swift"; sourceTree = "<group>"; };
-		EF5B0FBE20AC93A400C5B4F5 /* SingleSignOnRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleSignOnRequest.swift; sourceTree = "<group>"; };
-		EF5B0FBF20AC93A400C5B4F5 /* SingleSignOnUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleSignOnUser.swift; sourceTree = "<group>"; };
-		EF5B0FC120AC93A400C5B4F5 /* KeychainSwiftDistrib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainSwiftDistrib.swift; sourceTree = "<group>"; };
-		EF5B0FC220AC93A400C5B4F5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF6FCFDB20AE016E002613C9 /* GuardpostKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuardpostKit.h; sourceTree = "<group>"; };
+		EF6FCFDD20AE016E002613C9 /* Data+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Hex.swift"; sourceTree = "<group>"; };
+		EF6FCFDE20AE016E002613C9 /* RandomString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomString.swift; sourceTree = "<group>"; };
+		EF6FCFDF20AE016E002613C9 /* String+Base64.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Base64.swift"; sourceTree = "<group>"; };
+		EF6FCFE020AE016E002613C9 /* String+HMAC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+HMAC.swift"; sourceTree = "<group>"; };
+		EF6FCFE120AE016E002613C9 /* Guardpost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Guardpost.swift; sourceTree = "<group>"; };
+		EF6FCFE320AE016E002613C9 /* SingleSignOnResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleSignOnResponse.swift; sourceTree = "<group>"; };
+		EF6FCFE420AE016E002613C9 /* SingleSignOnUser+Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SingleSignOnUser+Keychain.swift"; sourceTree = "<group>"; };
+		EF6FCFE520AE016E002613C9 /* SingleSignOnRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleSignOnRequest.swift; sourceTree = "<group>"; };
+		EF6FCFE620AE016E002613C9 /* SingleSignOnUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleSignOnUser.swift; sourceTree = "<group>"; };
+		EF6FCFE820AE016E002613C9 /* KeychainSwiftDistrib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainSwiftDistrib.swift; sourceTree = "<group>"; };
+		EF6FCFE920AE016E002613C9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -272,7 +272,7 @@
 			isa = PBXGroup;
 			children = (
 				220821061FDCE5FF00975E11 /* emitron */,
-				EF5B0FB320AC93A400C5B4F5 /* GuardpostKit */,
+				EF6FCFDA20AE016E002613C9 /* GuardpostKit */,
 				220821051FDCE5FF00975E11 /* Products */,
 				0B09AD70C65F39D2F3A6E0C7 /* Frameworks */,
 			);
@@ -439,46 +439,46 @@
 			path = Providers;
 			sourceTree = "<group>";
 		};
-		EF5B0FB320AC93A400C5B4F5 /* GuardpostKit */ = {
+		EF6FCFDA20AE016E002613C9 /* GuardpostKit */ = {
 			isa = PBXGroup;
 			children = (
-				EF5B0FB420AC93A400C5B4F5 /* GuardpostKit.h */,
-				EF5B0FB520AC93A400C5B4F5 /* Utils */,
-				EF5B0FBA20AC93A400C5B4F5 /* Guardpost.swift */,
-				EF5B0FBB20AC93A400C5B4F5 /* SSO */,
-				EF5B0FC020AC93A400C5B4F5 /* 3rdParty */,
-				EF5B0FC220AC93A400C5B4F5 /* Info.plist */,
+				EF6FCFDB20AE016E002613C9 /* GuardpostKit.h */,
+				EF6FCFDC20AE016E002613C9 /* Utils */,
+				EF6FCFE120AE016E002613C9 /* Guardpost.swift */,
+				EF6FCFE220AE016E002613C9 /* SSO */,
+				EF6FCFE720AE016E002613C9 /* 3rdParty */,
+				EF6FCFE920AE016E002613C9 /* Info.plist */,
 			);
 			name = GuardpostKit;
 			path = ../Shared/src/GuardpostKit;
 			sourceTree = "<group>";
 		};
-		EF5B0FB520AC93A400C5B4F5 /* Utils */ = {
+		EF6FCFDC20AE016E002613C9 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				EF5B0FB620AC93A400C5B4F5 /* Data+Hex.swift */,
-				EF5B0FB720AC93A400C5B4F5 /* RandomString.swift */,
-				EF5B0FB820AC93A400C5B4F5 /* String+Base64.swift */,
-				EF5B0FB920AC93A400C5B4F5 /* String+HMAC.swift */,
+				EF6FCFDD20AE016E002613C9 /* Data+Hex.swift */,
+				EF6FCFDE20AE016E002613C9 /* RandomString.swift */,
+				EF6FCFDF20AE016E002613C9 /* String+Base64.swift */,
+				EF6FCFE020AE016E002613C9 /* String+HMAC.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		EF5B0FBB20AC93A400C5B4F5 /* SSO */ = {
+		EF6FCFE220AE016E002613C9 /* SSO */ = {
 			isa = PBXGroup;
 			children = (
-				EF5B0FBC20AC93A400C5B4F5 /* SingleSignOnResponse.swift */,
-				EF5B0FBD20AC93A400C5B4F5 /* SingleSignOnUser+Keychain.swift */,
-				EF5B0FBE20AC93A400C5B4F5 /* SingleSignOnRequest.swift */,
-				EF5B0FBF20AC93A400C5B4F5 /* SingleSignOnUser.swift */,
+				EF6FCFE320AE016E002613C9 /* SingleSignOnResponse.swift */,
+				EF6FCFE420AE016E002613C9 /* SingleSignOnUser+Keychain.swift */,
+				EF6FCFE520AE016E002613C9 /* SingleSignOnRequest.swift */,
+				EF6FCFE620AE016E002613C9 /* SingleSignOnUser.swift */,
 			);
 			path = SSO;
 			sourceTree = "<group>";
 		};
-		EF5B0FC020AC93A400C5B4F5 /* 3rdParty */ = {
+		EF6FCFE720AE016E002613C9 /* 3rdParty */ = {
 			isa = PBXGroup;
 			children = (
-				EF5B0FC120AC93A400C5B4F5 /* KeychainSwiftDistrib.swift */,
+				EF6FCFE820AE016E002613C9 /* KeychainSwiftDistrib.swift */,
 			);
 			path = 3rdParty;
 			sourceTree = "<group>";
@@ -490,7 +490,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF5B0FC320AC93A400C5B4F5 /* GuardpostKit.h in Headers */,
+				EF6FCFEA20AE016E002613C9 /* GuardpostKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -645,7 +645,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF5B0FD220AC94D700C5B4F5 /* Info.plist in Resources */,
+				EF6FCFF520AE016E002613C9 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -790,16 +790,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF5B0FC820AC93A400C5B4F5 /* Guardpost.swift in Sources */,
-				EF5B0FCC20AC93A400C5B4F5 /* SingleSignOnUser.swift in Sources */,
-				EF5B0FC420AC93A400C5B4F5 /* Data+Hex.swift in Sources */,
-				EF5B0FCA20AC93A400C5B4F5 /* SingleSignOnUser+Keychain.swift in Sources */,
-				EF5B0FC920AC93A400C5B4F5 /* SingleSignOnResponse.swift in Sources */,
-				EF5B0FCD20AC93A400C5B4F5 /* KeychainSwiftDistrib.swift in Sources */,
-				EF5B0FC620AC93A400C5B4F5 /* String+Base64.swift in Sources */,
-				EF5B0FCB20AC93A400C5B4F5 /* SingleSignOnRequest.swift in Sources */,
-				EF5B0FC520AC93A400C5B4F5 /* RandomString.swift in Sources */,
-				EF5B0FC720AC93A400C5B4F5 /* String+HMAC.swift in Sources */,
+				EF6FCFEF20AE016E002613C9 /* Guardpost.swift in Sources */,
+				EF6FCFF320AE016E002613C9 /* SingleSignOnUser.swift in Sources */,
+				EF6FCFEB20AE016E002613C9 /* Data+Hex.swift in Sources */,
+				EF6FCFF120AE016E002613C9 /* SingleSignOnUser+Keychain.swift in Sources */,
+				EF6FCFF020AE016E002613C9 /* SingleSignOnResponse.swift in Sources */,
+				EF6FCFF420AE016E002613C9 /* KeychainSwiftDistrib.swift in Sources */,
+				EF6FCFED20AE016E002613C9 /* String+Base64.swift in Sources */,
+				EF6FCFF220AE016E002613C9 /* SingleSignOnRequest.swift in Sources */,
+				EF6FCFEC20AE016E002613C9 /* RandomString.swift in Sources */,
+				EF6FCFEE20AE016E002613C9 /* String+HMAC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

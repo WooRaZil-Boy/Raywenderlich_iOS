@@ -44,8 +44,9 @@ extension SyncEngine {
     setupEngine()
   }
   
-  func stopSync() {
-    // TODO
+  func stopSync() { //프로세스 중지
+    dirtyNotificationToken?.invalidate()
+    dirtyNotificationToken = .none
     userId = .none
   }
 }
@@ -60,18 +61,62 @@ extension SyncEngine {
   }
   
   private func syncFromApi() {
-    // TODO
+    guard let userId = userId else { return }
+    store.requestViewingsForUser(userId: userId) { (viewings) in
+      DispatchQueue(label: "com.razeware.emitron.syncengine", qos: .background).async {
+        autoreleasepool {
+          do {
+            let realm = try Realm()
+            let localViewings = realm.objects(Viewing.self)
+            try realm.write {
+              for viewing in viewings {
+                // Does a local equivalent exist?
+                if let localViewing = localViewings.filter("videoId == %@", viewing.videoId).first { //루프에서 최신 것을 찾는다.
+                  // If the local one is dirty, keep the most recent
+                  if localViewing.dirty && localViewing.updatedAt > viewing.updatedAt {
+                    // NO-OP—it'll get synced to the API later
+                  } else {
+                    // Update the local one with the details from the remote on
+                    //동기화
+                    localViewing.updateFrom(remote: viewing)
+                  }
+                } else {
+                  // Not seem this before—make a local version
+                  realm.add(viewing)
+                }
+              }
+            }
+          } catch (let error) {
+            print(error)
+          }
+        }
+      }
+    }
   }
   
   private func configureListeners() {
-    // TODO
+    //local의 변경 사항을 API로 푸시
+    let result = realm.objects(Viewing.self).filter("dirty == TRUE")
+    //변경 될때 마다 트리거. 옵저버 설정
+    dirtyNotificationToken = result.observe { (_) in
+      for viewing in result {
+        self.syncToApi(viewing: viewing)
+      }
+    }
+    dirtyViewings = result
   }
   
   private func syncToApi(viewing: Viewing) {
     guard let userId = userId else { return }
     store.syncViewingToAPI(viewing: viewing, userId: userId) { (viewing) in
-      DispatchQueue.main.async {
-        // TODO
+      DispatchQueue.main.async { //Realm에 쓴다.
+        do {
+          try self.realm.write {
+            viewing.dirty = false
+          }
+        } catch (let error) {
+          print(error)
+        }
       }
     }
   }

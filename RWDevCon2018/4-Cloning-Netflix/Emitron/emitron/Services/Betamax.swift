@@ -49,7 +49,6 @@ final class Betamax {
     return decoder
   }()
   
-  
   private func setupProvider() {
     var plugins: [PluginType] = [
       NetworkActivityPlugin(networkActivityClosure: { (changeType, _) in

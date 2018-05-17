@@ -56,9 +56,8 @@ extension ScreencastsViewController {
     super.viewDidLoad()
     loadLayout(named: "Screencasts.xml",
                constants: GLOBAL_CONSTANTS.dictionary)
-    
     // TODO: Add screencasts observer
-    changeToken = videos.observe { [weak self] (change) in
+    changeToken = videos.observe { [weak self] change in
       //videos는 Betamax에서 getScreencasts()로 가져온 lazy 변수. Realm의 Results<Video>타입이다.
       //옵저버로 스크린 캐스트 비디오 객체가 Realm에 저장되면 콜백이 호출되어 컬렉션 뷰가 다시 로드된다.
       self?.collectionView.reloadData()

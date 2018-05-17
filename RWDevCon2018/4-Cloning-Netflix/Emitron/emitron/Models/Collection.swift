@@ -42,10 +42,9 @@ class Collection: Content {
   
   required init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
-    videoCount = try container.decode(Int.self, forKey: .videoCount) //int로 디코딩
+    videoCount = try container.decode(Int.self, forKey: .videoCount) //Int로 디코딩
     
-    if let videos = try? container.decode([Video].self, forKey: .videos) {
-      //List<Video>
+    if let videos = try? container.decode([Video].self, forKey: .videos) { //List<Video>
       self.videos.append(objectsIn: videos) //Realm에 추가
     }
     

@@ -1,1 +1,1 @@
-This directory contains the starter project for demo 2.
+This directory contains the final project for demo 3.

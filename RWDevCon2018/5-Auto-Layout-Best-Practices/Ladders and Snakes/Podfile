@@ -1,0 +1,9 @@
+platform :ios, '10.0'
+
+target 'Ladders and Snakes' do
+  use_frameworks!
+
+  # Pods for Ladders and Snakes
+  pod 'SnapKit', '4.0.0'
+
+end

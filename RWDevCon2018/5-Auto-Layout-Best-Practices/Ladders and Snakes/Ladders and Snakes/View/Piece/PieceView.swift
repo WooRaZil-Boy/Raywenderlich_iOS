@@ -26,45 +26,17 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
+import Foundation
 import UIKit
 
-@IBDesignable
-class BoardSquareViewLoader: UIView {
+class PieceView: UIImageView {
   
-  var contentView: BoardSquareView?
-  
-  @IBInspectable var nibName: String?
-  @IBInspectable var numberText: String?
-  @IBInspectable var descriptionText: String?
-  
-  override func awakeFromNib() {
-    super.awakeFromNib()
-    xibSetup()
+  class func create(size: CGFloat, image: UIImage) -> PieceView {
+    let piece = PieceView(image: image)
+    piece.addSizeConstraints(width: size, height: size)
+    return piece
   }
   
-  func xibSetup() {
-    guard let view = loadViewFromNib() else { return }
-    view.frame = bounds
-    view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    
-    view.numberLabel.text = numberText
-    view.titleLabel.text = descriptionText
-    view.backgroundColor = backgroundColor
-    
-    addSubview(view)
-    contentView = view
-  }
+  var currentLocation: (row: Int, column: Int)?
   
-  func loadViewFromNib() -> BoardSquareView? {
-    guard let nibName = nibName else { return nil }
-    let bundle = Bundle(for: type(of: self))
-    let nib = UINib(nibName: nibName, bundle: bundle)
-    return nib.instantiate(withOwner: self, options: nil).first as? BoardSquareView
-  }
-  
-  override func prepareForInterfaceBuilder() {
-    super.prepareForInterfaceBuilder()
-    xibSetup()
-    contentView?.prepareForInterfaceBuilder()
-  }
 }

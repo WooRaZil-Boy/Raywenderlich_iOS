@@ -76,3 +76,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 
+
+//MARK: - Demo3
+//Why does the Segmented Control look strange?
+//제약 조건이 이상한 컨트롤러를 선택하고,
+//Editor - Resolve Auto Layout Issues - Clear Constraints 로 리셋할 수 있다.
+
+
+
+
+//Why is the dice image stretched?
+//스토리보드에서 Shift 오른쪽 클릭으로 겹쳐있는 뷰 중 선택을 할 수 있다.
+//실행 중 Debug View Hierarchy버튼을 눌러 UI를 디버깅 할 수 있다.
+
+

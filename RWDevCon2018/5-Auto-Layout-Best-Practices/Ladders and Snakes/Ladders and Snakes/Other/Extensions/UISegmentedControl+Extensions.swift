@@ -28,43 +28,12 @@
 
 import UIKit
 
-@IBDesignable
-class BoardSquareViewLoader: UIView {
+extension UISegmentedControl {
   
-  var contentView: BoardSquareView?
-  
-  @IBInspectable var nibName: String?
-  @IBInspectable var numberText: String?
-  @IBInspectable var descriptionText: String?
-  
-  override func awakeFromNib() {
-    super.awakeFromNib()
-    xibSetup()
-  }
-  
-  func xibSetup() {
-    guard let view = loadViewFromNib() else { return }
-    view.frame = bounds
-    view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+  func toggle() {
+    assert(numberOfSegments == 2, "[Error] Cannot 'toggle' a control that doesn't have exactly two elements.")
     
-    view.numberLabel.text = numberText
-    view.titleLabel.text = descriptionText
-    view.backgroundColor = backgroundColor
-    
-    addSubview(view)
-    contentView = view
-  }
-  
-  func loadViewFromNib() -> BoardSquareView? {
-    guard let nibName = nibName else { return nil }
-    let bundle = Bundle(for: type(of: self))
-    let nib = UINib(nibName: nibName, bundle: bundle)
-    return nib.instantiate(withOwner: self, options: nil).first as? BoardSquareView
-  }
-  
-  override func prepareForInterfaceBuilder() {
-    super.prepareForInterfaceBuilder()
-    xibSetup()
-    contentView?.prepareForInterfaceBuilder()
+    let current = NSNumber(integerLiteral: selectedSegmentIndex).boolValue
+    selectedSegmentIndex = NSNumber(booleanLiteral: !current).intValue
   }
 }

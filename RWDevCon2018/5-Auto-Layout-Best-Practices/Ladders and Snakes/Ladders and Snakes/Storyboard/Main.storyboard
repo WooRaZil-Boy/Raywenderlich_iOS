@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,6 +18,75 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="myh-dV-5xd" userLabel="Bottom Container">
+                                <rect key="frame" x="0.0" y="517" width="375" height="150"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dice" translatesAutoresizingMaskIntoConstraints="NO" id="Mup-uh-onb" userLabel="Dice">
+                                        <rect key="frame" x="113" y="0.0" width="150" height="150"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="Mup-uh-onb" secondAttribute="height" multiplier="1:1" id="Jj2-Ou-w2f"/>
+                                            <constraint firstAttribute="width" constant="150" id="xL2-f1-3RM"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b0C-mt-gtz">
+                                        <rect key="frame" x="138" y="57" width="100" height="36"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <state key="normal" title="Play Again">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="playAgainTappedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vqs-wx-OcB"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zGN-kM-pea" userLabel="Dice Result">
+                                        <rect key="frame" x="113" y="0.0" width="150" height="150"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iw6-BJ-Dgg" userLabel="Dice Button">
+                                        <rect key="frame" x="113" y="0.0" width="150" height="150"/>
+                                        <connections>
+                                            <action selector="rollDiceTappedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6ww-VB-9Me"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="Iw6-BJ-Dgg" firstAttribute="trailing" secondItem="Mup-uh-onb" secondAttribute="trailing" id="61X-Tp-6lH"/>
+                                    <constraint firstItem="zGN-kM-pea" firstAttribute="trailing" secondItem="Mup-uh-onb" secondAttribute="trailing" id="7t9-zB-MXr"/>
+                                    <constraint firstItem="zGN-kM-pea" firstAttribute="bottom" secondItem="Mup-uh-onb" secondAttribute="bottom" id="CFh-ph-AKD"/>
+                                    <constraint firstItem="zGN-kM-pea" firstAttribute="leading" secondItem="Mup-uh-onb" secondAttribute="leading" id="Vg1-bU-u0j"/>
+                                    <constraint firstItem="Iw6-BJ-Dgg" firstAttribute="top" secondItem="Mup-uh-onb" secondAttribute="top" id="Ytw-tp-92W"/>
+                                    <constraint firstAttribute="bottom" secondItem="Mup-uh-onb" secondAttribute="bottom" id="ZHW-Hb-7QZ"/>
+                                    <constraint firstItem="zGN-kM-pea" firstAttribute="top" secondItem="Mup-uh-onb" secondAttribute="top" id="a2Y-CN-vIv"/>
+                                    <constraint firstItem="Mup-uh-onb" firstAttribute="centerY" secondItem="myh-dV-5xd" secondAttribute="centerY" id="bJQ-Ah-P8F"/>
+                                    <constraint firstItem="Mup-uh-onb" firstAttribute="top" secondItem="myh-dV-5xd" secondAttribute="top" id="bWK-cy-f0K"/>
+                                    <constraint firstItem="Mup-uh-onb" firstAttribute="centerX" secondItem="myh-dV-5xd" secondAttribute="centerX" id="eu7-rY-EnL"/>
+                                    <constraint firstItem="Iw6-BJ-Dgg" firstAttribute="leading" secondItem="Mup-uh-onb" secondAttribute="leading" id="fJv-H7-Iia"/>
+                                    <constraint firstItem="b0C-mt-gtz" firstAttribute="centerY" secondItem="myh-dV-5xd" secondAttribute="centerY" id="jgu-sg-PV3"/>
+                                    <constraint firstItem="Iw6-BJ-Dgg" firstAttribute="bottom" secondItem="Mup-uh-onb" secondAttribute="bottom" id="oJ3-an-dQ1"/>
+                                    <constraint firstItem="b0C-mt-gtz" firstAttribute="centerX" secondItem="myh-dV-5xd" secondAttribute="centerX" id="rEX-fV-OrY"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1KN-1x-yMU" userLabel="Top Container">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="146"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="jfx-a1-tko">
+                                        <rect key="frame" x="107" y="59" width="161" height="29"/>
+                                        <segments>
+                                            <segment title="Player One"/>
+                                            <segment title="Player Two"/>
+                                        </segments>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </segmentedControl>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="jfx-a1-tko" firstAttribute="centerX" secondItem="1KN-1x-yMU" secondAttribute="centerX" id="EBG-jw-osE"/>
+                                    <constraint firstItem="jfx-a1-tko" firstAttribute="centerY" secondItem="1KN-1x-yMU" secondAttribute="centerY" id="Q9g-BZ-Apr"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Czr-W3-jTg" userLabel="Board" customClass="BoardView" customModule="Ladders_and_Snakes" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="146" width="375" height="375"/>
                                 <subviews>
@@ -161,7 +230,7 @@
                                                 <rect key="frame" x="0.0" y="150" width="375" height="75"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N4l-xL-Jyf" customClass="BoardSquareViewLoader" customModule="Ladders_and_Snakes">
-                                                        <rect key="frame" x="0.0" y="0.0" width="75.5" height="75"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="75" height="75"/>
                                                         <color key="backgroundColor" red="0.33217242120000001" green="0.6297508127" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="N4l-xL-Jyf" secondAttribute="height" multiplier="1:1" id="6xT-Xz-oKo"/>
@@ -172,7 +241,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C7z-UD-onl" customClass="BoardSquareViewLoader" customModule="Ladders_and_Snakes">
-                                                        <rect key="frame" x="75.5" y="0.0" width="75" height="75"/>
+                                                        <rect key="frame" x="75" y="0.0" width="75" height="75"/>
                                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="C7z-UD-onl" secondAttribute="height" multiplier="1:1" id="EUi-5C-Y3O"/>
@@ -183,7 +252,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aM3-xO-Kp3" customClass="BoardSquareViewLoader" customModule="Ladders_and_Snakes">
-                                                        <rect key="frame" x="150.5" y="0.0" width="75.5" height="75"/>
+                                                        <rect key="frame" x="150" y="0.0" width="75" height="75"/>
                                                         <color key="backgroundColor" red="0.33217242120000001" green="0.6297508127" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="aM3-xO-Kp3" secondAttribute="height" multiplier="1:1" id="00p-aV-RhF"/>
@@ -194,7 +263,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kvy-Ut-6KG" customClass="BoardSquareViewLoader" customModule="Ladders_and_Snakes">
-                                                        <rect key="frame" x="226" y="0.0" width="74.5" height="75"/>
+                                                        <rect key="frame" x="225" y="0.0" width="75" height="75"/>
                                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="kvy-Ut-6KG" secondAttribute="height" multiplier="1:1" id="tmh-tl-DHR"/>
@@ -205,7 +274,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1ah-5E-3Iz" customClass="BoardSquareViewLoader" customModule="Ladders_and_Snakes">
-                                                        <rect key="frame" x="300.5" y="0.0" width="74.5" height="75"/>
+                                                        <rect key="frame" x="300" y="0.0" width="75" height="75"/>
                                                         <color key="backgroundColor" red="0.33217242120000001" green="0.6297508127" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="1ah-5E-3Iz" secondAttribute="height" multiplier="1:1" id="t0Z-wE-i33"/>
@@ -227,7 +296,7 @@
                                                 <rect key="frame" x="0.0" y="225" width="375" height="75"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oiy-xM-asM" customClass="BoardSquareViewLoader" customModule="Ladders_and_Snakes">
-                                                        <rect key="frame" x="0.0" y="0.0" width="75.5" height="75"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="75" height="75"/>
                                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="oiy-xM-asM" secondAttribute="height" multiplier="1:1" id="mNm-Dg-DY4"/>
@@ -238,7 +307,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Jo-dN-6Mx" customClass="BoardSquareViewLoader" customModule="Ladders_and_Snakes">
-                                                        <rect key="frame" x="75.5" y="0.0" width="74.5" height="75"/>
+                                                        <rect key="frame" x="75" y="0.0" width="75" height="75"/>
                                                         <color key="backgroundColor" red="0.33217242120000001" green="0.6297508127" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="8Jo-dN-6Mx" secondAttribute="height" multiplier="1:1" id="WcN-f9-0sq"/>
@@ -376,15 +445,28 @@
                         <constraints>
                             <constraint firstItem="Czr-W3-jTg" firstAttribute="width" relation="lessThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="width" id="4jQ-ze-Et0"/>
                             <constraint firstItem="Czr-W3-jTg" firstAttribute="height" relation="lessThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="height" id="5y6-j1-fJL"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="myh-dV-5xd" secondAttribute="bottom" id="9ti-e0-Rf8"/>
+                            <constraint firstItem="myh-dV-5xd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="HNf-8b-3oW"/>
+                            <constraint firstItem="myh-dV-5xd" firstAttribute="top" secondItem="Czr-W3-jTg" secondAttribute="bottom" priority="750" id="Kud-g6-o1A"/>
+                            <constraint firstItem="1KN-1x-yMU" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="OkH-1I-euh"/>
+                            <constraint firstItem="1KN-1x-yMU" firstAttribute="width" secondItem="Czr-W3-jTg" secondAttribute="width" id="QC9-i6-CvR"/>
                             <constraint firstItem="Czr-W3-jTg" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="QIO-Vw-0CR"/>
+                            <constraint firstItem="Czr-W3-jTg" firstAttribute="top" secondItem="1KN-1x-yMU" secondAttribute="bottom" id="Qm9-ae-G2R"/>
                             <constraint firstItem="Czr-W3-jTg" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" priority="750" id="X8b-Dq-091"/>
+                            <constraint firstItem="1KN-1x-yMU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="czX-8x-o79"/>
                             <constraint firstItem="Czr-W3-jTg" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="iCc-bk-4ic"/>
                             <constraint firstItem="Czr-W3-jTg" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" priority="750" id="vUW-Ho-FLh"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="myh-dV-5xd" secondAttribute="trailing" id="zK4-mI-H06"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="board" destination="Czr-W3-jTg" id="UM5-Qr-V5n"/>
+                        <outlet property="diceButton" destination="Iw6-BJ-Dgg" id="ppN-r4-MQn"/>
+                        <outlet property="diceImage" destination="Mup-uh-onb" id="bxg-Kv-T1P"/>
+                        <outlet property="diceResult" destination="zGN-kM-pea" id="LUS-mV-VWc"/>
+                        <outlet property="playAgain" destination="b0C-mt-gtz" id="8oX-e4-0dO"/>
+                        <outlet property="segmentedControl" destination="jfx-a1-tko" id="TSa-mr-M14"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -392,4 +474,7 @@
             <point key="canvasLocation" x="32.799999999999997" y="33.733133433283363"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="dice" width="300" height="300"/>
+    </resources>
 </document>

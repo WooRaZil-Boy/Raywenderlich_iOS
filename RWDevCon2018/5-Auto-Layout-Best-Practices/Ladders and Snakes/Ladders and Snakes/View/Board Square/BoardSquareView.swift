@@ -30,7 +30,7 @@ import UIKit
 
 @IBDesignable
 class BoardSquareView: UIView, Flippable {
-
+  
   @IBOutlet weak var numberLabel: UILabel!
   @IBOutlet weak var titleLabel: UILabel!
   

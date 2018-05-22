@@ -1,4 +1,4 @@
-///// Copyright (c) 2017 Razeware LLC
+///// Copyright (c) 2018 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -31,15 +31,70 @@ import UIKit
 class BoardView: UIView {
   @IBOutlet weak var rows: UIStackView!
   
+  var squaresInRow: Int {
+    return rows.arrangedSubviews.count
+  }
+  
   var squareWidth: CGFloat {
     return rows.arrangedSubviews.first?.bounds.size.height ?? 0
   }
   
-  func squareAt(row: Int, column: Int) -> BoardSquareView? {
+  func square(row: Int, column: Int) -> BoardSquareView? {
+    return square(at: BoardLocation(row: row, column: column))
+  }
+  
+  func square(at location: BoardLocation) -> BoardSquareView? {
     guard
-      let row = rows.arrangedSubviews[row] as? UIStackView,
-      let loader = row.arrangedSubviews[column] as? BoardSquareViewLoader
+      isSquare(at: location),
+      let row = rows.arrangedSubviews[location.row] as? UIStackView,
+      let loader = row.arrangedSubviews[location.column] as? BoardSquareViewLoader
     else { return nil }
+    
     return loader.contentView
+  }
+  
+  func isSquare(at location: BoardLocation) -> Bool {
+    let maxIndex = squaresInRow - 1
+    let indexRange = 0...maxIndex
+    
+    return indexRange ~= location.row && indexRange ~= location.column
+  }
+  
+  var finish: BoardSquareView? {
+    return square(at: finishLocation)
+  }
+  
+  var finishLocation: BoardLocation {
+    return (row: 0, column: 0)
+  }
+  
+  var start: BoardSquareView? {
+    return square(at: startLocation)
+  }
+  
+  var startLocation: BoardLocation {
+    let max = squaresInRow - 1
+    return (row: max, column: max)
+  }
+  
+  func move(piece: PieceView, to square: BoardSquareView, animated: Bool, completion: ((Bool) -> Swift.Void)? = nil) {
+    adjustConstraintsToMovePiece(piece: piece, to: square)
+    
+    // If not animated, just update constraints
+    guard animated else {
+      layoutIfNeeded()
+      return
+    }
+    
+    // Otherwise animate the application of the contraints
+    UIView.animate(withDuration: AnimationDuration.standard.rawValue, animations: { [weak self] in
+      self?.layoutIfNeeded()
+    }, completion: completion)
+  }
+  
+  private func adjustConstraintsToMovePiece(piece: PieceView, to square: BoardSquareView) {
+    piece.snp.remakeConstraints { make in
+      make.center.equalTo(square)
+    }
   }
 }

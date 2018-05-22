@@ -88,7 +88,6 @@ extension UIImageView: Sizeable {
   }
 }
 
-
 // MARK: - Animation
 
 extension UIImageView {
@@ -103,17 +102,13 @@ extension UIImageView {
 
 class LadderView: UIImageView {
   // Will be added as part of Demo 2.
-  
-  class func create(size: CGFloat, rotation: CGFloat = 0, direction: Direction = .facesRight, alpha: Alpha = .hidden) -> LadderView {
+  class func create(size: CGFloat, rotation degrees: CGFloat = 0, direction: Direction = .facesRight, alpha: Alpha = .hidden) -> LadderView {
     let ladder = LadderView(image: #imageLiteral(resourceName: "ladder"))
     ladder.alpha = alpha.rawValue
     ladder.contentMode = .scaleAspectFit
     ladder.flip(to: direction)
-    ladder.rotate(degrees: rotation)
+    ladder.rotate(degrees: degrees)
     ladder.addSizeConstraints(width: size, height: size)
-    
     return ladder
   }
-  
 }
-

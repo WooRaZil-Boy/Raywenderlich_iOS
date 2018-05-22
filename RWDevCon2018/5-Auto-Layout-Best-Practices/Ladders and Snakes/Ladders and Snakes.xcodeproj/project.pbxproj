@@ -10,11 +10,15 @@
 		870421FD201E4A8B005BAC95 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 870421FC201E4A8B005BAC95 /* Podfile */; };
 		870421FF201E51D6005BAC95 /* SnakeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870421FE201E51D6005BAC95 /* SnakeView.swift */; };
 		8713C4D81FFB0D14006E0B42 /* BoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8713C4D71FFB0D14006E0B42 /* BoardViewController.swift */; };
+		8717571020574B50000AD6A0 /* UISegmentedControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8717570F20574B50000AD6A0 /* UISegmentedControl+Extensions.swift */; };
+		8717571320574D12000AD6A0 /* PieceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8717571220574D12000AD6A0 /* PieceView.swift */; };
+		8772A4E6205B4852007033E8 /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8772A4E5205B4852007033E8 /* GameEngine.swift */; };
 		87773BB51FFB0EB900CA42B7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87773BB41FFB0EB900CA42B7 /* LaunchScreen.storyboard */; };
 		87773BB71FFB0F8500CA42B7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87773BB61FFB0F8500CA42B7 /* Main.storyboard */; };
 		8799F33A200D54AF009722C3 /* BoardSquareViewLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8799F337200D54AF009722C3 /* BoardSquareViewLoader.swift */; };
 		8799F33B200D54AF009722C3 /* BoardSquareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8799F338200D54AF009722C3 /* BoardSquareView.xib */; };
 		8799F33C200D54AF009722C3 /* BoardSquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8799F339200D54AF009722C3 /* BoardSquareView.swift */; };
+		87DDA1CE205AC85F00565111 /* Obstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DDA1CD205AC85F00565111 /* Obstacle.swift */; };
 		87E1C063201E760B00503A8D /* LadderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E1C062201E760B00503A8D /* LadderView.swift */; };
 		87E1C069201ED02000503A8D /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E1C068201ED02000503A8D /* BoardView.swift */; };
 		87E1C06D201ED0AE00503A8D /* UIView+NSLayoutAnchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E1C06C201ED0AE00503A8D /* UIView+NSLayoutAnchor.swift */; };
@@ -29,11 +33,15 @@
 		870421FC201E4A8B005BAC95 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		870421FE201E51D6005BAC95 /* SnakeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnakeView.swift; sourceTree = "<group>"; };
 		8713C4D71FFB0D14006E0B42 /* BoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewController.swift; sourceTree = "<group>"; };
+		8717570F20574B50000AD6A0 /* UISegmentedControl+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentedControl+Extensions.swift"; sourceTree = "<group>"; };
+		8717571220574D12000AD6A0 /* PieceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieceView.swift; sourceTree = "<group>"; };
+		8772A4E5205B4852007033E8 /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
 		87773BB41FFB0EB900CA42B7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		87773BB61FFB0F8500CA42B7 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		8799F337200D54AF009722C3 /* BoardSquareViewLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardSquareViewLoader.swift; sourceTree = "<group>"; };
 		8799F338200D54AF009722C3 /* BoardSquareView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BoardSquareView.xib; sourceTree = "<group>"; };
 		8799F339200D54AF009722C3 /* BoardSquareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardSquareView.swift; sourceTree = "<group>"; };
+		87DDA1CD205AC85F00565111 /* Obstacle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Obstacle.swift; sourceTree = "<group>"; };
 		87E1C062201E760B00503A8D /* LadderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LadderView.swift; sourceTree = "<group>"; };
 		87E1C068201ED02000503A8D /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BoardView.swift; path = "Ladders and Snakes/View/Board/BoardView.swift"; sourceTree = SOURCE_ROOT; };
 		87E1C06C201ED0AE00503A8D /* UIView+NSLayoutAnchor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+NSLayoutAnchor.swift"; path = "Ladders and Snakes/View/Extensions/UIView+NSLayoutAnchor.swift"; sourceTree = SOURCE_ROOT; };
@@ -68,6 +76,7 @@
 		8713C4CF1FFB0C74006E0B42 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8717571120574D01000AD6A0 /* Piece */,
 				872A0F082031281400D032B7 /* Extensions */,
 				872A0F072031280E00D032B7 /* Board */,
 				87E1C061201E75DE00503A8D /* Ladder */,
@@ -88,10 +97,27 @@
 		8713C4D21FFB0C81006E0B42 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				8717570E20574B22000AD6A0 /* Extensions */,
 				D2A5F2201F4A96D0005CD714 /* AppDelegate.swift */,
 				D2A5F20A1F4A9144005CD714 /* Assets.xcassets */,
 			);
 			path = Other;
+			sourceTree = "<group>";
+		};
+		8717570E20574B22000AD6A0 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				8717570F20574B50000AD6A0 /* UISegmentedControl+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		8717571120574D01000AD6A0 /* Piece */ = {
+			isa = PBXGroup;
+			children = (
+				8717571220574D12000AD6A0 /* PieceView.swift */,
+			);
+			path = Piece;
 			sourceTree = "<group>";
 		};
 		872A0F072031280E00D032B7 /* Board */ = {
@@ -117,6 +143,15 @@
 				87773BB41FFB0EB900CA42B7 /* LaunchScreen.storyboard */,
 			);
 			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		87DDA1CC205AC84E00565111 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				87DDA1CD205AC85F00565111 /* Obstacle.swift */,
+				8772A4E5205B4852007033E8 /* GameEngine.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		87E1C05A201E69CD00503A8D /* Board Square */ = {
@@ -177,6 +212,7 @@
 		D2A5F2021F4A9144005CD714 /* Ladders and Snakes */ = {
 			isa = PBXGroup;
 			children = (
+				87DDA1CC205AC84E00565111 /* Model */,
 				D2A5F20F1F4A9144005CD714 /* Info.plist */,
 				87773BB31FFB0E9100CA42B7 /* Storyboard */,
 				8713C4D11FFB0C7D006E0B42 /* Controller */,
@@ -319,11 +355,15 @@
 			files = (
 				870421FF201E51D6005BAC95 /* SnakeView.swift in Sources */,
 				8799F33C200D54AF009722C3 /* BoardSquareView.swift in Sources */,
+				8717571320574D12000AD6A0 /* PieceView.swift in Sources */,
 				D2A5F2211F4A96D0005CD714 /* AppDelegate.swift in Sources */,
 				8799F33A200D54AF009722C3 /* BoardSquareViewLoader.swift in Sources */,
 				87E1C06D201ED0AE00503A8D /* UIView+NSLayoutAnchor.swift in Sources */,
+				8717571020574B50000AD6A0 /* UISegmentedControl+Extensions.swift in Sources */,
+				8772A4E6205B4852007033E8 /* GameEngine.swift in Sources */,
 				87E1C063201E760B00503A8D /* LadderView.swift in Sources */,
 				87E1C069201ED02000503A8D /* BoardView.swift in Sources */,
+				87DDA1CE205AC85F00565111 /* Obstacle.swift in Sources */,
 				8713C4D81FFB0D14006E0B42 /* BoardViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

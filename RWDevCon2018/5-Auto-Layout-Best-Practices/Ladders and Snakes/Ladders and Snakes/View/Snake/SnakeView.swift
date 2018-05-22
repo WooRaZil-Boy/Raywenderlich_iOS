@@ -44,7 +44,6 @@ enum Color: String {
   case purple = "purple snake"
 }
 
-
 // MARK: - SnakeView
 
 class SnakeView: UIImageView {

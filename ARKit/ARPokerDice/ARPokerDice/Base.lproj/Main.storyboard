@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tXr-a1-R10">
+            <objects>
+                <viewController id="BV1-FR-VrT" customClass="ViewController" customModule="ARPokerDice" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bgD-7F-4kE">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cdm-w2-fHg">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </arscnView>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qfi-yQ-69M">
+                                <rect key="frame" x="0.0" y="20" width="375" height="50"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="laM-MV-WHs">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LC2-48-hnY">
+                                            <rect key="frame" x="8" y="0.0" width="359" height="50"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="LC2-48-hnY" firstAttribute="top" secondItem="laM-MV-WHs" secondAttribute="top" id="0py-DY-sFS"/>
+                                        <constraint firstAttribute="bottom" secondItem="LC2-48-hnY" secondAttribute="bottom" id="ARB-Xi-5IF"/>
+                                        <constraint firstAttribute="trailing" secondItem="LC2-48-hnY" secondAttribute="trailing" constant="8" id="YlC-bx-Ojm"/>
+                                        <constraint firstItem="LC2-48-hnY" firstAttribute="leading" secondItem="laM-MV-WHs" secondAttribute="leading" constant="8" id="fDy-Oo-2HT"/>
+                                    </constraints>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="skS-4n-LTR"/>
+                                </constraints>
+                                <blurEffect style="light"/>
+                            </visualEffectView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kzr-A8-BiV">
+                                <rect key="frame" x="16" y="597" width="343" height="50"/>
+                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="0.25" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="ccX-2z-snq"/>
+                                </constraints>
+                                <state key="normal" title="Start">
+                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="startButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="3q5-Ov-m5Y"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uEO-kU-8g1">
+                                <rect key="frame" x="16" y="78" width="60" height="40"/>
+                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="0.25" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="8sE-w9-mMu"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="AaZ-yW-gJu"/>
+                                </constraints>
+                                <state key="normal" title="STYLE">
+                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="styleButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="6T8-2G-P4T"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ILv-8W-zpd">
+                                <rect key="frame" x="299" y="78" width="60" height="40"/>
+                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="0.25" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="KHD-V9-A5W"/>
+                                    <constraint firstAttribute="height" constant="40" id="yJW-3i-o0a"/>
+                                </constraints>
+                                <state key="normal" title="RESET">
+                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="resetButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="ScE-7N-pk8"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="cdm-w2-fHg" firstAttribute="bottom" secondItem="EOc-tW-uHF" secondAttribute="bottom" id="2AU-Qi-7Qq"/>
+                            <constraint firstItem="EOc-tW-uHF" firstAttribute="bottom" secondItem="kzr-A8-BiV" secondAttribute="bottom" constant="20" id="7qX-0f-hXz"/>
+                            <constraint firstItem="qfi-yQ-69M" firstAttribute="leading" secondItem="EOc-tW-uHF" secondAttribute="leading" id="BZM-6B-fAf"/>
+                            <constraint firstItem="qfi-yQ-69M" firstAttribute="top" secondItem="EOc-tW-uHF" secondAttribute="top" id="CUh-Bn-Bz6"/>
+                            <constraint firstItem="cdm-w2-fHg" firstAttribute="leading" secondItem="EOc-tW-uHF" secondAttribute="leading" id="HaI-jb-t87"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="uEO-kU-8g1" secondAttribute="trailing" constant="20" symbolic="YES" id="IeC-AP-egE"/>
+                            <constraint firstItem="ILv-8W-zpd" firstAttribute="top" secondItem="LC2-48-hnY" secondAttribute="bottom" constant="8" id="KwI-Cp-8Un"/>
+                            <constraint firstItem="EOc-tW-uHF" firstAttribute="trailing" secondItem="ILv-8W-zpd" secondAttribute="trailing" constant="16" id="UoS-6v-4gk"/>
+                            <constraint firstItem="uEO-kU-8g1" firstAttribute="top" secondItem="qfi-yQ-69M" secondAttribute="bottom" constant="8" id="VMe-v5-qAH"/>
+                            <constraint firstItem="kzr-A8-BiV" firstAttribute="leading" secondItem="EOc-tW-uHF" secondAttribute="leading" constant="16" id="W2T-wA-M1H"/>
+                            <constraint firstItem="EOc-tW-uHF" firstAttribute="trailing" secondItem="qfi-yQ-69M" secondAttribute="trailing" id="egA-AI-42M"/>
+                            <constraint firstItem="ILv-8W-zpd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bgD-7F-4kE" secondAttribute="leading" id="gsX-Fu-31o"/>
+                            <constraint firstItem="EOc-tW-uHF" firstAttribute="trailing" secondItem="kzr-A8-BiV" secondAttribute="trailing" constant="16" id="ifO-dy-hhm"/>
+                            <constraint firstItem="cdm-w2-fHg" firstAttribute="top" secondItem="bgD-7F-4kE" secondAttribute="top" id="kNQ-r1-4bL"/>
+                            <constraint firstItem="cdm-w2-fHg" firstAttribute="trailing" secondItem="EOc-tW-uHF" secondAttribute="trailing" id="q9e-nt-FNR"/>
+                            <constraint firstItem="uEO-kU-8g1" firstAttribute="leading" secondItem="EOc-tW-uHF" secondAttribute="leading" constant="16" id="vTL-sf-jzf"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="EOc-tW-uHF"/>
+                    </view>
+                    <connections>
+                        <outlet property="resetButton" destination="ILv-8W-zpd" id="dap-D0-MET"/>
+                        <outlet property="sceneView" destination="cdm-w2-fHg" id="A4P-aH-9gl"/>
+                        <outlet property="startButton" destination="kzr-A8-BiV" id="oUu-rT-NzP"/>
+                        <outlet property="statusLabel" destination="LC2-48-hnY" id="uZ5-le-QuC"/>
+                        <outlet property="styleButton" destination="uEO-kU-8g1" id="ag0-U4-LO1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+</document>

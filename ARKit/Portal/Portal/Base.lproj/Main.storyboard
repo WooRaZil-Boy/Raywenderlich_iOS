@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Portal View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="PortalViewController" customModule="Portal" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qfc-IZ-0Kp">
+                                <rect key="frame" x="0.0" y="0.0" width="374" height="667"/>
+                            </arscnView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Session Interruption Message" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nli-Iz-uAM" userLabel="Session State Label" customClass="RWLabel" customModule="Portal" customModuleProvider="target">
+                                <rect key="frame" x="39" y="585" width="298" height="62"/>
+                                <color key="backgroundColor" red="0.97852419818621228" green="0.91621538493391474" blue="0.90644908400989976" alpha="0.36490426936619719" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="62" id="lsr-Va-DhV"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" red="0.82745098039999998" green="0.2156862745" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="phc-ZZ-K4Q" userLabel="Message Label" customClass="RWLabel" customModule="Portal" customModuleProvider="target">
+                                <rect key="frame" x="38" y="40" width="299" height="109"/>
+                                <color key="backgroundColor" red="0.97498226165771484" green="0.91289898586490448" blue="0.90316803574575999" alpha="0.41194432218309857" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="301" id="6x4-rW-BXY"/>
+                                    <constraint firstAttribute="height" constant="109" id="UUR-al-343"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
+                                <color key="textColor" red="0.33134185109315417" green="0.19777470780038203" blue="0.92935490610000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Nli-Iz-uAM" firstAttribute="centerX" secondItem="qfc-IZ-0Kp" secondAttribute="centerX" id="Q4l-Cq-Zyh"/>
+                            <constraint firstItem="phc-ZZ-K4Q" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="Qa5-UY-yt1"/>
+                            <constraint firstItem="phc-ZZ-K4Q" firstAttribute="trailing" secondItem="Nli-Iz-uAM" secondAttribute="trailing" id="bUU-yh-ecU"/>
+                            <constraint firstItem="qfc-IZ-0Kp" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="bvQ-jK-oeQ"/>
+                            <constraint firstAttribute="bottom" secondItem="Nli-Iz-uAM" secondAttribute="bottom" constant="20" symbolic="YES" id="dfe-wf-gIR"/>
+                            <constraint firstItem="phc-ZZ-K4Q" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="38" id="fEe-FL-7l0"/>
+                            <constraint firstItem="qfc-IZ-0Kp" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="iXU-f1-rME"/>
+                            <constraint firstItem="qfc-IZ-0Kp" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="pPm-d5-1AA"/>
+                            <constraint firstItem="phc-ZZ-K4Q" firstAttribute="leading" secondItem="Nli-Iz-uAM" secondAttribute="leading" id="tjd-W1-0K1"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="phc-ZZ-K4Q" secondAttribute="trailing" constant="38" id="z8n-xg-t06"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="messageLabel" destination="phc-ZZ-K4Q" id="s84-Hk-kDN"/>
+                        <outlet property="sceneView" destination="qfc-IZ-0Kp" id="yxv-OT-tGe"/>
+                        <outlet property="sessionStateLabel" destination="Nli-Iz-uAM" id="85z-D0-5TH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="132.68365817091455"/>
+        </scene>
+    </scenes>
+</document>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14112" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -19,6 +19,10 @@
                         <subviews>
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SQQ-GU-ZZt">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="vbd-IW-zBH" appends="YES" id="btV-2W-X14"/>
+                                </connections>
                             </arscnView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mar-mF-KDD">
                                 <rect key="frame" x="0.0" y="20" width="375" height="50"/>
@@ -59,11 +63,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sGM-E5-SVo" userLabel="StyleButton">
-                                <rect key="frame" x="16" y="78" width="60" height="40"/>
+                                <rect key="frame" x="16" y="78" width="46" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="0.25297095070422537" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="YNL-kt-7XF"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="tep-Wx-Zdu"/>
                                 </constraints>
                                 <state key="normal" title="STYLE">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -73,10 +76,9 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H9a-LH-hXT" userLabel="ResetButton">
-                                <rect key="frame" x="299" y="78" width="60" height="40"/>
+                                <rect key="frame" x="313" y="78" width="46" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="0.25046764964788731" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="4Dn-VJ-f18"/>
                                     <constraint firstAttribute="height" constant="40" id="ftC-Cq-GhC"/>
                                 </constraints>
                                 <state key="normal" title="RESET">
@@ -92,18 +94,18 @@
                             <constraint firstItem="mar-mF-KDD" firstAttribute="top" secondItem="d7j-zl-LHg" secondAttribute="top" id="75a-LE-SvX"/>
                             <constraint firstItem="SQQ-GU-ZZt" firstAttribute="trailing" secondItem="d7j-zl-LHg" secondAttribute="trailing" id="7tJ-M4-Xkf"/>
                             <constraint firstItem="d7j-zl-LHg" firstAttribute="trailing" secondItem="H9a-LH-hXT" secondAttribute="trailing" constant="16" id="BCd-gL-Fj9"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="sGM-E5-SVo" secondAttribute="trailing" constant="20" symbolic="YES" id="CLr-ui-kSr"/>
                             <constraint firstItem="0of-V3-vO8" firstAttribute="leading" secondItem="d7j-zl-LHg" secondAttribute="leading" constant="16" id="Fco-H1-VLK"/>
                             <constraint firstItem="d7j-zl-LHg" firstAttribute="bottom" secondItem="0of-V3-vO8" secondAttribute="bottom" constant="20" id="O0m-2t-WMg"/>
                             <constraint firstItem="SQQ-GU-ZZt" firstAttribute="bottom" secondItem="d7j-zl-LHg" secondAttribute="bottom" id="OYq-5I-8Xa"/>
                             <constraint firstItem="sGM-E5-SVo" firstAttribute="top" secondItem="mar-mF-KDD" secondAttribute="bottom" constant="8" id="QAY-bA-Lh4"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="sGM-E5-SVo" secondAttribute="trailing" constant="20" symbolic="YES" id="Qsn-n8-FpI"/>
                             <constraint firstItem="mar-mF-KDD" firstAttribute="leading" secondItem="d7j-zl-LHg" secondAttribute="leading" id="UVI-pT-wAM"/>
-                            <constraint firstItem="H9a-LH-hXT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xmW-kU-Dhs" secondAttribute="leading" constant="20" symbolic="YES" id="VfQ-ys-zeg"/>
                             <constraint firstItem="mar-mF-KDD" firstAttribute="trailing" secondItem="d7j-zl-LHg" secondAttribute="trailing" id="X0q-ia-cSp"/>
                             <constraint firstItem="d7j-zl-LHg" firstAttribute="trailing" secondItem="0of-V3-vO8" secondAttribute="trailing" constant="16" id="dJh-0T-rFE"/>
                             <constraint firstItem="H9a-LH-hXT" firstAttribute="top" secondItem="mar-mF-KDD" secondAttribute="bottom" constant="8" id="iZt-R0-pFw"/>
                             <constraint firstItem="SQQ-GU-ZZt" firstAttribute="leading" secondItem="d7j-zl-LHg" secondAttribute="leading" id="kbr-PW-G2s"/>
                             <constraint firstItem="sGM-E5-SVo" firstAttribute="leading" secondItem="d7j-zl-LHg" secondAttribute="leading" constant="16" id="obx-Dh-0ga"/>
+                            <constraint firstItem="H9a-LH-hXT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xmW-kU-Dhs" secondAttribute="leading" constant="20" symbolic="YES" id="voW-QQ-gXy"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="d7j-zl-LHg"/>
                     </view>
@@ -116,6 +118,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="up" id="vbd-IW-zBH">
+                    <connections>
+                        <action selector="swipeUpGestureHandler:" destination="BV1-FR-VrT" id="85k-n0-gwQ"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="140" y="123.68815592203899"/>
         </scene>

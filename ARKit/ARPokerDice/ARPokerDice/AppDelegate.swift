@@ -64,23 +64,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   
 }
-
-//A9 이상의 프로세서가 있는 실제 장치를 사용해야 한다.
-//• iPhone SE
-//• iPhone 6s 및 6s Plus
-//• iPhone 7 및 7 Plus
-//• iPad Pro (모든 크기의 1 세대 및 2 세대 : 9.7", 10.5" 및 12.9")
-//• iPad (2017+ 모델)
-//• iPhone 8 및 8 Plus
-//• iPhone X
-
-//ARKit을 사용하는 앱은 카메라에 대한 액세스가 반드시 있어야 한다.
-//Info.plist의 Find Privacy - Camera Usage Description에서 설정할 수 있다.
-//ARKit 템플릿으로 프로젝트를 생성하면, 자동으로 설정되어 있다.
-//이 메시지는 카메라에 액세스 요청할 때 사용자에게 표시되는 문자열이다.
-
-//SceneKit Asset Catalog는 .scnassets 확장자로 생성해 주면 된다.
-//ARPokerDice group에서 right-click, Add Files to "ARPokerDice"... 선택
-
-//SceneKit Scene File을 생성할 때, Group을 제대로 지정해 줘야 한다. .scnassets 확장자 내의 그룹인지 확인
-

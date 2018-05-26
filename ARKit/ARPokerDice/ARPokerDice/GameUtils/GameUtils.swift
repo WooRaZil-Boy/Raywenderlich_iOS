@@ -51,4 +51,3 @@ func convertToDegrees(angle: CGFloat) -> CGFloat {
   return CGFloat(CGFloat(angle) * CGFloat(RadiansPerDegrees))
 }
 
-//라디안을 각도로 변환하거나 각도를 라디안으로 변환. 회전과 각도를 다룰 때 유용

@@ -7,31 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		835481901FC2EDF500F6B1A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8354818F1FC2EDF500F6B1A8 /* AppDelegate.swift */; };
 		835481941FC2EDF500F6B1A8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835481931FC2EDF500F6B1A8 /* ViewController.swift */; };
 		835481971FC2EDF500F6B1A8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 835481951FC2EDF500F6B1A8 /* Main.storyboard */; };
 		835481991FC2EDF500F6B1A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 835481981FC2EDF500F6B1A8 /* Assets.xcassets */; };
 		8354819C1FC2EDF500F6B1A8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8354819A1FC2EDF500F6B1A8 /* LaunchScreen.storyboard */; };
 		837245B11FC42AB00063DAD7 /* PokerDice.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 837245B01FC42AB00063DAD7 /* PokerDice.scnassets */; };
-		EF9DC7D320B9160A00D95B34 /* GameUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9DC7CF20B9160900D95B34 /* GameUtils.swift */; };
-		EF9DC7D420B9160A00D95B34 /* SCNVector3+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9DC7D020B9160900D95B34 /* SCNVector3+Extension.swift */; };
-		EF9DC7D520B9160A00D95B34 /* Generics.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9DC7D120B9160900D95B34 /* Generics.swift */; };
-		EF9DC7D620B9160A00D95B34 /* Random+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9DC7D220B9160900D95B34 /* Random+Extension.swift */; };
+		83760D43200F96FA0069BADE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83760D42200F96F90069BADE /* AppDelegate.swift */; };
+		83C343B7200F9E96000D9947 /* GameUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C343B2200F9E96000D9947 /* GameUtils.swift */; };
+		83C343B8200F9E96000D9947 /* Generics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C343B3200F9E96000D9947 /* Generics.swift */; };
+		83C343B9200F9E96000D9947 /* Random+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C343B4200F9E96000D9947 /* Random+Extension.swift */; };
+		83C343BA200F9E96000D9947 /* SCNVector3+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C343B5200F9E96000D9947 /* SCNVector3+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8354818C1FC2EDF500F6B1A8 /* ARPokerDice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARPokerDice.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		8354818F1FC2EDF500F6B1A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		835481931FC2EDF500F6B1A8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		835481961FC2EDF500F6B1A8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		835481981FC2EDF500F6B1A8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8354819B1FC2EDF500F6B1A8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8354819D1FC2EDF500F6B1A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		837245B01FC42AB00063DAD7 /* PokerDice.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = PokerDice.scnassets; sourceTree = "<group>"; };
-		EF9DC7CF20B9160900D95B34 /* GameUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameUtils.swift; sourceTree = "<group>"; };
-		EF9DC7D020B9160900D95B34 /* SCNVector3+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SCNVector3+Extension.swift"; sourceTree = "<group>"; };
-		EF9DC7D120B9160900D95B34 /* Generics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Generics.swift; sourceTree = "<group>"; };
-		EF9DC7D220B9160900D95B34 /* Random+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Random+Extension.swift"; sourceTree = "<group>"; };
+		83760D42200F96F90069BADE /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		83C343B2200F9E96000D9947 /* GameUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameUtils.swift; sourceTree = "<group>"; };
+		83C343B3200F9E96000D9947 /* Generics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Generics.swift; sourceTree = "<group>"; };
+		83C343B4200F9E96000D9947 /* Random+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Random+Extension.swift"; sourceTree = "<group>"; };
+		83C343B5200F9E96000D9947 /* SCNVector3+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SCNVector3+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,9 +64,9 @@
 		8354818E1FC2EDF500F6B1A8 /* ARPokerDice */ = {
 			isa = PBXGroup;
 			children = (
-				EF9DC7CE20B9160900D95B34 /* GameUtils */,
-				8354818F1FC2EDF500F6B1A8 /* AppDelegate.swift */,
+				83C343B0200F9E96000D9947 /* GameUtils */,
 				837245B01FC42AB00063DAD7 /* PokerDice.scnassets */,
+				83760D42200F96F90069BADE /* AppDelegate.swift */,
 				835481931FC2EDF500F6B1A8 /* ViewController.swift */,
 				835481951FC2EDF500F6B1A8 /* Main.storyboard */,
 				835481981FC2EDF500F6B1A8 /* Assets.xcassets */,
@@ -76,13 +76,13 @@
 			path = ARPokerDice;
 			sourceTree = "<group>";
 		};
-		EF9DC7CE20B9160900D95B34 /* GameUtils */ = {
+		83C343B0200F9E96000D9947 /* GameUtils */ = {
 			isa = PBXGroup;
 			children = (
-				EF9DC7CF20B9160900D95B34 /* GameUtils.swift */,
-				EF9DC7D020B9160900D95B34 /* SCNVector3+Extension.swift */,
-				EF9DC7D120B9160900D95B34 /* Generics.swift */,
-				EF9DC7D220B9160900D95B34 /* Random+Extension.swift */,
+				83C343B2200F9E96000D9947 /* GameUtils.swift */,
+				83C343B3200F9E96000D9947 /* Generics.swift */,
+				83C343B4200F9E96000D9947 /* Random+Extension.swift */,
+				83C343B5200F9E96000D9947 /* SCNVector3+Extension.swift */,
 			);
 			path = GameUtils;
 			sourceTree = "<group>";
@@ -160,12 +160,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83760D43200F96FA0069BADE /* AppDelegate.swift in Sources */,
+				83C343B7200F9E96000D9947 /* GameUtils.swift in Sources */,
+				83C343BA200F9E96000D9947 /* SCNVector3+Extension.swift in Sources */,
+				83C343B8200F9E96000D9947 /* Generics.swift in Sources */,
 				835481941FC2EDF500F6B1A8 /* ViewController.swift in Sources */,
-				EF9DC7D320B9160A00D95B34 /* GameUtils.swift in Sources */,
-				EF9DC7D520B9160A00D95B34 /* Generics.swift in Sources */,
-				835481901FC2EDF500F6B1A8 /* AppDelegate.swift in Sources */,
-				EF9DC7D620B9160A00D95B34 /* Random+Extension.swift in Sources */,
-				EF9DC7D420B9160A00D95B34 /* SCNVector3+Extension.swift in Sources */,
+				83C343B9200F9E96000D9947 /* Random+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,7 +307,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = YMFKFKP9AX;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ARPokerDice/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -323,7 +323,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = YMFKFKP9AX;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ARPokerDice/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

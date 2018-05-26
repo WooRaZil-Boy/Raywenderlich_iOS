@@ -36,5 +36,3 @@ public extension Double {
     return (r64 * (max - min)) + min
   }
 }
-
-//Double에 random()을 확장하여 지정된 범위 내에서 임의의 Double 값을 생성

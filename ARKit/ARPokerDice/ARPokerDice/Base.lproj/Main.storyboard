@@ -66,8 +66,8 @@
                                 <rect key="frame" x="16" y="78" width="60" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="0.25297095070422537" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="D8l-yi-gAT"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="GJ6-iJ-agf"/>
+                                    <constraint firstAttribute="height" constant="40" id="YNL-kt-7XF"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="tep-Wx-Zdu"/>
                                 </constraints>
                                 <state key="normal" title="STYLE">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -80,8 +80,8 @@
                                 <rect key="frame" x="299" y="78" width="60" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="0.25046764964788731" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="1Ho-1A-W37"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="ffd-0c-mig"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="4Dn-VJ-f18"/>
+                                    <constraint firstAttribute="height" constant="40" id="ftC-Cq-GhC"/>
                                 </constraints>
                                 <state key="normal" title="RESET">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -92,22 +92,22 @@
                             </button>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="H9a-LH-hXT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xmW-kU-Dhs" secondAttribute="leading" constant="20" symbolic="YES" id="0pv-Mn-cwX"/>
                             <constraint firstItem="SQQ-GU-ZZt" firstAttribute="top" secondItem="xmW-kU-Dhs" secondAttribute="top" id="5e6-bG-laV"/>
                             <constraint firstItem="mar-mF-KDD" firstAttribute="top" secondItem="d7j-zl-LHg" secondAttribute="top" id="75a-LE-SvX"/>
                             <constraint firstItem="SQQ-GU-ZZt" firstAttribute="trailing" secondItem="d7j-zl-LHg" secondAttribute="trailing" id="7tJ-M4-Xkf"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="sGM-E5-SVo" secondAttribute="trailing" constant="20" symbolic="YES" id="7zy-El-8Oi"/>
+                            <constraint firstItem="d7j-zl-LHg" firstAttribute="trailing" secondItem="H9a-LH-hXT" secondAttribute="trailing" constant="16" id="BCd-gL-Fj9"/>
                             <constraint firstItem="0of-V3-vO8" firstAttribute="leading" secondItem="d7j-zl-LHg" secondAttribute="leading" constant="16" id="Fco-H1-VLK"/>
-                            <constraint firstItem="H9a-LH-hXT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xmW-kU-Dhs" secondAttribute="leading" constant="20" symbolic="YES" id="Hs8-j0-ks3"/>
-                            <constraint firstItem="d7j-zl-LHg" firstAttribute="trailing" secondItem="H9a-LH-hXT" secondAttribute="trailing" constant="16" id="MU6-gD-TuF"/>
                             <constraint firstItem="d7j-zl-LHg" firstAttribute="bottom" secondItem="0of-V3-vO8" secondAttribute="bottom" constant="20" id="O0m-2t-WMg"/>
                             <constraint firstItem="SQQ-GU-ZZt" firstAttribute="bottom" secondItem="d7j-zl-LHg" secondAttribute="bottom" id="OYq-5I-8Xa"/>
+                            <constraint firstItem="sGM-E5-SVo" firstAttribute="top" secondItem="mar-mF-KDD" secondAttribute="bottom" constant="8" id="QAY-bA-Lh4"/>
                             <constraint firstItem="mar-mF-KDD" firstAttribute="leading" secondItem="d7j-zl-LHg" secondAttribute="leading" id="UVI-pT-wAM"/>
-                            <constraint firstItem="H9a-LH-hXT" firstAttribute="top" secondItem="mar-mF-KDD" secondAttribute="bottom" constant="8" id="V3l-XM-Lho"/>
-                            <constraint firstItem="sGM-E5-SVo" firstAttribute="leading" secondItem="d7j-zl-LHg" secondAttribute="leading" constant="16" id="VSC-Fv-bw6"/>
                             <constraint firstItem="mar-mF-KDD" firstAttribute="trailing" secondItem="d7j-zl-LHg" secondAttribute="trailing" id="X0q-ia-cSp"/>
-                            <constraint firstItem="sGM-E5-SVo" firstAttribute="top" secondItem="mar-mF-KDD" secondAttribute="bottom" constant="8" id="Yx8-Me-ywx"/>
                             <constraint firstItem="d7j-zl-LHg" firstAttribute="trailing" secondItem="0of-V3-vO8" secondAttribute="trailing" constant="16" id="dJh-0T-rFE"/>
+                            <constraint firstItem="H9a-LH-hXT" firstAttribute="top" secondItem="mar-mF-KDD" secondAttribute="bottom" constant="8" id="iZt-R0-pFw"/>
                             <constraint firstItem="SQQ-GU-ZZt" firstAttribute="leading" secondItem="d7j-zl-LHg" secondAttribute="leading" id="kbr-PW-G2s"/>
+                            <constraint firstItem="sGM-E5-SVo" firstAttribute="leading" secondItem="d7j-zl-LHg" secondAttribute="leading" constant="16" id="obx-Dh-0ga"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="sGM-E5-SVo" secondAttribute="trailing" constant="20" symbolic="YES" id="sih-bB-0R4"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="d7j-zl-LHg"/>
                     </view>

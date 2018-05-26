@@ -36,4 +36,3 @@ public func arc4random <T: ExpressibleByIntegerLiteral> (_ type: T.Type) -> T {
   return r
 }
 
-//무작위 값을 생성

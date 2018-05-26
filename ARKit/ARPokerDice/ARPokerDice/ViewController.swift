@@ -45,15 +45,15 @@ enum GameState: Int16 { //게임 상태의 열거형
 }
 
 class ViewController: UIViewController {
-  
+
   // MARK: - Properties
-  
   var trackingStatus: String = "" //상태를 알려주기 위한 문자열
   var statusMessage: String = ""
   var gameState: GameState = .detectSurface //게임의 상태 속성. default 상태
-    var focusPoint:CGPoint! //레이 캐스팅에 사용할 화면상 위치.
+  var focusPoint:CGPoint! //레이 캐스팅에 사용할 화면상 위치
   var focusNode: SCNNode! //포커스 노드
   var diceNodes: [SCNNode] = [] //주사위 노드들의 배열
+  var lightNode: SCNNode! //광원
   var diceCount: Int = 5 //주사위의 수를 나타내는 카운터
   var diceStyle: Int = 0 //스타일 전환에 사용할 index
   var diceOffset: [SCNVector3] = [SCNVector3(0.0,0.0,0.0),
@@ -63,37 +63,41 @@ class ViewController: UIViewController {
                                   SCNVector3(0.05, 0.05, 0.02)]
   //주사위의 위치 offset. AR로 주사위를 던질 때, 정확히 ARCamera 상의 위치에 생성하지 않는다.
   //위치를 현실적으로 보정해준다.
-  
+
   // MARK: - Outlets
-  
+
   @IBOutlet var sceneView: ARSCNView!
   //ARSCNView는 카메라의 라이브 배경 이미지 위에 3D scene 을 오버레이할 수 있다.
   //ARKit과 SceneKit 간의 완벽한 통합을 제공한다.
-
+    
   //ARSCNView는 기본적으로 SceneKit 뷰이다. 여기에는 ARKit의 모션 추적 및 이미지 처리를 담당하는 ARSession
   //객체가 포함된다. 이것은 세션 기반으로 ARSession을 생성 한 다음 실행하여 AR Tracking 프로세스를 시작해야 한다.
-
+    
   //SpriteKit과 ARKit을 통합한 ARSKView도 있다. 2D SpriteKit 컨텐츠를 사용하는 경우 사용한다.
   @IBOutlet weak var statusLabel: UILabel!
   @IBOutlet weak var startButton: UIButton!
   @IBOutlet weak var styleButton: UIButton!
   @IBOutlet weak var resetButton: UIButton!
-  
+
   // MARK: - Actions
-  
+
   @IBAction func startButtonPressed(_ sender: Any) {
+    self.startGame()
   }
-  
+
   @IBAction func styleButtonPressed(_ sender: Any) {
     diceStyle = diceStyle >= 4 ? 0 : diceStyle + 1
     //5가지 스타일을 반복한다.
   }
-  
+
   @IBAction func resetButtonPressed(_ sender: Any) {
+    self.resetGame()
   }
-  
+
   @IBAction func swipeUpGestureHandler(_ sender: Any) {
-    guard let frame = sceneView.session.currentFrame else { return }
+    guard gameState == .swipeToPlay else { return } //게임이 시작할 상태가 아닐 때에 주사위를 던져선 안 된다.
+    //게임이 시작된면, .swipeToPlay 상태가 되고, 그 때에만 스와이프 동작을 허용한다.
+    guard let frame = self.sceneView.session.currentFrame else { return }
     //currentFrame은 ARScene의 캡쳐된 이미지, AR 카메라, 조명, 앵커, 특징점과 같은 정보를 가지고 있다.
     //세션의 가장 최근 ARScene 정보가 포함된 비디오 프레임 이미지
     
@@ -103,43 +107,71 @@ class ViewController: UIViewController {
       //카메라의 위치와 회전 정보를 행렬로 변환하여 주사위를 던진다.
     }
   }
-  
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        //터치가 시작될 때 트리거 된다.
+        DispatchQueue.main.async {
+            if let touchLocation = touches.first?.location(in: self.sceneView) {
+                //SceneView에서 터치한 위치를 가져온다.
+                if let hit = self.sceneView.hitTest(touchLocation, options: nil).first {
+                    //hitTest는 렌더링된 Scene에서 렌더링된 이미지의 한 지점에 해당하는 객체를 검색한다.
+                    //터치한 위치를 hitTest의 시작점으로 사용한다.
+                    if hit.node.name == "dice" { //해당 노드가 "dice"이면
+                        hit.node.removeFromParentNode() //scene에서 해당 dice를 제거한다.
+                        self.diceCount += 1 //카운터를 증가 시켜 던질 수 있는 주사위 수를 늘려준다.
+                    }
+                }
+            }
+        }
+        //터치한 주사위를 삭제한다.
+        
+        //Hit testing
+        //SceneView에는 히트 테스트를 수행할 수 있는 기능이 있다. 플레이어가 화면을 터치하는 화면 위치를 제공하면 된다.
+        //SceneKit은 광선을 Scene로 쏘고, 그 경로의 모든 물체를 "히트"로 간주한다.
+    }
+
   // MARK: - View Management
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
-    initSceneView()
-    initScene()
-    initARSession()
-    loadModels()
+    self.initSceneView()
+    self.initScene()
+    self.initARSession()
+    self.loadModels()
   }
-  
+
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     print("*** ViewWillAppear()")
   }
-  
+
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     print("*** ViewWillDisappear()")
   }
-  
+
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     print("*** DidReceiveMemoryWarning()")
   }
-  
+
   override var prefersStatusBarHidden: Bool {
     return true
   }
+
+  @objc
+  func orientationChanged() { //화면이 회전하면 focusPoint를 업데이트 해 줘야 한다.
+    //notification을 받아서 업데이트
+    focusPoint = CGPoint(x: view.center.x, y: view.center.y + view.center.y * 0.25)
+    //뷰의 y중심보다 25% 낮은 위치
     
-    @objc func orientationChanged() { //화면이 회전하면 focusPoint를 업데이트 해 줘야 한다.
-        focusPoint = CGPoint(x: view.center.x, y: view.center.y + view.center.y * 0.25)
-        //뷰의 y중심보다 25% 낮은 위치
-    }
-  
-  // 치ARK: - Initialization
-  
+    //Ray casting
+    //레이 캐스팅은 3D 물체와의 교차점을 찾고 있는 동안, 화면 중심(초점)에서 가상 Scene로 광선을 만들어 낸다. p.107
+    //광성이 평면과 교차하면 해당 교차 위치에 포커스 노드를 배치하면 된다.
+  }
+
+  // MARK: - Initialization
+
   func initSceneView() {
     sceneView.delegate = self
     sceneView.showsStatistics = true
@@ -148,7 +180,8 @@ class ViewController: UIViewController {
       //ARSCNDebugOptions.showWorldOrigin,
       //SCNDebugOptions.showBoundingBoxes,
       //SCNDebugOptions.showWireframe
-    ] //디버깅 옵션
+    ]
+    
     //• Feature points : Scene 전체에 보이는 작은 점들을 추가한다.
     //  디바이스의 위치와 방향을 정확하게 추적하는 데 사용된다.
     //• World origin : 세션을 시작한 곳의 R(X)G(Y)B(Z) 교차선을 나타낸다.
@@ -156,7 +189,7 @@ class ViewController: UIViewController {
     //  SceneKit 객체 도형의 범위를 보여준다.
     //• Wireframe : Scene의 geometry를 표시한다. AR Scene에서 각 3D 객체의 표면에 있는 폴리곤 윤곽을 볼 수 있다.
     //  기하학적 모양이 얼마나 자세히 표시되는 지 확인할 수 있다.
-    
+
     focusPoint = CGPoint(x: view.center.x, y: view.center.y + view.center.y * 0.25)
     //뷰의 y중심보다 25% 낮은 위치
     //레이 캐스팅에 사용할 화면 상의 위치를 정의한다. 일반적으로 화면의 중심이다.
@@ -165,24 +198,27 @@ class ViewController: UIViewController {
     NotificationCenter.default.addObserver(self, selector: #selector(ViewController.orientationChanged), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
     //화면 회전 시 알림을 트리거
   }
-  
+
   func initScene() {
     let scene = SCNScene() //빈 Scene 생성
     scene.isPaused = false
     sceneView.scene = scene
     scene.lightingEnvironment.contents = "PokerDice.scnassets/Textures/Environment_CUBE.jpg"
     //전체적인 Scene의 조명을 Environment_CUBE.jpg로 설정
-    scene.lightingEnvironment.intensity = 2
-    //강도 2
+    scene.lightingEnvironment.intensity = 2 //조명 강도 2
+    scene.physicsWorld.speed = 1.0 //물리엔진 설정. 기본값은 1.0이다(2.0은 2배 빠름, 0은 멈춘다).
+    scene.physicsWorld.timeStep = 1.0 / 60.0 //물리엔진 업데이트 간격
+    //기본적으로 SceneKit의 물리 엔진은 초당 60회 업데이트 된다. 간격을 늘리면 더 정확해지지만 CPU 소모가 커진다.
+    //빠르게 이동하는 객체 간 충돌 등을 사용할 때는 값을 올려야 한다.
   }
-  
+
   func initARSession() {
     guard ARWorldTrackingConfiguration.isSupported else {
       //디바이스가 ARWorldTrackingConfiguration(6DOF)를 지원하는 지 여부
       print("*** ARConfig: AR World Tracking Not Supported")
       return
     }
-    
+
     let config = ARWorldTrackingConfiguration() //ARWorldTrackingConfiguration 인스턴스 생성
     //AR session을 시작하기 전에 AR session configuration을 먼저 만들어야 한다.
     //AR session configuration은 장치가 있는 실제 세계와 가상 콘텐츠가 있는 3D 세계 사이의 연결을 설정한다.
@@ -208,11 +244,12 @@ class ViewController: UIViewController {
     //ARPlaneAnchor는 중심점, 방향, 표면 범위를 포함하는 추가 평면 정보와 함께 실제 변환(위치, 방향)을 포함한다.
     //이 정보를 사용하여 SCeneKit Plane 노드를 생성할 수 있다. p.101
     //cf. ARFaceAnchor도 있다.
+    
+    config.isLightEstimationEnabled = true //광원 분석 여부
+    //밝은 환경에 있으면 빛의 강도가 높아지고, 어두운 환경이면 빛의 강도가 낮아진다.
+    
     sceneView.session.run(config) //AR Session 시작
     //6DOF로 트래킹 데이터를 수집을 시작한다.
-    
-    
-    
     
     //Controlling an AR session
     //AR Session을 제어하는 방법
@@ -222,9 +259,9 @@ class ViewController: UIViewController {
     //  ex. 버튼을 누를 때에만 오디오 샘플링 활성화
     //• Resetting : ARSession.run(_ : options :)으로 세션을 재시작한다. 이전 세션의 정보가 삭제된다.
   }
-  
+
   // MARK: - Load Models
-  
+
   func loadModels() {
     let diceScene = SCNScene(
       named: "PokerDice.scnassets/Models/DiceScene.scn")! //Scene 로드하여 저장
@@ -238,208 +275,330 @@ class ViewController: UIViewController {
         //recursively 매개변수를 true로 하면, 자식 노드의 하위 트리까지 검색한다.
         //false로 하면 해당 노드의 직접적인 자식만 검색
     }
-    
+
     let focusScene = SCNScene(
       named: "PokerDice.scnassets/Models/FocusScene.scn")! //Scene 로드하여 저장
     focusNode = focusScene.rootNode.childNode(
       withName: "focus", recursively: false)! //포커스 노드 발견해서
-    
+
     sceneView.scene.rootNode.addChildNode(focusNode) //SceneView에 자식노드로 추가한다.
+    
+    lightNode = diceScene.rootNode.childNode(withName: "directional", recursively: false)!
+    //diceScene에서 광원 노드를 가져온다.
+    sceneView.scene.rootNode.addChildNode(lightNode) //SceneView에 자식노드로 추가한다.
   }
-  
+
   // MARK: - Helper Functions
-  
+
   func throwDiceNode(transform: SCNMatrix4, offset: SCNVector3) {
     //선택된 주사위 노드를 AR Scene로 복제하는 메서드
+    let distance = simd_distance(focusNode.simdPosition,
+                                 simd_make_float3(transform.m41,
+                                                  transform.m42,
+                                                  transform.m43))
+    //주사위에 다양한 힘을 가한다. 이를 위해 주사위와 초점 노드 사이의 거리를 계산한다.
+    
+    let direction = SCNVector3(-(distance * 2.5) * transform.m31,
+                               -(distance * 2.5) * (transform.m32 - Float.pi / 4),
+                               -(distance * 2.5) * transform.m33)
+    //주사위를 던진다. 이를 위해 순방향 벡터를 생성하고, 주사위 회전을 포함하여 계산한 거리를 통합한다.
+    
+    let rotation = SCNVector3(Double.random(min: 0, max: Double.pi),
+                              Double.random(min: 0, max: Double.pi),
+                              Double.random(min: 0, max: Double.pi))
+    //임의의 회전할 벡터를 정의한다. 주사위가 plane위에 떨어진 후
+    
     let position = SCNVector3(transform.m41 + offset.x,
                               transform.m42 + offset.y,
                               transform.m43 + offset.z)
     //transform의 위치데이터를 벡터와 결합해 offset 위치를 만든다.
     
+    //Transform은 SCNMatrix4fh 4x4의 행렬이다. m41의 경우 4행 1열을 나타낸다.
+    //각 행은 변환, 회전, 크기 등의 특정 값과 연관되어 있다.
+    
     let diceNode = diceNodes[diceStyle].clone() //선택된 주사위 노드의 복제 생성
     diceNode.name = "dice" //이름
     diceNode.position = position //위치 설정
+    diceNode.eulerAngles = rotation //회전 각도 설정
+    diceNode.physicsBody?.resetTransform() //트랜스폼 리셋. 주사위의 위치를 업데이트 한다.
+    diceNode.physicsBody?.applyForce(direction, asImpulse: true)
+    //주사위에 힘을 가해 특정 방향으로 던진다.
+    
     sceneView.scene.rootNode.addChildNode(diceNode)
     //복제된 주사위 노드가 AR Scene에 배치된다.
     diceCount -= 1 //diceCount 감소 시켜 주사위가 굴려졌을음 나타낸다.
   }
-    
-    func createARPlaneNode(planeAnchor: ARPlaneAnchor, color: UIColor) -> SCNNode {
-        //앵커를 받아 Plane 요소를 추가한다.
-        let planeGeometry = SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z))
-        //extent로 검출된 평면의 너비와 길이를 가져올 수 있다.
-        //앵커의 범위에 대한 지오메트리 평면(Editor에서 초록색으로 추가하던 객체)이 생성된다.
-        
-        let planeMaterial = SCNMaterial() //Material 생성
-        planeMaterial.diffuse.contents = "PokerDice.scnassets/Textures/Surface_DIFFUSE.png"
-        //Scene Editor로 설정하던 것을 코드로. 텍스처를 가져온다.
-        planeGeometry.materials = [planeMaterial] //지오메트리에 텍스처를 입힌다.
-        
-        let planeNode = SCNNode(geometry: planeGeometry) //지오메트리로 plane 노드 생성
-        planeNode.position = SCNVector3Make(planeAnchor.center.x, 0, planeAnchor.center.z)
-        //앵커의 중심점을 기준으로 평면 노드의 위치 설정
-        planeNode.transform = SCNMatrix4MakeRotation(-Float.pi / 2, 1, 0, 0)
-        //SCNPlane으로 생성된 지오메트리(Editor의 초록색 Plane)는 기본적으로 수직이다.
-        //따라서 평면으로 배치하려면 x축을 기준으로 시계 방향으로 90도 회전해야 한다.
-        //수직 앵커를 사용할 때는 이 줄을 생략할 수 있다.
-        
-        return planeNode
+
+  func updateStatus() { //현재 게임 상태
+    switch gameState {
+    case .detectSurface:
+      statusMessage = "Scan entire table surface...\nHit START when ready!"
+    case .pointToSurface:
+      statusMessage = "Point at designated surface first!"
+    case .swipeToPlay:
+      statusMessage = "Swipe UP to throw!\nTap on dice to collect it again."
     }
     
-    func updateARPlaneNode(planeNode: SCNNode, planeAchor: ARPlaneAnchor) {
-        //기존의 plane 노드를 새로운 위치, 방향, 크기로 업데이트 하는 메서드
-        let planeGeometry = planeNode.geometry as! SCNPlane //여기서는 수평 plane만 사용하므로
-        planeGeometry.width = CGFloat(planeAchor.extent.x) //앵커 너비로 가로 업데이트
-        planeGeometry.height = CGFloat(planeAchor.extent.z) //앵커 길이로 세로 업데이트
-        
-        planeNode.position = SCNVector3Make(planeAchor.center.x, 0, planeAchor.center.z)
-        //앵커 중앙의 위치로 plane 노드의 위치를 업데이트한다.
+    self.statusLabel.text = trackingStatus != "" ?
+      "\(trackingStatus)" : "\(statusMessage)"
+    //statusLabel에 상태를 표기한다. 필요한 경우 기존 메시지에 추가
+  }
+
+  func updateFocusNode() {
+    let results = self.sceneView.hitTest(self.focusPoint, types: [.existingPlaneUsingExtent])
+    //해당 지점의 해당 타입의 실제 객체 또는 AR 앵커를 검색한다.
+    //hitTest는 레이 캐스트를 수행한다. 매개변수로 광선을 발사할 곳의 스크린 위치와 찾고자하는 대상 유형을 입력한다.
+    //.existingPlaneUsingExtent으로 plane 기반의 객체만 가져온다.
+    //.featurePoints, .estimatedHorizontalPlane, .existingPlane 등을 사용할 수 있다.
+
+    if results.count == 1 { //검색된 결과가 하나라면
+      if let match = results.first { //해당 결과를 가져온다.
+        let t = match.worldTransform //위치, 방향, 크기 정보가 포함된 worldTransform를 사용한다.
+        self.focusNode.position = SCNVector3(x: t.columns.3.x, y: t.columns.3.y, z: t.columns.3.z)
+        //변환 행렬을 기반으로 포커스 노드의 위치를 업데이트한다.
+        //위치정보는 변환 행렬의 세 번째 열에서 찾을 수 있다.
+        self.gameState = .swipeToPlay
+      }
+    } else { //검색 결과가 없다면
+      self.gameState = .pointToSurface
+      //표면을 감지하도록 gameState를 설정해 준다.
     }
+  }
+
+  func createARPlaneNode(planeAnchor: ARPlaneAnchor, color: UIColor) -> SCNNode {
+    //앵커를 받아 Plane 요소를 추가한다.
+
+    // 1 - Create plane geometry using anchor extents
+    let planeGeometry = SCNPlane(width: CGFloat(planeAnchor.extent.x),
+                                 height: CGFloat(planeAnchor.extent.z))
+    //extent로 검출된 평면의 너비와 길이를 가져올 수 있다.
+    //앵커의 범위에 대한 지오메트리 평면(Editor에서 초록색으로 추가하던 객체)이 생성된다.
+
+    // 2 - Create meterial with just a diffuse color
+    let planeMaterial = SCNMaterial() //Material 생성
+    planeMaterial.diffuse.contents = "PokerDice.scnassets/Textures/Surface_DIFFUSE.png" //color
+    //Scene Editor로 설정하던 것을 코드로. 텍스처를 가져온다.
+    planeGeometry.materials = [planeMaterial] //지오메트리에 텍스처를 입힌다.
+
+    // 3 - Create plane node
+    let planeNode = SCNNode(geometry: planeGeometry) //지오메트리로 plane 노드 생성
+    planeNode.position = SCNVector3Make(planeAnchor.center.x, 0, planeAnchor.center.z)
+    //앵커의 중심점을 기준으로 평면 노드의 위치 설정
+    planeNode.transform = SCNMatrix4MakeRotation(-Float.pi / 2, 1, 0, 0)
+    //SCNPlane으로 생성된 지오메트리(Editor의 초록색 Plane)는 기본적으로 수직이다.
+    //따라서 평면으로 배치하려면 x축을 기준으로 시계 방향으로 90도 회전해야 한다.
+    //수직 앵커를 사용할 때는 이 줄을 생략할 수 있다.
     
-    func removeARPlaneNode(node: SCNNode) {
-        //여러 Plane이 겹치는 경우가 있다.
-        //이런 경우, ARKit은 감지된 여러 Plane을 여러 평면으로 병합할 수 있다.
-        for childNode in node.childNodes { //해당 노드의 자식 노드들을 loop로 돌아서
-            childNode.removeFromParentNode()
-            //자식 노드들을 삭제한다.
+    planeNode.physicsBody = createARPlanePhysics(geometry: planeGeometry) //물리 엔진 추가
+
+    return planeNode
+  }
+
+  func updateARPlaneNode(planeNode: SCNNode, planeAchor: ARPlaneAnchor) {
+    //기존의 plane 노드를 새로운 위치, 방향, 크기로 업데이트 하는 메서드
+
+    // 1 - Update plane geometry with planeAnchor details
+    let planeGeometry = planeNode.geometry as! SCNPlane //여기서는 수평 plane만 사용하므로
+    planeGeometry.width = CGFloat(planeAchor.extent.x) //앵커 너비로 가로 업데이트
+    planeGeometry.height = CGFloat(planeAchor.extent.z) //앵커 길이로 세로 업데이트
+
+    // 2 - Update plane position
+    planeNode.position = SCNVector3Make(planeAchor.center.x, 0, planeAchor.center.z)
+    //앵커 중앙의 위치로 plane 노드의 위치를 업데이트한다.
+    
+    planeNode.physicsBody = nil //plane이 업데이트 되면 해당 물리 엔진을 해제한 후
+    planeNode.physicsBody = createARPlanePhysics(geometry: planeGeometry) //새로 추가해 줘야 한다.
+  }
+
+  func removeARPlaneNode(node: SCNNode) {
+    //여러 Plane이 겹치는 경우가 있다.
+    //이런 경우, ARKit은 감지된 여러 Plane을 여러 평면으로 병합할 수 있다.
+    //이를 위해 하나의 평면을 남겨두고 나머지는 삭제한다.
+    for childNode in node.childNodes { //해당 노드의 자식 노드들을 loop로 돌아서
+      childNode.removeFromParentNode() //자식 노드들을 삭제한다.
+    }
+  }
+    
+    func updateDiceNodes() {
+        for node in sceneView.scene.rootNode.childNodes { //사용 가능한 모든 노드 loop
+            if node.name == "dice" { //노드의 이름이 "dice"인 경우
+                if node.presentation.position.y < -2 {
+                    //노드(dice)의 현재 y 위치가 지상보다 2미터 아래있다면
+                    node.removeFromParentNode() //주사위 제거
+                    diceCount += 1 //주사위 카운트를 증가 시켜 다시 굴릴 수 있도록 한다.
+                }
+            }
         }
     }
     
-    func updateFocusNode() {
-        let results = self.sceneView.hitTest(self.focusPoint, types: [.existingPlaneUsingExtent])
-        //해당 지점의 해당 타입의 실제 객체 또는 AR 앵커를 검색한다.
-        //hitTest는 레이 캐스트를 수행한다. 매개변수로 광선을 발사할 곳의 스크린 위치와 찾고자하는 대상 유형을 입력한다.
-        //.existingPlaneUsingExtent으로 plane 기반의 객체만 가져온다.
-        //.featurePoints, .estimatedHorizontalPlane, .existingPlane 등을 사용할 수 있다.
+    func createARPlanePhysics(geometry: SCNGeometry) -> SCNPhysicsBody {
+        //주사위가 표면을 감지할 수 있도록 하는 helper
+        let physicsBody = SCNPhysicsBody(
+            type: .kinematic,
+            shape: SCNPhysicsShape(geometry: geometry, options: nil))
+        //type과 shpae를 매개변수로 물리 엔진을 코드로 생성한다.
+        //여기서는 표면을 감지해야 하므로, plane 형태의 geometry가 와야 한다.
+        physicsBody.restitution = 0.5 //탄성
+        physicsBody.friction = 0.5 //저항
+        //속성을 설정해 준다.
         
-        if results.count == 1 { //검색된 결과가 하나라면
-            if let match = results.first { //해당 결과를 가져온다.
-                let t = match.worldTransform //위치, 방향, 크기 정보가 포함된 worldTransform를 사용한다.
-                
-                self.focusNode.position = SCNVector3(x: t.columns.3.x, y: t.columns.3.y, z: t.columns.3.z)
-                //변환 행렬을 기반으로 포커스 노드의 위치를 업데이트한다.
-                //위치정보는 변환 행렬의 세 번째 열에서 찾을 수 있다.
-                self.gameState = .swipeToPlay
+        return physicsBody
+    }
+    
+    func suspendARPlaneDetection() {
+        //Plane 감지를 일시 중단한다.
+        //플레이어가 게임을 시작한 후에는 다른 Plane을 계속해서 찾을 필요가 없다.
+        let config = sceneView.session.configuration as! ARWorldTrackingConfiguration
+        //현재 AR tracking configuration을 가져온다.
+        config.planeDetection = [] //빈 배열로 설정해서, 탐지할 표면을 지운다.
+        
+        sceneView.session.run(config) //변경한 설정으로 세션을 다시 시작한다.
+        //이후 plane 탐지를 위해 리소스를 소모하지 않을 것이다.
+    }
+    
+    func hideARPlaneNodes() {
+        //감지된 Plane을 보여 주는 것도 무의미하다.
+        for anchor in (self.sceneView.session.currentFrame?.anchors)! {
+            //현재 Scene에서 사용 가능한 모든 앵커를 가져온다.
+            if let node = self.sceneView.node(for: anchor) { //해당 앵커에 관련된 노드를 가져온다.
+                for child in node.childNodes { //노드의 자식 모드를 loop
+                    let material = child.geometry?.materials.first!
+                    //지금은 material을 하나만 사용하고 있으므로.
+                    material?.colorBufferWriteMask = [] //모든 색상 정보를 비활성화 해서 노드를 숨긴다.
+                }
             }
-        } else { //검색 결과가 없다면
-            self.gameState = .pointToSurface
-            //표면을 감지하도록 gameState를 설정해 준다.
+        }
+    }
+    
+    func startGame() {
+        DispatchQueue.main.async {
+            self.startButton.isHidden = true //시작 버튼 숨김
+            self.suspendARPlaneDetection() //AR Plane 탐지 중지
+            self.hideARPlaneNodes() //감지된 Plane 숨김
+            self.gameState = .pointToSurface //게임 상태 변환
+        }
+    }
+    
+    func resetARSession() {
+        //ARSession을 다시 시작한다. 게임을 리셋한 경우 주로 사용
+        let config = sceneView.session.configuration as! ARWorldTrackingConfiguration
+        //AR configuration을 가져온다.
+        config.planeDetection = .horizontal //plane 탐지를 다시 활성화 한다.
+        sceneView.session.run(config,
+                              options: [.resetTracking, .removeExistingAnchors])
+        //세션을 다시 시작.
+        //.resetTracking : ARKit을 다시 시작한다.
+        //.removeExistingAnchors : 이전에 감지된 모든 앵커를 지운다.
+    }
+    
+    func resetGame() {
+        DispatchQueue.main.async {
+            self.startButton.isHidden = false //시작 버튼 다시 보이게
+            self.resetARSession() //세션 다시 시작
+            self.gameState = .detectSurface //게임 상태 변환
         }
     }
 }
 
 extension ViewController : ARSCNViewDelegate {
-  //프로토콜 자체를 extension으로 관리해 주는 것이 좋다.
-  //관련 기능을 유지하면서 깨끗하게 분리해 낸다. 가독성을 높여준다.
-  
+
   // MARK: - SceneKit Management
-  
-  func renderer(_ renderer: SCNSceneRenderer,
-                updateAtTime time: TimeInterval) {
+
+  func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
     DispatchQueue.main.async {
-//      self.statusLabel.text = self.trackingStatus
-        self.updateStatus() //위의 코드 대체
-        self.updateFocusNode() //포커스 노드 업데이트
+      //self.statusLabel.text = self.trackingStatus
+      self.updateStatus() //상태 업데이트
+      self.updateFocusNode() //포커스 노드 업데이트
+      self.updateDiceNodes() //주사위 업데이트
     }
   }
-    
-  func updateStatus() {
-    switch gameState { //현재 게임 상태
-    case .detectSurface:
-        statusMessage = "Scan entire table surface...\nHit START when ready!"
-    case .pointToSurface:
-        statusMessage = "Point at designated surface first!"
-    case .swipeToPlay:
-        statusMessage = "Swipe UP to throw!\nTap on dice to collect it again."
-    }
-    
-    self.statusLabel.text = trackingStatus != "" ? "\(trackingStatus)" : "\(statusMessage)"
-    //statusLabel에 상태를 표기한다. 필요한 경우 기존 메시지에 추가.
-  }
-  
-  
+
   // MARK: - Session State Management
-  
-  func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
+
+  func session(_ session: ARSession,
+               cameraDidChangeTrackingState camera: ARCamera) {
     //세션이 실행되는 동안 외부 상태 및 이벤트에 따라 트래킹 상태를 변경될 수 있다.
     //세션 상태가 변경될 때 마다 해당 메서드가 트리거 된다. 따라서 상태를 모니터링하기 좋은 장소이다.
     switch camera.trackingState { //ARCamera의 상태로 Switch
     case .notAvailable: //ARSession을 추적할 수 없는 경우
-      trackingStatus = "Tacking:  Not available!"
+        trackingStatus = "Tacking:  Not available!"
     case .normal: //정상적인 상태
-      trackingStatus = "Tracking: All Good!"
+        trackingStatus = "Tracking: All Good!"
     case .limited(let reason): //ARSession을 추적할 수는 있지만, 제한적인 경우
-      switch reason {
-      case .excessiveMotion: //디바이스가 너무 빨리 움직여 정확한 정확한 이미지 위치를 트래킹 할 수 없는 경우
-        trackingStatus = "Tracking: Limited due to excessive motion!"
-      case .insufficientFeatures: //이미지 위치를 트래킹할 feature들이 충분하지 않은 경우
-        trackingStatus = "Tracking: Limited due to insufficient features!"
-      case .initializing: //세션이 트래킹 정보를 제공할 충분한 데이터를 아직 수집하지 못한 경우
-        //새로 세션 시작하거나 구성 변경 시 일시적으로 발생한다.
-        trackingStatus = "Tracking: Initializing..."
-      case .relocalizing: //세션이 중단된 이후 재개하려고 시도 중인 경우
-        trackingStatus = "Tracking: Relocalizing..."
-      }
+        switch reason {
+        case .excessiveMotion: //디바이스가 너무 빨리 움직여 정확한 정확한 이미지 위치를 트래킹 할 수 없는 경우
+            trackingStatus = "Tracking: Limited due to excessive motion!"
+        case .insufficientFeatures: //이미지 위치를 트래킹할 feature들이 충분하지 않은 경우
+            trackingStatus = "Tracking: Limited due to insufficient features!"
+        case .initializing: //세션이 트래킹 정보를 제공할 충분한 데이터를 아직 수집하지 못한 경우
+            //새로 세션 시작하거나 구성 변경 시 일시적으로 발생한다.
+            trackingStatus = "Tracking: Initializing..."
+        case .relocalizing: //세션이 중단된 이후 재개하려고 시도 중인 경우
+            trackingStatus = "Tracking: Relocalizing..."
+        }
     }
   }
-  
-  // MARK: - Session Error Management
-  
+
+  // MARK: - Session Error Managent
+
   func session(_ session: ARSession,
                didFailWithError error: Error) {
     //delegate에게 오류로 세션이 중지될 때 알려 준다.
-    trackingStatus = "AR Session Failure: \(error)"
+    self.trackingStatus = "AR Session Failure: \(error)"
   }
-  
+
   func sessionWasInterrupted(_ session: ARSession) {
     //세션이 중단 되기 전에 이 메서드가 먼저 트리거 된다. 여기서 필요한 일부 설정을 저장하고 오류 처리할 수 있다.
     //주로 앱이 백그라운드로 가거나, 많은 앱들이 실행 중인 경우 세션이 중단되는 경우가 발생한다.
-    trackingStatus = "AR Session Was Interrupted!"
+    self.trackingStatus = "AR Session Was Interrupted!"
   }
-  
+
   func sessionInterruptionEnded(_ session: ARSession) {
     //세션 재시작. 이전 interruption이 종료될 때 트리거 된다.
     //세션 트래킹을 재설정하여 모든 것이 정상적으로 다시 작동하는 지 확인하는 것이 좋다.
-    trackingStatus = "AR Session Interruption Ended"
+    self.trackingStatus = "AR Session Interruption Ended"
+    self.resetGame() //게임 재시작
   }
-  
+
   // MARK: - Plane Management
-  
-    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        //감지된 모든 표면(여기서는 수평)에 대한 AR anchor가 자동으로 추가될 때 호출된다.
-        //파라미터의 node는 세로운 SceneKit 노드로, ARAnchor 노드와 쌍을 이룬다.
-        guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
-        //여기서는 ARPlaneAnchor 노드만 사용하므로 이외의 타입에 대해서는 그대로 반환한다.
-        
-        DispatchQueue.main.async { //메인 스레드에서만 UI 업데이트 등의 시각적 요소를 만들 수 있다.
-            let planeNode = self.createARPlaneNode(planeAnchor: planeAnchor, color: UIColor.yellow.withAlphaComponent(0.5))
-            //앵커의 정보를 색상과 함께 전달해 plane 노드를 생성한다.
-            node.addChildNode(planeNode)
-            //해당 노드를 ARKit 노드의 하위 노드로 추가된다.
-        }
-    }
+
+  func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+    //감지된 모든 표면(여기서는 수평)에 대한 AR anchor가 자동으로 추가될 때 호출된다.
+    //파라미터의 node는 세로운 SceneKit 노드로, ARAnchor 노드와 쌍을 이룬다.
+    guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
+    //여기서는 ARPlaneAnchor 노드만 사용하므로 이외의 타입에 대해서는 그대로 반환한다.
     
-    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
-        //SceneKit 노드의 속성이 해당 앵커의 현제 상태와 일치하도록 업데이트해야 하는 경우 호출된다.
-        //이전에 감지된 표면을 새 정보로 업데이트해야 할 경우 트리거 된다.
-        //여기서 node는 이전에 추가한 기존 plane 노드이다.
-        guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
-        //여기서는 ARPlaneAnchor 노드만 사용하므로 이외의 타입에 대해서는 그대로 반환한다.
-        
-        DispatchQueue.main.async { //메인 스레드에서만 UI 업데이트 등의 시각적 요소를 만들 수 있다.
-            self.updateARPlaneNode(planeNode: node.childNodes[0], planeAchor: planeAnchor)
-            //앵커 정보를 첫 번째 자식 노드와 함께 전달한다.
-        }
+    DispatchQueue.main.async { //메인 스레드에서만 UI 업데이트 등의 시각적 요소를 만들 수 있다.
+      let planeNode = self.createARPlaneNode(planeAnchor: planeAnchor,
+                                             color: UIColor.yellow.withAlphaComponent(0.5))
+      //앵커의 정보를 색상과 함께 전달해 plane 노드를 생성한다.
+      node.addChildNode(planeNode) //해당 노드를 ARKit 노드의 하위 노드로 추가된다.
     }
+  }
+
+  func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
+    //SceneKit 노드의 속성이 해당 앵커의 현제 상태와 일치하도록 업데이트해야 하는 경우 호출된다.
+    //이전에 감지된 표면을 새 정보로 업데이트해야 할 경우 트리거 된다.
+    //여기서 node는 이전에 추가한 기존 plane 노드이다.
+    guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
+    //여기서는 ARPlaneAnchor 노드만 사용하므로 이외의 타입에 대해서는 그대로 반환한다.
     
-    func renderer(_ renderer: SCNSceneRenderer, didRemove node: SCNNode, for anchor: ARAnchor) {
-        //노드가 제거되었을 때 트리거 된다.
-        guard anchor is ARPlaneAnchor else { return }
-        
-        DispatchQueue.main.async {
-            self.removeARPlaneNode(node: node) //노드를 삭제한다.
-        }
+    DispatchQueue.main.async { //메인 스레드에서만 UI 업데이트 등의 시각적 요소를 만들 수 있다.
+      self.updateARPlaneNode(
+        planeNode: node.childNodes[0],
+        planeAchor: planeAnchor)
+        //앵커 정보를 첫 번째 자식 노드와 함께 전달한다.
     }
+  }
+
+  func renderer(_ renderer: SCNSceneRenderer, didRemove node: SCNNode, for anchor: ARAnchor) {
+    //노드가 제거되었을 때 트리거 된다.
+    guard anchor is ARPlaneAnchor else { return }
+    
+    DispatchQueue.main.async {
+      self.removeARPlaneNode(node: node) //노드를 삭제한다.
+    }
+  }
 }
 
 //A9 이상의 프로세서가 있는 실제 장치를 사용해야 한다.
@@ -592,8 +751,30 @@ extension ViewController : ARSCNViewDelegate {
 
 
 
-//Ray casting
-//레이 캐스팅은 3D 물체와의 교차점을 찾고 있는 동안, 화면 중심(초점)에서 가상 Scene로 광선을 만들어 낸다. p.107
-//광성이 평면과 교차하면 해당 교차 위치에 포커스 노드를 배치하면 된다.
+//SceneKit의 물리엔진을 이용하여 더욱 사실감 있는 AR을 만들 수 있다.
 
+//The physics body
+//SceneKit에 내장된 물리 엔진을 사용하려면 SCNode에 SCNPhysicsBody를 연결해야 한다.
+//SCNPhysicsBody에는 세 가지 유형이 있다.
+//• A static body : 벽과 같은 정적. 다른 물리 구조체는 static body 구조체와 상호작용하고 영향을 받지만,
+//  static body는 영향을 받지 않고 항상 정적인 위치에 있게 된다.
+//• A dynamic body : 물리 엔진에 의해 제어된다. 다른 구조체와 상호 작용한다. ex. 공, 주사위
+//• A kinematic body : 물리 엔진에 의해 제어되지 않고, 프로그래밍 방식으로 제어한다.
+
+//The physics shape
+//피라미드, 상자, 구, 원통, 원뿔, 도넛, 캡슐, 튜브와 같은 기하학적 모양을 정의한다. p.113
+
+//Other physical proper1es
+//질량, 마찰, 탄성 등의 속성을 정의할 수 있다. p.114
+
+//Adding physics
+//Scenen Editor의 Physics Inspector 탭에서 물리 엔진을 적용할 수 있다.
+//완벽한 물리적 특성을 구현할 필요 없다(복잡해 지며 오히려 너무 현실적이라 사용하기 불편해 진다). 적당히!
+//각 속성에 대한 정의는 p.116
+
+
+
+
+//Lights and shadows
+//Scene Editor에서 광원을 추가하고 그림자를 설정할 수 있다. p.123
 

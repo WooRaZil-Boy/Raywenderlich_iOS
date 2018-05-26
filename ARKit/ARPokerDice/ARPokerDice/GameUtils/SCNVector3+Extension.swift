@@ -254,6 +254,4 @@ prefix func -(v: SCNVector3) -> SCNVector3 {
   return v * -1
 }
 
-//벡터를 사용하여 SCNVector3 유형을 확장. 벡터의 합, 곱, 차, 길이, 거리, 각도 등을 계산할 수 있다.
-
 

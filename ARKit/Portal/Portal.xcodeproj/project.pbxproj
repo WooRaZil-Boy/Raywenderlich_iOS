@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		932242871FD7958600F97F5D /* SCNNodeHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932242861FD7958600F97F5D /* SCNNodeHelpers.swift */; };
 		93935D631FD4C6ED0040A6A8 /* RWLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93935D621FD4C6ED0040A6A8 /* RWLabel.swift */; };
 		93C2FC241F91690C003C03F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C2FC231F91690C003C03F5 /* AppDelegate.swift */; };
 		93C2FC261F91690C003C03F5 /* PortalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C2FC251F91690C003C03F5 /* PortalViewController.swift */; };
@@ -16,10 +17,10 @@
 		93C2FC361F925494003C03F5 /* SCNVector3Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C2FC351F925494003C03F5 /* SCNVector3Extension.swift */; };
 		93C2FC651F94273E003C03F5 /* FloatingPointExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C2FC641F94273E003C03F5 /* FloatingPointExtension.swift */; };
 		93C2FC691F942E23003C03F5 /* Assets.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 93C2FC681F942E23003C03F5 /* Assets.scnassets */; };
-		EF9DC7D820B9F60200D95B34 /* SCNNodeHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9DC7D720B9F60200D95B34 /* SCNNodeHelpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		932242861FD7958600F97F5D /* SCNNodeHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNNodeHelpers.swift; sourceTree = "<group>"; };
 		93935D621FD4C6ED0040A6A8 /* RWLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWLabel.swift; sourceTree = "<group>"; };
 		93C2FC201F91690C003C03F5 /* Portal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Portal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93C2FC231F91690C003C03F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -31,7 +32,6 @@
 		93C2FC351F925494003C03F5 /* SCNVector3Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNVector3Extension.swift; sourceTree = "<group>"; };
 		93C2FC641F94273E003C03F5 /* FloatingPointExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPointExtension.swift; sourceTree = "<group>"; };
 		93C2FC681F942E23003C03F5 /* Assets.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = Assets.scnassets; sourceTree = "<group>"; };
-		EF9DC7D720B9F60200D95B34 /* SCNNodeHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCNNodeHelpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,10 +48,10 @@
 		93935D611FD4C6B40040A6A8 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				EF9DC7D720B9F60200D95B34 /* SCNNodeHelpers.swift */,
 				93C2FC351F925494003C03F5 /* SCNVector3Extension.swift */,
 				93C2FC641F94273E003C03F5 /* FloatingPointExtension.swift */,
 				93935D621FD4C6ED0040A6A8 /* RWLabel.swift */,
+				932242861FD7958600F97F5D /* SCNNodeHelpers.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -164,7 +164,7 @@
 			files = (
 				93C2FC261F91690C003C03F5 /* PortalViewController.swift in Sources */,
 				93C2FC361F925494003C03F5 /* SCNVector3Extension.swift in Sources */,
-				EF9DC7D820B9F60200D95B34 /* SCNNodeHelpers.swift in Sources */,
+				932242871FD7958600F97F5D /* SCNNodeHelpers.swift in Sources */,
 				93C2FC651F94273E003C03F5 /* FloatingPointExtension.swift in Sources */,
 				93C2FC241F91690C003C03F5 /* AppDelegate.swift in Sources */,
 				93935D631FD4C6ED0040A6A8 /* RWLabel.swift in Sources */,

@@ -46,9 +46,14 @@ class PortalViewController: UIViewController {
   var debugPlanes: [SCNNode] = [] //디버그 모드에서 렌더링된 모든 plane을 저장하는 배열
   var viewCenter: CGPoint { //뷰의 가운데 지점
     let viewBounds = view.bounds
-    
     return CGPoint(x: viewBounds.width / 2.0, y: viewBounds.height / 2.0)
   }
+  
+  let POSITION_Y: CGFloat = -WALL_HEIGHT*0.5 //Y차원 노드에 대한 위치 오프셋
+  let POSITION_Z: CGFloat = -SURFACE_LENGTH*0.5 //Z차원 노드에 대한 위치 오프셋
+  
+  let DOOR_WIDTH:CGFloat = 1.0 //출입구 너비
+  let DOOR_HEIGHT:CGFloat = 2.4 //출입구 높이
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -70,7 +75,8 @@ class PortalViewController: UIViewController {
     configuration.isLightEstimationEnabled = true //조명 추적 계산 사용
     //가상 콘텐츠를 더 사실적으로 보이게 한다.
 
-    sceneView?.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+    sceneView?.session.run(configuration,
+                           options: [.resetTracking, .removeExistingAnchors])
     //해당 구성과 옵션으로 세션 시작
     //sceneView에 표시되는 카메라에서 ARKit세션과 비디오 캡쳐가 시작된다.
     
@@ -115,7 +121,6 @@ class PortalViewController: UIViewController {
     for debugPlaneNode in self.debugPlanes {
       debugPlaneNode.removeFromParentNode()
     }
-    
     self.debugPlanes = []
   }
   
@@ -137,14 +142,94 @@ class PortalViewController: UIViewController {
   
   func makePortal() -> SCNNode {
     let portal = SCNNode() //SCNNode 생성
-    let box = SCNBox(width: 1.0, height: 1.0, length: 1.0, chamferRadius: 0)
-    //SCNBox로 큐브 지오메트리(Scene Editor 에서 녹색 객체) 생성
-    let boxNode = SCNNode(geometry: box) //지오메트리로 객체 생성
     
-    portal.addChildNode(boxNode) //포탈의 하위 노드에 큐브 박스 추가
+    //Dummy
+//    let box = SCNBox(width: 1.0,
+//                     height: 1.0,
+//                     length: 1.0,
+//                     chamferRadius: 0)
+//    //SCNBox로 큐브 지오메트리(Scene Editor 에서 녹색 객체) 생성
+//    let boxNode = SCNNode(geometry: box) //지오메트리로 객체 생성
+//    portal.addChildNode(boxNode) //포탈의 하위 노드에 큐브 박스 추가
+    
+    let floorNode = makeFloorNode() //floor 노드 작성
+    floorNode.position = SCNVector3(0, POSITION_Y, POSITION_Z) //위치설정
+    //노드의 부모 좌표에서 해당 좌표로 설정된다.
+    portal.addChildNode(floorNode) //포탈의 하위 노드에 floor 노드 추가
+    
+    let ceilingNode = makeCeilingNode() //ceiling 노드 작성
+    ceilingNode.position = SCNVector3(0, POSITION_Y+WALL_HEIGHT, POSITION_Z)
+    portal.addChildNode(ceilingNode)
+    
+    let farWallNode = makeWallNode() //farWall 노드 작성
+    farWallNode.eulerAngles = SCNVector3(0, 90.0.degreesToRadians, 0)
+    //eulerAngles으로 방향을 설정한다. Y축을 따라 회전하고 카메라에 수직이기 때문에 90도 회전을 한다.
+    farWallNode.position = SCNVector3(0, POSITION_Y+WALL_HEIGHT*0.5, POSITION_Z-SURFACE_LENGTH*0.5)
+    //위치 설정
+    portal.addChildNode(farWallNode)
+    
+    let rightSideWallNode = makeWallNode(maskLowerSide: true) //maskLowerSide true로 외부 벽 하단에 배치
+    rightSideWallNode.eulerAngles = SCNVector3(0, 180.0.degreesToRadians, 0)
+    //eulerAngles으로 방향을 설정한다. 180도 회전. 벽은 내부면이 오른쪽 방향을 향한다.
+    rightSideWallNode.position = SCNVector3(WALL_LENGTH*0.5, POSITION_Y+WALL_HEIGHT*0.5, POSITION_Z)
+    portal.addChildNode(rightSideWallNode)
+    
+    let leftSideWallNode = makeWallNode(maskLowerSide: true) //maskLowerSide true로 외부 벽 하단에 배치
+    //회전이 따로 적용되지 않는다.
+    leftSideWallNode.position = SCNVector3(-WALL_LENGTH*0.5, POSITION_Y+WALL_HEIGHT*0.5, POSITION_Z)
+    portal.addChildNode(leftSideWallNode)
+    
+    addDoorway(node: portal)
+    placeLightSource(rootNode: portal)
     
     return portal
   }
+  
+  func addDoorway(node: SCNNode) {
+    let halfWallLength: CGFloat = WALL_LENGTH * 0.5
+    let frontHalfWallLength: CGFloat = (WALL_LENGTH - DOOR_WIDTH) * 0.5
+    //문 양쪽에 붙어 있을 벽의 너비 정의
+    
+    let rightDoorSideNode = makeWallNode(length: frontHalfWallLength)
+    rightDoorSideNode.eulerAngles = SCNVector3(0, 270.0.degreesToRadians, 0)
+    rightDoorSideNode.position = SCNVector3(halfWallLength - 0.5 * DOOR_WIDTH,
+                                            POSITION_Y+WALL_HEIGHT*0.5,
+                                            POSITION_Z+SURFACE_LENGTH*0.5)
+    //입구 오른쪽의 문 생성
+    node.addChildNode(rightDoorSideNode)
+    
+    let leftDoorSideNode = makeWallNode(length: frontHalfWallLength)
+    leftDoorSideNode.eulerAngles = SCNVector3(0, 270.0.degreesToRadians, 0)
+    leftDoorSideNode.position = SCNVector3(-halfWallLength + 0.5 * frontHalfWallLength,
+                                           POSITION_Y+WALL_HEIGHT*0.5,
+                                           POSITION_Z+SURFACE_LENGTH*0.5)
+    //입구 왼쪽의 문 생성
+    node.addChildNode(leftDoorSideNode)
+    
+    let aboveDoorNode = makeWallNode(length: DOOR_WIDTH, height: WALL_HEIGHT - DOOR_HEIGHT)
+    //문 위쪽의 벽 생성
+    aboveDoorNode.eulerAngles = SCNVector3(0, 270.0.degreesToRadians, 0)
+    aboveDoorNode.position = SCNVector3(0,
+                                        POSITION_Y+(WALL_HEIGHT-DOOR_HEIGHT)*0.5+DOOR_HEIGHT,
+                                        POSITION_Z+SURFACE_LENGTH*0.5)
+    node.addChildNode(aboveDoorNode)
+  }
+  
+  func placeLightSource(rootNode: SCNNode) {
+    //광원을 추가한다.
+    let light = SCNLight() //광원 생성
+    light.intensity = 10 //강도
+    light.type = .omni //광원의 유형. 전 방향(잠 광원)
+    
+    let lightNode = SCNNode() //광원 노드 생성
+    lightNode.light = light //광원 연결
+    lightNode.position = SCNVector3(0,
+                                    POSITION_Y+WALL_HEIGHT,
+                                    POSITION_Z)
+    //천장 중앙
+    rootNode.addChildNode(lightNode)
+  }
+  
 }
 
 extension PortalViewController: ARSCNViewDelegate {
@@ -168,21 +253,19 @@ extension PortalViewController: ARSCNViewDelegate {
             extent: planeAnchor.extent)
           //ARKit에 의해 감지된 planeAnchor의 중심 좌표와 범위 좌표를 전달하여 SCNNode 객체를 생성한다.
           node.addChildNode(debugPlaneNode)
-          //노드 객체는 ARSCNView에서 Scene에 자동으로 추가되는 빈 SCNNode이다(좌표는 앵커와 동일).
-          //debugPlaneNode를 자식 노드로 추가한다.
+        //노드 객체는 ARSCNView에서 Scene에 자동으로 추가되는 빈 SCNNode이다(좌표는 앵커와 동일).
+        //debugPlaneNode를 자식 노드로 추가한다.
           self.debugPlanes.append(debugPlaneNode) //새롭게 감지한 plane을 해당 배열에 추가한다.
         #endif
         self.messageLabel?.alpha = 1.0
-        self.messageLabel?.text = """
-        Tap on the detected \
-        horizontal plane to place the portal
-        """
+        self.messageLabel?.text = "Tap on the detected horizontal plane to place the portal"
         //메시지 업데이트
-      } else if !self.isPortalPlaced {
+      }
+      else if !self.isPortalPlaced {
         //추가된 앵커가 ARPlaneAnchor가 아니고 포털 노드가 아직 배치되지 않은 경우
         //사용자가 포털을 생성하기 위해 화면을 터치하는 경우이다.
-        self.portalNode = self.makePortal() //포탈 생성
         
+        self.portalNode = self.makePortal() //포탈 생성
         if let portal = self.portalNode {
           node.addChildNode(portal) //포탈을 해당 노드의 자식 노드로 추가하고
           self.isPortalPlaced = true //포탈 생생 flag를 true로 바꾼다.
@@ -196,10 +279,11 @@ extension PortalViewController: ARSCNViewDelegate {
             self.messageLabel?.alpha = 0
           }
         }
+        
       }
     }
   }
- 
+  
   func renderer(_ renderer: SCNSceneRenderer,
                 didUpdate node: SCNNode,
                 for anchor: ARAnchor) {
@@ -207,7 +291,8 @@ extension PortalViewController: ARSCNViewDelegate {
     //해당 ARAnchor가 업데이트 될 때 delegate에서 콜백 메서드를 받는다.
     DispatchQueue.main.async { //UI업데이트는 메인 스레드에서 실행되야 한다.
       if let planeAnchor = anchor as? ARPlaneAnchor,
-        node.childNodes.count > 0, !self.isPortalPlaced  {
+        node.childNodes.count > 0,
+        !self.isPortalPlaced {
         //ARAnchor가 ARPlaneAnchor인지 확인하고, Plane의 SCNNode에 해당하는 하나 이상의 하위 노드가 있는 지 확인
         //포탈이 생성되지 않은 경우에만 plane을 업데이트 한다.
         updatePlaneNode(node.childNodes[0],
@@ -218,11 +303,13 @@ extension PortalViewController: ARSCNViewDelegate {
     }
   }
   
-  func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+  func renderer(_ renderer: SCNSceneRenderer,
+                updateAtTime time: TimeInterval) {
     //렌더링 동안 다양한 시간에 작업을 수행하는데 사용한다.
     //이 메서드는 프레임 당 정확히 한 번 호출되며 모든 프레임 별 논리를 수행하는 데 사용한다.
     DispatchQueue.main.async { //메인 스레드에서 UI업데이트를 수행해야 한다.
-      if let _ = self.sceneView?.hitTest(self.viewCenter, types: [.existingPlaneUsingExtent]).first {
+      if let _ = self.sceneView?.hitTest(self.viewCenter,
+                                         types: [.existingPlaneUsingExtent]).first {
         //뷰 중심에서 히트 테스트를 수행해 선상에 겹치는 plane의 좌표를 추출한다.
         self.crosshair.backgroundColor = UIColor.green //감지한 결과가 있다면 녹색으로 표기
       } else {
@@ -237,34 +324,30 @@ extension PortalViewController: ARSCNViewDelegate {
   func session(_ session: ARSession, didFailWithError error: Error) {
     //세션이 실패할 때 호출된다. 실패 시 세션이 일시 중지되고, 센서 데이터를 수신하지 않는다.
     guard let label = self.sessionStateLabel else { return } //sessionStateLabel 존재 여부 확인
-    
-    showMessage(error.localizedDescription, label: label, seconds: 3)
-    //해당 시간만큼 메시지 출력
+    showMessage(error.localizedDescription, label: label, seconds: 3) //해당 시간만큼 메시지 출력
   }
   
   func sessionWasInterrupted(_ session: ARSession) {
     //세션이 인터럽트될 때 호출. 즉, 앱이 백그라운드로 이동하여 비디오 캡쳐가 중단될 때 호출된다.
     //인터럽트 상태가 끝날 때까지 추가 프레임 업데이트가 전달되지 않는다.
     guard let label = self.sessionStateLabel else { return }
-    
     showMessage("Session interrupted", label: label, seconds: 3)
   }
-  
+
   func sessionInterruptionEnded(_ session: ARSession) {
     //세션 인터럽트가 종료된 후 호출. 인터럽트가 종료되면, 세션은 마지막으로 알려진 상태에서 계속 실행된다.
     //따라서 앵커가 제대로 업데이트 되지 않는데, 그렇기 때문에 세션을 다시 시작해 줘야 한다.
     guard let label = self.sessionStateLabel else { return }
-    
     showMessage("Session resumed", label: label, seconds: 3)
     
     DispatchQueue.main.async { //UI관련 업데이트는 메인 스레드에서 호출되어야 한다.
       self.removeAllNodes() //이전에 렌더링된 객체를 제거
       self.resetLabels() //레이블 재 설정
     }
-    
     runSession() //세션 다시 시작. 구성을 재설정하고 새로운 구성으로 트래킹을 다시 시작한다.
     //즉, 이전 세션에서 감지한 앵커와 plane 객체가 모두 삭제되면서 새 세션을 실행한다.
   }
+  
 }
 
 //ARKit은 모든 센서 및 카메라 데이터를 처리하지만, 가상 콘텐츠는 실제로 렌더링하지 않는다.
@@ -275,6 +358,22 @@ extension PortalViewController: ARSCNViewDelegate {
 
 
 
+//The SceneKit coordinate system
+//SceneKit을 사용하여 가상 3D 객체를 뷰에 추가할 수 있다. Scene는 좌표 공간을 정의하는 루트 노드와
+//실제 객체를 표현하는 다른 노드들로 구성된다. 이때 노드는 SCNNode 타입이며, SCNNode 객체는 부모 노드를 기준으로
+//좌표 공간의 변환(위치, 방향 및 크기 조절)을 정의한다. Scene의 rootNode 객체는 SceneKit에 의해 렌더링 된 세계의
+//좌표계를 정의한다. 이 루트 노드에 추가하는 각 자식 노드는 자체 좌표계를 만들고 차례대로 자체 자식에 상속된다.
+
+//SceneKit은 오른손 좌표계를 사용한다. p.163
+//SCNNode 객체의 위치는 SCNNode 객체를 부모의 좌표계 내에서 찾은 SCNVector3로 정의된다.
+//기본 위치는 노드가 상위 노드의 좌표 시스템의 원점에 놓여 있음을 나타내는 0 벡터이다.
+//SCNVector3은 각 구성 요소가 각 축의 좌표를 나타내는 Float 값인 3 개의 구성 요소 벡터이다.
+//SCNNode 객체의 방향은 pitch, yaw, roll 각도로 표시되며 eulerAngles 속성에 의해 정의된다. p.60 참고
 
 
 
+
+//Textures
+//SCNNode 자체는 표시되는 내용이 없다. SCNGeometry를 노드에 첨부하여 2D 혹은 3D 객체를 Scene에 추가한다.
+//Geometry에는 형태를 결정하는 SCNMaterial 객체가 있다.
+//SceneKit Asset catalog는 코드와 별도로 프로젝트 Asset을 관리한다.

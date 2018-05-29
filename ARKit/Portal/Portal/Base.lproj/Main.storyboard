@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -41,34 +41,34 @@
                                 <color key="textColor" red="0.33134185109315417" green="0.19777470780038203" blue="0.92935490610000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NTI-b1-Z0l" userLabel="Crosshair">
-                                <rect key="frame" x="182" y="328" width="10" height="10"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8W2-Uu-bQu" userLabel="Crosshair">
+                                <rect key="frame" x="182.5" y="328.5" width="10" height="10"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="10" id="3KP-Y6-lG0"/>
-                                    <constraint firstAttribute="height" constant="10" id="mxZ-Vt-kCR"/>
+                                    <constraint firstAttribute="width" constant="10" id="4Ok-0c-84F"/>
+                                    <constraint firstAttribute="height" constant="10" id="H1i-3K-2JT"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="NTI-b1-Z0l" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="ABQ-fy-5Ar"/>
                             <constraint firstAttribute="centerX" secondItem="qfc-IZ-0Kp" secondAttribute="centerX" id="Q4l-Cq-Zyh"/>
                             <constraint firstItem="phc-ZZ-K4Q" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="Qa5-UY-yt1"/>
+                            <constraint firstItem="8W2-Uu-bQu" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="ZQD-cQ-4Yg"/>
                             <constraint firstItem="phc-ZZ-K4Q" firstAttribute="trailing" secondItem="Nli-Iz-uAM" secondAttribute="trailing" id="bUU-yh-ecU"/>
                             <constraint firstItem="qfc-IZ-0Kp" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="bvQ-jK-oeQ"/>
                             <constraint firstAttribute="bottom" secondItem="Nli-Iz-uAM" secondAttribute="bottom" constant="20" symbolic="YES" id="dfe-wf-gIR"/>
                             <constraint firstItem="phc-ZZ-K4Q" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="38" id="fEe-FL-7l0"/>
-                            <constraint firstItem="NTI-b1-Z0l" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="g3E-zG-1bA"/>
                             <constraint firstItem="qfc-IZ-0Kp" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="iXU-f1-rME"/>
                             <constraint firstItem="qfc-IZ-0Kp" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="pPm-d5-1AA"/>
                             <constraint firstItem="phc-ZZ-K4Q" firstAttribute="leading" secondItem="Nli-Iz-uAM" secondAttribute="leading" id="tjd-W1-0K1"/>
+                            <constraint firstItem="8W2-Uu-bQu" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="wwN-8l-gUS"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="phc-ZZ-K4Q" secondAttribute="trailing" constant="38" id="z8n-xg-t06"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="crosshair" destination="NTI-b1-Z0l" id="Ga1-9s-Fx7"/>
+                        <outlet property="crosshair" destination="8W2-Uu-bQu" id="8ZE-z8-W2k"/>
                         <outlet property="messageLabel" destination="phc-ZZ-K4Q" id="s84-Hk-kDN"/>
                         <outlet property="sceneView" destination="qfc-IZ-0Kp" id="yxv-OT-tGe"/>
                         <outlet property="sessionStateLabel" destination="Nli-Iz-uAM" id="85z-D0-5TH"/>

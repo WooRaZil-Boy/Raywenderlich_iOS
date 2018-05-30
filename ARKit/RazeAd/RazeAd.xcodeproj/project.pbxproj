@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		572EF60E1F92BC60009D75C7 /* RectangularPlane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572EF60D1F92BC60009D75C7 /* RectangularPlane.swift */; };
+		577395AF1FE67FAA00BD3C5A /* BillboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577395AC1FE67FAA00BD3C5A /* BillboardViewController.swift */; };
 		57BB835B1F8910DB00D14A14 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BB835A1F8910DB00D14A14 /* AppDelegate.swift */; };
 		57BB835F1F8910DB00D14A14 /* AdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BB835E1F8910DB00D14A14 /* AdViewController.swift */; };
 		57BB83621F8910DB00D14A14 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57BB83601F8910DB00D14A14 /* Main.storyboard */; };
@@ -15,13 +16,15 @@
 		57BB83671F8910DB00D14A14 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57BB83651F8910DB00D14A14 /* LaunchScreen.storyboard */; };
 		57CDBE0E1FD0D78D00D00F45 /* BillboardContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CDBE0D1FD0D78D00D00F45 /* BillboardContainer.swift */; };
 		57D546DE1FE576600098AC47 /* TargetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D546DD1FE576600098AC47 /* TargetView.swift */; };
-		EF05A64E20BE894D003D5803 /* BillboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF05A64B20BE894D003D5803 /* BillboardView.swift */; };
-		EF05A64F20BE894D003D5803 /* BillboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF05A64C20BE894D003D5803 /* BillboardViewController.swift */; };
-		EF05A65020BE894D003D5803 /* BillboardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF05A64D20BE894D003D5803 /* BillboardViewController.xib */; };
+		EF65F9F520BED6490073C9BA /* Billboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF65F9F420BED6490073C9BA /* Billboard.storyboard */; };
+		EF65F9FA20BED6810073C9BA /* VideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF65F9F720BED6810073C9BA /* VideoCell.swift */; };
+		EF65F9FB20BED6810073C9BA /* WebBrowserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF65F9F820BED6810073C9BA /* WebBrowserCell.swift */; };
+		EF65F9FC20BED6810073C9BA /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF65F9F920BED6810073C9BA /* ImageCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		572EF60D1F92BC60009D75C7 /* RectangularPlane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangularPlane.swift; sourceTree = "<group>"; };
+		577395AC1FE67FAA00BD3C5A /* BillboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BillboardViewController.swift; sourceTree = "<group>"; };
 		57BB83571F8910DB00D14A14 /* RazeAd.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RazeAd.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57BB835A1F8910DB00D14A14 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		57BB835E1F8910DB00D14A14 /* AdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdViewController.swift; sourceTree = "<group>"; };
@@ -31,9 +34,10 @@
 		57BB83681F8910DB00D14A14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		57CDBE0D1FD0D78D00D00F45 /* BillboardContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillboardContainer.swift; sourceTree = "<group>"; };
 		57D546DD1FE576600098AC47 /* TargetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetView.swift; sourceTree = "<group>"; };
-		EF05A64B20BE894D003D5803 /* BillboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BillboardView.swift; sourceTree = "<group>"; };
-		EF05A64C20BE894D003D5803 /* BillboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BillboardViewController.swift; sourceTree = "<group>"; };
-		EF05A64D20BE894D003D5803 /* BillboardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BillboardViewController.xib; sourceTree = "<group>"; };
+		EF65F9F420BED6490073C9BA /* Billboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Billboard.storyboard; sourceTree = "<group>"; };
+		EF65F9F720BED6810073C9BA /* VideoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCell.swift; sourceTree = "<group>"; };
+		EF65F9F820BED6810073C9BA /* WebBrowserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebBrowserCell.swift; sourceTree = "<group>"; };
+		EF65F9F920BED6810073C9BA /* ImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,9 +54,9 @@
 		571390EC1F93C4EA00A6CDB0 /* ui */ = {
 			isa = PBXGroup;
 			children = (
-				EF05A64B20BE894D003D5803 /* BillboardView.swift */,
-				EF05A64C20BE894D003D5803 /* BillboardViewController.swift */,
-				EF05A64D20BE894D003D5803 /* BillboardViewController.xib */,
+				EF65F9F620BED6810073C9BA /* cells */,
+				EF65F9F420BED6490073C9BA /* Billboard.storyboard */,
+				577395AC1FE67FAA00BD3C5A /* BillboardViewController.swift */,
 				57BB83651F8910DB00D14A14 /* LaunchScreen.storyboard */,
 				57BB83601F8910DB00D14A14 /* Main.storyboard */,
 				57BB835E1F8910DB00D14A14 /* AdViewController.swift */,
@@ -112,6 +116,16 @@
 				571390EC1F93C4EA00A6CDB0 /* ui */,
 			);
 			path = RazeAd;
+			sourceTree = "<group>";
+		};
+		EF65F9F620BED6810073C9BA /* cells */ = {
+			isa = PBXGroup;
+			children = (
+				EF65F9F720BED6810073C9BA /* VideoCell.swift */,
+				EF65F9F820BED6810073C9BA /* WebBrowserCell.swift */,
+				EF65F9F920BED6810073C9BA /* ImageCell.swift */,
+			);
+			path = cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,7 +190,7 @@
 			files = (
 				57BB83671F8910DB00D14A14 /* LaunchScreen.storyboard in Resources */,
 				57BB83641F8910DB00D14A14 /* Assets.xcassets in Resources */,
-				EF05A65020BE894D003D5803 /* BillboardViewController.xib in Resources */,
+				EF65F9F520BED6490073C9BA /* Billboard.storyboard in Resources */,
 				57BB83621F8910DB00D14A14 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -188,12 +202,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				577395AF1FE67FAA00BD3C5A /* BillboardViewController.swift in Sources */,
+				EF65F9FB20BED6810073C9BA /* WebBrowserCell.swift in Sources */,
+				EF65F9FC20BED6810073C9BA /* ImageCell.swift in Sources */,
+				EF65F9FA20BED6810073C9BA /* VideoCell.swift in Sources */,
 				57CDBE0E1FD0D78D00D00F45 /* BillboardContainer.swift in Sources */,
 				57BB835F1F8910DB00D14A14 /* AdViewController.swift in Sources */,
-				EF05A64E20BE894D003D5803 /* BillboardView.swift in Sources */,
 				572EF60E1F92BC60009D75C7 /* RectangularPlane.swift in Sources */,
 				57D546DE1FE576600098AC47 /* TargetView.swift in Sources */,
-				EF05A64F20BE894D003D5803 /* BillboardViewController.swift in Sources */,
 				57BB835B1F8910DB00D14A14 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -337,7 +353,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = YMFKFKP9AX;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = RazeAd/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.RazeAd;
@@ -355,7 +371,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = YMFKFKP9AX;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = RazeAd/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.RazeAd;

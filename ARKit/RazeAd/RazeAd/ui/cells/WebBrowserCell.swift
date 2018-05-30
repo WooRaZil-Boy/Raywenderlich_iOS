@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018 Razeware LLC
+ * Copyright (c) 2017 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,39 +28,14 @@
  * THE SOFTWARE.
  */
 
-import ARKit
-import SceneKit
+import UIKit
 
-protocol VideoPlayerDelegate: class { //비디오 플레이어 delegate
-    func didStartPlay() //시작
-    func didEndPlay() //종료
-}
+class WebBrowserCell: UICollectionViewCell {
+  @IBOutlet weak var webBrowser: UIWebView!
 
-protocol VideoNodeHandler: class {
-    func createNode() -> SCNNode? //비디오 플레이어에 새로운 SCNNode가 필요할 때 adViewController에 의해 호출된다.
-    func removeNode() //노드를 제거해야 할 때 호출된다.
-}
-
-class BillboardContainer {
-  var billboardAnchor: ARAnchor
-  var billboardNode: SCNNode?
-  var videoAnchor: ARAnchor?
-  var videoNode: SCNNode?
-  var plane: RectangularPlane
-  var isFullScreen = false
-  var viewController: BillboardViewController?
-
-  var hasBillboardNode: Bool { return billboardNode != nil }
-  var hasVideoNode: Bool { return videoNode != nil }
-    
-  weak var videoNodeHandler: VideoNodeHandler?
-  weak var videoPlayerDelegate: VideoPlayerDelegate? //비디오 플레이어 delegate
-
-  init(billboardAnchor: ARAnchor, plane: RectangularPlane) {
-    self.billboardAnchor = billboardAnchor
-    self.plane = plane
-    self.billboardNode = nil
-    self.videoAnchor = nil
-    self.videoNode = nil
+  func go(to urlString: String) {
+    guard let url = URL(string: urlString) else { return }
+    let request = URLRequest(url: url)
+    webBrowser.loadRequest(request)
   }
 }

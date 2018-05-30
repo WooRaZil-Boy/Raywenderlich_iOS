@@ -38,37 +38,37 @@ import Vision //Vison Framework
 class AdViewController: UIViewController {
   @IBOutlet var sceneView: ARSCNView!
   weak var targetView: TargetView!
-  
+
   private var billboard: BillboardContainer?
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+
     // Set the view's delegate
     sceneView.delegate = self
-    
+
     // Set the session's delegate
     sceneView.session.delegate = self
 
     // Show statistics such as fps and timing information
     sceneView.showsStatistics = true
-    
+
     // Create a new scene
     let scene = SCNScene()
-    
+
     // Set the scene to the view
     sceneView.scene = scene
-    
+
     // Setup the target view
     let targetView = TargetView(frame: view.bounds)
     view.addSubview(targetView)
     self.targetView = targetView
     targetView.show()
   }
-  
+
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    
+
     // Create a session configuration
     let configuration = ARWorldTrackingConfiguration()
     configuration.worldAlignment = .camera
@@ -87,13 +87,44 @@ class AdViewController: UIViewController {
     //camera로 설정을하면, 생성된 plane이 항상 카메라를 향하게 된다.
     //카메라에서 생성된 plane 사각형의 중심까지을 잇는 선은 수직이다. p.205
     
+    if #available(iOS 11.3, *) {
+        var triggerImages = ARReferenceImage.referenceImages(inGroupNamed: "RMK-ARKit-triggers", bundle: nil)
+        //감지 가능한 이미지는 ARReferenceImage의 인스턴스에 번들로 제공된다.
+        //RMK-ARKit-triggers 그룹에 추가한 이미지를 로드한다.
+        //해당 이미지를 감지한다.
+        
+        //Asset에 있는 지정해 둔 이미지 외에 코드로 추가할 때
+        let image = UIImage(named: "logo_2")! //이미지 생성
+        let referenceImage = ARReferenceImage(image.cgImage!, orientation: .up, physicalWidth: 0.2)
+        //실제 너비 0.2미터의 참조 이미지 생성. 물리적 높이는 시스템에 의해 계산된다.
+        triggerImages?.insert(referenceImage) //새로 작성된 참조 이미지를 triggerImages의 그룹에 추가한다.
+        
+        //참조 이미지 감지는 QR코드 감지를 대체하지 않는다(둘 다 작동한다).
+        
+        configuration.detectionImages = triggerImages //배열이 아닌 Set
+        //detectionImages 속성으로 ARKit에서 인식할 이미지 세트를 지정해 줄 수 있다.
+        
+        //Detec1ng predefined images
+        //ARKit 1.5에는 사용자 지정 이미지를 감지하는 기능이 추가되었다.
+        //흰색 직사각형이나 QR코드를 감지하는 대신 앱에서 하나 이상의 미리 정의된 이미지를 인식할 수 있다.
+        //Xcode 9.3 이상, iOS 11.3 이상에서만 작동하며, 하나 이상의 참조 이미지가 있어야 한다.
+        //Assets.xcassets에서 New AR Resource Group으로 그룹을 만들고 New AR Reference Image으로 이미지를 추가해야 한다. p.246
+        //warning이 뜨기도 하지만, 완전히 조건에 맞춘 이미지가 아니더라도 대부분 작동은 한다.
+        
+        //참조 이미지가 인식되면 앱에 알리기 위해 ARKit이 필요하다. 인식되면, ARKit은 세션에 앵커를 자동으로 추가한다.
+        //앵커가 추가될 때 알림을 받을 수 있는 세 가지 방법이 있다.
+        //• ARSessionDelegate의 session(_:didAdd:)
+        //• ARSKViewDelegate의 view(_:didAdd:for:)
+        //• ARSCNViewDelegate의 rendered(_:didAdd:for:)
+    }
+    
     // Run the view's session
     sceneView.session.run(configuration)
   }
-  
+
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-    
+
     // Pause the view's session
     sceneView.session.pause()
   }
@@ -107,7 +138,7 @@ extension AdViewController: ARSCNViewDelegate {
     //새 앵커를 ARKit 세션에 수동으로 추가하면, ARKit은 이 메서드를 호출하여 메서드 끝에서
     //앵커를 반환하여 새로 만든 앵커에 대한 SceneKit 노드를 제공한다.
     //노드를 추가하지 않도록 ARKit에 알릴 수도 있다. 이 경우에는 단순히 nil을 반환하면 된다.
-    guard let billboard = billboard else { return nil } //빌보드가 없다면 종료
+    guard let billboard = billboard else { return nil }
     var node: SCNNode? = nil
     
     //DispatchQueue.main.sync { //이 메서드는 일반적으로 메인 스레드에서 호출되지 않는다.
@@ -117,13 +148,21 @@ extension AdViewController: ARSCNViewDelegate {
       let billboardNode = addBillboardNode() //SCNNode 반환
       //touchesBegun(_:with)에서 생성된 ARKit 앵커와 연결된 이 노드는 SceneKit 노드로 지오메트리를 가지고 있다.
       //SceneKit의 모든 지오메트리는 SCNGeometry를 상속한다.
+      
+      self.createBillboardController()
+      //이전 구현에서는 addBillboardNode() 내부에서 BillboardViewController를 만들었다.
+      //새로운 구현(Ch12)에서는 스토리보드 기반의 billboard를 새로 만든다. 복잡하기 때문에 아예 새로운 메서드로 떼어낸다.
       node = billboardNode
-        
+      
 //      let image = UIImage(named: "logo_1")!
 //      setBillboardImage(image: image) //빌보드에 이미지 생성
-    case (let videoAnchor) where videoAnchor == billboard.videoAnchor:
-        //비디오 앵커인 경우
-        node = addVideoPlayerNode()
+        
+    case (let videoAnchor)
+      where videoAnchor == billboard.videoAnchor: //비디오 앵커인 경우
+      
+//      node = addVideoPlayerNode() //이전 구현
+        node = billboard.videoNodeHandler?.createNode()
+      
     default:
       break
     }
@@ -135,7 +174,7 @@ extension AdViewController: ARSCNViewDelegate {
 extension AdViewController: ARSessionDelegate {
   func session(_ session: ARSession, didFailWithError error: Error) {
   }
-  
+
   func sessionWasInterrupted(_ session: ARSession) {
     //ARKit 세션이 interruptede되면(백 그라운드 등) 위치 및 방향을 찾던 센서도 중단된다.
     //백그라운드 처리를 사용할 수도 있다. 하지만, 정기적으로 수행하면 리소스가 많이 낭비된다.
@@ -143,34 +182,47 @@ extension AdViewController: ARSessionDelegate {
     //따라서 세션이 중단될때 빌보드를 제거하는 것으로 간단히 구현 가능하다.
     removeBillboard()
   }
-  
+
   func sessionInterruptionEnded(_ session: ARSession) {
   }
+    
+    func session(_ session: ARSession, didAdd anchors: [ARAnchor]) {
+        //ARKit은 앵커가 세션에 추가될 때 이 메서드를 호출한다.
+        //참조 이미지가 인식되면 새로운 앵커가 생성되기 때문에 이 메서드가 트리거 된다.
+        if #available(iOS 11.3, *) {
+            if let imageAnchor = anchors.compactMap({ $0 as? ARImageAnchor }).first {
+                //유형별로 필터링하고 ARImageAnchor인스턴스만 유지한다. 그 중 첫 번째 요소만 가져온다
+                self.createBillboard(center: imageAnchor.transform, size: imageAnchor.referenceImage.physicalSize)
+                //해당 앵커를 사용해 빌보드를 생성한다.
+            }
+        }
+    }
 }
 
 extension AdViewController {
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     if billboard?.hasVideoNode == true { //비디오 노드가 있는 지 확인
-        billboard?.billboardNode?.isHidden = false //빌보드 노드 숨기고
-        removeVideo() //비디오 제거
+      billboard?.billboardNode?.isHidden = false //빌보드 노드 숨기고
+//      removeVideo() //비디오 제거
         
-        return
-        //추가 적인 처리 없이 메서드를 종료시킨다. 비디오가 재생되는 동안 터치하면 QR코드 스캔을 트리거하지 않는다.
+      billboard?.videoNodeHandler?.removeNode() //비디오 노드 제거
+      return
+      //추가 적인 처리 없이 메서드를 종료시킨다. 비디오가 재생되는 동안 터치하면 QR코드 스캔을 트리거하지 않는다.
     }
-    
+
     guard let currentFrame = sceneView.session.currentFrame else { return }
     //가장 최근 세션에서 캡쳐된 AR scene 정보를 가지고 있는 비디오 프레임이 없다면 반환
     //비디오 피드의 단일 캡쳐로, ARKit은 이를 분석하고 디바이스의 모션 감지 기능과 결합하여 AR을 만든다.
-    
+
     DispatchQueue.global(qos: .background).async {
         //이미지 처리는 CPU의 자원을 많이 소모하므로 백그라운드에서 실행하는 것이 자원관리에 좋다.
       do {
 //        let request = VNDetectRectanglesRequest { (request, error) in
-          //Vison 프레임워크로 사각형을 감지한 후, VNDetectRectanglesRequest를 사용해
-          //해당 사각형을 ARKit 객체로 변환할 수 있다.
-          //사각형 영역을 찾는 이미지 분석이 완료되면 클로저가 호출된다.
+        //Vison 프레임워크로 사각형을 감지한 후, VNDetectRectanglesRequest를 사용해
+        //해당 사각형을 ARKit 객체로 변환할 수 있다.
+        //사각형 영역을 찾는 이미지 분석이 완료되면 클로저가 호출된다.
         
-          let request = VNDetectBarcodesRequest { (request, error) in
+        let request = VNDetectBarcodesRequest { (request, error) in
           //VNDetectBarcodesRequest로 QR코드를 읽을 수 있다.
           //VNDetectRectanglesRequest을 VNDetectBarcodesRequest로
           //VNRectangleObservation를 VNBarcodeObservation로 대체해 준다.
@@ -182,19 +234,19 @@ extension AdViewController {
           //• Text : VNDetectTextRectanglesRequest 사용. 식별 가능한 텍스트가 포함된 영역을 감지한다.
           //• Rectangle, object 트래킹 : VNTrackRectangleRequest, VNTrackObjectRequest 사용.
           //  이전에 감지한 모든 직사각형과 객체를 추적한다.
-            
+          
           // Access the first result in the array,
           // after converting to an array
           // of VNBarcodeObservation
-//          guard let results = request.results?.compactMap({ $0 as? VNRectangleObservation }),
-            //결과는 반환되는 request의 results에서 가져올 수 있다(Any 타입).
-            //감지된 각 사각형을 VNRectangleObservation 타입으로 변환하여 배열에 저장한다.
             
-            guard let results = request.results?.compactMap({ $0 as? VNBarcodeObservation }),
+//          guard let results = request.results?.compactMap({ $0 as? VNRectangleObservation }),
+          //결과는 반환되는 request의 results에서 가져올 수 있다(Any 타입).
+          //감지된 각 사각형을 VNRectangleObservation 타입으로 변환하여 배열에 저장한다.
+            
+          guard let results = request.results?.compactMap({ $0 as? VNBarcodeObservation }),
             //VNDetectBarcodesRequest로 QR코드를 읽을 수 있다.
             //VNDetectRectanglesRequest을 VNDetectBarcodesRequest로
             //VNRectangleObservation를 VNBarcodeObservation로 대체해 준다.
-            
             let result = results.first else {
             //감지된 결과가 하나도 없다면 반환
             //VNDetectRectanglesRequest의 maximumObservations 속성은 default가 1이다.
@@ -204,7 +256,7 @@ extension AdViewController {
             print ("[Vision] VNRequest produced no result")
             return
           }
-          
+
           let coordinates: [matrix_float4x4] = [result.topLeft, result.topRight, result.bottomRight, result.bottomLeft].compactMap {
             //VNRectangleObservation로 감지된 사각형의 네 꼭지점을 식별할 수 있다.
             //Vison Framework는 2D 이미지에서 작동하므로, 결과는 항상 비트맵 이미지 내의 2D좌표이다.
@@ -219,38 +271,39 @@ extension AdViewController {
             //• existingPlane : plane의 크기를 고려하지 않는 연관된 앵커가 있는 plane
             //• existingPlaneUsingExtent : plane의 크기를 고려한 연관된 앵커가 있는 평면
             //나머지 3개가 평면을 감지해 내는 것이므로 점을 감지하는 것은 하나밖에 없다.
+            
             return hitFeature.worldTransform //hitTest에서 나온 결과를 Transform으로 저장
             //worldTransform 속성은 world coordinate system을 기준으로 한 위치와 방향 정보를 가지고 있다.
             //3D의 모든 객체에는 world coordinate system 기준의 위치와 방향이 있다.
             //world coordinate system은 세션이 시작될 때마다 ARKit에 의해 설정되며
             //디바이스의 위치와 방향에 따라 달라진다.
           }
-          
+
           guard coordinates.count == 4 else { return }
           //map을 거친 후, coordinate은 worldTransform 속성에서 가져온 4x4 행렬의 배열이 된다.
           //사각형을 다루기 때문에 반드시 4개의 좌표가 있어야 한다.
           //ARKit에서 Vison에서 찾은 2D 좌표를 3D로 변환이 하나라도 실패한다면 종료된다.
-          
+            
           /*
           simd_float4x4([
-              [1.0, 0.0, 0.0, 0.0)],
-              [0.0, 1.0, 0.0, 0.0)],
-              [0.0, 0.0, 1.0, 0.0)],
-              [-0.0293431, -0.238044, -0.290515, 1.0)]
+             [1.0, 0.0, 0.0, 0.0)],
+             [0.0, 1.0, 0.0, 0.0)],
+             [0.0, 0.0, 1.0, 0.0)],
+             [-0.0293431, -0.238044, -0.290515, 1.0)]
           ])
           */
           //coordinates의 각 요소(matrix_float4x4 타입)은 위와 같이 4x4 행렬로 출력된다.
           //마지막 열은 위치(position)를 지정하고, 앞의 세 열은 크기 조정(scale) 및 방향(orientation)을 지정한다.
-          
+
           DispatchQueue.main.async { //UI요소를 추가하고 제거하므로 메인 스레드에서 진행해야 한다.
             self.removeBillboard() //이전 빌보드가 표시된 경우 제거한다.
-            
+
             let (topLeft, topRight, bottomRight, bottomLeft) = (coordinates[0], coordinates[1], coordinates[2], coordinates[3])
-            
+
             self.createBillboard(topLeft: topLeft, topRight: topRight, bottomRight: bottomRight, bottomLeft: bottomLeft)
             //새로운 빌보드를 작성한다. 파라미터로 이전 단계에서 찾은 네 개의 좌표를 전달한다.
-            
-            //디버깅 위한 Dummy
+
+            // Uncomment to show four small placeholders in correspondence of the plane vertices
             /*
             for coordinate in coordinates {
               let box = SCNBox(width: 0.01, height: 0.01, length: 0.001, chamferRadius: 0.0)
@@ -259,9 +312,10 @@ extension AdViewController {
               self.sceneView.scene.rootNode.addChildNode(node)
             }
             */
+            //디버깅 위한 Dummy
           }
         }
-        
+
         let handler = VNImageRequestHandler(cvPixelBuffer: currentFrame.capturedImage)
         //VNDetectRectanglesRequest를 실행하는 방법은 실제 이미지 처리를 담당하는 핸들러를 작성하는 것이다.
         //cvPixelBuffer 매개변수로 분석할 이미지를 전달한다.
@@ -271,6 +325,7 @@ extension AdViewController {
         //핸들러 인스턴스가 단일 프레임에 대해 정의되어 있다.
         //텍스트 인식, 바코드 감지 등 동일한 프레임에서 여러 요청을 수행할 수도 있다.
         //그 경우에는 하나의 요청당 하나의 핸들러를 생성해야 한다.
+        
         try handler.perform([request]) //핸들러를 실행한다.
       } catch(let error) { //오류 처리
         print("An error occurred during rectangle detection: \(error)")
@@ -287,142 +342,238 @@ private extension AdViewController {
     //평면에 수직인 선(녹색선)사이의 각도로 결정된다. p.191
     let plane = RectangularPlane(topLeft: topLeft, topRight: topRight, bottomLeft: bottomLeft, bottomRight: bottomRight)
     //사각형 크기와 중심을 계산하는 RectangularPlane 컨테이너에 4개의 행렬 값을 전달한다.
-    
+
 //    let anchor = ARAnchor(transform: plane.center)
     //사각형 중심에 위치한 plane에 대한 앵커를 생성한다.
     
-    let rotation = SCNMatrix4MakeRotation(Float.pi / 2.0, 0.0, 0.0, 1.0)
+    let rotation =
+      SCNMatrix4MakeRotation(Float.pi / 2.0, 0.0, 0.0, 1.0)
     //z축을 중심으로 시계 방향으로 90도 회전한 행렬 //카메라 world alignment를 사용하면 반대편에서 평면을 본 방향으로
-    let rotatedCenter = plane.center * matrix_float4x4(rotation) //회전을 평면 중심에 적용
+    let rotatedCenter =
+      plane.center * matrix_float4x4(rotation) //회전을 평면 중심에 적용
     let anchor = ARAnchor(transform: rotatedCenter) //앵커 transform에 적용
     
     billboard = BillboardContainer(billboardAnchor: anchor, plane: plane)
     //앵커와 plane으로 BillboardContainer를 생성한다.
     //BillboardContainer는 빌보드에 대한 데이터를 저장하는데 사용하는 자료구조. 액세스할 수 있도록 저장해 둔다.
+    billboard?.videoPlayerDelegate = self //delegate를 설정해 준다.
     
     sceneView.session.add(anchor: anchor) //앵커 추가
-    
+
     print("New billboard created")
   }
     
-    func createVideo() {
-        guard let billboard = self.billboard else { return }
+    func createBillboard(center: matrix_float4x4, size: CGSize) {
+        //위의 createBillboard와 구현이 거의 동일하다.
+        let plane = RectangularPlane(center: center, size: size)
+        //네 개의 직사각형 꼭지점 대신 참조 이미지의 중심점으로 plane을 생성한다.
+        let rotation = SCNMatrix4MakeRotation(Float.pi / 2, -1.0, 0.0, 0.0)
+        //회전 행렬이 이전 createBillboard메서드와 다르다.
+        //위의 메서드는 z축 시계 방향으로 90도 회전 했지만, 여기서는 x축 시계 반대 방향으로 90도 회전한다.
+        //이것은 SceneKit 노드의 일반적인 조정이다.
         
-        let rotation = SCNMatrix4MakeRotation(Float.pi / 2.0, 0.0, 0.0, 1.0)
-        let rotatedCenter = billboard.plane.center * matrix_float4x4(rotation)
-        //빌보드와 같은 위치 중앙
-        let anchor = ARAnchor(transform: rotatedCenter) //새 앵커 생성
+        //이후 나머지는 위의 createBillboard 메서드와 같다.
+        let rotatedCenter = plane.center * matrix_float4x4(rotation)
+        let anchor = ARAnchor(transform: rotatedCenter)
         
-        sceneView.session.add(anchor: anchor) //앵커 추가
-        self.billboard?.videoAnchor = anchor //나중에 액세스 할 수 있도록 앵커 저장
+        billboard = BillboardContainer(billboardAnchor: anchor, plane: plane)
+        billboard?.videoPlayerDelegate = self
+        
+        sceneView.session.add(anchor: anchor)
+        
+        print("New billboard created")
     }
-  
+
+//  func createVideo() {
+//    guard let billboard = billboard else { return }
+//
+//    let rotation =
+//      SCNMatrix4MakeRotation(Float.pi / 2.0, 0.0, 0.0, 1.0)
+//    let rotatedCenter =
+//      billboard.plane.center * matrix_float4x4(rotation)
+//    //빌보드와 같은 위치 중앙
+//    let anchor = ARAnchor(transform: rotatedCenter) //새 앵커 생성
+//
+//    sceneView.session.add(anchor: anchor) //앵커 추가
+//    self.billboard?.videoAnchor = anchor //나중에 액세스 할 수 있도록 앵커 저장
+//  }
+
   func addBillboardNode() -> SCNNode? {
     guard let billboard = billboard else { return nil }
-    
+
     let rectangle = SCNPlane(width: billboard.plane.width, height: billboard.plane.height)
     //createBillboard에서 저장한 RectangularPlane 구조체 값으로 SCNPlane(지오메트리) 생성
     let rectangleNode = SCNNode(geometry: rectangle) //지오메트리로 SCNNode 생성
     self.billboard?.billboardNode = rectangleNode //컨테이너에 노드 추가
-    
-    let images = [
-        "logo_1", "logo_2", "logo_3", "logo_4", "logo_5"
-        ].map { UIImage(named: $0)! }
-    //map으로 해당 이름의 이미지 객체를 생성해 배열로 저장
-    
-    setBillboardImages(images)
-    
+
+//    let images = [
+//      "logo_1", "logo_2", "logo_3", "logo_4", "logo_5"
+//      ].map { UIImage(named: $0)! }
+//    //map으로 해당 이름의 이미지 객체를 생성해 배열로 저장
+//
+//    setBillboardImages(images)
+
     return rectangleNode
   }
-    
-    func addVideoPlayerNode() -> SCNNode? {
-        guard let billboard = self.billboard else { return nil }
-        //AVPlayerViewController가 있지만, ARKit과 함께 작동하지 않는다.
-        //따라서 AVPlayer를 직접 사용해서 비디오를 재생시켜야 한다.
-        
-        let billboardSize = CGSize(width: billboard.plane.width, height: billboard.plane.height / 2)
-        let frameSize = CGSize(width: 1024, height: 512)
-        let videoUrl = URL(string: "https://www.rmp-streaming.com/media/bbb-360p.mp4")!
-        //필요한 변수 초기화
-        
-        let player = AVPlayer(url: videoUrl) //비디오 플레이어 생성
-        let videoPlayerNode = SKVideoNode(avPlayer: player) //SpriteKit의 비디오 노드
-        //비디오 내용을 표시할 수 있다.
-        videoPlayerNode.position = CGPoint(x: frameSize.width / 2, y: frameSize.height / 2)
-        videoPlayerNode.zRotation = CGFloat.pi
-        
-        let spritekitScene = SKScene(size: frameSize) //SpriteKit Scene 생성
-        spritekitScene.addChild(videoPlayerNode) //비디오 노드 추가
-        
-        let plane = SCNPlane(width: billboardSize.width, height: billboardSize.height)
-        //Plane (SceneKit)을 설정한다.
-        plane.firstMaterial!.isDoubleSided = true
-        plane.firstMaterial!.diffuse.contents = spritekitScene
-        //SpriteKit Scene로 생성한 비디오 노드를 사용한다.
-        let node = SCNNode(geometry: plane) //노드 생성
-        
-        self.billboard?.videoNode = node //나중에 참조할 수 있도록 새로 작성된 노드를 저장한다.
-        
-        self.billboard?.billboardNode?.isHidden = true //빌보드 노드를 숨기고
-        videoPlayerNode.play() //비디오를 재생한다.
-        
-        return node
-    }
-  
+
+//  func addVideoPlayerNode() -> SCNNode? {
+//    //AVPlayerViewController가 있지만, ARKit과 함께 작동하지 않는다.
+//    //따라서 AVPlayer를 직접 사용해서 비디오를 재생시켜야 한다.
+//    guard let billboard = billboard else { return nil }
+//
+//    let billboardSize = CGSize(
+//      width: billboard.plane.width,
+//      height: billboard.plane.height / 2
+//    )
+//    let frameSize = CGSize(width: 1024, height: 512)
+//    let videoUrl = URL(string:
+//      "https://www.rmp-streaming.com/media/bbb-360p.mp4")!
+//    //필요한 변수 초기화
+//
+//    let player = AVPlayer(url: videoUrl) //비디오 플레이어 생성
+//    let videoPlayerNode = SKVideoNode(avPlayer: player) //SpriteKit의 비디오 노드
+//    videoPlayerNode.size = frameSize
+//    videoPlayerNode.position = CGPoint(
+//      x: frameSize.width / 2,
+//      y: frameSize.height / 2
+//    )
+//    videoPlayerNode.zRotation = CGFloat.pi
+//
+//    let spritekitScene = SKScene(size: frameSize) //SpriteKit Scene 생성
+//    spritekitScene.addChild(videoPlayerNode) //비디오 노드 추가
+//
+//    let plane = SCNPlane(
+//      width: billboardSize.width,
+//      height: billboardSize.height
+//    ) //Plane (SceneKit)을 설정한다.
+//    plane.firstMaterial!.isDoubleSided = true
+//    plane.firstMaterial!.diffuse.contents = spritekitScene
+//    //SpriteKit Scene로 생성한 비디오 노드를 사용한다.
+//    let node = SCNNode(geometry: plane) //노드 생성
+//
+//    self.billboard?.videoNode = node //나중에 참조할 수 있도록 새로 작성된 노드를 저장한다.
+//
+//    self.billboard?.billboardNode?.isHidden = true //빌보드 노드를 숨기고
+//    videoPlayerNode.play() //비디오를 재생한다.
+//
+//    return node
+//  }
+
   func removeBillboard() {
     if let anchor = billboard?.billboardAnchor {
       //guard로 billboard 속성이 nil인지 아닌지 확인할 수도 있지만, 앵커만 확인하면 되므로 간단히 구현
+      if let viewController = billboard?.viewController {
+        viewController.willMove(toParentViewController: nil)
+        viewController.view.removeFromSuperview()
+        viewController.removeFromParentViewController()
+      }
       sceneView.session.remove(anchor: anchor) //앵커 있는 경우 ARKit 세션에서 앵커 제거
       billboard?.billboardNode?.removeFromParentNode()
+      billboard?.videoNodeHandler = nil
       billboard = nil
       //노드 삭제
     }
   }
     
-    func removeVideo() {
-        if let videoAnchor = billboard?.videoAnchor {
-            sceneView.session.remove(anchor: videoAnchor) //앵커 제거
+    func createBillboardController() {
+        DispatchQueue.main.async { //UI 업데이트 이므로 메인 스레드에서 진행해야 한다.
+            let navController = UIStoryboard(name: "Billboard", bundle: nil).instantiateInitialViewController() as! UINavigationController
+            //스토리 보드 기반의 Billboard 생성. instantiateInitialViewController()로 인스턴스화 한다.
             
-            billboard?.videoNode?.removeFromParentNode() //비디오 노드 제거
-            billboard?.videoAnchor = nil
-            billboard?.videoNode = nil
+            let billboardViewController = navController.visibleViewController as! BillboardViewController
+            //네비게이션 컨트롤러에서 현재 보이는 뷰 컨트롤러를 가져온다(첫 번째 뷰 컨트롤러(root)가 된다).
+            billboardViewController.sceneView = self.sceneView
+            billboardViewController.billboard = self.billboard
+            //속성 할당
+            
+            billboardViewController.willMove(toParentViewController: self)
+            //willMove는 뷰 컨트롤러가 컨테이너 뷰 컨트롤러에 추가 되거나 제거되기 바로 전에 호출된다.
+            //새로운 뷰 컨트롤러(billboardViewController)에게 부모 뷰 컨트롤러 self(AdViewController)로
+            //이동할 것이라 알려준다.
+            self.addChildViewController(billboardViewController)
+            //AdViewController에 billboardViewController를 자식으로 추가한다.
+            self.view.addSubview(billboardViewController.view)
+            //AdViewController 뷰에 billboardViewController의 뷰를 하위 뷰로 추가한다.
+            
+            self.show(viewController: billboardViewController)
+            //billboardViewController를 보이게 한다.
         }
     }
     
-    func setBillboardImages(_ images: [UIImage]) {
-        let material = SCNMaterial() //SCNMaterial 생성
+    private func show(viewController: BillboardViewController) {
+        //이전 장의 setBillboardImages()에서의 로직과 거의 유사하다.
+        let material = SCNMaterial()
         material.isDoubleSided = true
-        //isDoubleSided를 true로 설정하면, 재질이 양면에 적용된다.
-        //false로 설정하면, 카메라가 뒤쪽에서 객체를 보고 있을 때 보이지 않게 된다.
+        material.cullMode = .front //어떤 면이 SceneKit를 렌더링할지 결정
         
-        DispatchQueue.main.async { //UI 작업 처리를 위해 메인 스레드에서 진행
-            // https://forums.developer.apple.com/thread/89423
-            // A UIView can be assigned to a material
-            let billboardViewController = BillboardViewController(nibName: "BillboardViewController", bundle: nil) //billboardViewController 인스턴스 생성
-            billboardViewController.delegate = self //delegate 설정
-            billboardViewController.images = images
-            material.diffuse.contents = billboardViewController.view
-            
-//            let imageView = UIImageView(image: image) //매개변수로 전달된 이미지로 뷰 생성
-//            material.diffuse.contents = imageView //material의 diffuse 속성에 추가한다.
-//            material.diffuse.contents = image
-            //ImageView에 boxing하는 대신 UIImage 자체를 지정할 수도 있다.
-            //경우에 따라 투명도가 있는 이미지를 사용할 때나 UIView 상속 클래스를 사용하는 경우 UIImageView가
-            //제대로 표현되지 않기 때문에 더 좋은 옵션이 될 수도 있다.
-            
-            self.billboard?.viewController = billboardViewController
-            //새로 인스턴스화된 뷰 컨트롤러를 추적하기 위해 BillboardContainer 구조체에 저장한다.
-            self.billboard?.billboardNode?.geometry?.materials = [material]
-            //새 재질을 해당 지오메트리에 설정한다.
-            //billboardNode는 touchesBegun(_:with)에서 생성된 ARKit 앵커와 연결된 SceneKit 노드로
-            //지오메트리를 가지고 있다. SceneKit의 모든 지오메트리는 SCNGeometry를 상속한다.
-        }
+        material.diffuse.contents = viewController.view
+        
+        billboard?.viewController = viewController
+        billboard?.billboardNode?.geometry?.materials = [material]
     }
+
+//  func removeVideo() {
+//    if let videoAnchor = billboard?.videoAnchor {
+//      sceneView.session.remove(anchor: videoAnchor) //앵커 제거
+//    }
+//
+//    billboard?.videoNode?.removeFromParentNode() //비디오 노드 제거
+//    billboard?.videoAnchor = nil
+//    billboard?.videoNode = nil
+//  }
+
+//  func setBillboardImages(_ images: [UIImage]) {
+//    let material = SCNMaterial() //SCNMaterial 생성
+//    material.isDoubleSided = true
+//    //isDoubleSided를 true로 설정하면, 재질이 양면에 적용된다.
+//    //false로 설정하면, 카메라가 뒤쪽에서 객체를 보고 있을 때 보이지 않게 된다.
+//
+//    DispatchQueue.main.async { //UI 작업 처리를 위해 메인 스레드에서 진행
+//      // https://forums.developer.apple.com/thread/89423
+//      // A UIView can be assigned to a material
+//      let billboardViewController = BillboardViewController(
+//        nibName: "BillboardViewController", bundle: nil) //billboardViewController 인스턴스 생성
+//      billboardViewController.delegate = self //delegate 설정
+//      billboardViewController.images = images
+//
+//      material.diffuse.contents = billboardViewController.view
+//
+////            let imageView = UIImageView(image: image) //매개변수로 전달된 이미지로 뷰 생성
+////            material.diffuse.contents = imageView //material의 diffuse 속성에 추가한다.
+////            material.diffuse.contents = image
+//      //ImageView에 boxing하는 대신 UIImage 자체를 지정할 수도 있다.
+//      //경우에 따라 투명도가 있는 이미지를 사용할 때나 UIView 상속 클래스를 사용하는 경우 UIImageView가
+//      //제대로 표현되지 않기 때문에 더 좋은 옵션이 될 수도 있다.
+//
+//      self.billboard?.viewController = billboardViewController
+//      //새로 인스턴스화된 뷰 컨트롤러를 추적하기 위해 BillboardContainer 구조체에 저장한다.
+//
+//      self.billboard?.billboardNode?.geometry?.materials = [material]
+//      //새 재질을 해당 지오메트리에 설정한다.
+//      //billboardNode는 touchesBegun(_:with)에서 생성된 ARKit 앵커와 연결된 SceneKit 노드로
+//      //지오메트리를 가지고 있다. SceneKit의 모든 지오메트리는 SCNGeometry를 상속한다.
+//    }
+//  }
 }
 
-extension AdViewController: BillboardViewDelegate {
-    func billboardViewDidSelectPlayVideo(_ view: BillboardView) {
-        createVideo()
+//extension AdViewController: BillboardViewDelegate {
+//  func billboardViewDidSelectPlayVideo(
+//    _ view: BillboardView) {
+//
+//    createVideo()
+//  }
+//}
+
+extension AdViewController: VideoPlayerDelegate {
+    func didStartPlay() {
+        //비디오 재생 시작
+        billboard?.billboardNode?.isHidden = true //빌보드를 숨긴다.
+        //새 노드가 만들어진다.
+    }
+    
+    func didEndPlay() {
+        //비디오 재생 종료
+        billboard?.billboardNode?.isHidden = false //빌보드를 다시 보인다.
     }
 }
 

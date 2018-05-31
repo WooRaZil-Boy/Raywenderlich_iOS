@@ -29,6 +29,7 @@
  */
 
 import UIKit
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -36,7 +37,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-    // Override point for customization after application launch.
+    UINavigationBar.appearance().barTintColor = UIColor(white: 0.1294, alpha: 1.0)
+
+    UNUserNotificationCenter.current().requestAuthorization(options: [.sound, .alert, .badge], completionHandler: {(_, _) in })
+    
     return true
   }
 }

@@ -31,14 +31,14 @@
 import ARKit
 import SceneKit
 
-protocol VideoPlayerDelegate: class { //비디오 플레이어 delegate
-    func didStartPlay() //시작
-    func didEndPlay() //종료
+protocol VideoNodeHandler: class {
+  func createNode() -> SCNNode? //비디오 플레이어에 새로운 SCNNode가 필요할 때 adViewController에 의해 호출된다.
+  func removeNode() //노드를 제거해야 할 때 호출된다.
 }
 
-protocol VideoNodeHandler: class {
-    func createNode() -> SCNNode? //비디오 플레이어에 새로운 SCNNode가 필요할 때 adViewController에 의해 호출된다.
-    func removeNode() //노드를 제거해야 할 때 호출된다.
+protocol VideoPlayerDelegate: class { //비디오 플레이어 delegate
+  func didStartPlay() //시작
+  func didEndPlay() //종료
 }
 
 class BillboardContainer {
@@ -52,7 +52,7 @@ class BillboardContainer {
 
   var hasBillboardNode: Bool { return billboardNode != nil }
   var hasVideoNode: Bool { return videoNode != nil }
-    
+
   weak var videoNodeHandler: VideoNodeHandler?
   weak var videoPlayerDelegate: VideoPlayerDelegate? //비디오 플레이어 delegate
 

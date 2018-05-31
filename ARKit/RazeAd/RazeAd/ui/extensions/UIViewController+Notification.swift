@@ -29,13 +29,21 @@
  */
 
 import UIKit
+import UserNotifications
 
-class WebBrowserCell: UICollectionViewCell {
-  @IBOutlet weak var webBrowser: UIWebView!
-
-  func go(to urlString: String) {
-    guard let url = URL(string: urlString) else { return }
-    let request = URLRequest(url: url)
-    webBrowser.loadRequest(request)
+extension UIViewController {
+  func showAlert(with id: String, title: String, message: String) {
+    if UIApplication.shared.applicationState == .active {
+      let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+      alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+      present(alert, animated: true, completion: nil)
+    } else {
+      let content = UNMutableNotificationContent()
+      content.title = title
+      content.body = message
+      content.sound = UNNotificationSound.default()
+      let notification = UNNotificationRequest(identifier: id, content: content, trigger: nil)
+      UNUserNotificationCenter.current().add(notification, withCompletionHandler: nil)
+    }
   }
 }

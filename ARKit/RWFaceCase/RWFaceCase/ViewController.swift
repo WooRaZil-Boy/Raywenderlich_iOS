@@ -32,6 +32,13 @@ import UIKit
 import SceneKit
 import ARKit
 
+enum ContentType: Int {
+    case none
+    case mask
+    case glasses
+    case pig
+}
+
 class ViewController: UIViewController {
 
   // MARK: - Properties
@@ -44,16 +51,19 @@ class ViewController: UIViewController {
   var session: ARSession {
     return sceneView.session
   }
+
+  var contentTypeSelected: ContentType = .none
     
-    var anchorNode: SCNNode?
-    var mask: Mask?
-    var maskType = MaskType.basic
+  var anchorNode: SCNNode?
+  var mask: Mask?
+  var maskType = MaskType.zombie
+  var glasses: Glasses?
+  var pig: Pig?
 
   // MARK: - View Management
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     setupScene()
     createFaceGeometry()
   }
@@ -91,34 +101,42 @@ class ViewController: UIViewController {
   // MARK: - Button Actions
 
   @IBAction func didTapReset(_ sender: Any) {
-    print("didTapReset")
-    resetTracking() //사용자가 세션을 재설정하고하 할 때마다 버튼을 눌러 재설정할 수 있다.
+    print("didTapReset") //사용자가 세션을 재설정하고자 할 때마다 버튼을 눌러 재설정할 수 있다.
+    contentTypeSelected = .none //콘텐츠 타입 none으로 초기화
+    resetTracking() //트래킹 재시작
   }
 
   @IBAction func didTapMask(_ sender: Any) {
     print("didTapMask")
-    
+
     switch maskType { //마스크 타입을 바꿔준다.
     case .basic:
-        maskType = .zombie
+      maskType = .zombie
     case .painted:
-        maskType = .basic
+      maskType = .basic
     case .zombie:
-        maskType = .painted
+      maskType = .painted
     }
-    
+
     mask?.swapMaterials(maskType: maskType)
     //바꾼 마스크 타입으로 마스크 재 생성
-    
-    resetTracking() //트래킹 재 시작
+
+    contentTypeSelected = .mask //콘텐츠 타입 mask로 설정
+    resetTracking() //트래킹 재시작
   }
 
   @IBAction func didTapGlasses(_ sender: Any) {
     print("didTapGlasses")
+    
+    contentTypeSelected = .glasses //콘텐츠 타입 glasses로 설정
+    resetTracking() //트래킹 재시작
   }
 
   @IBAction func didTapPig(_ sender: Any) {
     print("didTapPig")
+    
+    contentTypeSelected = .pig //콘텐츠 타입 pig로 설정
+    resetTracking() //트래킹 재시작
   }
 
   @IBAction func didTapRecord(_ sender: Any) {
@@ -131,50 +149,59 @@ class ViewController: UIViewController {
 extension ViewController: ARSCNViewDelegate {
 
   // Tag: SceneKit Renderer
-    func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        //액션, 애니메이션, 물리 측정 등이 되기 전에 발생해야 하는 모든 업데이트를 수행하도록 한다.
-        //SceneKit은 SCNView 객체가 일시 중지되지 않는 한 한 프레임당 여러 번 이 메서드를 호출한다.
-        //여기에 렌더링 루프를 추가하면 계속해서 Scene에 반영된다(게임에서도!).
-        //즉, Scene를 렌더링하는 데 사용하는 표현 노드의 계층 구조를 즉시 업데이트 한다.
-        guard let estimate = session.currentFrame?.lightEstimate else {
-            //configuration에서 isLightEstimationEnabled 속성을 true로 하면,
-            //캡쳐하는 모든 객체에 대해 Scene 조명 정보를 제공한다. 이 정보는 각 ARFrame의 lightEstimate에 저장된다.
-            //이 데이터를 사용하면, 환경 조명을 일치시켜 마스크를 더욱 사실적으로 보이게 할 수 있다.
-            return
-        }
-        
-        let intensity = estimate.ambientIntensity / 1000.0
-        //ambientIntensitysms Scene 전체에서 주변 조명의 예상 광도(루멘). 1000의 값은 중립적인 빛이다.
-        sceneView.scene.lightingEnvironment.intensity = intensity //광도를 재 설정해 준다.
-        
-        let intensityStr = String(format: "%.2f", intensity)
-        let sceneLighting = String(format: "%.2f", sceneView.scene.lightingEnvironment.intensity)
-        
-        print("Intensity: \(intensityStr) - \(sceneLighting)")
+  func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+    //액션, 애니메이션, 물리 측정 등이 되기 전에 발생해야 하는 모든 업데이트를 수행하도록 한다.
+    //SceneKit은 SCNView 객체가 일시 중지되지 않는 한 한 프레임당 여러 번 이 메서드를 호출한다.
+    //여기에 렌더링 루프를 추가하면 계속해서 Scene에 반영된다(게임에서도!).
+    //즉, Scene를 렌더링하는 데 사용하는 표현 노드의 계층 구조를 즉시 업데이트 한다.
+    guard let estimate = session.currentFrame?.lightEstimate else {
+      //configuration에서 isLightEstimationEnabled 속성을 true로 하면,
+      //캡쳐하는 모든 객체에 대해 Scene 조명 정보를 제공한다. 이 정보는 각 ARFrame의 lightEstimate에 저장된다.
+      //이 데이터를 사용하면, 환경 조명을 일치시켜 마스크를 더욱 사실적으로 보이게 할 수 있다.
+      return
     }
 
+    let intensity = estimate.ambientIntensity / 1000.0
+    //ambientIntensitysms Scene 전체에서 주변 조명의 예상 광도(루멘). 1000의 값은 중립적인 빛이다.
+    sceneView.scene.lightingEnvironment.intensity = intensity //광도를 재 설정해 준다.
+
+    let intensityStr = String(format: "%.2f", intensity)
+    let sceneLighting = String(format: "%.2f",
+                               sceneView.scene.lightingEnvironment.intensity)
+
+    print("Intensity: \(intensityStr) - \(sceneLighting)")
+  }
+
   // Tag: ARNodeTracking
-    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        //Scene에 추가된 각 앵커에 대해 호출되고 해당 AR앵커에 대해 만들어진 SceneKit노드에서 전달된다.
-        //SceneKit 노드(새 ARAnchor)가 Scene에 추가되면 트리거 된다.
-        anchorNode = node //앵커 노드
-        setupFaceNodeContent() //마스크 추가
-    }
-    
+  func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+    //Scene에 추가된 각 앵커에 대해 호출되고 해당 AR앵커에 대해 만들어진 SceneKit노드에서 전달된다.
+    //SceneKit 노드(새 ARAnchor)가 Scene에 추가되면 트리거 된다.
+    anchorNode = node //앵커 노드
+    setupFaceNodeContent() //마스크 추가
+  }
+
   // Tag: ARFaceGeometryUpdate
-    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
-        //마스크를 anchorNode의 자식으로 추가하면, 앵커노드가 자동으로 사용자 얼굴의 위치와 방향을 추적한다.
-        //하지만 얼굴 표정과 같은 업데이트는 이루어지지 않는데, face mesh geometry를 사용하여 쉽게 추적할 수 있다.
-        //update(from:)에서 사용자의 표정을 추적할 수 있다. 이 메서드는 ScenenKit 지오메트리를 변형하여 face mesh와 일치하도록 한다.
-        //하지만 여기에서는 앵커 업데이트 될때마다 마스크를 업데이트 한다.
-        
-        //앵커가 업데이트 될 때마다 뷰가 자동으로 이 메서드를 호출한다.
-        guard let faceAnchor = anchor as? ARFaceAnchor else { return }
-        updateMessage(text: "Tracking your face.")
-        
-        mask?.update(withFaceAnchor: faceAnchor)
-    }
+  func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
+    //마스크를 anchorNode의 자식으로 추가하면, 앵커노드가 자동으로 사용자 얼굴의 위치와 방향을 추적한다.
+    //하지만 얼굴 표정과 같은 업데이트는 이루어지지 않는데, face mesh geometry를 사용하여 쉽게 추적할 수 있다.
+    //update(from:)에서 사용자의 표정을 추적할 수 있다. 이 메서드는 ScenenKit 지오메트리를 변형하여 face mesh와 일치하도록 한다.
+    //하지만 여기에서는 앵커 업데이트 될때마다 마스크를 업데이트 한다.
     
+    //앵커가 업데이트 될 때마다 뷰가 자동으로 이 메서드를 호출한다.
+    guard let faceAnchor = anchor as? ARFaceAnchor else { return }
+    updateMessage(text: "Tracking your face.")
+    
+    switch contentTypeSelected {
+    case .none: break
+    case .mask:
+        mask?.update(withFaceAnchor: faceAnchor)
+    case .glasses:
+        glasses?.update(withFaceAnchor: faceAnchor)
+    case .pig:
+        pig?.update(withFaceAnchor: faceAnchor)
+    }
+  }
+
   // Tag: ARSession Handling
   func session(_ session: ARSession, didFailWithError error: Error) {
     print("** didFailWithError")
@@ -203,7 +230,7 @@ private extension ViewController {
 
     // Show statistics such as fps and timing information
     sceneView.showsStatistics = true
-    
+
     // Setup environment
     sceneView.automaticallyUpdatesLighting = true /* default setting */
     sceneView.autoenablesDefaultLighting = false /* default setting */
@@ -233,33 +260,55 @@ private extension ViewController {
   }
 
   // Tag: CreateARSCNFaceGeometry
-    func createFaceGeometry() {
-        updateMessage(text: "Creating face geometry.")
-        
-        let device = sceneView.device! //Metal Device 사용
-        //이게 원본 코드인데 오류 나는 경우도 있음
-        
+  func createFaceGeometry() {
+    updateMessage(text: "Creating face geometry.")
+
+    let device = sceneView.device! //Metal Device 사용
+    //이게 원본 코드인데 오류 나는 경우도 있음
+    
 //        var device: MTLDevice!
 //        device = MTLCreateSystemDefaultDevice()
-        
-        let maskGeometry = ARSCNFaceGeometry(device: device)! //ARSCNFaceGeometry 초기화
-        mask = Mask(geometry: maskGeometry, maskType: maskType) //해당 마스크 타입으로 마스크 생성
-    }
+
+    let maskGeometry = ARSCNFaceGeometry(device: device)! //ARSCNFaceGeometry 초기화
+    mask = Mask(geometry: maskGeometry, maskType: maskType) //해당 마스크 타입으로 마스크 생성
+    
+    let glassesGeometry = ARSCNFaceGeometry(device: device)! //ARSCNFaceGeometry 초기화
+    glasses = Glasses(geometry: glassesGeometry) //해당 지오메트리로 안경 생성
+    
+    let pigGeometry = ARSCNFaceGeometry(device: device)! //ARSCNFaceGeometry 초기화
+    pig = Pig(geometry: pigGeometry) //해당 지오메트리로 돼지 생성
+  }
 
   // Tag: Setup Face Content Nodes
-    func setupFaceNodeContent() {
-        //마스크 노드를 앵커 노드에 추가한다.
-        guard let node = anchorNode else { return }
-        
-        node.childNodes.forEach { $0.removeFromParentNode() }
-        //앵커 노드의 자식 노드 제거(이전 마스크 내용을 제거한다).
-        
+  func setupFaceNodeContent() {
+    //마스크 노드를 앵커 노드에 추가한다.
+    guard let node = anchorNode else { return }
+
+    node.childNodes.forEach { $0.removeFromParentNode() }
+    //앵커 노드의 자식 노드 제거(이전 마스크 내용을 제거한다).
+
+    switch contentTypeSelected {
+    case .none: break
+    case .mask:
         if let content = mask {
             node.addChildNode(content)
             //앵커에 해당 마스크 추가
             //앵커에 자식으로 추가하기 때문에 앵커노드로 표시되는 사용자의 얼굴을 자동으로 추적한다.
         }
+    case .glasses:
+        if let content = glasses {
+            node.addChildNode(content)
+            //앵커에 안경 추가
+            //앵커에 자식으로 추가하기 때문에 앵커노드로 표시되는 사용자의 얼굴을 자동으로 추적한다.
+        }
+    case .pig:
+        if let content = pig {
+            node.addChildNode(content)
+            //앵커에 돼지 추가
+            //앵커에 자식으로 추가하기 때문에 앵커노드로 표시되는 사용자의 얼굴을 자동으로 추적한다.
+        }
     }
+  }
 
   // Tag: Update UI
   func updateMessage(text: String) {

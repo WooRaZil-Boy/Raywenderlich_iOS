@@ -7,25 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		040F09BE1FFD3488002AC53B /* Mask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040F09BD1FFD3488002AC53B /* Mask.swift */; };
 		04862EE51FFA77D40044C865 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04862EE41FFA77D40044C865 /* AppDelegate.swift */; };
+		04862EE71FFA77D40044C865 /* Models.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 04862EE61FFA77D40044C865 /* Models.scnassets */; };
 		04862EE91FFA77D40044C865 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04862EE81FFA77D40044C865 /* ViewController.swift */; };
 		04862EEC1FFA77D40044C865 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04862EEA1FFA77D40044C865 /* Main.storyboard */; };
 		04862EEE1FFA77D40044C865 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04862EED1FFA77D40044C865 /* Assets.xcassets */; };
 		04862EF11FFA77D40044C865 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04862EEF1FFA77D40044C865 /* LaunchScreen.storyboard */; };
-		EFDEEB8020C28087008E8032 /* Mask.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDEEB7F20C28087008E8032 /* Mask.swift */; };
-		EFDEEB8220C2FB45008E8032 /* Models.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = EFDEEB8120C2FB45008E8032 /* Models.scnassets */; };
+		A43C0AD920C52E5200B2596E /* Glasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43C0AD820C52E5200B2596E /* Glasses.swift */; };
+		A43C0ADB20C53C0000B2596E /* Pig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43C0ADA20C53C0000B2596E /* Pig.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		040F09BD1FFD3488002AC53B /* Mask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mask.swift; sourceTree = "<group>"; };
 		04862EE11FFA77D30044C865 /* RWFaceCase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RWFaceCase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04862EE41FFA77D40044C865 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		04862EE61FFA77D40044C865 /* Models.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = Models.scnassets; sourceTree = "<group>"; };
 		04862EE81FFA77D40044C865 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		04862EEB1FFA77D40044C865 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		04862EED1FFA77D40044C865 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		04862EF01FFA77D40044C865 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		04862EF21FFA77D40044C865 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EFDEEB7F20C28087008E8032 /* Mask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mask.swift; sourceTree = "<group>"; };
-		EFDEEB8120C2FB45008E8032 /* Models.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = Models.scnassets; sourceTree = "<group>"; };
+		A43C0AD820C52E5200B2596E /* Glasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Glasses.swift; sourceTree = "<group>"; };
+		A43C0ADA20C53C0000B2596E /* Pig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pig.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +43,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		040F09BC1FFD32C6002AC53B /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				040F09BD1FFD3488002AC53B /* Mask.swift */,
+				A43C0AD820C52E5200B2596E /* Glasses.swift */,
+				A43C0ADA20C53C0000B2596E /* Pig.swift */,
+			);
+			path = Content;
+			sourceTree = "<group>";
+		};
 		04862ED81FFA77D30044C865 = {
 			isa = PBXGroup;
 			children = (
@@ -58,24 +72,16 @@
 		04862EE31FFA77D30044C865 /* RWFaceCase */ = {
 			isa = PBXGroup;
 			children = (
-				EFDEEB7E20C28072008E8032 /* Content */,
+				040F09BC1FFD32C6002AC53B /* Content */,
 				04862EE41FFA77D40044C865 /* AppDelegate.swift */,
 				04862EE81FFA77D40044C865 /* ViewController.swift */,
 				04862EEA1FFA77D40044C865 /* Main.storyboard */,
-				EFDEEB8120C2FB45008E8032 /* Models.scnassets */,
+				04862EE61FFA77D40044C865 /* Models.scnassets */,
 				04862EED1FFA77D40044C865 /* Assets.xcassets */,
 				04862EEF1FFA77D40044C865 /* LaunchScreen.storyboard */,
 				04862EF21FFA77D40044C865 /* Info.plist */,
 			);
 			path = RWFaceCase;
-			sourceTree = "<group>";
-		};
-		EFDEEB7E20C28072008E8032 /* Content */ = {
-			isa = PBXGroup;
-			children = (
-				EFDEEB7F20C28087008E8032 /* Mask.swift */,
-			);
-			path = Content;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,8 +143,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04862EE71FFA77D40044C865 /* Models.scnassets in Resources */,
 				04862EF11FFA77D40044C865 /* LaunchScreen.storyboard in Resources */,
-				EFDEEB8220C2FB45008E8032 /* Models.scnassets in Resources */,
 				04862EEE1FFA77D40044C865 /* Assets.xcassets in Resources */,
 				04862EEC1FFA77D40044C865 /* Main.storyboard in Resources */,
 			);
@@ -151,9 +157,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A43C0ADB20C53C0000B2596E /* Pig.swift in Sources */,
 				04862EE91FFA77D40044C865 /* ViewController.swift in Sources */,
 				04862EE51FFA77D40044C865 /* AppDelegate.swift in Sources */,
-				EFDEEB8020C28087008E8032 /* Mask.swift in Sources */,
+				A43C0AD920C52E5200B2596E /* Glasses.swift in Sources */,
+				040F09BE1FFD3488002AC53B /* Mask.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -67,7 +67,7 @@ class Mask: SCNNode {
       material.diffuse.contents = UIColor(red: 0.0,
                                           green: 0.68,
                                           blue: 0.37,alpha: 1)
-        //텍스처 설정. //Ray Wenderlich Green
+      //텍스처 설정. //Ray Wenderlich Green
         
     case .painted: //페인팅 마스크
       material.diffuse.contents =

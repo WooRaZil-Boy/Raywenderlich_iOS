@@ -33,10 +33,10 @@ import SceneKit
 import ARKit
 
 enum ContentType: Int {
-    case none
-    case mask
-    case glasses
-    case pig
+  case none
+  case mask
+  case glasses
+  case pig
 }
 
 class ViewController: UIViewController {
@@ -53,7 +53,7 @@ class ViewController: UIViewController {
   }
 
   var contentTypeSelected: ContentType = .none
-    
+
   var anchorNode: SCNNode?
   var mask: Mask?
   var maskType = MaskType.zombie
@@ -118,23 +118,20 @@ class ViewController: UIViewController {
       maskType = .painted
     }
 
-    mask?.swapMaterials(maskType: maskType)
-    //바꾼 마스크 타입으로 마스크 재 생성
+    mask?.swapMaterials(maskType: maskType) //바꾼 마스크 타입으로 마스크 재 생성
 
-    contentTypeSelected = .mask //콘텐츠 타입 mask로 설정
+    contentTypeSelected = .mask//콘텐츠 타입 mask로 설정
     resetTracking() //트래킹 재시작
   }
 
   @IBAction func didTapGlasses(_ sender: Any) {
     print("didTapGlasses")
-    
     contentTypeSelected = .glasses //콘텐츠 타입 glasses로 설정
     resetTracking() //트래킹 재시작
   }
 
   @IBAction func didTapPig(_ sender: Any) {
     print("didTapPig")
-    
     contentTypeSelected = .pig //콘텐츠 타입 pig로 설정
     resetTracking() //트래킹 재시작
   }
@@ -155,9 +152,9 @@ extension ViewController: ARSCNViewDelegate {
     //여기에 렌더링 루프를 추가하면 계속해서 Scene에 반영된다(게임에서도!).
     //즉, Scene를 렌더링하는 데 사용하는 표현 노드의 계층 구조를 즉시 업데이트 한다.
     guard let estimate = session.currentFrame?.lightEstimate else {
-      //configuration에서 isLightEstimationEnabled 속성을 true로 하면,
-      //캡쳐하는 모든 객체에 대해 Scene 조명 정보를 제공한다. 이 정보는 각 ARFrame의 lightEstimate에 저장된다.
-      //이 데이터를 사용하면, 환경 조명을 일치시켜 마스크를 더욱 사실적으로 보이게 할 수 있다.
+        //configuration에서 isLightEstimationEnabled 속성을 true로 하면,
+        //캡쳐하는 모든 객체에 대해 Scene 조명 정보를 제공한다. 이 정보는 각 ARFrame의 lightEstimate에 저장된다.
+        //이 데이터를 사용하면, 환경 조명을 일치시켜 마스크를 더욱 사실적으로 보이게 할 수 있다.
       return
     }
 
@@ -190,15 +187,15 @@ extension ViewController: ARSCNViewDelegate {
     //앵커가 업데이트 될 때마다 뷰가 자동으로 이 메서드를 호출한다.
     guard let faceAnchor = anchor as? ARFaceAnchor else { return }
     updateMessage(text: "Tracking your face.")
-    
+
     switch contentTypeSelected {
     case .none: break
     case .mask:
-        mask?.update(withFaceAnchor: faceAnchor)
+      mask?.update(withFaceAnchor: faceAnchor)
     case .glasses:
-        glasses?.update(withFaceAnchor: faceAnchor)
+      glasses?.update(withFaceAnchor: faceAnchor)
     case .pig:
-        pig?.update(withFaceAnchor: faceAnchor)
+      pig?.update(withFaceAnchor: faceAnchor)
     }
   }
 
@@ -240,9 +237,9 @@ private extension ViewController {
 
   // Tag: ARFaceTrackingConfiguration
   func resetTracking() {
+    //얼굴 추적을 위해서는 ARFaceTrackingConfiguration을 사용해야 한다.
+    //이전까지는 AROrientationTrackingConfiguration이나 ARWorldTrackingConfiguration를 사용했다.
     guard ARFaceTrackingConfiguration.isSupported else {
-      //얼굴 추적을 위해서는 ARFaceTrackingConfiguration을 사용해야 한다.
-      //이전까지는 AROrientationTrackingConfiguration이나 ARWorldTrackingConfiguration를 사용했다.
       updateMessage(text: "Face Tracking Not Supported.")
       return
     }
@@ -263,7 +260,7 @@ private extension ViewController {
   func createFaceGeometry() {
     updateMessage(text: "Creating face geometry.")
 
-    let device = sceneView.device! //Metal Device 사용
+    let device = sceneView.device!  //Metal Device 사용
     //이게 원본 코드인데 오류 나는 경우도 있음
     
 //        var device: MTLDevice!
@@ -290,23 +287,23 @@ private extension ViewController {
     switch contentTypeSelected {
     case .none: break
     case .mask:
-        if let content = mask {
-            node.addChildNode(content)
-            //앵커에 해당 마스크 추가
-            //앵커에 자식으로 추가하기 때문에 앵커노드로 표시되는 사용자의 얼굴을 자동으로 추적한다.
-        }
+      if let content = mask {
+        node.addChildNode(content)
+        //앵커에 해당 마스크 추가
+        //앵커에 자식으로 추가하기 때문에 앵커노드로 표시되는 사용자의 얼굴을 자동으로 추적한다.
+      }
     case .glasses:
-        if let content = glasses {
-            node.addChildNode(content)
-            //앵커에 안경 추가
-            //앵커에 자식으로 추가하기 때문에 앵커노드로 표시되는 사용자의 얼굴을 자동으로 추적한다.
-        }
+      if let content = glasses {
+        node.addChildNode(content)
+        //앵커에 안경 추가
+        //앵커에 자식으로 추가하기 때문에 앵커노드로 표시되는 사용자의 얼굴을 자동으로 추적한다.
+      }
     case .pig:
-        if let content = pig {
-            node.addChildNode(content)
-            //앵커에 돼지 추가
-            //앵커에 자식으로 추가하기 때문에 앵커노드로 표시되는 사용자의 얼굴을 자동으로 추적한다.
-        }
+      if let content = pig {
+        node.addChildNode(content)
+        //앵커에 돼지 추가
+        //앵커에 자식으로 추가하기 때문에 앵커노드로 표시되는 사용자의 얼굴을 자동으로 추적한다.
+      }
     }
   }
 

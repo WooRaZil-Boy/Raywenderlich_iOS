@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4wD-Eu-NKJ">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment version="2304" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="p66-MW-kpi">
+            <objects>
+                <navigationController id="4dB-9U-ji1" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="qJf-M8-ny5">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="M7I-7j-gMH" kind="relationship" relationship="rootViewController" id="LKm-X0-2jt"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9m7-QJ-RFD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1183" y="164"/>
+        </scene>
+        <!--Add a Cat-->
+        <scene sceneID="B9o-T7-PNA">
+            <objects>
+                <viewController id="M7I-7j-gMH" customClass="CatDetailViewController" customModule="Catstagram" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="YeQ-8q-8a6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="LGF-Oy-aV5"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Add a Cat" id="pgD-BA-Oim">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="x1H-6e-Tjn">
+                            <connections>
+                                <segue destination="OsV-n7-ssV" kind="unwind" identifier="exitSegue" unwindAction="exitAddModalWithSegue:" id="YZ9-5W-H5f"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="YsI-qx-JKe"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XQR-5P-wDG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="OsV-n7-ssV" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="2055" y="159"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="LXL-Yo-JcU">
+            <objects>
+                <navigationController id="4wD-Eu-NKJ" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="gmY-qc-MOy">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="OU8-nv-cCh" kind="relationship" relationship="rootViewController" id="crm-Za-9Zz"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uab-sE-3tM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-655" y="165"/>
+        </scene>
+        <!--Cat Feed View Controller-->
+        <scene sceneID="y06-La-q7W">
+            <objects>
+                <viewController id="OU8-nv-cCh" customClass="CatFeedViewController" customModule="Catstagram" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mAW-bg-h5j">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="1RQ-MY-ke2"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="ekP-Qv-BE4">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="0Dz-w5-vrX">
+                            <connections>
+                                <segue destination="4dB-9U-ji1" kind="presentation" id="A5E-DM-H21"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Gg0-rf-Icf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="254" y="162"/>
+        </scene>
+    </scenes>
+</document>

@@ -31,6 +31,7 @@
 import UIKit
 import SceneKit
 import ARKit
+import ReplayKit
 
 enum ContentType: Int {
   case none
@@ -59,6 +60,10 @@ class ViewController: UIViewController {
   var maskType = MaskType.zombie
   var glasses: Glasses?
   var pig: Pig?
+    
+  let sharedRecorder = RPScreenRecorder.shared()
+  //ReplayKit에서 녹화/녹음을 담당하는 싱글톤 객체
+  private var isRecording = false
 
   // MARK: - View Management
 
@@ -66,6 +71,8 @@ class ViewController: UIViewController {
     super.viewDidLoad()
     setupScene()
     createFaceGeometry()
+    
+    sharedRecorder.delegate = self //delegate 설정
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -138,6 +145,18 @@ class ViewController: UIViewController {
 
   @IBAction func didTapRecord(_ sender: Any) {
     print("didTapRecord")
+    
+    guard sharedRecorder.isAvailable else {
+        //ReplayKit 사용할 수 있는 지 여부 확인
+        print("Recording is not available.")
+        return
+    }
+    
+    if !isRecording {
+        startRecording()
+    } else {
+        stopRecording()
+    }
   }
 }
 
@@ -316,6 +335,120 @@ private extension ViewController {
   }
 }
 
+// MARK: - RPPreviewViewControllerDelegate (ReplayKit)
+extension ViewController: RPPreviewViewControllerDelegate, RPScreenRecorderDelegate {
+    //ReplayKit의 delegate
+    
+    // RPPreviewViewControllerDelegate methods
+    func previewControllerDidFinish(_ previewController: RPPreviewViewController) {
+        print("previewControllerDidFinish")
+        dismiss(animated: true) //편집 뷰를 닫는다.
+    }
+    
+    // RPScreenRecorderDelegate methods
+    func screenRecorder(_ screenRecorder: RPScreenRecorder, didStopRecordingWith previewViewController: RPPreviewViewController?, error: Error?) {
+        //오류 혹은 사용불가로 recording이 중단 되면 이 메서드가 호출된다.
+        guard error == nil else {
+            print("There was an error recording: \(String(describing: error?.localizedDescription))")
+            self.isRecording = false
+            return
+        }
+    }
+    
+    func screenRecorderDidChangeAvailability(_ screenRecorder: RPScreenRecorder) {
+        //recording 가능 / 불가능 상태가 변경되면 호출된다.
+        recordButton.isEnabled = sharedRecorder.isAvailable
+        //ReplayKit을 사용할 수 있으면 recordButton도 사용 가능하도록 설정한다.
+        if !recordButton.isEnabled {
+            self.isRecording = false
+        }
+        
+        // Update the title in code
+        if sharedRecorder.isAvailable { //상태에 따른 UI 업데이트
+            DispatchQueue.main.async {
+                self.recordButton.setTitle("[ RECORD ]", for: .normal)
+                self.recordButton.backgroundColor = UIColor(red: 0.0039,
+                                                            green: 0.5882,
+                                                            blue: 1, alpha: 1.0)
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.recordButton.setTitle("[ RECORDING DISABLED ]", for: .normal)
+                self.recordButton.backgroundColor = UIColor.red
+            }
+        }
+    }
+    
+    // Private functions
+    private func startRecording() {
+        self.sharedRecorder.isMicrophoneEnabled = true
+        //true로 설정하면, 처음 사용 시에 마이크 사용 권한에 대한 alert을 띄운다.
+        
+        sharedRecorder.startRecording(handler: { error in
+            //recording 시작 //startRecording은 RPPreviewViewController를 사용하여 데이터를 처리한다.
+            //startCapture(handler:completionHandler:)을 사용할 수도 있다.
+            guard error == nil else { //에러
+                print("There was an error starting the recording: \(String(describing: error?.localizedDescription))")
+                return
+            }
+            
+            //정상작동
+            print("Started Recording Successfully")
+            self.isRecording = true //recording 중
+            
+            DispatchQueue.main.async { //UI 업데이트
+                self.recordButton.setTitle("[ STOP RECORDING ]", for: .normal)
+                self.recordButton.backgroundColor = UIColor.red
+            }
+        })
+    }
+    
+    func stopRecording() {
+        self.sharedRecorder.isMicrophoneEnabled = false
+        //다시 false(기본 설정)으로 바꾼다.
+        
+        sharedRecorder.stopRecording(handler: { previewViewController, error in
+            //recording 중단. //startRecording의 역이다.
+            guard error == nil else { //에러
+                print("There was an error stopping the recording: \(String(describing: error?.localizedDescription))")
+                return
+            }
+            
+            //정상작동
+//            if let unwrappedPreview = previewViewController {
+//                unwrappedPreview.previewControllerDelegate = self //delegate 설정
+//                self.present(unwrappedPreview, animated: true, completion: {})
+//            }
+            
+            //recording 후 바로 편집화면으로 가기 전에 사용자가 삭제할 것인지 편집화면으로 갈 것인지 선택하도록 변경
+            let alert = UIAlertController(title: "Recording Complete", message: "Do you want to preview/edit your recording or delete it?", preferredStyle: .alert)
+            let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { (action: UIAlertAction) in
+                self.sharedRecorder.discardRecording(handler: { () -> Void in
+                    //삭제
+                    print("Recording deleted.")
+                })
+            })
+            let editAction = UIAlertAction(title: "Edit", style: .default, handler: { (action: UIAlertAction) -> Void in
+                if let unwrappedPreview = previewViewController {
+                    unwrappedPreview.previewControllerDelegate = self
+                    self.present(unwrappedPreview, animated: true, completion: {})
+                }
+            })
+            
+            alert.addAction(editAction)
+            alert.addAction(deleteAction)
+            self.present(alert, animated: true, completion: nil)
+        })
+        
+        //recording이 완료되었으므로 다시 기본 상태로 UI와 변수를 업데이트 한다.
+        self.isRecording = false
+        DispatchQueue.main.async {
+            self.recordButton.setTitle("[ RECORD ]", for: .normal)
+            self.recordButton.backgroundColor = UIColor(red: 0.0039, green: 0.5882, blue: 1, alpha: 1.0) /* #0196ff */
+        }
+    }
+}
+
 //ARKit for face-based AR
 //ARKit은 TrueDepth 전면 카메라를 사용하여 얼굴 추적을 할 수 있다. 현재는 iPhoneX가 이 카메라가 장착된 유일한 장치이다.
 //ARKit의 얼굴 추적은 사람 얼굴만 추적하며, 네 가지 기본 기능이 포함되어 있다.
@@ -332,3 +465,34 @@ private extension ViewController {
 //그 후 앵커를 사용하여 위치 및 방향과 같은 가상 콘텐츠에 대한 다양한 세부 정보를 얻을 수 있다.
 //두 개 이상의 얼굴이 감지되면, 가장 확실한 하나의 얼굴을 사용한다. 좌표계는 오른손 기준이며 미터 단위이다. p.298
 //이 좌표계는 x가 사용자의 오른쪽에 있음을 의미한다. 실제 세계에서 오른쪽은 사용자의 왼쪽이다.
+
+
+
+
+//Getting started with ReplayKit
+//iOS 9에서 처음 나온 ReplayKit은 앱에 화면 녹화 기능을 제공한다.
+//ReplayKit을 사용하면 두 개의 ReplayKit API를 사용해 앱에서 오디오, 비디오, 마이크 녹화 및 녹음을 할 수 있다.
+//• RPScreenRecorder : 직접 recording을 하는 싱글톤. 모든 앱은 이 클래스의 shared instance에 액세스할 수 있다.
+//• RPPreviewViewController : recoding 완료 후 편집하거나 공유하는 데 사용하는 뷰 컨트롤러
+//2017년 발표된 ReplayKit 2에서는 다음과 같은 기능이 추가되었다.
+//• iOS screen record and broadcast : iOS 화면을 recoding한다. 시스템 UI를 제외한 모든 화면을 가져올 수 있다.
+//  디바이스에서 바로 broadcasting도 가능하다.
+//• Broadcast pairing : 라이브 스트리밍을 앱에 통합할 수 있다.
+//• Fast camera switching : 전 / 후면 카메라 사이에서 피드를 전환할 수 있다.
+//• In-app screen capture : 앱에서 직접 스크린을 캡쳐. 오디오, 비디오, 마이크에 직접 액세스할 수 있다.
+
+
+
+
+//How does ReplayKit work?
+//ReplayKit의 전체적인 로직은 p.344. 앱에서 RPScreenRecorder로 replay daemon과 통신하고
+//하위 수준의 비디오 및 오디오 서비스와 통신을 한다. 거기서 상황이 인코딩되고 ReplayKit에서만 액세스 할 수 있는
+//동영상 파일로 전송된다. 이 후, RPPreviewViewController 인스턴스에서 편집, 미리보기, 공유 등을 할 수 있다.
+
+
+
+//How does ReplayKit 2 work?
+//ReplayKit과 거의 비슷하며 전체적인 로직은 p.345. 가장 큰 차이점은 녹화한 오디오/비디오 샘플이
+//RPPreviewViewController를 통하지 않고 우회하여 앱으로 직접 전송된다.
+
+

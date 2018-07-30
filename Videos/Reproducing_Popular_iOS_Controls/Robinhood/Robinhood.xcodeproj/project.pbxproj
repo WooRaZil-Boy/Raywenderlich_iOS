@@ -1,0 +1,456 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B622710920BFAB6E003D1DE7 /* TickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B622710820BFAB6E003D1DE7 /* TickerCell.swift */; };
+		B622710B20BFAB77003D1DE7 /* TickerColumnCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B622710A20BFAB77003D1DE7 /* TickerColumnCell.swift */; };
+		B622710D20BFAB86003D1DE7 /* TickerControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B622710C20BFAB86003D1DE7 /* TickerControl.swift */; };
+		B6289EF320BF6B5E00A85B1F /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6289EF220BF6B5E00A85B1F /* GraphView.swift */; };
+		B64C914B209F3DF100BB1DEC /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B64C9145209F3DF100BB1DEC /* Roboto-Bold.ttf */; };
+		B64C914C209F3DF100BB1DEC /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B64C9146209F3DF100BB1DEC /* Roboto-Medium.ttf */; };
+		B64C914D209F3DF200BB1DEC /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B64C9147209F3DF100BB1DEC /* Roboto-Thin.ttf */; };
+		B64C914E209F3DF200BB1DEC /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B64C9148209F3DF100BB1DEC /* Roboto-Light.ttf */; };
+		B64C914F209F3DF200BB1DEC /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B64C9149209F3DF100BB1DEC /* Roboto-Regular.ttf */; };
+		B64C9150209F3DF200BB1DEC /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B64C914A209F3DF100BB1DEC /* Roboto-Black.ttf */; };
+		B64C9153209F3E2100BB1DEC /* StyleGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64C9152209F3E2100BB1DEC /* StyleGuide.swift */; };
+		B64C915C209F3E6200BB1DEC /* RobinhoodData.json in Resources */ = {isa = PBXBuildFile; fileRef = B64C915A209F3E6200BB1DEC /* RobinhoodData.json */; };
+		B64C915D209F3E6200BB1DEC /* RobinhoodData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64C915B209F3E6200BB1DEC /* RobinhoodData.swift */; };
+		B64C9165209F3E7F00BB1DEC /* CardStackLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64C9162209F3E7F00BB1DEC /* CardStackLayout.swift */; };
+		B64C9166209F3E7F00BB1DEC /* RobinhoodCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64C9163209F3E7F00BB1DEC /* RobinhoodCardViewModel.swift */; };
+		B64C9167209F3E7F00BB1DEC /* RobinhoodCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64C9164209F3E7F00BB1DEC /* RobinhoodCardCell.swift */; };
+		B657D1C520E1763900D65C98 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657D1C420E1763900D65C98 /* String+Extensions.swift */; };
+		B6BF6461209F137F000FDF39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BF6460209F137F000FDF39 /* AppDelegate.swift */; };
+		B6BF6463209F137F000FDF39 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BF6462209F137F000FDF39 /* ViewController.swift */; };
+		B6BF6466209F137F000FDF39 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6BF6464209F137F000FDF39 /* Main.storyboard */; };
+		B6BF6468209F1380000FDF39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6BF6467209F1380000FDF39 /* Assets.xcassets */; };
+		B6BF646B209F1380000FDF39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6BF6469209F1380000FDF39 /* LaunchScreen.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		B622710820BFAB6E003D1DE7 /* TickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickerCell.swift; sourceTree = "<group>"; };
+		B622710A20BFAB77003D1DE7 /* TickerColumnCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickerColumnCell.swift; sourceTree = "<group>"; };
+		B622710C20BFAB86003D1DE7 /* TickerControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickerControl.swift; sourceTree = "<group>"; };
+		B6289EF220BF6B5E00A85B1F /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GraphView.swift; path = Robinhood/Graph/GraphView.swift; sourceTree = SOURCE_ROOT; };
+		B64C9145209F3DF100BB1DEC /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
+		B64C9146209F3DF100BB1DEC /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		B64C9147209F3DF100BB1DEC /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
+		B64C9148209F3DF100BB1DEC /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
+		B64C9149209F3DF100BB1DEC /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		B64C914A209F3DF100BB1DEC /* Roboto-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Black.ttf"; sourceTree = "<group>"; };
+		B64C9152209F3E2100BB1DEC /* StyleGuide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleGuide.swift; sourceTree = "<group>"; };
+		B64C915A209F3E6200BB1DEC /* RobinhoodData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RobinhoodData.json; sourceTree = "<group>"; };
+		B64C915B209F3E6200BB1DEC /* RobinhoodData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RobinhoodData.swift; sourceTree = "<group>"; };
+		B64C9162209F3E7F00BB1DEC /* CardStackLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardStackLayout.swift; sourceTree = "<group>"; };
+		B64C9163209F3E7F00BB1DEC /* RobinhoodCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RobinhoodCardViewModel.swift; sourceTree = "<group>"; };
+		B64C9164209F3E7F00BB1DEC /* RobinhoodCardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RobinhoodCardCell.swift; sourceTree = "<group>"; };
+		B657D1C420E1763900D65C98 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		B6BF645D209F137F000FDF39 /* Robinhood.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Robinhood.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6BF6460209F137F000FDF39 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B6BF6462209F137F000FDF39 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B6BF6465209F137F000FDF39 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B6BF6467209F1380000FDF39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B6BF646A209F1380000FDF39 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B6BF646C209F1380000FDF39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B6BF645A209F137F000FDF39 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B622710720BFAB35003D1DE7 /* Ticker */ = {
+			isa = PBXGroup;
+			children = (
+				B622710820BFAB6E003D1DE7 /* TickerCell.swift */,
+				B622710A20BFAB77003D1DE7 /* TickerColumnCell.swift */,
+				B622710C20BFAB86003D1DE7 /* TickerControl.swift */,
+			);
+			path = Ticker;
+			sourceTree = "<group>";
+		};
+		B6289EF120BF6B4A00A85B1F /* Graph */ = {
+			isa = PBXGroup;
+			children = (
+				B6289EF220BF6B5E00A85B1F /* GraphView.swift */,
+			);
+			path = Graph;
+			sourceTree = "<group>";
+		};
+		B64C9144209F3DDA00BB1DEC /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				B64C914A209F3DF100BB1DEC /* Roboto-Black.ttf */,
+				B64C9145209F3DF100BB1DEC /* Roboto-Bold.ttf */,
+				B64C9148209F3DF100BB1DEC /* Roboto-Light.ttf */,
+				B64C9146209F3DF100BB1DEC /* Roboto-Medium.ttf */,
+				B64C9149209F3DF100BB1DEC /* Roboto-Regular.ttf */,
+				B64C9147209F3DF100BB1DEC /* Roboto-Thin.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		B64C9151209F3E1400BB1DEC /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				B64C9152209F3E2100BB1DEC /* StyleGuide.swift */,
+				B657D1C420E1763900D65C98 /* String+Extensions.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		B64C9154209F3E2A00BB1DEC /* Cards */ = {
+			isa = PBXGroup;
+			children = (
+				B64C9164209F3E7F00BB1DEC /* RobinhoodCardCell.swift */,
+				B64C9163209F3E7F00BB1DEC /* RobinhoodCardViewModel.swift */,
+				B64C9162209F3E7F00BB1DEC /* CardStackLayout.swift */,
+			);
+			path = Cards;
+			sourceTree = "<group>";
+		};
+		B64C9159209F3E5B00BB1DEC /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				B64C915A209F3E6200BB1DEC /* RobinhoodData.json */,
+				B64C915B209F3E6200BB1DEC /* RobinhoodData.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		B6BF6454209F137F000FDF39 = {
+			isa = PBXGroup;
+			children = (
+				B6BF645F209F137F000FDF39 /* Robinhood */,
+				B6BF645E209F137F000FDF39 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B6BF645E209F137F000FDF39 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B6BF645D209F137F000FDF39 /* Robinhood.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B6BF645F209F137F000FDF39 /* Robinhood */ = {
+			isa = PBXGroup;
+			children = (
+				B622710720BFAB35003D1DE7 /* Ticker */,
+				B6289EF120BF6B4A00A85B1F /* Graph */,
+				B64C9159209F3E5B00BB1DEC /* Data */,
+				B64C9154209F3E2A00BB1DEC /* Cards */,
+				B64C9151209F3E1400BB1DEC /* Helpers */,
+				B64C9144209F3DDA00BB1DEC /* Fonts */,
+				B6BF6460209F137F000FDF39 /* AppDelegate.swift */,
+				B6BF6462209F137F000FDF39 /* ViewController.swift */,
+				B6BF6464209F137F000FDF39 /* Main.storyboard */,
+				B6BF6467209F1380000FDF39 /* Assets.xcassets */,
+				B6BF6469209F1380000FDF39 /* LaunchScreen.storyboard */,
+				B6BF646C209F1380000FDF39 /* Info.plist */,
+			);
+			path = Robinhood;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B6BF645C209F137F000FDF39 /* Robinhood */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B6BF6485209F1380000FDF39 /* Build configuration list for PBXNativeTarget "Robinhood" */;
+			buildPhases = (
+				B6BF6459209F137F000FDF39 /* Sources */,
+				B6BF645A209F137F000FDF39 /* Frameworks */,
+				B6BF645B209F137F000FDF39 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Robinhood;
+			productName = Robinhood;
+			productReference = B6BF645D209F137F000FDF39 /* Robinhood.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B6BF6455209F137F000FDF39 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0930;
+				LastUpgradeCheck = 0930;
+				ORGANIZATIONNAME = RayWenderlich.com;
+				TargetAttributes = {
+					B6BF645C209F137F000FDF39 = {
+						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 1000;
+					};
+				};
+			};
+			buildConfigurationList = B6BF6458209F137F000FDF39 /* Build configuration list for PBXProject "Robinhood" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B6BF6454209F137F000FDF39;
+			productRefGroup = B6BF645E209F137F000FDF39 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B6BF645C209F137F000FDF39 /* Robinhood */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B6BF645B209F137F000FDF39 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B64C914C209F3DF100BB1DEC /* Roboto-Medium.ttf in Resources */,
+				B6BF646B209F1380000FDF39 /* LaunchScreen.storyboard in Resources */,
+				B64C914F209F3DF200BB1DEC /* Roboto-Regular.ttf in Resources */,
+				B64C914D209F3DF200BB1DEC /* Roboto-Thin.ttf in Resources */,
+				B6BF6468209F1380000FDF39 /* Assets.xcassets in Resources */,
+				B64C9150209F3DF200BB1DEC /* Roboto-Black.ttf in Resources */,
+				B64C914E209F3DF200BB1DEC /* Roboto-Light.ttf in Resources */,
+				B64C914B209F3DF100BB1DEC /* Roboto-Bold.ttf in Resources */,
+				B64C915C209F3E6200BB1DEC /* RobinhoodData.json in Resources */,
+				B6BF6466209F137F000FDF39 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B6BF6459209F137F000FDF39 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B622710D20BFAB86003D1DE7 /* TickerControl.swift in Sources */,
+				B6BF6463209F137F000FDF39 /* ViewController.swift in Sources */,
+				B64C915D209F3E6200BB1DEC /* RobinhoodData.swift in Sources */,
+				B622710920BFAB6E003D1DE7 /* TickerCell.swift in Sources */,
+				B657D1C520E1763900D65C98 /* String+Extensions.swift in Sources */,
+				B64C9166209F3E7F00BB1DEC /* RobinhoodCardViewModel.swift in Sources */,
+				B6BF6461209F137F000FDF39 /* AppDelegate.swift in Sources */,
+				B64C9165209F3E7F00BB1DEC /* CardStackLayout.swift in Sources */,
+				B6289EF320BF6B5E00A85B1F /* GraphView.swift in Sources */,
+				B622710B20BFAB77003D1DE7 /* TickerColumnCell.swift in Sources */,
+				B64C9167209F3E7F00BB1DEC /* RobinhoodCardCell.swift in Sources */,
+				B64C9153209F3E2100BB1DEC /* StyleGuide.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		B6BF6464209F137F000FDF39 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B6BF6465209F137F000FDF39 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		B6BF6469209F1380000FDF39 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B6BF646A209F1380000FDF39 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B6BF6483209F1380000FDF39 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B6BF6484209F1380000FDF39 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B6BF6486209F1380000FDF39 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2HG8AL7F4U;
+				INFOPLIST_FILE = Robinhood/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.Robinhood;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B6BF6487209F1380000FDF39 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2HG8AL7F4U;
+				INFOPLIST_FILE = Robinhood/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.Robinhood;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B6BF6458209F137F000FDF39 /* Build configuration list for PBXProject "Robinhood" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B6BF6483209F1380000FDF39 /* Debug */,
+				B6BF6484209F1380000FDF39 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B6BF6485209F1380000FDF39 /* Build configuration list for PBXNativeTarget "Robinhood" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B6BF6486209F1380000FDF39 /* Debug */,
+				B6BF6487209F1380000FDF39 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B6BF6455209F137F000FDF39 /* Project object */;
+}

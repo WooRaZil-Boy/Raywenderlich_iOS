@@ -1,0 +1,72 @@
+ [
+  {
+  "title": "After-hours movement",
+  "type": "stockMovement",
+  "time": "1d",
+  "text": "GILD is down 2.46% to $76.75 in after-hours trading.",
+  "link": "View GILD"
+  },
+  {
+  "title": "Yahoo finance",
+  "type": "news",
+  "time": "6h",
+  "text": "3 Stocks With Blazingly Fast-Growing Dividends",
+  "link": "View article"
+  },
+  {
+  "title": "Seeking Alpha",
+  "type": "news",
+  "time": "10h",
+  "text": "SA Interview: Investing in Orphaned Stocks With The Boyar Value Group",
+  "link": "View article"
+  },
+  {
+  "title": "Seeking Alpha",
+  "type": "news",
+  "time": "12h",
+  "text": "33 Dividend Increases February 19-23, 2018 (Part 3: Remaining Sectors)",
+  "link": "View article"
+  },
+  {
+  "title": "Yahoo Finance",
+  "type": "news",
+  "time": "20h",
+  "text": "These 2 Tech Stocks Have Strong Dividend Growth Potential",
+  "link": "View article"
+  },
+  {
+  "title": "Yahoo Finance",
+  "type": "news",
+  "time": "1d",
+  "text": "Baidu's iQiyi Files for IPO -- What Investors Need to Know",
+  "link": "View article"
+  },
+  {
+  "title": "Yahoo Finance",
+  "type": "news",
+  "time": "1d",
+  "text": "Financially Strong And High Growth Stocks",
+  "link": "View article"
+  },
+  {
+  "title": "Seeking Alpha",
+  "type": "news",
+  "time": "1d",
+  "text": "Budgeting, Savings, Investing, And Retirement Planning",
+  "link": "View article"
+  },
+  {
+  "title": "Yahoo Finance",
+  "type": "news",
+  "time": "1d",
+  "text": "3 Stocks to Buy and Hold for Decades",
+  "link": "View article"
+  },
+  {
+  "title": "Seeking Alpha",
+  "type": "news",
+  "time": "1d",
+  "text": "Splunk: The Unstoppable Firecracker",
+  "link": "View article"
+  }
+  ]

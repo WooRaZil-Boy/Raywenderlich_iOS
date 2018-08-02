@@ -1,0 +1,232 @@
+{ "cardTiles": [
+                {
+                "type": "appOfTheDay",
+                "apps": [
+                         {
+                         "name": "Captioned - Say, Show, Share",
+                         "tagline": "Photo & Video",
+                         "iconName": "captionedIcon",
+                         "cost": "free",
+                         "category": "photo & video",
+                         "hasInAppPurchase": "false",
+                         "alreadyPurchased": "false",
+                         "onDevice": "false"
+                         }
+                        ],
+                "backgroundImage": "captionedBg",
+                "backgroundType": "dark"
+                },
+                {
+                "type": "appCollection",
+                "title": "Last-Minute Travel Booking",
+                "subtitle": "The Daily List",
+                "apps": [
+                           {
+                           "name": "Hitlist",
+                           "tagline": "Cheap flights, airline tickets",
+                           "iconName": "hitlistIcon",
+                           "cost": "free",
+                           "category": "travel",
+                           "hasInAppPurchase": "false",
+                           "alreadyPurchased": "false",
+                           "onDevice": "false"
+                           },
+                           {
+                           "name": "Hopper - Watch & Book Flights",
+                           "tagline": "Predict flight & hotel prices",
+                           "iconName": "hopperIcon",
+                           "cost": "free",
+                           "category": "travel",
+                           "hasInAppPurchase": "false",
+                           "alreadyPurchased": "true",
+                           "onDevice": "true"
+                           },
+                           {
+                           "name": "KAYAK Flights, Hotels & Cars",
+                           "tagline": "Find the best travel prices",
+                           "iconName": "kayakIcon",
+                           "cost": "free",
+                           "category": "travel",
+                           "hasInAppPurchase": "false",
+                           "alreadyPurchased": "true",
+                           "onDevice": "false"
+                           },
+                           {
+                           "name": "Hotels.com - Hotel booking",
+                           "tagline": "The obvious choice",
+                           "iconName": "hotelsIcon",
+                           "cost": "free",
+                           "category": "travel",
+                           "hasInAppPurchase": "false",
+                           "alreadyPurchased": "false",
+                           "onDevice": "false"
+                           },
+                           {
+                           "name": "Booking.com: Travel Deals",
+                           "tagline": "Travel",
+                           "iconName": "bookingIcon",
+                           "cost": "free",
+                           "category": "travel",
+                           "hasInAppPurchase": "false",
+                           "alreadyPurchased": "false",
+                           "onDevice": "false"
+                           },
+                           {
+                           "name": "Airbnb",
+                           "tagline": "The obvious choice",
+                           "iconName": "airbnbIcon",
+                           "cost": "free",
+                           "category": "travel",
+                           "hasInAppPurchase": "false",
+                           "alreadyPurchased": "true",
+                           "onDevice": "true"
+                           },
+                           {
+                           "name": "Amtrak",
+                           "tagline": "Travel",
+                           "iconName": "amtrakIcon",
+                           "cost": "free",
+                           "category": "travel",
+                           "hasInAppPurchase": "false",
+                           "alreadyPurchased": "false",
+                           "onDevice": "false"
+                           }
+                          ]
+                },
+                {
+                "type": "appArticle",
+                "title": "The Incredible, Adorable Sloth Bat",
+                "subtitle": "Behind the Scenes",
+                "description": "Tap to read how one of Toca Life: Pets' cutest creatures came to life.",
+                "apps": [
+                           {
+                           "name": "Toca Life: Pets",
+                           "tagline": "Meet friends with paws & claws",
+                           "iconName": "tocaLifeIcon",
+                           "cost": "$2.99",
+                           "category": "games",
+                           "hasInAppPurchase": "false",
+                           "alreadyPurchased": "false",
+                           "onDevice": "false"
+                           }
+                          ],
+                "backgroundImage": "tocaLifeBg",
+                "backgroundType": "dark"
+                },
+                {
+                "type": "appOfTheDay",
+                "apps": [
+                           {
+                           "name": "Taylor Swift: The Swift Life",
+                           "tagline": "Connect with Taylor Swift",
+                           "iconName": "taylorSwiftIcon",
+                           "cost": "free",
+                           "category": "social networking",
+                           "hasInAppPurchase": "true",
+                           "alreadyPurchased": "false",
+                           "onDevice": "false"
+                           }
+                          ],
+                "backgroundImage": "taylorSwiftBg",
+                "backgroundType": "dark"
+                },
+                {
+                "type": "appCollection",
+                "title": "Game that will Knock Your Socks Off",
+                "subtitle": "Let's Play",
+                "apps": [
+                           {
+                           "name": "KAMI 2",
+                           "tagline": "A calm, compelling puzzler",
+                           "iconName": "kami2Icon",
+                           "cost": "free",
+                           "category": "games",
+                           "hasInAppPurchase": "true",
+                           "alreadyPurchased": "false",
+                           "onDevice": "false"
+                           },
+                           {
+                           "name": "Rainbrow",
+                           "tagline": "Eyebrow-controlled game!",
+                           "iconName": "rainbrowIcon",
+                           "cost": "free",
+                           "category": "games",
+                           "hasInAppPurchase": "false",
+                           "alreadyPurchased": "true",
+                           "onDevice": "false"
+                           },
+                           {
+                           "name": "Reigns: Her Majesty",
+                           "tagline": "Swipe and be the Queen!",
+                           "iconName": "reignsIcon",
+                           "cost": "$2.99",
+                           "category": "games",
+                           "hasInAppPurchase": "false",
+                           "alreadyPurchased": "true",
+                           "onDevice": "true"
+                           },
+                           {
+                           "name": "Life Is Strange",
+                           "tagline": "Choice-Based Narrative Game",
+                           "iconName": "lifeIsStrangeIcon",
+                           "cost": "$2.99",
+                           "category": "games",
+                           "hasInAppPurchase": "true",
+                           "alreadyPurchased": "false",
+                           "onDevice": "false"
+                           },
+                           {
+                           "name": "Blackbox",
+                           "tagline": "Think outside the box",
+                           "iconName": "blackboxIcon",
+                           "cost": "free",
+                           "category": "games",
+                           "hasInAppPurchase": "true",
+                           "alreadyPurchased": "true",
+                           "onDevice": "true"
+                           },
+                           {
+                           "name": "Run Sausage Run!",
+                           "tagline": "Kitchen Nightmare Escape",
+                           "iconName": "runSausageIcon",
+                           "cost": "free",
+                           "category": "games",
+                           "hasInAppPurchase": "true",
+                           "alreadyPurchased": "false",
+                           "onDevice": "false"
+                           },
+                           {
+                           "name": "Toca Life: Pets",
+                           "tagline": "Meet friends with paws & claws",
+                           "iconName": "tocaLifeIcon",
+                           "cost": "$2.99",
+                           "category": "games",
+                           "hasInAppPurchase": "false",
+                           "alreadyPurchased": "false",
+                           "onDevice": "false"
+                           }
+                          ]
+                },
+                {
+                "type": "appArticle",
+                "title": "Gen III Pokémon Are Here!",
+                "subtitle": "Major update",
+                "description": "Tap to get the skinny on Pokémon Go's newest characters.",
+                "apps": [
+                           {
+                           "id": "pokemonGo",
+                           "name": "Pokémon GO",
+                           "tagline": "Discover Pokémon worldwide",
+                           "iconName": "pokemonGoIcon",
+                           "cost": "free",
+                           "category": "travel",
+                           "hasInAppPurchase": "false",
+                           "alreadyPurchased": "false",
+                           "onDevice": "false"
+                           }
+                          ],
+                "backgroundImage": "pokemonGoBg",
+                "backgroundType": "light"
+                }
+                ]
+}

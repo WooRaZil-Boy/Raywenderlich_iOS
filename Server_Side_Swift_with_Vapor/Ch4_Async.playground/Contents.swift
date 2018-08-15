@@ -1,6 +1,6 @@
 //Async
 //Vapor 3의 가장 중요한 새 기능 중 하나는 비동기이다. 동기식으로 처리할 때, 메인 스레드 하나만 사용한다면, 해당 서버 작업이 끝날 때까지 스레드가 차단된다.
-//반명 비동기식 서버에서는 하나의 스레드에서 여러 작업을 따로 처리할 수 있다. p.35
+//반명 비동기식 서버에서는 하나의 스레드에서 여러 작업을 따로 처리할 수 있다. p.48
 //서버가 여러 개의 스레드를 가질 수 있지만, 그 수에는 한계가 있다. 스레드 간의 컨텍스트 전환은 비용이 많이 들며, 모든 데이터 액세스가 스레드로부터 안전하도록 보장하는 것
 //또한 소모적인 작업이면서 오류가 발생하기 쉽다. 결과적으로 스레드를 추가하여 동기식으로 구현하는 것은 비효율적인 방법이다.
 
@@ -46,7 +46,7 @@
 //
 //        return user.save().map(to: HTTPStatus.self) { user in
 //            //user.save()로 갱신된 사용자 DB에 저장
-//            //Future<User>를 반환하지만, HTTPStatus이 Future가 아니므로 map을 사용한다.
+//            //Future<User>를 반환하지만, HTTPStatus의 값은 Future가 아니므로 map을 사용한다.
 //            return HTTPStatus.noContent
 //            //적절한 HTTPStatus값을 반환한다.
 //        }
@@ -83,9 +83,42 @@
 //    //201 Created 상태 반환
 //}
 
+//Multiple futures
+//때로는 서로 의존하지 않는 여러 유형의 Future를 기다려야 한다.(ex. request 데이터 디코딩하고 사용자를 DB에서 가져오는 경우)
+//Vapor는 최대 5개까지의 Future를 기다린다.
+//두 가지의 Future가 있다면 DB에서 모든 사용자를 얻고 request의 일부 데이터를 디코딩하면 된다.
+//flatMap(
+//    to: HTTPStatus.self,
+//    database.getAllUsers(),
+//    //Global flatMap을 사용하여 두 가지 Future가 완료될 때까지 기다린다.
+//    
+//request.content.decode(UserData.self)) { allUsers, userData in
+//    //클로저는 완료된 Future를 매개변수(allUsers, userData)로 사용한다.
+//    
+//    return allUsers[0]
+//        .addData(userData)
+//        .transform(to: HTTPStatus.noContent)
+//    //addData로 Future의 결과 return. noContent로 변환
+//}
+
+//map(
+//    to: HTTPStatus.self,
+//    database.getAllUsers(),
+//    //클로저가 Future의 결과를 반화하지 않으면 대신 global map을 사용할 수 있다.
+//
+//request.content.decode(UserData.self)) { allUsers, userData in
+//    //클로저는 완료된 Future를 매개변수(allUsers, userData)로 사용한다.
+//
+//    allUsers[0].syncAddData(userData)
+//    //동기식으로 AddData호출
+//
+//    return HTTPStatus.noConte환t //noContent 반환
+//}
+
 //Creating futures
 //때로는 사용자의 필요에 따라 Future를 만들어야 할 때가 있다. if 문이 non-Future를 반환하고, else 블록이 Future를 반환한다면,
-//컴파일러는 동일한 유형이 아니라는 경고를 할 것이다. 이런 경우, Future.map(on :)을 사용하 non-Future를 Future로 변환해야 한다.
+//컴파일러는 동일한 유형이 아니라는 경고를 할 것이다. 이런 경우, request.future(_ :)을 사용하여 non-Future를 Future로 변환해야 한다.
+//이전 버전에서는 Future.map(on:)
 //func createTrackingSession(for request: Request) -> Future<TrackingSession> {
 //    //request를 받아 TrackingSession을 생성하는 함수. Future<TrackingSession>를 반환
 //    return request.makeNewSession()
@@ -102,14 +135,15 @@
 //        //제대로 세션이 만들어지지 않은 경우, 새로운 TrackingSession을 생성한다.
 //    }
 //
-//    return Future.map(on: request) { createdSession }
-//    //Future.map(on:)을 사용해 Future유형을 반환할 수 있다.
+//    return request.future(createdSession)
+//    //request.future(_:)을 사용해 Future유형을 반환할 수 있다.
+//    //이는 request가 실행되는 동일한 작업자에게 Future를 반환한다.
 //}
 //createTrackingSession(for :)이 Future <TrackingSession>을 반환하기 때문에
-//future.map(on :)을 사용하여 createdSession을 Future<TrackingSession>으로 설정해야 한다.
+//request.future(_:)을 사용하여 createdSession을 Future<TrackingSession>으로 설정해야 한다.
 
 //Dealing with errors
-//Vapor는 오류 처리를 자주 사용한다. 대부분의 함수의 경우 오류처리를 지원해 커스터마이징할 수 있다.
+//Vapor는 Swift의 오류 처리를 자주 사용한다. 대부분의 함수의 경우 오류처리를 지원해 커스터마이징할 수 있다.
 //비동기에서의 오류 처리는 Promise가 언제 실행될 지 모르기 때문에 일반 Swift의 do-try-catch를 사용할 수 없다.
 //기본적으로 Vapor는 Future와 함께 작동하는 자체 do-try-catch 콜백을 가지고 있다.
 //let futureResult = user.save()
@@ -122,6 +156,7 @@
 //}
 //이 do-try-catch 메서드는 오류가 나더라도 중단되지는 않지만 해당 오류를 확인할 수 있다.
 //save() 호출이 실패하고 futureResult를 반환하 오류는 계속해서 체인에 전파되고 수정을 시도할 것이다.
+
 //Vapor는 이러한 유형 오류를 처리하기 위해 catchMap(_:)과 catchFlatMap(_:)을 제공한다.
 //이 메서드들은 오류를 처리하고 수정하거나 다른 오류를 발생 시킬 수 있다.
 //return user.save(on: req).catchMap { error -> User in
@@ -131,6 +166,7 @@
 //    return User(name: "Default User")
 //    //오류 시 반환할 기본 User
 //}
+
 //Vapor는 클로저가 Future를 반환해야 할 때, catchFlatMap(_:)를 사용할 수 있다.
 //return user.save().catchFlatMap { error -> Future<User> in
 //    print("Error saving the user: \(error)")
@@ -151,15 +187,18 @@
 //            return HTTPStatus.noContent
 //        }
 //}
+
 //map(to:)과 flatMap(to:)을 써서 아래처럼 쓸 수 있다.
 //return database
 //    .getAllUsers()
 //    .flatMap(to: User.self) { users in
+//        //Future
 //        let user = users[0]
 //        user.name = "Bob"
 //
 //        return user.save()
 //    }.map(to: HTTPStatus.self) { user in
+//        //Promise
 //        return HTTPStatus.noContent
 //}
 //Chaining futures를 사용해, 코드 중첩을 줄일 수 있으며 관리하기 더 쉽다.

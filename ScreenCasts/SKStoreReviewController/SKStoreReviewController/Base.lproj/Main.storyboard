@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.3.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="K6q-mz-RIB">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Review View Controller-->
+        <scene sceneID="kEu-z6-Vuz">
+            <objects>
+                <viewController id="K6q-mz-RIB" customClass="ReviewViewController" customModule="SKStoreReviewController" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="YyD-nq-GAk">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Workout Review" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jJR-qK-zcx">
+                                <rect key="frame" x="97" y="72" width="181" height="31.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jo1-8e-fUV">
+                                <rect key="frame" x="163" y="377" width="49" height="30"/>
+                                <state key="normal" title="Submit"/>
+                                <connections>
+                                    <action selector="submitButtonTouched:" destination="K6q-mz-RIB" eventType="touchUpInside" id="Bki-Z4-Ue3"/>
+                                </connections>
+                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="rAu-0c-RpV">
+                                <rect key="frame" x="18" y="182" width="302" height="68"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="J5P-4Z-AMX">
+                                        <rect key="frame" x="0.0" y="0.0" width="302" height="24"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Water Consumed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sAv-d8-aiL">
+                                                <rect key="frame" x="0.0" y="0.0" width="151" height="24"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20 mL" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odu-vz-qWg">
+                                                <rect key="frame" x="151" y="0.0" width="151" height="24"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="krK-e0-Zb1">
+                                        <rect key="frame" x="0.0" y="44" width="302" height="24"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calories Burned" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rz6-su-0jW">
+                                                <rect key="frame" x="0.0" y="0.0" width="151" height="24"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="200 kCal" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qm8-PT-eLs">
+                                                <rect key="frame" x="151" y="0.0" width="151" height="24"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoDark" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Drt-Qz-kYz">
+                                <rect key="frame" x="337" y="625" width="22" height="22"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="jJR-qK-zcx" firstAttribute="centerX" secondItem="T7x-Sw-AGh" secondAttribute="centerX" id="084-wl-vPa"/>
+                            <constraint firstItem="T7x-Sw-AGh" firstAttribute="bottom" secondItem="Drt-Qz-kYz" secondAttribute="bottom" constant="20" id="1wM-LQ-Msm"/>
+                            <constraint firstItem="rAu-0c-RpV" firstAttribute="top" secondItem="jJR-qK-zcx" secondAttribute="bottom" constant="78.5" id="38t-qg-ByB"/>
+                            <constraint firstItem="Jo1-8e-fUV" firstAttribute="top" secondItem="rAu-0c-RpV" secondAttribute="bottom" constant="127" id="7BH-oK-FG5"/>
+                            <constraint firstItem="rz6-su-0jW" firstAttribute="leading" secondItem="T7x-Sw-AGh" secondAttribute="leading" constant="18" id="A31-WJ-1Pt"/>
+                            <constraint firstItem="jJR-qK-zcx" firstAttribute="top" secondItem="T7x-Sw-AGh" secondAttribute="top" constant="52" id="Bx9-cm-Mbo"/>
+                            <constraint firstItem="T7x-Sw-AGh" firstAttribute="trailing" secondItem="Qm8-PT-eLs" secondAttribute="trailing" constant="55" id="Ead-qp-Vjc"/>
+                            <constraint firstItem="T7x-Sw-AGh" firstAttribute="trailing" secondItem="odu-vz-qWg" secondAttribute="trailing" constant="55" id="aPi-ou-Jip"/>
+                            <constraint firstItem="Jo1-8e-fUV" firstAttribute="centerX" secondItem="T7x-Sw-AGh" secondAttribute="centerX" id="nVw-sw-pGu"/>
+                            <constraint firstItem="sAv-d8-aiL" firstAttribute="leading" secondItem="T7x-Sw-AGh" secondAttribute="leading" constant="18" id="pez-0O-ILK"/>
+                            <constraint firstItem="T7x-Sw-AGh" firstAttribute="trailing" secondItem="Drt-Qz-kYz" secondAttribute="trailing" constant="16" id="yOZ-WJ-CzR"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="T7x-Sw-AGh"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RXQ-R2-f8u" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="122" y="181"/>
+        </scene>
+    </scenes>
+</document>

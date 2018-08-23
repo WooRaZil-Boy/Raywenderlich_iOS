@@ -1,0 +1,30 @@
+# 1 : Docker Compose 버전 지정
+version: '3'
+# 2 : 으용 프로그램의 서비스 정의
+services:
+  # 3 : til-app에 대한 서비스 정의
+  til-app:
+    # 4 : Docker Compose가 Postgres 컨테이너를 먼저 시작하도록 의존성 설정
+    depends_on:
+      - postgres
+    # 5 : Dockerfile를 현재 디렉토리에 빌드
+    build: .
+    # 6 : DATABASE_HOSTNAME 환경 변수를 삽입하고 포트를 설정한다.
+    # Docker Compose에는 내부 DNS 확인자가 있다.
+    #til-app 컨테이너가 hostname을 postgres로, postgres 컨테이너에 연결하도록 한다.
+    environment:
+      - DATABASE_HOSTNAME=postgres
+      - DATABASE_PORT=5432
+  # 7 : Postgres 컨테이너의 서비스 정의
+  postgres:
+    # 8 : 표준 Postgres image 사용
+    image: "postgres"
+    # 9 : DB 환경 변수 설정. 이전에 DB 생성 때 쓰던 것과 같다.
+    environment:
+      - POSTGRES_DB=vapor-test
+      - POSTGRES_USER=vapor
+      - POSTGRES_PASSWORD=password
+
+# 기본적으로 Docker 컨테이너는 서로 존재 여부를 알 수 없다.
+# Docker에는 응용 프로그램 테스트 및 실행을 위해 서로 다른 컨테이너를 연결하는 Docker Compose가 있다.
+# 이를 사용해 테스트에 필요한 PostgreSQL를 가져온다.

@@ -32,3 +32,5 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
 }
+
+//API 응용 프로그램과 같은 언어(Swift)를 사용해 관리할 수 있다.

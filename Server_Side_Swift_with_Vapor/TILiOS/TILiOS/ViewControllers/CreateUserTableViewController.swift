@@ -46,6 +46,33 @@ class CreateUserTableViewController: UITableViewController {
   }
 
   @IBAction func save(_ sender: Any) {
-    navigationController?.popViewController(animated: true)
+    guard let name = nameTextField.text, !name.isEmpty else { //name 입력 텍스트 필드가 비어 있는지 확인
+      ErrorPresenter.showError(message: "You must specify a name", on: self)
+      return
+    }
+    
+    guard let username = usernameTextField.text, !username.isEmpty else { //username 입력 텍스트 필드가 비어 있는지 확인
+      ErrorPresenter.showError(message: "You must specify a username", on: self)
+      return
+    }
+    
+    let user = User(name: name, username: username)
+    //입력된 데이터로 새로운 User 생성
+    
+    ResourceRequest<User>(resourcePath: "users").save(user) { [weak self] result in
+      //생성된 user로, ResourceRequest 생성해 save(_: completion:) 메서드 실행
+      switch result {
+      case .failure: //저장 실패
+        let message = "There was a problem saving the user"
+        ErrorPresenter.showError(message: message, on: self)
+      case .success: //저장 성공
+        DispatchQueue.main.async { [weak self] in
+          self?.navigationController?.popViewController(animated: true)
+          //이전 ViewController로 돌아간다.
+        }
+      }
+    }
+    
+    
   }
 }

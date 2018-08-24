@@ -46,6 +46,18 @@ class AcronymsTableViewController: UITableViewController {
     super.viewWillAppear(animated)
     refresh(nil)
   }
+  
+  // MARK: - Navigation
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if segue.identifier == "AcronymsToAcronymDetail" { //상세 보기
+      guard let destination = segue.destination as? AcronymDetailTableViewController, let indexPath = tableView.indexPathForSelectedRow else {
+        //indexPathForSelectedRow로 바로 선택한 cell의 indexPath를 가져올 수 있다.
+        return
+      }
+      
+      destination.acronym = acronyms[indexPath.row] //상세 보기의 acronym 설정
+    }
+  }
 
   // MARK: - IBActions
   @IBAction func refresh(_ sender: UIRefreshControl?) {
@@ -88,5 +100,18 @@ extension AcronymsTableViewController {
     cell.detailTextLabel?.text = acronym.long
     
     return cell
+  }
+  
+  override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    //editing control 사용. Swipte-to-delete
+    if let id = acronyms[indexPath.row].id { //유효한 id를 가지고 있으면
+      let acronymDetailRequester = AcronymRequest(acronymID: id)
+      //AcronymRequest 해당 Acronym 삭제
+      acronymDetailRequester.delete()
+    }
+    
+    acronyms.remove(at: indexPath.row) //local 배열의 해당 Acronym 삭제
+    tableView.deleteRows(at: [indexPath], with: .automatic)
+    //테이블 뷰에서 Acronym 행 삭제
   }
 }

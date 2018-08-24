@@ -57,7 +57,7 @@ struct ResourceRequest<ResourceType> where ResourceType: Codable {
   }
   
   func getAll(completion: @escaping (GetResourcesRequest<ResourceType>) -> Void) {
-    //API에서 자원 유형의 모든 값을 가져오는 함수. 완료 클로저를 매개 변수로 사용한다.
+    //API에서 자원 유형의 모든 값을 가져오는 메서드. 완료 클로저를 매개 변수로 사용한다.
     let dataTask = URLSession.shared.dataTask(with: resourceURL) { data, _, _ in
       //자원의 URL로 내용을 검색하고, 완료되면 데이터를 받아 클로저를 실행한다.
       //여기서는 선언만 한다. resume() 메서드로 실제로 실행한다.
@@ -80,7 +80,7 @@ struct ResourceRequest<ResourceType> where ResourceType: Codable {
   }
   
   func save(_ resourceToSave: ResourceType, completion: @escaping (SaveResult<ResourceType>) -> Void) {
-    //API에서 자원 유형을 저장 하는 함수. 완료 클로저를 매개 변수로 사용한다.
+    //API에서 자원 유형을 저장 하는 메서드. 완료 클로저를 매개 변수로 사용한다.
     do {
       var urlRequest = URLRequest(url: resourceURL) //해당 경로로 URLRequest를 생성한다.
       urlRequest.httpMethod = "POST" //save request의 HTTP 메서드는 POST
@@ -93,7 +93,7 @@ struct ResourceRequest<ResourceType> where ResourceType: Codable {
         //자원의 URL에 request body의 내용을 저장하고, 완료되면 데이터와 response를 받아 클로저를 실행한다.
         //여기서는 선언만 한다. resume() 메서드로 실제로 실행한다.
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let jsonData = data else {
-          //HTTP Response가 있고, 그 응답 상태가 200(OK)인지, 데이터가 있는 지 확인한다.
+          //HTTP Response가 있고, 그 응답 상태가 200(OK)인지, 데이터가 있는지 확인한다.
           completion(.failure) //하나라도 오류가 있다면 위에서 작성한 Enum으로 fail 완료 클로저를 반환한다.
           return
         }

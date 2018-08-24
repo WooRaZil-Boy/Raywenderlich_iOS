@@ -21,6 +21,7 @@
 		23FBBD992066AE8F00DBFA59 /* CreateAcronymTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FBBD982066AE8F00DBFA59 /* CreateAcronymTableViewController.swift */; };
 		23FBBD9B2066AFAE00DBFA59 /* SelectUserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FBBD9A2066AFAE00DBFA59 /* SelectUserTableViewController.swift */; };
 		5C2901831F8F6DE700803663 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C2901821F8F6DE700803663 /* LaunchScreen.storyboard */; };
+		A47E0C7E212FEBF500DA249C /* AcronymRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47E0C7D212FEBF500DA249C /* AcronymRequest.swift */; };
 		D2A5F2091F4A9144005CD714 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2A5F2071F4A9144005CD714 /* Main.storyboard */; };
 		D2A5F20B1F4A9144005CD714 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D2A5F20A1F4A9144005CD714 /* Assets.xcassets */; };
 		D2A5F2211F4A96D0005CD714 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A5F2201F4A96D0005CD714 /* AppDelegate.swift */; };
@@ -42,6 +43,7 @@
 		23FBBD982066AE8F00DBFA59 /* CreateAcronymTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAcronymTableViewController.swift; sourceTree = "<group>"; };
 		23FBBD9A2066AFAE00DBFA59 /* SelectUserTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectUserTableViewController.swift; sourceTree = "<group>"; };
 		5C2901821F8F6DE700803663 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A47E0C7D212FEBF500DA249C /* AcronymRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcronymRequest.swift; sourceTree = "<group>"; };
 		D2A5F2001F4A9144005CD714 /* TILiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TILiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2A5F2081F4A9144005CD714 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D2A5F20A1F4A9144005CD714 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 			children = (
 				23FBBD9020669DAD00DBFA59 /* ErrorPresenter.swift */,
 				EF26B5C6212F21650043FB4C /* ResourceRequest.swift */,
+				A47E0C7D212FEBF500DA249C /* AcronymRequest.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2A5F2211F4A96D0005CD714 /* AppDelegate.swift in Sources */,
+				A47E0C7E212FEBF500DA249C /* AcronymRequest.swift in Sources */,
 				EF26B5C7212F21650043FB4C /* ResourceRequest.swift in Sources */,
 				23FBBD952066A67B00DBFA59 /* CreateUserTableViewController.swift in Sources */,
 				23FBBD9120669DAD00DBFA59 /* ErrorPresenter.swift in Sources */,

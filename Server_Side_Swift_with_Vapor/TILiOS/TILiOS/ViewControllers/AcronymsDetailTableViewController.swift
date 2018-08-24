@@ -63,17 +63,53 @@ class AcronymDetailTableViewController: UITableViewController {
 
   // MARK: - Navigation
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    if segue.identifier == "EditAcronymSegue" {
+    if segue.identifier == "EditAcronymSegue" { //edit 시
       guard let destination = segue.destination as? CreateAcronymTableViewController else {
           return
       }
+      
       destination.selectedUser = user
       destination.acronym = acronym
+      //속성 설정
+    } else if segue.identifier == "AddToCategorySegue" { //카테고리 추가 시
+      guard let destination = segue.destination as? AddToCategoryTableViewController else {
+        return
+      }
+      
+      destination.acronym = acronym
+      destination.selectedCategories = categories
+      //속성 설정
     }
   }
 
   func getAcronymData() {
-
+    guard let id = acronym?.id else { //nil 여부 판단
+      return
+    }
+    
+    let acronymDetailRequester = AcronymRequest(acronymID: id)
+    //API와 통신할 AcronymRequest 를 생성한다.
+    acronymDetailRequester.getUser { [weak self] result in
+      //API에서 해당 Acronym id로 User를 얻는다.
+      switch result {
+      case .success(let user):
+        self?.user = user //user 속성 업데이트
+      case .failure:
+        let message = "There was an error getting the acronym’s user"
+        ErrorPresenter.showError(message: message, on: self)
+      }
+    }
+    
+    acronymDetailRequester.getCategories { [weak self] result in
+      //API에서 해당 Acronym id로 Category(배열)을 얻는다.
+      switch result {
+      case .success(let categories):
+        self?.categories = categories //categories 속성 업데이트
+      case .failure:
+        let message = "There was an error getting the acronym’s categories"
+        ErrorPresenter.showError(message: message, on: self)
+      }
+    }
   }
 
   func updateAcronymView() {
@@ -84,7 +120,15 @@ class AcronymDetailTableViewController: UITableViewController {
 
   // MARK: - IBActions
   @IBAction func updateAcronymDetails(_ segue: UIStoryboardSegue) {
-
+    guard let controller = segue.source as? CreateAcronymTableViewController else {
+      //source로 세그먼트가 출발한 뷰를 가져올 수 있다. 세그먼트가 CreateAcronymTableViewController에서 왔는지 확인
+      //즉, Acronym 업데이트 성공 후, unwind 해서 돌아왔을 경우
+      return
+    }
+    
+    user = controller.selectedUser
+    acronym = controller.acronym
+    //DB에 업데이트된 정보 반영
   }
 }
 
@@ -92,7 +136,7 @@ class AcronymDetailTableViewController: UITableViewController {
 extension AcronymDetailTableViewController {
 
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return 4
+    return 5
   }
 
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -110,9 +154,21 @@ extension AcronymDetailTableViewController {
       cell.textLabel?.text = user?.name
     case 3:
       cell.textLabel?.text = categories[indexPath.row].name
+    case 4:
+      cell.textLabel?.text = "Add To Category"
     default:
       break
     }
+    
+    if indexPath.section == 4 { //해당 Acronym에 카테고리 추가 일 때만 활성화
+      //해당 셀만 선택이 가능해 진다.
+      cell.selectionStyle = .default
+      cell.isUserInteractionEnabled = true
+    } else { //비 활성화
+      cell.selectionStyle = .none
+      cell.isUserInteractionEnabled = false
+    }
+    
     return cell
   }
 

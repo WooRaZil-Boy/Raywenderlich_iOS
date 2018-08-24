@@ -44,7 +44,14 @@ class CreateAcronymTableViewController: UITableViewController {
     super.viewDidLoad()
     acronymShortTextField.becomeFirstResponder()
     
-    populateUsers()
+    if let acronym = acronym { //edit mode
+      acronymShortTextField.text = acronym.short
+      acronymLongTextField.text = acronym.long
+      userLabel.text = selectedUser?.name
+      navigationItem.title = "Edit Acronym" //ViewController title 설정
+    } else { //save mode
+      populateUsers()
+    }
   }
   
   func populateUsers() {
@@ -95,16 +102,41 @@ class CreateAcronymTableViewController: UITableViewController {
     
     let acronym = Acronym(short: shortText, long: longText, userID: userID)
     //입력한 정보로 Acronym 생성
-    ResourceRequest<Acronym>(resourcePath: "acronyms").save(acronym) { [weak self] result in
-      //생성된 acronym로, ResourceRequest 생성해 save(_: completion:) 메서드 실행
-      switch result {
-      case .failure: //저장 실패
-        let message = "There was a problem saving the acronym"
+    
+    if self.acronym != nil { //Update
+      guard let existingID = self.acronym?.id else { //id가 유효한지 확인
+        let message = "There was an error updating the acronym"
         ErrorPresenter.showError(message: message, on: self)
-      case .success: //저장 성공
-        DispatchQueue.main.async { [weak self] in
-          self?.navigationController?.popViewController(animated: true)
-          //이전 ViewController로 돌아간다.
+        return
+      }
+      
+      AcronymRequest(acronymID: existingID).update(with: acronym) { result in
+        //생성된 acronym로, ResourceRequest 생성해 update(_: completion:) 메서드 실행
+        switch result {
+        case .failure: //업데이트 실패
+          let message = "There was a problem saving the acronym"
+          ErrorPresenter.showError(message: message, on: self)
+        case .success(let updatedAcronym): //업데이트 성공
+          self.acronym = updatedAcronym //DB에 업데이트 된 acronym를 설정해 준다.
+          
+          DispatchQueue.main.async { [weak self] in
+            self?.performSegue(withIdentifier: "UpdateAcronymDetails", sender: nil)
+            //unwind segue 트리거
+          }
+        }
+      }
+    } else { //Create
+      ResourceRequest<Acronym>(resourcePath: "acronyms").save(acronym) { [weak self] result in
+        //생성된 acronym로, ResourceRequest 생성해 save(_: completion:) 메서드 실행
+        switch result {
+        case .failure: //저장 실패
+          let message = "There was a problem saving the acronym"
+          ErrorPresenter.showError(message: message, on: self)
+        case .success: //저장 성공
+          DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+            //이전 ViewController로 돌아간다.
+          }
         }
       }
     }

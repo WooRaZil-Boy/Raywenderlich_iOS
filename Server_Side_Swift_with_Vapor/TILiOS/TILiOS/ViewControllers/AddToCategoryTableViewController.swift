@@ -31,8 +31,8 @@ import UIKit
 class AddToCategoryTableViewController: UITableViewController {
 
   // MARK: - Properties
-  var categories: [Category] = []
-  var selectedCategories: [Category]!
+  var categories: [Category] = [] //API에서 retrieve해서 가져온 모든 카테고리 배열
+  var selectedCategories: [Category]! //해당 acronym의 카테고리
   var acronym: Acronym!
 
   // MARK: - View Life Cycle
@@ -42,7 +42,21 @@ class AddToCategoryTableViewController: UITableViewController {
   }
 
   func loadData() {
-
+    let categoriesRequest = ResourceRequest<Category>(resourcePath: "categories")
+    //카테고리에 대한 ResourceRequest 생성
+    categoriesRequest.getAll { [weak self] result in
+      //API에서 모든 카테고리를 가져온다.
+      switch result {
+      case .failure: //실패 시
+        let message = "There was an error getting the categories"
+        ErrorPresenter.showError(message: message, on: self)
+      case .success(let categories): //성공 시
+        self?.categories = categories //카테고리 업데이트
+        DispatchQueue.main.async { [weak self] in
+          self?.tableView.reloadData() //테이블 뷰 리로드
+        }
+      }
+    }
   }
 }
 
@@ -68,5 +82,39 @@ extension AddToCategoryTableViewController {
     }
 
     return cell
+  }
+}
+
+// MARK: - UITableViewDelegate
+extension AddToCategoryTableViewController {
+  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    let category = categories[indexPath.row] //사용자가 선택한 카테고리를 가져온다.
+    
+    guard let acronymID = acronym.id else { //해당 Acronym이 유효한 id인지 확인
+      let message = """
+      There was an error adding the acronym
+      to the category - the acronym has no ID
+      """
+      ErrorPresenter.showError(message: message, on: self)
+      return
+    }
+    
+    let acronymRequest = AcronymRequest(acronymID: acronymID) //acronymRequest 생성
+    acronymRequest.add(category: category) { [weak self] result in
+      //API로 DB의 해당 Acronym에 카테고리 추가 update(_: completion:) 메서드 실행
+      switch result {
+      case .success:
+        DispatchQueue.main.async { [weak self] in
+          self?.navigationController?.popViewController(animated: true)
+          //이전 ViewController로 돌아간다.
+        }
+      case .failure:
+        let message = """
+          There was an error adding the acronym
+          to the category
+          """
+        ErrorPresenter.showError(message: message, on: self)
+      }
+    }
   }
 }

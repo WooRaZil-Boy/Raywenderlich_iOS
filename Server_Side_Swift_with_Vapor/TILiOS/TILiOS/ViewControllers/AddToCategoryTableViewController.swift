@@ -43,13 +43,15 @@ class AddToCategoryTableViewController: UITableViewController {
 
   func loadData() {
     let categoriesRequest = ResourceRequest<Category>(resourcePath: "categories")
-    //카테고리에 대한 ResourceRequest 생성
+     //카테고리에 대한 ResourceRequest 생성
     categoriesRequest.getAll { [weak self] result in
       //API에서 모든 카테고리를 가져온다.
+      
       switch result {
       case .failure: //실패 시
-        let message = "There was an error getting the categories"
-        ErrorPresenter.showError(message: message, on: self)
+        ErrorPresenter.showError(message: "There was an error getting the categories", on: self) { _ in
+          self?.navigationController?.popViewController(animated: true)
+        }
       case .success(let categories): //성공 시
         self?.categories = categories //카테고리 업데이트
         DispatchQueue.main.async { [weak self] in
@@ -68,25 +70,22 @@ extension AddToCategoryTableViewController {
   }
 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let category = categories[indexPath.row]
-
     let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
+    let category =  categories[indexPath.row]
     cell.textLabel?.text = category.name
-
     let isSelected = selectedCategories.contains { element in
       element.name == category.name
     }
-
     if isSelected {
       cell.accessoryType = .checkmark
     }
-
     return cell
   }
 }
 
 // MARK: - UITableViewDelegate
 extension AddToCategoryTableViewController {
+
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let category = categories[indexPath.row] //사용자가 선택한 카테고리를 가져온다.
     
@@ -102,6 +101,7 @@ extension AddToCategoryTableViewController {
     let acronymRequest = AcronymRequest(acronymID: acronymID) //acronymRequest 생성
     acronymRequest.add(category: category) { [weak self] result in
       //API로 DB의 해당 Acronym에 카테고리 추가 update(_: completion:) 메서드 실행
+      
       switch result {
       case .success:
         DispatchQueue.main.async { [weak self] in
@@ -110,9 +110,9 @@ extension AddToCategoryTableViewController {
         }
       case .failure:
         let message = """
-          There was an error adding the acronym
-          to the category
-          """
+        There was an error adding the acronym
+        to the category
+        """
         ErrorPresenter.showError(message: message, on: self)
       }
     }

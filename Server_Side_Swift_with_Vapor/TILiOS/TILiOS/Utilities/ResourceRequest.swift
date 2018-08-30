@@ -1,4 +1,4 @@
-/// Copyright (c) 2018년 Razeware LLC
+/// Copyright (c) 2018 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -36,8 +36,8 @@ enum GetResourcesRequest<ResourceType> {
 
 enum SaveResult<ResourceType> {
   //TILApp API(Save)를 호출한 결과를 나타내는 열거형
-  case success(ResourceType)
-  case failure
+  case success(ResourceType) //성공
+  case failure //실패
 }
 
 struct ResourceRequest<ResourceType> where ResourceType: Codable {
@@ -45,7 +45,7 @@ struct ResourceRequest<ResourceType> where ResourceType: Codable {
   //API와 통신하고 결과를 받아오는 객체
   let baseURL = "https://rw-vapor-til.vapor.cloud/api/" //API 기본 URL
   let resourceURL: URL
-  
+
   init(resourcePath: String) {
     guard let resourceURL = URL(string: baseURL) else {
       //특정 자원(User, Acronym, Category) URL 초기화
@@ -55,7 +55,7 @@ struct ResourceRequest<ResourceType> where ResourceType: Codable {
     self.resourceURL = resourceURL.appendingPathComponent(resourcePath)
     //지정된 컴퍼넌트를 추가한 URL를 반환한다.
   }
-  
+
   func getAll(completion: @escaping (GetResourcesRequest<ResourceType>) -> Void) {
     //API에서 자원 유형의 모든 값을 가져오는 메서드. 완료 클로저를 매개 변수로 사용한다.
     let dataTask = URLSession.shared.dataTask(with: resourceURL) { data, _, _ in
@@ -66,9 +66,10 @@ struct ResourceRequest<ResourceType> where ResourceType: Codable {
         completion(.failure) //nil인 경우에는 위에서 작성한 Enum으로 fail 완료 클로저를 반환한다.
         return
       }
-    
+      
       do {
-        let resources = try JSONDecoder().decode([ResourceType].self, from: jsonData)
+        let decoder = JSONDecoder()
+        let resources = try decoder.decode([ResourceType].self, from: jsonData)
         //response data를 ResourceTypes 배열로 디코딩한다.
         completion(.success(resources)) //문제가 없으면 success와 함께 완료 클로저 실행
       } catch {
@@ -78,26 +79,46 @@ struct ResourceRequest<ResourceType> where ResourceType: Codable {
     
     dataTask.resume() //dataTask 시작
   }
-  
+
   func save(_ resourceToSave: ResourceType, completion: @escaping (SaveResult<ResourceType>) -> Void) {
     //API에서 자원 유형을 저장 하는 메서드. 완료 클로저를 매개 변수로 사용한다.
     do {
+      guard let token = Auth().token else { //토큰을 가져 온다.
+        Auth().logout() //토큰이 없으면 새 토큰을 얻기 위해 재 로그인해야 하므로 logOut()을 호출한다.
+        return
+      }
+      //Acronym을 생성할 때, User를 제공할 필요 없으므로, CreateAcronymTableViewController를 단순화할 수 있다.
+      //CreateAcronymTableViewController에서 Acronym을 생성할 때, User 선택 옵션이 없는 새로운 생성 View가 표시된다.
+      
       var urlRequest = URLRequest(url: resourceURL) //해당 경로로 URLRequest를 생성한다.
       urlRequest.httpMethod = "POST" //save request의 HTTP 메서드는 POST
       urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
       //Content-Type을 application/json로 request의 header 설정. API가 디코딩할 JSON 데이터(input)를 인식하게 한다.
+      urlRequest.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+      //header에 Authorization를 사용하여 request에 토큰을 추가한다.
       urlRequest.httpBody = try JSONEncoder().encode(resourceToSave)
       //save request의 httpBody를 요청된 자원 유형으로 설정한다.
       
       let dataTask = URLSession.shared.dataTask(with: urlRequest) { data, response, _ in
         //자원의 URL에 request body의 내용을 저장하고, 완료되면 데이터와 response를 받아 클로저를 실행한다.
         //여기서는 선언만 한다. resume() 메서드로 실제로 실행한다.
-        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let jsonData = data else {
-          //HTTP Response가 있고, 그 응답 상태가 200(OK)인지, 데이터가 있는지 확인한다.
-          completion(.failure) //하나라도 오류가 있다면 위에서 작성한 Enum으로 fail 완료 클로저를 반환한다.
+        guard let httpResponse = response as? HTTPURLResponse else {
+          //HTTP Response 확인
+          completion(.failure) //오류가 있다면 위에서 작성한 Enum으로 fail 완료 클로저를 반환한다.
           return
         }
         
+        guard httpResponse.statusCode == 200, let jsonData = data else {
+          //HTTP Response가 있고, 그 응답 상태가 200(OK)인지, 데이터가 있는지 확인한다.
+          if httpResponse.statusCode == 401 { //반환된 response의 상태가 401 Unauthorized
+            //401이라면 토큰이 유효하지 않음을 의미한다.
+            Auth().logout() //새로운 로그인 시퀀스를 시작하기 위해 로그아웃한다.
+          }
+          
+          completion(.failure) //하나라도 오류가 있다면 위에서 작성한 Enum으로 fail 완료 클로저를 반환한다.
+          return
+        }
+
         do {
           let resource = try JSONDecoder().decode(ResourceType.self, from: jsonData)
           //response data를 ResourceTypes 으로 디코딩한다.

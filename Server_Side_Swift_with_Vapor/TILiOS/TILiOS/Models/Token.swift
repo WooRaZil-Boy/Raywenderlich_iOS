@@ -26,18 +26,15 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import UIKit
+import Foundation
 
-class ErrorPresenter {
+final class Token: Codable {
+  var id: UUID?
+  var token: String
+  var userID: UUID
 
-  static func showError(message: String, on viewController: UIViewController?, dismissAction: ((UIAlertAction) -> Void)? = nil) {
-    weak var vc = viewController
-    DispatchQueue.main.async {
-      let alert = UIAlertController(title: "Error",
-                                    message: message,
-                                    preferredStyle: .alert)
-      alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: dismissAction))
-      vc?.present(alert, animated: true)
-    }
+  init(token: String, userID: UUID) {
+    self.token = token
+    self.userID = userID
   }
 }

@@ -31,6 +31,14 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
+  
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+    if Auth().token == nil { //토큰을 확인한다. 토큰이 없다면, 로그인 화면을 rootViewController로 한다.
+      let rootController = UIStoryboard(name: "Login", bundle: Bundle.main).instantiateViewController(withIdentifier: "LoginNavigation")
+      self.window?.rootViewController = rootController
+    }
+    return true //토큰이 있다면, Storyboard에서 rootViewController로 지정한 AcronymsTableViewController로 시작.
+  }
 }
 
 //API 응용 프로그램과 같은 언어(Swift)를 사용해 관리할 수 있다.

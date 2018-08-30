@@ -28,16 +28,39 @@
 
 import UIKit
 
-class ErrorPresenter {
+class LoginTableViewController: UITableViewController {
 
-  static func showError(message: String, on viewController: UIViewController?, dismissAction: ((UIAlertAction) -> Void)? = nil) {
-    weak var vc = viewController
-    DispatchQueue.main.async {
-      let alert = UIAlertController(title: "Error",
-                                    message: message,
-                                    preferredStyle: .alert)
-      alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: dismissAction))
-      vc?.present(alert, animated: true)
+  // MARK: - Properties
+
+  @IBOutlet weak var usernameTextField: UITextField!
+  @IBOutlet weak var passwordTextField: UITextField!
+
+  @IBAction func loginTapped(_ sender: UIBarButtonItem) { //사용자가 로그인 버튼 누를 시 실행
+    guard let username = usernameTextField.text, !username.isEmpty else {
+      ErrorPresenter.showError(message: "Please enter your username", on: self)
+      return
+    }
+
+    guard let password = passwordTextField.text, !password.isEmpty else {
+      ErrorPresenter.showError(message: "Please enter your password", on: self)
+      return
+    }
+    
+    Auth().login(username: username, password: password) { result in
+      //Auth의 login 메서드를 호출한다.
+      
+      switch result {
+      case .success: //로그인 성공 시
+        DispatchQueue.main.async {
+          let appDelegate = UIApplication.shared.delegate as? AppDelegate
+          appDelegate?.window?.rootViewController = UIStoryboard(name: "Main", bundle: Bundle.main)
+            .instantiateInitialViewController()
+          //앱을 다시 시작한다. 토큰이 있으므로 AcronymsTableViewController 부터 시작한다.
+        }
+      case .failure: //로그인 실패 시
+        let message = "Could not login. Check your credentials and try again"
+        ErrorPresenter.showError(message: message, on: self)
+      }
     }
   }
 }

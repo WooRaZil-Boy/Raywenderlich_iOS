@@ -1,4 +1,0 @@
-module CNIOAtomics {
-    umbrella "/Users/geunseong-gai/Documents/Xcode/Raywenderlich/Server_Side_Swift_with_Vapor/Pokemon/.build/checkouts/swift-nio.git-3108475404973543938/Sources/CNIOAtomics/include"
-    export *
-}

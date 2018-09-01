@@ -1,6 +1,8 @@
 //import FluentMySQL //FluentMySQL
 import FluentPostgreSQL //FluentPostgreSQL
 import Vapor
+import Leaf
+import Authentication
 
 /// Called before your application initializes.
 public func configure(_ config: inout Config, _ env: inout Environment, _ services: inout Services) throws {
@@ -14,6 +16,12 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     try services.register(FluentPostgreSQLProvider())
     //FluentPostgreSQLProvider를 등록한다.
     
+    try services.register(LeafProvider())
+    //LeafProvider를 등록한다.
+    
+    try services.register(AuthenticationProvider())
+    //Authentication를 등록한다.
+    
     /// Register routes to the router
     let router = EngineRouter.default()
     try routes(router)
@@ -21,8 +29,15 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     
     /// Register middleware
     var middlewares = MiddlewareConfig() // Create _empty_ middleware config
-    /// middlewares.use(FileMiddleware.self) // Serves files from `Public/` directory
+    middlewares.use(FileMiddleware.self) // Serves files from `Public/` directory
+    //대부분의 웹 사이트는 이미지 혹은 스타일 시티와 같은 정적 파일을 사용할 수 있어야 한다.
+    //CDN, Nginx, Apache와 같은 서버를 사용하여 작업을 수행하지만, Vapor는 FileMiddleware로 파일을 제공한다.
+    //FileMiddleware를 MiddlewareConfig에 추가하여, 파일을 제공한다.
+    //기본적으로 프로젝트의 Public 디렉토리에 있는 파일을 제공한다.
+    //ex. Public/styles/stylesheet.css 파일을 /styles/stylesheet.css 로 엑세스 할 수 있다.
     middlewares.use(ErrorMiddleware.self) // Catches errors and converts to HTTP response
+    middlewares.use(SessionsMiddleware.self) //Vapor는 미들웨어인 SessionsMiddleware를 사용하여 세션을 관리한다.
+    //SessionsMiddleware가 응용 프로그램의 전역 미들웨어로 등록된다. 또한 모든 request에 대한 세션을 사용할 수 있다.
     services.register(middlewares)
     
 //    // Configure a SQLite database
@@ -122,7 +137,21 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     migrations.add(model: Acronym.self, database: .psql) //PostgreSQL DB를 지정해 준다. //Acronym 모델 추기
     migrations.add(model: Category.self, database: .psql) //Category 모델 추가
     migrations.add(model: AcronymCategoryPivot.self, database: .psql) //AcronymCategoryPivot 모델 추가
-    services.register(migrations)
+    migrations.add(model: Token.self, database: .psql) //Token 모델 추가
+
+    switch env {
+    case .development, .testing: //개발이거나 테스트 환경인 경우에만
+        migrations.add(migration: AdminUser.self, database: .psql) //AdminUser 추가. default User 가 생성된다.
+        //여기선 full model이 아니므로 add(model:database:) 대신 add(migration:database:) 를 사용한다.
+    default: //일반적으로 출시된 Product라면 기본 사용자 없이, 새 사용자를 Register 해서 사용해야 한다.
+        break
+    }
+    
+    migrations.add(migration: AddTwitterURLToUser.self, database: .psql) //AddTwitterURLToUser 추가
+    //Migration은 순서대로 진행되므로 기존 마이그레이션 이후에 호출되어야 한다.
+    //User에 새로운 속성이 추가된다. full model이 아니므로 add(model:database:) 대신 add(migration:database:) 를 사용한다.
+    migrations.add(migration: MakeCategoriesUnique.self, database: .psql) //MakeCategoriesUnique 추가
+    services.register(migrations) //Vapor가 응용 프로그램이 시작될 때 해당 모델의 테이블을 생성한다.
     
     
     
@@ -134,6 +163,30 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     services.register(commandConfig) //commandConfig를 서비스에 등록
     //Local에서 DB를 삭제한 경우, Vapor Cloud에도 반영을 해주기 위한 코드. p.142
     
+    config.prefer(LeafRenderer.self, for: ViewRenderer.self)
+    //ViewRenderer 유형을 요청할 때, Vapor가 LeafRenderer를 사용하도록 설정한다.
+    //렌더러를 얻기 위해 일반적으로 req.view()를 사용하면 다른 템플릿 엔진으로 쉽게 전환할 수 있다.
+    //req.view()에 Vapor에 ViewRenderer를 준수하는 유형을 사용해야 한다(WebsiteController).
+    //Leaf가 빌드된 모듈인 TemplateKit은 PlaintextRenderer를 제공하고, Leaf는 LeafRenderer를 제공한다.
+    
+    
+    
+    
+    //Web authentication
+    config.prefer(MemoryKeyedCache.self, for: KeyedCache.self)
+    //KeyedCache 서비스를 요청 받을 때 MemoryKeyedCache를 사용하도록 한다.
+    //KeyedCache는 세션을 백업하는 key-value cache 이다.
+    //KeyedCache의 구현은 여러 가지가 있다.
+    
+    //How it works
+    //이전에 request header에 Token과 credential을 보내는 HTTP basic authentication과 bearer authentication를 사용해 API의 보안성을 높였다.
+    //그러나 웹브라우저에서는 이런 방법이 불가능하다. 브라우저가 일반적인 HTML로 작성한 request에 header를 추가할 방법이 없기 때문이다.
+    //이 문제를 해결하기 위해 브라우저와 웹 사이트에서는 cookie를 사용한다. 쿠키는 응용 프로그램이 사용자 컴퓨터에 저장하기 위해 브라우저로 전송하는 작은 데이터 비트이다.
+    //(웹사이트에서 사용자 컴퓨터의 하드 디스크에 저장해 놓은 작은 파일로, 사용자가 해당 사이트를 다시 방문할 때 그 사이트에 알려주는 것이 주 용도. 신분증으로 생각하면 된다.)
+    //사용자가 응용 프로그램에 request를 만들면, 브라우저가 사이트의 쿠키를 첨부한다. 이를 session과 결합하여 사용자를 인증한다.
+    //세션을 통해 request 간에 상태를 유지할 수 있다. Vapor에서 세션을 사용하도록 설정하면, 응용 프로그램에서 고유한 ID로 쿠키를 사용자에게 제공한다.
+    //이 ID는 사용자의 세션을 식별한다. 사용자가 로그인하면, Vapor는 사용자를 세션에 저장한다.
+    //사용자가 로그인했는지 또는 현재 인증된 사용자를 얻고 있는지 확인해야 하는 경우 세션을 쿼리한다.
 }
 
 //DB와의 연결 및 초기화 설정은 configure에서 한다.
@@ -163,3 +216,16 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
 //위의 DB 설정을 완료하고, Git 커밋 푸시 후, vapor cloud deploy 로 deploy한다.
 //여기서 DB를 추가를 물을 시 y를 선택해 주고 설정한 DB를 고르면 된다.
 //여기서는 이전과 달리 update하는 것이므로 build 유형은 update를 선택하면 된다.
+
+
+
+
+//Web authentication
+//이전에 request header에 Token과 credential을 보내는 HTTP basic authentication과 bearer authentication를 사용해 API의 보안성을 높였다.
+//그러나 웹브라우저에서는 이런 방법이 불가능하다. 브라우저가 일반적인 HTML로 작성한 request에 header를 추가할 방법이 없기 때문이다.
+//이 문제를 해결하기 위해 브라우저와 웹 사이트에서는 cookie를 사용한다. 쿠키는 응용 프로그램이 사용자 컴퓨터에 저장하기 위해 브라우저로 전송하는 작은 데이터 비트이다.
+//(웹사이트에서 사용자 컴퓨터의 하드 디스크에 저장해 놓은 작은 파일로, 사용자가 해당 사이트를 다시 방문할 때 그 사이트에 알려주는 것이 주 용도. 신분증으로 생각하면 된다.)
+//사용자가 응용 프로그램에 request를 만들면, 브라우저가 사이트의 쿠키를 첨부한다. 이를 session과 결합하여 사용자를 인증한다.
+//세션을 통해 request 간에 상태를 유지할 수 있다. Vapor에서 세션을 사용하도록 설정하면, 응용 프로그램에서 고유한 ID로 쿠키를 사용자에게 제공한다.
+//이 ID는 사용자의 세션을 식별한다. 사용자가 로그인하면, Vapor는 사용자를 세션에 저장한다.
+//사용자가 로그인했는지 또는 현재 인증된 사용자를 얻고 있는지 확인해야 하는 경우 세션을 쿼리한다.

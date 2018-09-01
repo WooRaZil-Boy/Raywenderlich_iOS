@@ -28,7 +28,7 @@ final class AcronymCategoryPivot: PostgreSQLUUIDPivot, ModifiablePivot {
 
 extension AcronymCategoryPivot: Migration {
     static func prepare(on connection: PostgreSQLConnection) -> Future<Void> {
-        //prepare(on)을 override한다.
+        //prepare(on)을 override한다. //DB에서 실행할 마이그레이션 변경 설정
         return Database.create(self, on: connection) { builder in
             //DB에서 AcronymCategoryPivot에 대한 테이블을 생성한다.
             try addProperties(to: builder)

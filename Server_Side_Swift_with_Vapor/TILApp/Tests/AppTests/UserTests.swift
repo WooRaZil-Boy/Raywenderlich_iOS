@@ -121,26 +121,30 @@ final class UserTests: XCTestCase {
         _ = try User.create(on: conn) //default 유저 생성. 저장
         //몇 명의 User를 생성해 DB에 저장한다. 두 User 생성 방식은 같다.
         
-        let users = try app.getResponse(to: usersURI, decodeTo: [User].self)
+        let users = try app.getResponse(to: usersURI, decodeTo: [User.Public].self)
         //Response를 가져온다.
         
-        XCTAssertEqual(users.count, 2)
-        XCTAssertEqual(users[0].name, usersName)
-        XCTAssertEqual(users[0].username, usersUsername)
-        XCTAssertEqual(users[0].id, user.id)
+        XCTAssertEqual(users.count, 3)
+        XCTAssertEqual(users[1].name, usersName)
+        XCTAssertEqual(users[1].username, usersUsername)
+        XCTAssertEqual(users[1].id, user.id)
         //response 값이 예상 값과 일치하는 지 확인
+        //admin user account에 대한 assertion 테스트로 바꿔준다.
     }
     
     func testUserCanBeSavedWithAPI() throws {
         //사용자 저장 테스트
-        let user = User(name: usersName, username: usersUsername)
-        //유저 생성
+        
+        let user = User(name: usersName, username: usersUsername, password: "password")
+        //유저 생성 //인증을 사용하는 모델로 업데이트
+        
         let receivedUser = try app.getResponse(
             to: usersURI,
             method: .POST,
             headers: ["Content-Type": "application/json"],
             data: user,
-            decodeTo: User.self)
+            decodeTo: User.Public.self,
+            loggedInRequest: true)
         //API에 POST 요청을 보내고 response를 받는다. request body으로 유저 객체를 사용하고,
         //헤더를 JSON 형식으로 설정한다. response는 User 객체로 변환한다.
         
@@ -149,22 +153,24 @@ final class UserTests: XCTestCase {
         XCTAssertNotNil(receivedUser.id)
         //response 값이 예상 값과 일치하는 지 확인
         
-        let users = try app.getResponse(to: usersURI, decodeTo: [User].self)
+        let users = try app.getResponse(to: usersURI, decodeTo: [User.Public].self)
         //API에서 모든 사용자를 가져온다.
         
-        XCTAssertEqual(users.count, 1)
-        XCTAssertEqual(users[0].name, usersName)
-        XCTAssertEqual(users[0].username, usersUsername)
-        XCTAssertEqual(users[0].id, receivedUser.id)
+        XCTAssertEqual(users.count, 2)
+        XCTAssertEqual(users[1].name, usersName)
+        XCTAssertEqual(users[1].username, usersUsername)
+        XCTAssertEqual(users[1].id, receivedUser.id)
         //DB에 생성 저장된 값이 예상 값과 일치하는 지 확인
+        //default로 admin 사용자가 있으므로 새로 생성한 유저는 2번째가 된다.
     }
     
     func testGettingASingleUserFromTheAPI() throws {
         //단일 사용자 검색 테스트
         let user = try User.create(name: usersName, username: usersUsername, on: conn)
         //DB에 사용자 생성 후 저장
-        let receivedUser = try app.getResponse(to: "\(usersURI)\(user.id!)", decodeTo: User.self)
-        // api/users/<ID> 경로로 User를 가져와 디코딩한다.
+        let receivedUser = try app.getResponse(to: "\(usersURI)\(user.id!)", decodeTo: User.Public.self)
+        //api/users/<ID> 경로로 User를 가져와 디코딩한다.
+        //response에 더 이상 user의 password가 포함되지 않으므로 디코딩 유형을 User.Public으로 변경한다.
         
         XCTAssertEqual(receivedUser.name, usersName)
         XCTAssertEqual(receivedUser.username, usersUsername)
@@ -221,3 +227,9 @@ final class UserTests: XCTestCase {
 //테스트를 위한 DB를 새로 만들어야 한다(name과 port번호도 configure에서 설정해 줘야 한다).
 //테스트 DB 또한 Docker 컨테이너로 생성할 수 있다. p.172
 //컨테이너 이름과 DB 이름, 포트를 변경해 줘야 한다.
+
+
+
+
+//Updating the tests
+//인증을 추가했으므로, 테스트를 업데이트 해야 한다.

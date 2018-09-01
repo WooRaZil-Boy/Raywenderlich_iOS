@@ -49,7 +49,7 @@ class Auth { //AppDelegate에서 응용 프로그램이 시작될 때 인증을 
   
   func login(username: String, password: String, completion: @escaping (AuthResult) -> Void) {
     //username, password로 로그인
-    let path = "https://rw-vapor-til.vapor.cloud/api/users/login"
+    let path = "https://<YOUR_VAPOR_CLOUD_URL>/api/users/login"
   
     guard let url = URL(string: path) else { //URL 유효성 검사
       fatalError()

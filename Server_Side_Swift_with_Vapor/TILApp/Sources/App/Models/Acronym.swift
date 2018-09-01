@@ -80,7 +80,7 @@ extension Acronym: Migration {
     //configure.swift에서 지정해 줄 수 있다.
     
     static func prepare(on connection: PostgreSQLConnection) -> Future<Void> { //Foreign key constraints
-        //prepare(on)을 override한다.
+        //prepare(on)을 override한다. //DB에서 실행할 마이그레이션 변경 설정
         return Database.create(self, on: connection) { builder in
             //DB에 Acronym 테이블을 생성한다.
             try addProperties(to: builder)

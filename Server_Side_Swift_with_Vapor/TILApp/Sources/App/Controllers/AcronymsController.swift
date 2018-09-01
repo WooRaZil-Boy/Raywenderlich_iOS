@@ -1,5 +1,6 @@
 import Vapor
 import Fluent
+import Authentication
 
 struct AcronymsController: RouteCollection {
     //RouteCollection를 구현해, route를 관리하는 Controller를 구현할 수 있다.
@@ -20,19 +21,19 @@ struct AcronymsController: RouteCollection {
         //각 메서드들을 등록해 준다.
 //        acronymsRoutes.post(use: createHandler)
 //        //POST 요청을 처리하는 경로. 여기서는 http://localhost:8080/api/acronyms 이 된다.
-        acronymsRoutes.post(Acronym.self, use: createHandler)
-        //위의 메서드를 helper를 사용하는 메서드로 대체한다.
-        //POST 요청을 처리하는 경로. 여기서는 http://localhost:8080/api/acronyms 이 된다.
+//        acronymsRoutes.post(Acronym.self, use: createHandler)
+//        //위의 메서드를 helper를 사용하는 메서드로 대체한다.
+//        //POST 요청을 처리하는 경로. 여기서는 http://localhost:8080/api/acronyms 이 된다.
         acronymsRoutes.get(Acronym.parameter, use: getHandler)
         //GET 요청을 처리하는 경로. 여기서는 http://localhost:8080/api/acronyms/<ID> 가 된다.
         //id 속성을 최종 경로 세그먼트로 사용해 특정 조건을 만족하는 객체만 검색한다.
-        acronymsRoutes.put(Acronym.parameter, use: updateHandler)
-        //업데이트는 PUT 요청을 사용한다. 경로는 http://localhost:8080/api/acronyms/<ID> 가 된다.
-        //id 속성을 최종 경로 세그먼트로 사용해 특정 조건을 만족하는 객체만 가져온다.
-        //request로 새로운 정보를 가진 데이터를 가져온다.
-        acronymsRoutes.delete(Acronym.parameter, use: deleteHandler)
-        //삭제는 DELETE 요청을 사용한다. 경로는 http://localhost:8080/api/acronyms/<ID> 가 된다.
-        //id 속성을 최종 경로 세그먼트로 사용해 특정 조건을 만족하는 객체만 가져온다.
+//        acronymsRoutes.put(Acronym.parameter, use: updateHandler)
+//        //업데이트는 PUT 요청을 사용한다. 경로는 http://localhost:8080/api/acronyms/<ID> 가 된다.
+//        //id 속성을 최종 경로 세그먼트로 사용해 특정 조건을 만족하는 객체만 가져온다.
+//        //request로 새로운 정보를 가진 데이터를 가져온다.
+//        acronymsRoutes.delete(Acronym.parameter, use: deleteHandler)
+//        //삭제는 DELETE 요청을 사용한다. 경로는 http://localhost:8080/api/acronyms/<ID> 가 된다.
+//        //id 속성을 최종 경로 세그먼트로 사용해 특정 조건을 만족하는 객체만 가져온다.
         acronymsRoutes.get("search", use: searchHandler)
         //필터링은 GET 요청을 사용한다. 경로는 http://localhost:8080/api/acronyms/search 가 된다.
         acronymsRoutes.get("first", use: getFirstHandler)
@@ -41,12 +42,69 @@ struct AcronymsController: RouteCollection {
         //정렬은 GET 요청을 사용한다. 경로는 http://localhost:8080/api/acronyms/sorted 가 된다.
         acronymsRoutes.get(Acronym.parameter, "user", use: getUserHandler)
         //Getting the parent는 GET 요청을 사용한다. 경로는 http://localhost:8080/api/acronyms/<ID>/user 가 된다.
-        acronymsRoutes.post(Acronym.parameter, "categories", Category.parameter, use: addCategoriesHandler)
-        //형제 관계 생성은 POST 요청을 사용한다. 경로는 http://localhost:8080/api/acronyms/<ID>/categories/<ID> 가 된다.
+//        acronymsRoutes.post(Acronym.parameter, "categories", Category.parameter, use: addCategoriesHandler)
+//        //형제 관계 생성은 POST 요청을 사용한다. 경로는 http://localhost:8080/api/acronyms/<ID>/categories/<ID> 가 된다.
         acronymsRoutes.get(Acronym.parameter, "categories", use: getCategoriesHandler)
         //형제 관계 검색은 GET 요청을 사용한다. 경로는 http://localhost:8080/api/acronyms/<ID>/categories/ 가 된다.
-        acronymsRoutes.delete(Acronym.parameter, "categories", Category.parameter, use: removeCategoriesHandler)
+//        acronymsRoutes.delete(Acronym.parameter, "categories", Category.parameter, use: removeCategoriesHandler)
+//        //형제 관계 삭제는 DELETE 요청을 사용한다. 경로는 http://localhost:8080/api/acronyms/<ID>/categories/<ID> 가 된다.
+        
+//        let basicAuthMiddleware = User.basicAuthMiddleware(using: BCryptDigest())
+//        //BCryptDigest를 사용해 암호를 확인하는 HTTP basic authentication 미들웨어를 인스턴스화한다.
+//        //User는 BasicAuthenticatable를 구현했기에 static method을 사용할 수 있다.
+//        let guardAuthMiddleware = User.guardAuthMiddleware()
+//        //request에 유효한 인증이 포함되도록 보장하는 GuardAuthenticationMiddleware 인스턴스 생성
+//        let protected = acronymsRoutes.grouped(basicAuthMiddleware, guardAuthMiddleware)
+//        //미들웨어 그룹을 생성한다.
+//        protected.post(Acronym.self, use: createHandler)
+//        //acronymsRoutes.post(Acronym.self, use: createHandler)를 대체한다(인증되지 않은 경우 오류 발생 시킨다).
+//        //create acronym로 들어오는 경로들이 미들웨어 그룹을 거쳐 createHandler(_:acronym:)를 호출하도록 연결한다.
+//        //따라서 HTTP basic authentication을 사용하여 acronym을 생성하는 인증된 request를 만들 수 있다.
+//
+//        //미들웨어를 사용하면 응용 프로그램에서 request 및 response를 가로챌(intercept) 수 있다.
+//        //여기서 basicAuthMiddleware는 request를 가로채 제공된 사용자를 인증한다.
+//        //미들웨어는 여러 개를 함께 연결할 수 있다. basicAuthMiddleware는 사용자를 인증 하고,
+//        //guardAuthMiddleware는 request에 인증된 사용자가 있는지 확인한다.
+//        //인증된 사용자가 없으면 guardAuthMiddleware가 오류를 일으킨다.
+//        //따라서 예전과 같이 http://localhost:8080/api/acronyms POST에서 인증 없이 진행하면 401 Unauthorized error response가 난다.
+//        //따라서 REST API를 사용할 때 Authorization 해 줘야 한다.
+        
+        
+        
+        
+        let tokenAuthMiddleware = User.tokenAuthMiddleware() //tokenAuthMiddleware 생성
+        //BearerAuthenticationMiddleware로 request에서 Bearer Token을 추출한다.
+        //그 후, 미들웨어는 해당 토큰을 로그인한 사용자로 변환한다.
+        let guardAuthMiddleware = User.guardAuthMiddleware()
+        //request에 유효한 인증이 포함되도록 보장하는 GuardAuthenticationMiddleware 인스턴스 생성
+        let tokenAuthGroup = acronymsRoutes.grouped(tokenAuthMiddleware, guardAuthMiddleware)
+        //미들웨어 그룹을 생성한다. 토큰 인증으로 Acronym를 생성하는 경우, Routes를 보호한다.
+        
+        tokenAuthGroup.post(AcronymCreateData.self, use: createHandler)
+        //POST 요청을 처리하는 경로. 여기서는 http://localhost:8080/api/acronyms 이 된다.
+        //create acronym로 들어오는 경로들이 미들웨어 그룹을 거쳐 createHandler(_:acronym:)를 호출하도록 연결한다.
+        //따라서 Token authentication을 사용하여 Acronym을 생성하는 인증된 request를 만들 수 있다.
+        
+        //REST API를 사용할 때 인증이 필요하다. Bearer <TOKEN STRING>로 Authorization header를 추가해 줘야 한다.
+        //이전에 HTTP basic authentication를 사용 중이라면, 헤더에서 제거해 준다.
+        
+        //위의 기본 HTTP basic authentication을 Token authentication으로 대체한다.
+        
+        tokenAuthGroup.put(Acronym.parameter, use: updateHandler)
+        //업데이트는 PUT 요청을 사용한다. 경로는 http://localhost:8080/api/acronyms/<ID> 가 된다.
+        //id 속성을 최종 경로 세그먼트로 사용해 특정 조건을 만족하는 객체만 가져온다.
+        //request로 새로운 정보를 가진 데이터를 가져온다.
+        tokenAuthGroup.delete(Acronym.parameter, use: deleteHandler)
+        //삭제는 DELETE 요청을 사용한다. 경로는 http://localhost:8080/api/acronyms/<ID> 가 된다.
+        //id 속성을 최종 경로 세그먼트로 사용해 특정 조건을 만족하는 객체만 가져온다.
+        tokenAuthGroup.post(Acronym.parameter, "categories", Category.parameter, use: addCategoriesHandler)
+        //형제 관계 생성은 POST 요청을 사용한다. 경로는 http://localhost:8080/api/acronyms/<ID>/categories/<ID> 가 된다.
+        tokenAuthGroup.delete(Acronym.parameter, "categories", Category.parameter, use: removeCategoriesHandler)
         //형제 관계 삭제는 DELETE 요청을 사용한다. 경로는 http://localhost:8080/api/acronyms/<ID>/categories/<ID> 가 된다.
+        
+        //이전 비인증 / HTTP basic authentication 방식 Routes 들을 토큰을 사용하도록 대체해 준다.
+        //GET 방식은 바꿀 필요 없고, POST, PUT, DELETE 등만 바꿔준다. 인증된 사용자만이 CRUD를 할 수 있다.
+        //인증되지 않은 사용자는 acronym의 세부 정보를 계속 볼 수 있다(GET).
     }
     
     //Create
@@ -66,9 +124,23 @@ struct AcronymsController: RouteCollection {
 //        }
 //    }
     
-    func createHandler(_ req: Request, acronym: Acronym) throws -> Future<Acronym> {
-        //위의 createHandler(_:) 메서드를 대체한다.
-        //이 메서드는 매개변수로 Acronym를 가져온다. Acronym는 이미 decode 되었기 때문에 따로 decode()할 필요 없다.
+//    func createHandler(_ req: Request, acronym: Acronym) throws -> Future<Acronym> {
+//        //위의 createHandler(_:) 메서드를 대체한다.
+//        //이 메서드는 매개변수로 Acronym를 가져온다. Acronym는 이미 decode 되었기 때문에 따로 decode()할 필요 없다.
+//        return acronym.save(on: req)
+//        //Vapor는 들어오는 데이터를 decoding 하기 위해 PUT, POST, PATCH 경로에 대한 helper 기능을 제공한다.
+//        //이를 사용하면, 중첩되는 코드를 간단하게 정리할 수 있다.
+//    }
+    
+    func createHandler(_ req: Request, data: AcronymCreateData) throws -> Future<Acronym> {
+        //위의 createHandler(_:) 메서드에 인증을 사용하도록 대체한다.
+        
+        let user = try req.requireAuthenticated(User.self)
+        //request에서 인증된 사용자를 가져온다.
+        //인증을 구현 했기에 request에 user id가 있다. 따라서 각 request 마다 이를 보낸 사용자를 알 수 있다.
+        let acronym = try Acronym(short: data.short, long: data.long, userID: user.requireID())
+        //request 및 인증 정보로 Acronym을 생성한다.
+        
         return acronym.save(on: req)
         //Vapor는 들어오는 데이터를 decoding 하기 위해 PUT, POST, PATCH 경로에 대한 helper 기능을 제공한다.
         //이를 사용하면, 중첩되는 코드를 간단하게 정리할 수 있다.
@@ -92,19 +164,40 @@ struct AcronymsController: RouteCollection {
     }
     
     //Update
+//    func updateHandler(_ req: Request) throws -> Future<Acronym> { //Future<Acronym>를 반환한다.
+//        return try flatMap(
+//            to: Acronym.self,
+//            req.parameters.next(Acronym.self),
+//            req.content.decode(Acronym.self)
+//            //flatMap으로 매개 변수 추출과 디코딩이 완료될 때까지 기다린다.
+//            //파라미터로 to: DB의 모델 객체(Acronym), id로 요청해서 가져온 객체(수정할 객체), 디코딩 객체
+//        ) { acronym, updatedAcronym in
+//            //DB의 객체와 수정할 객체를 가져온다.
+//            acronym.short = updatedAcronym.short
+//            acronym.long = updatedAcronym.long
+//            acronym.userID = updatedAcronym.userID
+//            //업데이트
+//
+//            return acronym.save(on: req) //Fluent의 모델 저장 메서드
+//            //Fluent (Acronym)을 사용하여 모델을 저장한다.
+//            //Fluent는 저장되면서 모델을 반환한다(여기서는 Future<Acronym>).
+//        }
+//    }
+    
     func updateHandler(_ req: Request) throws -> Future<Acronym> { //Future<Acronym>를 반환한다.
         return try flatMap(
             to: Acronym.self,
             req.parameters.next(Acronym.self),
-            req.content.decode(Acronym.self)
-            //flatMap으로 매개 변수 추출과 디코딩이 완료될 때까지 기다린다.
-            //파라미터로 to: DB의 모델 객체(Acronym), id로 요청해서 가져온 객체(수정할 객체), 디코딩 객체
-        ) { acronym, updatedAcronym in
-            //DB의 객체와 수정할 객체를 가져온다.
-            acronym.short = updatedAcronym.short
-            acronym.long = updatedAcronym.long
-            acronym.userID = updatedAcronym.userID
-            //업데이트
+            req.content.decode(AcronymCreateData.self)
+            //request data를 AcronymCreateData로 교체
+        ) { acronym, updateData in
+            acronym.short = updateData.short
+            acronym.long = updateData.long
+            //AcronymCreateData에는 userID 속성이 없다.
+            
+            let user = try req.requireAuthenticated(User.self)
+            //request에서 인증된 사용자를 얻는다.
+            acronym.userID = try user.requireID() //인증된 사용자에서 userID를 가져온다.
             
             return acronym.save(on: req) //Fluent의 모델 저장 메서드
             //Fluent (Acronym)을 사용하여 모델을 저장한다.
@@ -172,14 +265,24 @@ struct AcronymsController: RouteCollection {
     
     
     //Getting the parent
-    func getUserHandler(_ req: Request) throws -> Future<User> { //Future<User>를 반환한다.
+//    func getUserHandler(_ req: Request) throws -> Future<User> { //Future<User>를 반환한다.
+//        return try req
+//            .parameters.next(Acronym.self) //request의 파라미터에서 해당 Acronym 객체를 가져온다.
+//            .flatMap(to: User.self) { acronym in
+//                //flatMap(to:)는 해당하는 유형으로 최종 반환한다.
+//                acronym.user.get(on: req)
+//                //computed property에서 user를 가져온다.
+//            }
+//    }
+    
+    func getUserHandler(_ req: Request) throws -> Future<User.Public> { //Future<User.Public>를 반환한다.
         return try req
             .parameters.next(Acronym.self) //request의 파라미터에서 해당 Acronym 객체를 가져온다.
-            .flatMap(to: User.self) { acronym in
+            .flatMap(to: User.Public.self) { acronym in
                 //flatMap(to:)는 해당하는 유형으로 최종 반환한다.
-                acronym.user.get(on: req)
-                //computed property에서 user를 가져온다.
-            }
+                acronym.user.get(on: req).convertToPublic()
+                //computed property에서 user를 가져와 Public으로 변환한다.
+        }
     }
     
     
@@ -203,7 +306,7 @@ struct AcronymsController: RouteCollection {
     //Querying the relationship
     func getCategoriesHandler(_ req: Request) throws -> Future<[Category]> { //Future<[Category]> 반환
         return try req.parameters.next(Acronym.self) //파라미터를 가져온다.
-            .flatMap(to: [Category].self) { acronym in //flatMap으로 request의 파라미터에서 Acronym를 추출하고 wrapping한다.
+            .flatMap(to: [Category].self) { acronym in //flatMap으로 request의 파라미터에서 Acronym를 추출하고 unwrapping한다.
                 try acronym.categories.query(on: req).all()
                 //computed property에서 Category를 가져오고 Fluent 쿼리를 사용해서 모든 Category를 반환한다.
             }
@@ -247,5 +350,13 @@ struct AcronymsController: RouteCollection {
 
 //Fluent는 Future<Model> 유형에 대해 save(on:), create(on:), update(on:), delete(on:)의 편리한 함수를 제공한다.
 //모델을 저장하기 전에 조작할 필요 없는 경우 유용하게 사용할 수 있다.
+
+struct AcronymCreateData: Content {
+    //User가 Acronym을 생성하기 위해 보내야 하는 request data를 정의한다.
+    let short: String
+    let long: String
+    
+    //사용자가 Acronym을 생성할 때 request에 id를 보내야 한다. 인증 구현 했기에, 각 request 마다 이를 보낸 사용자를 알 수 있다.
+}
 
 

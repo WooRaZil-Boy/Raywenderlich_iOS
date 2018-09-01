@@ -44,7 +44,7 @@ struct AcronymRequest {
   let resource: URL
 
   init(acronymID: Int) {
-    let resourceString = "https://rw-vapor-til.vapor.cloud/api/acronyms/\(acronymID)"
+    let resourceString = "https://<YOUR_VAPOR_CLOUD_URL>/api/acronyms/\(acronymID)"
     //API 기본 URL String
     
     guard let resourceURL = URL(string: resourceString) else { //URL 변환

@@ -43,7 +43,7 @@ enum SaveResult<ResourceType> {
 struct ResourceRequest<ResourceType> where ResourceType: Codable {
   //제네릭 매개 변수가 Codable을 준수해야 하는 ResourceRequest 유형 정의
   //API와 통신하고 결과를 받아오는 객체
-  let baseURL = "https://rw-vapor-til.vapor.cloud/api/" //API 기본 URL
+  let baseURL = "https://<YOUR_VAPOR_CLOUD_URL>/api/" //API 기본 URL
   let resourceURL: URL
 
   init(resourcePath: String) {

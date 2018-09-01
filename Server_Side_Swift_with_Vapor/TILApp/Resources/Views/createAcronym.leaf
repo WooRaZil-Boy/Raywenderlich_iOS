@@ -1,0 +1,71 @@
+#set("content") { #// 콘텐츠 변수를 설정한다. 다른 곳에서 #get() 으로 해당 부분을 가져올 수 있다.
+    <h1>#(title)</h1>
+
+    <form method="post"> #// HTML form. 사용자가 form을 제출할 때 POST request를 URL로 보낸다.
+        #if(csrfToken) { #// context에 csrfToken 값이 있는지 확인한다.
+            <input type="hidden" name="csrfToken" value="#(csrfToken)">
+            #// 숨겨진 input으로 브라우저는 이 토큰 정보를 사용자에게 표시하지 않는다.
+        }
+
+        <div class="form-group">
+            <label for="short">Acronym</label>
+            <!-- <input type="text" name="long" class="form-control" id="short"/> -->
+            <input type="text" name="short" class="form-control" id="short" #if(editing){value="#(acronym.short)"}/>
+            #// <input>으로 사용자가 short 텍스트를 삽입할 수 있게 한다.
+            #// editing flag가 true라면, 이전 값을 삽입한다.
+            #// name 속성은 request에서 데이터를 보낼 때, 브라우저에 키를 알려준다.
+        </div>
+        <div class="form-group">
+            <label for="long">Meaning</label>
+            <!-- <input type="text" name="long" class="form-control" id="long"/> -->
+            <input type="text" name="long" class="form-control" id="long" #if(editing){value="#(acronym.long)"}/>
+            #// <input>으로 사용자가 long 텍스트를 삽입할 수 있게 한다.
+            #// editing flag가 true라면, 이전 값을 삽입한다.
+            #// name 속성은 request에서 데이터를 보낼 때, 브라우저에 키를 알려준다.
+        </div>
+
+        <!-- <div class="form-group">
+            <label for="userID">User</label>
+            <select name="userID" class="form-control" id="userID">
+                #// <select>로 drop-down 메뉴를 생성한다.
+                #// #for(user in users) {
+                    #// Leaf의 #for()를 사용해, 모든 user를 반복한다.
+                    <option value="#(user.id)" #if(editing){#if(acronym.userID == user.id){selected}}>
+                        #// acronym.userID가 user.id와 일치하면, selected 설정해, drop-down 메뉴에서 선택된 것으로 표시
+                        #(user.name)
+                    </option>
+                #// }
+            </select>
+        </div> -->
+
+        <div class="form-group">
+            <label for="categories">Categories</label>
+            <select name="categories[]" class="form-control" id="categories" placeholder="Categories" multiple="multiple">
+                #// 사용자가 카테고리를 지정할 수 있도록 <select>를 사용한다. multiple을 설정해 다중 카테고리를 설정할 수 있도록 한다.
+                #// name의 categories[]는 form이 URL-encoded array 로 보내게 한다.
+
+                #if(editing) { #// editing 모드라면 loop
+                    #for(category in categories) {
+                        <option value="#(category.name)" selected="selected">
+                            #(category.name)
+                        </option>
+                        #// 각 카테고리를 <option>으로 추가한다. 테고리를 편집할 때, 카테고리 태그를 미리 채울 수 있다.
+                    }
+                }
+            </select>
+        </div>
+
+        <!-- <button type="submit" class="btn btn-primary">
+            Submit
+        </button> -->
+        <button type="submit" class="btn btn-primary">
+            #if(editing){Update} else{Submit}
+        </button>
+        #// form을 웹 앱에 보내는 submit 버튼. 페이지의 모드에 따라 Update, Submit으로 변경
+    </form>
+}
+
+#embed("base")
+
+#// Leaf의 embed() 를 사용해, 템플릿(base.leaf)이 페이지에 포함되어 렌더링 된다.
+#// base.leaf 템플릿은 #get() 을 사용해, #set() 으로 설정된 내용을 가져온다.

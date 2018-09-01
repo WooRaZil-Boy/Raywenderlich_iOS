@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en"> #// 기본 HTML 5 페이지를 선언한다(leaf에서 주석은 #//로 단다).
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!-- Select2 CSS  https://select2.org/ -->
+    #if(title == "Create An Acronym") { #// 페이지가 Create An Acronym 인 경우, Select2 CSS 포함
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" integrity="sha384-HIipfSYbpCkh5/1V87AWAeR5SUrNiewznrUrtNz1ux4uneLhsAKzv/0FnMbj3m6g" crossorigin="anonymous">
+    }
+
+    #if(title == "Edit Acronym") { #// 페이지가 Edit Acronym 인 경우, Select2 CSS 포함
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" integrity="sha384-HIipfSYbpCkh5/1V87AWAeR5SUrNiewznrUrtNz1ux4uneLhsAKzv/0FnMbj3m6g" crossorigin="anonymous">
+    }
+
+    <link rel="stylesheet" href="/styles/style.css">
+
+    <title>#(title) | Acronyms</title>
+    #// #()는 Leaf 함수로 여기서는 title이라는 매개변수를 추출한다.
+    #// Vapor와 마찬가지로 Leaf는 Codable을 사용하여 데이터를 처리한다.
+    #// WebsiteController 참고
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        #// 페이지 탐색 섹션을 나타내는 <nav>를 정의한다.
+        #// 부트 스트랩은 이를 확장하는 클래스와 유틸리티를 제공한다.
+        <a class="navbar-brand" href="/">TIL</a>
+        #// root 링크 지정한다.
+        <button class="navbar-toggler" type="button"
+        data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        #// id="navbarSupportedContent" 섹션을 표시하거나 숨기는 토글 버튼 생성
+        #// 화면 크기가 작을 경우 토글 버튼이 보인다.
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        #// 토글되는 화면 섹션
+            <ul class="navbar-nav mr-auto">
+            #// 표시할 탐색 링크 목록
+                <li class="nav-item #if(title == "Homepage"){active}">
+                    <a href="/" class="nav-link">Home</a>
+                </li>
+                #// 홈페이지에 대한 링크 추가
+                #// Leaf의 #if를 사용해, 페이지 제목이 "Homepage"인 경우 active class를 추가한다.
+                <li class="nav-item #if(title == "All Users"){active}">
+                    <a href="/users" class="nav-link">All Users</a>
+                </li>
+                #// 유저 페이지에 대한 링크 추가
+                #// Leaf의 #if를 사용해, 페이지 제목이 "All Users"인 경우 active class를 추가한다.
+                <li class="nav-item #if(title == "All Categories"){active}">
+                    <a href="/categories" class="nav-link">All Categories</a>
+                </li>
+                #// 카테고리 페이지에 대한 링크 추가
+                #// Leaf의 #if를 사용해, 페이지 제목이 "All Users"인 경우 active class를 추가한다.
+                <li class="nav-item #if(title == "Create An Acronym"){active}">
+                    <a href="/acronyms/create" class="nav-link">Create An Acronym</a>
+                </li>
+                #// Acronym 생성 페이지에 대한 링크 추가
+                #// Leaf의 #if를 사용해, 페이지 제목이 "Create An Acronym"인 경우 active class를 추가한다.
+
+                #if(!userLoggedIn) { #// 로그인한 사용자 없는 경우에만 가입 링크가 표시된다.
+                    <li class="nav-item #if(title == "Register"){active}">
+                        <a href="/register" class="nav-link">Register</a>
+                    </li>
+                    #// 가입 페이지에 대한 링크 추가
+                    #// Leaf의 #if를 사용해, 페이지 제목이 "Register"인 경우 active class를 추가한다.
+                }
+            </ul>
+
+            #if(userLoggedIn) { #// 사용자가 로그인한 경우에만 로그아웃 옵션 표시
+                <form class="form-inline" action="/logout" method="POST">
+                    #// /logout에 POST request 보내는 form
+                    <input class="nav-link btn btn-link" type="submit" value="Log out">
+                    #// 로그아웃 값으로 form에 submit을 추가
+                </form>
+            }
+        </div>
+    </nav>
+
+    <div class="container mt-3">
+        #get(content) #// Leaf의 get()을 사용해, 콘텐츠 변수를 검색한다.
+    </div>
+
+    #if(showCookieMessage) { #// showCookieMessage가 true이면
+        <footer id="cookie-footer"> #// footer를 추가한다.
+            <div id="cookieMessage" class="container">
+                <span class="muted">
+                    This site uses cookies! To accept this, click <a href="#" onclick="cookiesConfirmed()">OK</a>
+                    #// 사용자가 클릭할 수 있는 OK 링크 추가. 쿠키 메시지를 닫는 JavaScript함수 cookiesConfirmed() 호출한다.
+                </span>
+            </div>
+        </footer>
+        <script src="/scripts/cookies.js"></script>
+    }
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+    #// 전체 jQuery 라이브러리를 포함한다. Bootstrap은 slim 버전으로 충분하지만, Select2는 전체 라이브러리가 필요하다.
+
+    #if(title == "Create An Acronym") { #// 페이지가 Create An Acronym 인 경우, Select2용 JavaScript 포함
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js" integrity="sha384-222hzbb8Z8ZKe6pzP18nTSltQM3PdcAwxWKzGOKOIF+Y3bROr5n9zdQ8yTRHgQkQ" crossorigin="anonymous"></script>
+        <script src="/scripts/createAcronym.js"></script> #// 로컬의 createAcronym.js 포함
+    }
+
+    #if(title == "Edit Acronym") { #// 페이지가 Edit Acronym 인 경우, Select2용 JavaScript 포함
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js" integrity="sha384-222hzbb8Z8ZKe6pzP18nTSltQM3PdcAwxWKzGOKOIF+Y3bROr5n9zdQ8yTRHgQkQ" crossorigin="anonymous"></script>
+        <script src="/scripts/createAcronym.js"></script> #// 로컬의 createAcronym.js 포함
+    }
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>
+
+#// 이 파일은 기본 템플릿을 형성하며, 모든 페이지에 동일하게 표시된다.
+
+#// 각 페이지의 템플릿을 변경하면 해당 페이지에만 영향을 미친다.
+#// Leaf를 사용해, 템플릿을 다른 템플릿에 포함 시킬 수 있다.
+#// 이렇게 하면, 모든 페이지에 공통된 코드가 포함된 기본 템플릿을 만들어 사이트 전체에서 사용할 수 있다.
+
+#// 디버그 모드에서는 페이지를 새로고침하여 변경사항을 확인할 수 있다.
+#// 하지만, 릴리즈 모드에서는 Leaf가 페이지를 캐싱하므로 변경 사ㅎ항을 보려면 응용 프로그램을 다시 시작해야 한다.

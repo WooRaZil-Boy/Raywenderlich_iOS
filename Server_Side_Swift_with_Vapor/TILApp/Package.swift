@@ -45,14 +45,25 @@ let package = Package(
         .package(url: "https://github.com/vapor/fluent-postgresql.git",
                  from: "1.0.0-rc"),
         //FluentPostgreSQL dependency 추가
+        .package(url: "https://github.com/vapor/leaf.git",
+                 from: "3.0.0-rc"),
+        //Leaf dependency 추가
+        .package(url: "https://github.com/vapor/auth.git",
+                 from: "2.0.0-rc"),
+        //auth dependency 추가
+        .package(url: "https://github.com/vapor-community/Imperial.git",
+                 from: "0.7.1")
+        //Imperial dependency 추가(OAuth2.0)
         ],
     targets: [
         .target(name: "App", dependencies: ["FluentPostgreSQL",
-                                            "Vapor"]),
+                                            "Vapor",
+                                            "Leaf",
+                                            "Authentication",
+                                            "Imperial"]),
         .target(name: "Run", dependencies: ["App"]),
         .testTarget(name: "AppTests", dependencies: ["App"]), //테스트
         //App target이 FluentPostgreSQL의 dependency 링크가 바르게 연결되도록 지정
     ]
 )
 //PostgreSQL 패키지
-

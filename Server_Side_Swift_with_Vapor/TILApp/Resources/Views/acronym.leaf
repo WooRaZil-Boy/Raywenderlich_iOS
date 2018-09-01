@@ -1,0 +1,41 @@
+#set("content") { #// 콘텐츠 변수를 설정한다. 다른 곳에서 #get() 으로 해당 부분을 가져올 수 있다.
+    <h1>#(acronym.short)</h1>
+    <h2>#(acronym.long)</h2>
+
+    <p>Created by <a href="/users/#(user.id)/">#(user.name)</a></p>
+    #// user.leaf로 가는 링크를 설정한다.
+    #// acronym에 대한 정보를 가져온다. 매개변수로 입력된 AcronymContext 변수들을 가져올 수 있다.
+    #// Leaf의 #()함수를 사용해 AcronymContext의 변수를 추출해 오고, dot notation으로 액세스할 수 있다.
+
+    #if(count(categories) > 0) {
+        #// Leaf의 #if() 와 count를 사용해, categories가 비었는지 확인한다.
+        #// if()는 null 허용 여부에 대한 변수의 유효성 검사, Bool 연산, 표현식 평가를 할 수 있다.
+        <h3>Categories</h3>
+        <ul>
+            #for(category in categories) {
+                #// Leaf의 #for()를 사용해, 모든 category를 반복한다.
+                <li>
+                    <a href="/categories/#(category.id)">
+                        #(category.name)
+                    </a>
+                    #// 각 category에 대한 링크 추가
+                </li>
+            }
+        </ul>
+    }
+
+    <!-- <a class="btn btn-primary" href="/acronyms/#(acronym.id)/edit" role="button">Edit</a> -->
+    <form method="post" action="/acronyms/#(acronym.id)/delete">
+        #// POST form 으로 /acronyms/<ACRONYM ID>/delete 로 데이터를 보낸다.
+        #// 생성, 수정, 삭제와 같이 DB를 수정하는 작업은 POST request를 사용하는 것이 좋다.
+        #// CSRF (Cross Site Request Forgery) 토큰을 사용해 보안을 향상 시킬 수 있다.
+        <a class="btn btn-primary" href="/acronyms/#(acronym.id)/edit" role="button">Edit</a>&nbsp;
+        #// 수정 버튼 /acronyms/<ACRONYM ID>/edit 에 대한 링크를 삽입한다. 단순 링크로 POST action은 아니다.
+        <input class="btn btn-danger" type="submit" value="Delete" />
+        #// 삭제 버튼. submit으로 POST action(/acronyms/<ACRONYM ID>/delete)이 된다.
+    </form>
+}
+
+#embed("base")
+#// Leaf의 embed() 를 사용해, 템플릿(base.leaf)이 페이지에 포함되어 렌더링 된다.
+#// base.leaf 템플릿은 #get() 을 사용해, #set() 으로 설정된 내용을 가져온다.

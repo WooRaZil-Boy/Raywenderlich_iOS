@@ -1,0 +1,44 @@
+#set("content") { #// 콘텐츠 변수를 설정한다. 다른 곳에서 #get() 으로 해당 부분을 가져올 수 있다.
+    <h1>#(category.name)</h1>
+
+    #if(count(acronyms) > 0) {
+        #// Leaf의 #if() 와 count를 사용해, acronyms이 비었는지 확인한다.
+        #// if()는 null 허용 여부에 대한 변수의 유효성 검사, Bool 연산, 표현식 평가를 할 수 있다.
+        <table class="table table-bordered table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th>
+                        Short
+                    </th>
+                    <th>
+                        Long
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                #for(acronym in acronyms) {
+                    #// Leaf의 #for()를 사용해, 모든 category를 반복한다.
+                    <tr>
+                        <td>
+                            <a href="/acronyms/#(acronym.id)">
+                                #(acronym.short)
+                            </a>
+                        </td>
+                        <td>
+                            #(acronym.long)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    } else {
+        #// acronyms이 비어 있는 경우, 안내 메시지를 출력한다.
+        <h2>There aren't any acronyms yet!</h2>
+    }
+}
+
+#embed("base")
+
+#// Leaf의 embed() 를 사용해, 템플릿(base.leaf)이 페이지에 포함되어 렌더링 된다.
+#// base.leaf 템플릿은 #get() 을 사용해, #set() 으로 설정된 내용을 가져온다.

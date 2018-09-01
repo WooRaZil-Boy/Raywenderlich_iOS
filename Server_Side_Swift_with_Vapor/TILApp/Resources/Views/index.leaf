@@ -1,0 +1,44 @@
+
+#set("content") { #// 콘텐츠 변수를 설정한다. 다른 곳에서 #get() 으로 해당 부분을 가져올 수 있다.
+    <img src="/images/logo.png" class="mx-auto d-block" alt="TIL Logo" />
+    #// FileMiddleware를 사용해 이미지를 가져올 수 있다.
+    #// 경로는 Public/ 이 기본으로, Public/images/logo.png 이 된다.
+    <h1>Acronyms</h1>
+    #if(acronyms) {
+        #// Leaf의 #if()를 사용해서 acronyms 변수가 설정되어 있는 지 확인한다.
+        #// if()는 null 허용 여부에 대한 변수의 유효성 검사, Bool 연산, 표현식 평가를 할 수 있다.
+        <table class="table table-bordered table-hover">
+            #// acronyms이 존재하는 경우, HTML 테이블을 생성한다.
+            <thead class="thead-light">
+                <tr>
+                    <th>Short</th>
+                    <th>Long</th>
+                </tr>
+            </thead>
+            #// 헤더에 Short과 Long을 입력해 준다.
+
+            <tbody>
+                #for(acronym in acronyms) {
+                    #// Leaf의 #for()를 사용해, 모든 acronym를 반복한다.
+                    <tr>
+                        <td><a href="/acronyms/#(acronym.id)">#(acronym.short)</a></td>
+                        #// acronyms.leaf로 가는 링크를 설정한다.
+                        <td>#(acronym.long)</td>
+                    </tr>
+                    #// 각 acronym에 대한 행을 작성한다. 매개변수로 입력된 IndexContext의 변수들을 가져올 수 있다.
+                    #// Leaf의 #()함수를 사용해 IndexContext의 변수를 추출해 오고, dot notation으로 액세스할 수 있다.
+                }
+            </tbody>
+        </table>
+    } else {
+        #// acronyms이 비어 있는 경우, 안내 메시지를 출력한다.
+        <h2>There aren’t any acronyms yet!</h2>
+    }
+}
+
+#embed("base")
+#// Leaf의 embed() 를 사용해, 템플릿(base.leaf)이 페이지에 포함되어 렌더링 된다.
+#// base.leaf 템플릿은 #get() 을 사용해, #set() 으로 설정된 내용을 가져온다.
+
+#// base.leaf에서 중복적으로 들어가는 부분은 제거해 준다.
+#// Leaf의 set(), get()을 이용해 해당 콘텐츠들을 설정하고 적절한 위치에 넣어주면 된다.

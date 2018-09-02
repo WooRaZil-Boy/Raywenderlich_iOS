@@ -40,73 +40,78 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     //SessionsMiddleware가 응용 프로그램의 전역 미들웨어로 등록된다. 또한 모든 request에 대한 세션을 사용할 수 있다.
     services.register(middlewares)
     
-//    // Configure a SQLite database
-//    let sqlite = try SQLiteDatabase(storage: .memory)
-//    //.memory 저장소를 사용한다. 이렇게 설정하면, DB가 메모리에 상주하고, 디스크에 저장되지 않는다.
-//    //따라서 응용 프로그램이 종료될 때 사라진다.
-//
-//    /// Register the configured SQLite database to the database config.
-//    var databases = DatabasesConfig()
-//    databases.add(database: sqlite, as: .sqlite)
-//    services.register(databases)
-//    //응용 프로그램 전체에서 .sqlite로 식별되는 SQLiteDatabase의 인스턴스를 등록하는 DatabasesConfig 타입을 생성한다.
+    //    // Configure a SQLite database
+    //    let sqlite = try SQLiteDatabase(storage: .memory)
+    //    //.memory 저장소를 사용한다. 이렇게 설정하면, DB가 메모리에 상주하고, 디스크에 저장되지 않는다.
+    //    //따라서 응용 프로그램이 종료될 때 사라진다.
+    //
+    //    /// Register the configured SQLite database to the database config.
+    //    var databases = DatabasesConfig()
+    //    databases.add(database: sqlite, as: .sqlite)
+    //    services.register(databases)
+    //    //응용 프로그램 전체에서 .sqlite로 식별되는 SQLiteDatabase의 인스턴스를 등록하는 DatabasesConfig 타입을 생성한다.
     
-//    let database = SQLiteDatabase(storage: .file(path: "db.sqlite")
-//    try databases.add(database: database), as: .sqlite)
+    //    let database = SQLiteDatabase(storage: .file(path: "db.sqlite")
+    //    try databases.add(database: database), as: .sqlite)
     //SQLite를 사용해 디스크에 저장하길 원한다면, 이런식으로 작성하면 된다.
     //파일이 없으면 지정된 경로에 DB파일을 작성한다.
     
-//    // Configure a MySQL database
-//    var databases = DatabasesConfig()
-//    let databaseConfig = MySQLDatabaseConfig(hostname: "localhost",
-//                                             username: "vapor",
-//                                             password: "password",
-//                                             database: "vapor")
-//    let database = MySQLDatabase(config: databaseConfig)
-//    databases.add(database: database, as: .mysql)
-//    services.register(databases)
-//    //default에서 사용하던 SQLite 대신 MySQL을 사용한다.
-//    //Docker에서 지정한 값과 동일하게 MySQL을 구성한다.
+    //    // Configure a MySQL database
+    //    var databases = DatabasesConfig()
+    //    let databaseConfig = MySQLDatabaseConfig(hostname: "localhost",
+    //                                             username: "vapor",
+    //                                             password: "password",
+    //                                             database: "vapor")
+    //    let database = MySQLDatabase(config: databaseConfig)
+    //    databases.add(database: database, as: .mysql)
+    //    services.register(databases)
+    //    //default에서 사용하던 SQLite 대신 MySQL을 사용한다.
+    //    //Docker에서 지정한 값과 동일하게 MySQL을 구성한다.
     
     // Configure a PostgreSQL database
     var databases = DatabasesConfig() //DatabasesConfig로 데이터베이스를 구성한다.
-//    let databaseConfig = PostgreSQLDatabaseConfig(hostname: "localhost",
-//                                             username: "vapor",
-//                                             database: "vapor",
-//                                             password: "password")
-//    //local에서 사용 시. 하드코딩
+    //    let databaseConfig = PostgreSQLDatabaseConfig(hostname: "localhost",
+    //                                             username: "vapor",
+    //                                             database: "vapor",
+    //                                             password: "password")
+    //    //local에서 사용 시. 하드코딩
     
-    let hostname = Environment.get("DATABASE_HOSTNAME") ?? "localhost"
-    let username = Environment.get("DATABASE_USER") ?? "vapor"
-
-    let databaseName: String
-    let databasePort: Int
-    if (env == .testing) { //테스팅 중에는 실행 DB 이름과 포트를 다른 값으로 설정한다.
-        databaseName = "vapor-test"
+    let databaseConfig: PostgreSQLDatabaseConfig
+    if let url = Environment.get("DATABASE_URL") { //Heroku
+        databaseConfig = PostgreSQLDatabaseConfig(url: url)!
+    } else { //Vapor, Local
+        let hostname = Environment.get("DATABASE_HOSTNAME") ?? "localhost"
+        let username = Environment.get("DATABASE_USER") ?? "vapor"
         
-        if let testPort = Environment.get("DATABASE_PORT") {
-            //DB 포트를 테스트용 환경 변수로 설정한다(Linux docker-compose.yml의 포트를 가져온다).
-            databasePort = Int(testPort) ?? 5433
-        } else {
-           databasePort = 5433
+        let databaseName: String
+        let databasePort: Int
+        if (env == .testing) { //테스팅 중에는 실행 DB 이름과 포트를 다른 값으로 설정한다.
+            databaseName = "vapor-test"
+            
+            if let testPort = Environment.get("DATABASE_PORT") {
+                //DB 포트를 테스트용 환경 변수로 설정한다(Linux docker-compose.yml의 포트를 가져온다).
+                databasePort = Int(testPort) ?? 5433
+            } else {
+                databasePort = 5433
+            }
+            
+        } else { //실제 응용 프로그램 실행. 테스팅과는 DB 이름과 포트를 다른 값으로 설정한다.
+            databaseName = Environment.get("DATABASE_DB") ?? "vapor"
+            databasePort = 5432
         }
-
-    } else { //실제 응용 프로그램 실행. 테스팅과는 DB 이름과 포트를 다른 값으로 설정한다.
-        databaseName = Environment.get("DATABASE_DB") ?? "vapor"
-        databasePort = 5432
+        
+        let password = Environment.get("DATABASE_PASSWORD") ?? "password"
+        //Environment.get(_ :)로 Vapor Cloud가 설정한 환경 변수를 가져올 수 있다.
+        //nil을 반환하면 로컬에서 실행되는 경우이므로, 기본값으로 사용한다.
+        
+        databaseConfig = PostgreSQLDatabaseConfig(
+            hostname: hostname,
+            port: databasePort, //포트 구성
+            username: username,
+            database: databaseName,
+            password: password)
+        //vapor cloud 사용 시에는 런타임 시의 환경 변수 값으로 바꿔줘야 한다.
     }
-    
-    let password = Environment.get("DATABASE_PASSWORD") ?? "password"
-    //Environment.get(_ :)로 Vapor Cloud가 설정한 환경 변수를 가져올 수 있다.
-    //nil을 반환하면 로컬에서 실행되는 경우이므로, 기본값으로 사용한다.
-    
-    let databaseConfig = PostgreSQLDatabaseConfig(
-        hostname: hostname,
-        port: databasePort, //포트 구성
-        username: username,
-        database: databaseName,
-        password: password)
-    //vapor cloud 사용 시에는 런타임 시의 환경 변수 값으로 바꿔줘야 한다.
     
     let database = PostgreSQLDatabase(config: databaseConfig) //PostgreSQLDatabase 생성
     databases.add(database: database, as: .psql) //.psql 식별자 사용하여 DB 객체를 DatabasesConfig에 추가
@@ -119,17 +124,17 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     //    migrations.add(model: Todo.self, database: .sqlite)
     //default 모델 마이그레이션
     
-//    //SQLite
-//    migrations.add(model: Acronym.self, database: .sqlite) //마이그레이션 추가
-//    //Fluent는 단일 응용 프로그램에서 여러 DB를 혼합해 각 모델의 보유하는 DB를 지정한다.
-//    //마이그레이션은 한 번만 실행된다.
-//    //마이그레이션이 성공적으로 되면, 실행 시 콘솔창에 로그가 표시된다.
-//    services.register(migrations)
-//    //각 모델에 사용할 DB를 응용 프로그램에 알려주는 MigrationConfig 타입을 생성한다.
+    //    //SQLite
+    //    migrations.add(model: Acronym.self, database: .sqlite) //마이그레이션 추가
+    //    //Fluent는 단일 응용 프로그램에서 여러 DB를 혼합해 각 모델의 보유하는 DB를 지정한다.
+    //    //마이그레이션은 한 번만 실행된다.
+    //    //마이그레이션이 성공적으로 되면, 실행 시 콘솔창에 로그가 표시된다.
+    //    services.register(migrations)
+    //    //각 모델에 사용할 DB를 응용 프로그램에 알려주는 MigrationConfig 타입을 생성한다.
     
-//    //MySQL
-//    migrations.add(model: Acronym.self, database: .mysql) //MySQL DB를 지정해 준다.
-//    services.register(migrations)
+    //    //MySQL
+    //    migrations.add(model: Acronym.self, database: .mysql) //MySQL DB를 지정해 준다.
+    //    services.register(migrations)
     
     //PostgreSQL
     migrations.add(model: User.self, database: .psql) //User 모델 추가
@@ -138,11 +143,11 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     migrations.add(model: Category.self, database: .psql) //Category 모델 추가
     migrations.add(model: AcronymCategoryPivot.self, database: .psql) //AcronymCategoryPivot 모델 추가
     migrations.add(model: Token.self, database: .psql) //Token 모델 추가
-
+    
     switch env {
     case .development, .testing: //개발이거나 테스트 환경인 경우에만
         migrations.add(migration: AdminUser.self, database: .psql) //AdminUser 추가. default User 가 생성된다.
-        //여기선 full model이 아니므로 add(model:database:) 대신 add(migration:database:) 를 사용한다.
+    //여기선 full model이 아니므로 add(model:database:) 대신 add(migration:database:) 를 사용한다.
     default: //일반적으로 출시된 Product라면 기본 사용자 없이, 새 사용자를 Register 해서 사용해야 한다.
         break
     }
@@ -229,3 +234,62 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
 //세션을 통해 request 간에 상태를 유지할 수 있다. Vapor에서 세션을 사용하도록 설정하면, 응용 프로그램에서 고유한 ID로 쿠키를 사용자에게 제공한다.
 //이 ID는 사용자의 세션을 식별한다. 사용자가 로그인하면, Vapor는 사용자를 세션에 저장한다.
 //사용자가 로그인했는지 또는 현재 인증된 사용자를 얻고 있는지 확인해야 하는 경우 세션을 쿼리한다.
+
+
+
+
+//Setting up Heroku p.402
+// brew install heroku/brew/heroku 로 CLI을 설치하고, heroku login 명령어로 로그인 한다.
+// heroku auth:whoami 로 제대로 로그인 했는지 확인할 수 있다.
+
+//Git
+//Heroku는 앱을 deploy 하기 위해 Git을 사용해야 하기 때문에 프로젝트에 Git repository가 있어야 한다.
+//git이 있는 지 확인 하려면 터미널에서 다음과 같이 입력해 보면 된다.
+// git rev-parse --is-inside-work-tree
+//true가 출력 되면 Git repository가 있는 것이다.
+
+//Connect with Heroku
+//heroku와 연결하기 하려면 $ heroku git:remote -a your-apps-name-here 를 입력해 Heroku에서 설정한 app name을 설정해 연결해 준다.
+//Heroku 대시 보드에서 Deploy 탭을 클릭해 Existing Git repository 를 확인해 명령어를 확인해 볼 수 있다.
+
+
+
+
+//Set Buildpack
+//Heroku는 앱을 배포할 때 Buildpack라는 recipe를 제공한다.
+//Vapor는 Vapor 앱 용 Buildpack이 있다. Buildpack을 설정하려면 터미널에서 다음 명령을 입력한다.
+// heroku buildpacks:set https://github.com/vapor-community/heroku-buildpack
+
+//Swift version file
+//Buildpack 설정 후 Heroku에는 두 개의 configuration 파일이 필요하다.
+//그 중 하나는 .swift-version 이다. Buildpack에서 프로젝트에 설치할 Swift 버전을 결정하는 데 사용된다.
+// echo "4.1" > .swift-version
+
+//Procfile
+//Heroku에 앱을 빌드하고 나면 실행할 프로세스 유형과 실행 방법을 알아야 한다. 이를 위해 Procfile 이라는 파일을 사용한다.
+// echo "web: Run serve --env production" \"--hostname 0.0.0.0 --port \$PORT" > Procfile
+
+//Commit changes
+//.swift-version 와 Procfile 를 추가했으므로 commit 해야 한다.
+
+//Configure the database
+//배포 전에 앱 내에서 DB를 구성해야 한다.
+// heroku config
+//그러면, 해당 프로젝트에 대한 프로비저닝 DB 정보를 출력한다. DATABASE_URL(환경 변수 이름)과 환경 변수의 값이 들어 있다(DB link).
+
+//Configure Google environment variables
+//Google 인증을 사용하고 있다면, 이전에서 한 것과 동일하게 하게 Goolge 환경 변수를 구성해 줘야 한다.
+
+//heroku config:set \GOOGLE_CALLBACK_URL=https://<YOUR_HEROKU_URL>/oauth/google
+//heroku config:set GOOGLE_CLIENT_ID=<YOUR_CLIENT_ID>
+//heroku config:set GOOGLE_CLIENT_SECRET=<YOUR_CLIENT_SECRET>
+
+//Deploy to Heroku
+// git push heroku master 를 입력해 push한다.
+//Heroku는 앱이 빌드되면 자동으로 시작한다. 터미널에서 heroku ps:scale web=1 를 입력해 시작할 수 도 있다.
+//터미널에서 heroku open를 입력해 대시보드 탭을 바로 열 수 있다.
+
+//Reverting your database
+// heroku run Run -- revert --yes --env production 로 마지막 마이그레이션을 되돌릴 수 있다.
+// heroku run Run -- revert --all --yes --env production 로 전체 DB를 되돌릴 수 있다.
+// heroku run Run -- migrate --env production 로 마이그레이션을 할 수 있다.

@@ -410,3 +410,88 @@ extension MasterViewController {
 
 
 //Swift vs Objective-C debugging contexts
+//디버깅 시, non-Swift debugging context와 Swift debugging context가 있다.
+//Objective-C 코드에서는 non-Swift debugging context, Swift 코드에서는 Swift debugging context가 기본이다.
+//(많은 Swift 코드가 Objective-C를 사용하기 때문에, 기본적으로 non-Swift debugging context 인 경우도 많다.)
+//(lldb) po [UIApplication sharedApplication] 를 입력하면, 제대로 진행되지 않고 error를 출력한다.
+//Swift 코드에서 breakpoint가 작동했으므로 Swift debugging context가 적용되어야 하는데, Objective-C context로 작성했기 때문이다.
+//마찬가지로, Objective-C context에서 Swift context를 입력하면 작동하지 않는다.
+//-l 옵션을 사용해, Objective-C context로 강제할 수 있다.
+//po 표현식이 -O -- 로 매핑되기 때문에 po를 직접 사용할 수 없고, 표현식 자체를 사용해 줘야 한다.
+//(lldb) expression -l objc -O -- [UIApplication sharedApplication] 이를 Swift context로 출력하려면
+//(lldb) po UIApplication.shared 라고 쓰면 된다.
+//다시 resume 한후 같은 (lldb) po UIApplication.shared 를 입력하면 오류가 난다.
+//breakpoint를 벗어난 현재 코드가 Objective-C context에 있기 때문에 Swift context를 실행하려하면 오류가 발생하는 것이다.
+//디버거에서 현재 일시 중지된 언어를 항상 인지하고 있어야 한다.
+
+
+
+
+//User defined variables
+//LLDB는 객체를 출력할 때, 자동으로 local 변수를 생성한다. 여기에서 자신만의 변수를 설정해 줄 수 있다.
+//(lldb) po id test = [NSObject new] 이를 실행하면, 새 NSObject를 생성하고, test라는 변수에 저장한다.
+//하지만 (lldb) po test 를 입력하면 error가 난다. LLBD에서 변수를 사용할 때는 $를 써야 한다.
+//따라서 (lldb) po id $test = [NSObject new] 로 선언하고 (lldb) po $test 로 출력해야 한다.
+
+//Swift context에서는 po 표현식을 풀어 써줘야 한다. (lldb) expression -l swift -O -- $test
+//(lldb) exppression -l swift -O -- $test.description 하지만 이 구문은 오류가 난다.
+//Objective-C context 에서 LLDB 변수를 만든 다음 Swift context로 이동하는 경우, 모든 것이 "올바르게 작동" 한다고 보장할 수 없다.
+//Objective-C와 Swift from LLDB 간의 브리징은 개선 중이며 시간이 버전이 업데이트 될 수록 점차 호환될 것이다.
+
+//LLDB에서 변수를 만들면, 객체에 대한 참조를 가져와서 임의의 메서드를 실행(디버그) 해 볼 수 있다.
+//Symbolic breakpoint를 추가해 Symbol에 Signals.MasterContainerViewController.viewDidLoad() -> () 를 설정한다. p.74
+//매개 변수 및, 배개 변수 반환 형식에 대한 공백도 같이 써줘야 한다(MasterContainerViewController는 MasterViewController의 super class).
+//앱을 다시 빌드하면, MasterContainerViewController.viewDidLoad() 에서 breakpoint가 걸린다. (lldb) p self 를 입력하면
+//Swift debugging context 에서 실행한 첫 번째 인수이므로 LLDB는 $R0 변수를 생성한다.
+//(lldb) continue 로 진행을 하면, viewDidLoad()를 벗어나기 때문에, self를 사용해도 MasterContainerViewController의 인스턴스 참조를 가져올 수 없다.
+//(MasterContainerViewController는 MasterViewController의 super class)
+//하지만 아직 $R0 변수가 있기 때문에 이를 사용해 참조를 가져올 수 있다. 이를 가져와 메서드를 실행하고 코드 디버깅을 할 수 있다.
+//(lldb) po $R0.title 오류가 난다. LLDB가 Objective-C로 기본 설정되었기 때문에 Swift context를 유지하려면 -l 옵션을 사용해야 한다.
+//(lldb) expression -l swift -- $R0.title 네비게이션 바에 보이는 viewController의 title을 출력한다.
+//(lldb) expression -l swift -- $R0.title = "💩💩💩💩💩" 이후 (lldb) continue 를 입력하면, 네비게이션 바의 title이 바뀐 것을 확인할 수 있다.
+//이 기능은 디버깅 중일 때, 특정 입력이 있는 함수를 단계별로 실행하여 작동 방법을 확인하는 경우 유용하다.
+//여전히 viewDidLoad에 symbolic breakpoint가 있을 때, 일시 중지 시키고 다음을 입력한다.
+//(lldb) expression -l swift -O -- $R0.viewDidLoad()
+//아무 변화가 없다. MasterContainerViewController가 메서드를 실행했지만, 기본적으로 LLDB는 명령을 실행할 때, breakpoint를 무시한다.
+//-i 옵션으로 이를 비활성화 할 수 있다.
+//(lldb) expression -l swift -O -i 0 -- $R0.viewDidLoad() 이전에 작성한 viewDidLoad() 의 breakpoint에서 중단된다.
+//이 방법은 논리를 테스트하는데 유용하다. ex. 다른 입력을 처리하는 방법을 알기 위해 함수에 다른 매개 변수를 제공하여 테스트 구동 디버깅을 구현한다.
+
+
+
+
+//Type formatting
+//LLDB에서는 기본 데이터 유형의 출력 형식을 지정할 수 있다. C언어의 포맷팅을 사용한다.
+//(lldb) expression -G x -- 10 이 옵션(-G)는 원하는 출력의 형식을 LLDB에 알려준다. G는 GDB(LLDB 이전의 디버거) 형식을 나타낸다. x는 16진수를 나타낸다.
+//즉 10을 16진수로 출력한다.
+//(lldb) p/x 10 로 더 간결하게 나타낼 수 있다.
+//(lldb) p/t 10 는 10을 2진수로 나타낸다. /t 는 이진 형식을 지정한다.
+//(lldb) p/t -10 , (lldb) p/t 10.0 등으로도 쓸 수 있다.
+//(lldb) p/d 'D' 로 ASCII 코드도 출력할 수 있다. /d는 10진수 형식을 지정한다.
+//(lldb) p/c 1430672467 로 문자로 변환할 수도 있다. /c 는 char 형식을 지정한다. 숫자를 2진수로 바꿔 8비트로 분할하여 각 ASCII 코드를 가져온다.
+
+//• x: hexadecimal • d: decimal • u: unsigned decimal • o: octal • t: binary • a: address • c: character constant • f: float • s: string
+//https://sourceware.org/gdb/ onlinedocs/gdb/Output-Formats.html
+
+//추가적인 LLDB 포맷을 사용할 수도 있다. GDB 형식 구문은 사용할 수 없게 된다.
+//(lldb) expression -f Y -- 1430672467
+
+//• B: boolean • b: binary • y: bytes • Y: bytes with ASCII • c: character • C: printable character • F: complex float • s: c-string
+//• i: decimal • E: enumeration • x: hex • f: float • o: octal • O: OSType • U: unicode16 • u: unsigned decimal • p: pointer
+//http://lldb.llvm.org/varformats.html
+
+
+
+
+//**************************************** Ch6. Thread, Frame & Stepping Around ****************************************
+//Stack 101
+//컴퓨터 프로그램이 실행되면, 스택과 힙에 값을 저장한다. 스택은 현재 실행중인 코드에 대한 참조를 저장하는 LIFO(Last-In-First-Out) 큐이다.
+//LIFO는 가장 최근에 추가된 것이 먼저 제거된다. 스택 포인터는 현재 스택의 맨 위를 가리킨다.
+//스택 포인터는 다음 가져올 객체의 위치 또는 다음 객체를 배치할 위치를 알려준다. p.81
+
+
+
+
+//Examining the stackʼs frames
+//실제 iOS 디바이스로 빌드하면, 시뮬레이터에서 빌드한 것과 어셈블리가 달라진다. 이는 시뮬레이터가 Mac의 기본 명령어 세트인 x86_64(구형 디바이스 시뮬레이터에선 i386)를 사용하지만
+//실제 디바이스는 ARM 아키텍처를 사용하기 때문이다.

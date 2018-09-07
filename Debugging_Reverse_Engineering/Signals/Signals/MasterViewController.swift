@@ -495,3 +495,72 @@ extension MasterViewController {
 //Examining the stackʼs frames
 //실제 iOS 디바이스로 빌드하면, 시뮬레이터에서 빌드한 것과 어셈블리가 달라진다. 이는 시뮬레이터가 Mac의 기본 명령어 세트인 x86_64(구형 디바이스 시뮬레이터에선 i386)를 사용하지만
 //실제 디바이스는 ARM 아키텍처를 사용하기 때문이다.
+//Symbolic breakpoint를 추가한다. Symbol 란에 Signals.MasterViewController.viewWillAppear(Swift.Bool) -> () 를 추가한다. p.82
+//이는 MasterViewController의 viewWillAppear(_:) 메서드에 Symbolic breakpoint를 추가한다.
+//build를 실행해, viewWillAppear의 breakpoint에서 멈추면, Xcode 왼쪽 패널에서 Stack trace를 살펴 볼 수 있다(⌘ + 7).
+//패널 하단에 위치한 필터의 오른쪽에 3개의 버튼이 모두 비활성화되어 있는지 확인한다. 각 버튼이 필터링을 하는데, 비공개 되어 있는 코드에 대해서도 확인해야 할 부분이 있으므로 비활성화한다.
+//디버그 네비게이터 패널 내에서 stack trace가 나타나 stack frame 목록을 보여준다. 가장 첫 번째는 viewWillAppear(_:) 이고,
+//다음은 Swift/Objective-C 브리징인 @objc MasterViewController.viewWillAppear(Bool) -> () 이다.
+//이 메서드는 Objective-C가 Swift 코드를 사용할 수 있도록 자동 생성된다. 이후 UIKit에서 사용되는 Objective-C 코드 stack frame이 이어진다.
+//CoreAnimation에 속한 C++ 코드를 볼 수도 있다. CoreFoundation의 CFRunLoop 이름을 포함하는 몇 가지 메서드가 실행된 후, main function이 실행된다.
+//(Swift 프로그램도 main function이 있다. 단지 숨겨져 있을 뿐이다.)
+//LLDB에서도 stack tracking을 할 수 있다. Xcode의 패널에서 보이는 것은 간단하게 요약한 것이다.
+//(lldb) thread backtrace 이 작업을 (lldb) bt 로 줄여써도 동일하다(하지만 실제로는 다른 명령이다). 네비게이터에서 보던 것과 같은 출력이 표시된다.
+//(lldb) frame info 디버그 네비게이션과 출력이 일치한다. LLDB를 이용하면, 상세한 정보를 세밀하게 제어할 수 있다.
+//또한 이러한 명령을 유용하게 사용할 수 있는 사용자 정의 LLDB 스크립트를 작성할 수 있다.
+//Debug Navigator에 표시된 숫자를 사용해 stack frame에 연결할 수 있다.
+//(lldb) frame select 1 스택의 인덱스 1에 있는 메서드인 @objc 브리징 메서드로 이동한다.
+//objc 브리징은 Objective-C의 동적인 특성과 상호작용하기 위해 Swift 컴파일러에서 생성된 방법이다. Swift 3.2 이전 버전에서는
+//모든 NSObject에는 @objc 브리징 메서드가 생성되어 있었다. Swift4의 기본 빌드 설정을 사용하면 Objective-C의 NSObject 라도
+//@objc (혹은 @objcMembers) 특성이 있어야 브리징 메서드를 생성할 수 있다.
+//(lldb) frame select 1 를 실행하면, 어셈블리 코드를 확인할 수 있다. 멈춰진 녹선 라인의 명령을 기억해 둔다.
+//그 바로 앞에 viewWillAppear(_:)을 실행하는 callq 명령이 있다(breakpoint를 이곳에 설정했기 때문).
+
+
+
+
+//Stepping
+//LLDB에서 프로그램을 일시 중지 시켰을 때, 프로그램을 단계별로 진행할 수 있다. 각각의 프로그램 코드를 계속 실행 하면서, 작은 덩어리로 검사가 가능하다.
+
+//Stepping over
+//Stepping over를 사용하면, 디버거가 현재 일시 중지된 컨텍스트에서 다음 코드(일반 적으로 다음 행)으로 이동한다.
+//즉, 현재 명령문이 다른 함수를 호출하면, LLDB는 그 함수가 완료되거나 반환될 때까지 실행된다.
+//(lldb) run 이렇게 하면, Xcode를 다시 컴파일할 필요없이 다시 프로그램을 시작한다.
+//(lldb) next 디버거가 한 줄 앞으로(breakpoint의 다음 행으로) 이동한다.
+
+//Stepping in
+//Stepping in 은 다음 명령이 함수 호출이면, 디버거가 해당 함수의 시작으로 이동한 후 일시 중지한다.
+//(lldb) run 이렇게 하면, Xcode를 다시 컴파일할 필요없이 다시 프로그램을 시작한다.
+//(lldb) step 을 입력하면, 여기에서는 처음 breakpoint에 설정된 부분에 바로 함수 호출이 있으므로, stepping in이 제대로 되지 않는다.
+//이런 경우에는 step into 보다 step over 같이 진행된다. 이는 LLDB가 기본적으로 해당 함수에 대한 디버그 symbol이 없으면 stepping into를 무시하기 때문이다.
+//이 경우, 함수 호출은 UIKit에 있으며 debug symbol이 따로 없다.
+//하지만 debug symbol이 없는 함수로 들어 갈때, LLDB가 어떻게 작동하는지 설정할 수 있다.
+//(lldb) settings show target.process.thread.step-in-avoid-nodebug
+//이 앖이 true이면, stepping in 은 step over 처럼 작동한다. 이 설정은 변경하거나 무시하도록 할 수 있다.
+//(lldb) step -a0 이렇게 하면 디버그 symbol 여부에 관계없이 LLDB가 단계별로 진행된다.
+
+//Stepping out
+//Stepping out은 함수가 그 지속 시간 동안 계속되고, 반환되었을 때 멈추는 것을 의미한다.
+//스택 관점에서 실행은 stack frame이 pop 될때까지 계속된다.
+//(lldb) finish 를 입력하면, 디버거가 stack trace 에서 하나의 함수를 일시중지 한 것임을 알 수 있다. 몇 번 더 반복해 실행해 보면 stack이 하나씩 줄어드는 것을 볼 수 있다.
+//finish는 LLDB가 현재 함수에서 빠져나오도록 한다.
+
+//Stepping in the Xcode GUI
+//GUI 버튼으로도 위의 기능들을 대신할 수 있다. 순서대로 step over, step in, step out 이다.
+//Control 과 Shift 키를 누른 상태에서 다른 스레드의 실행을 수동으로 제어할 수 있다.
+//이렇게 하면, 나머지 스레드가 일시 정지된 상태에서 디버거가 일시 중지된 스레드를 단계별로 실행한다.
+//네트워킹이나 Grand Central Dispatch(GCD) 같이 디버깅하기 어려운 동시성 코드의 경우 사용할 수 있다.
+//LLDB에서는 --run-mode 옵션이나 간단히 -m 옵션을 사용해 같은 효과를 낼 수 있다.
+
+
+
+
+//Examining data in the stack
+//frame variable 명령은 실행 파일의 헤더에 있는 디버그 symbol 정보를 가져온다(혹은 dYSM). 특정 스택 프레임에 대한 정보를 출력한다.
+//디버그 정보로 frame variable 명령은 적절한 옵션을 사용해 프로그램의 전역 변수뿐 아니라 함수의 모든 변수 범위를 쉽게 알 수 있다.
+//다시 빌드 해서 viewWillAppear(_:) 에서 breakpoint가 멈춘 후, 스택의 가장 위(0)로 이동한다(네비게이션에서 선택하거나).
+//(lldn) frame select 0 혹은 (lldb) f 0 를 입력한다. 그리고
+//(lldb) frame variable 를 입력하면, 여러 정보를 볼 수 있다. 현재 스택 프레임과 코드 행에서 사용할 수 있는 변수를 출력한다.
+//이 출력은 Console창 왼쪽 패널의 Variables View의 내용과 일치하는 것을 알 수 있다. p.88
+//(lldb) frame variable -F self 이는 현재 self(MasterViewController)가 사용할 수 있는 모든 private 변수를 출력한다(-F는 flat의 약자).
+//이는 pulic 변수를 탐색하는 좋은 방법 중 하나이다.

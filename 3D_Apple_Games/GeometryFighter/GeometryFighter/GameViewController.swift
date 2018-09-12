@@ -21,6 +21,7 @@ class GameViewController: UIViewController {
         setupView()
         setupScene()
         setupCamera()
+        spawnShape()
     }
     
     override var shouldAutorotate: Bool { //디바이스의 회전 여부 처리
@@ -35,6 +36,22 @@ class GameViewController: UIViewController {
         scnView = self.view as! SCNView //self.view를 SCNView로 캐스팅해서 scnView 속성에 저장한다.
         //뷰를 참조해야 할 때마다 다시 캐스팅할 필요 없어진다. 뷰는 Main.storyboard에서 SCNView로 되어 있다.
         //SCNView는 UIView(macOS에서는 NSView)의 하위 클래스이다.
+        scnView.showsStatistics = true //실시간 통계 패널 보기
+        // • fps : 초당 프레임. 60fps 이상이 나와야 쾌적하게 게임이 실행된다. 높을 수록 좋다.
+        // • ◆ : 프레임 당 총 draw 호출 수. 단일 프레임 당 그려져(draw) 표시되는 객체의 총량. 광원 효과도 이 양을 증가 시킬 수 있다. 낮을 수록 좋다.
+        // • ▲ : 프레임 당 총 폴리곤 수. 보여지는 모든 geometry에 대한 단일 프레임을 그릴(draw) 때 사용되는 폴리곤의 총량. 낮을 수록 좋다.
+        // • ✸ : 총 가시 광선 광원 수. 현재 보이는 객체에 영향을 주는 광원의 총량. 한 번에 3 개 이상 사용하지 않을 것을 권장
+        
+        // + 버튼을 누르면, 세부 정보가 나타난다.
+        // • Frame time : 단일 프레임을 그리는데 걸린 총 시간. 60fps 일 때 16.7ms의 시간이 걸린다.
+        // • The color chart : 프레임을 그리는 데 걸린 대략적인 시간의 백분율을 표시한다.
+        scnView.allowsCameraControl = true //제스처로 활성화된 camera를 수동으로 제어할 수 있다.
+        //SceneKit이 카메라 노드를 생성하고 터치 이벤트를 처리하여 사용자가 scene의 제스처 처리를 할 수 있도록 한다.
+        // • Single finger swipe : 회전
+        // • Two finger swipe: 이동
+        // • Two finger pinch: 줌 인/아웃
+        // • Double-tap : 여러 개의 camera 객체 있는 경우 전환. 하나 밖에 없는 경우에는 기본 위치와 설정으로 camera를 재설정한다.
+        scnView.autoenablesDefaultLighting = true //Default(무 지향성) 광원 추가
     }
     
     func setupScene() {
@@ -49,6 +66,52 @@ class GameViewController: UIViewController {
         cameraNode.camera = SCNCamera() //노드에 카메라 속성을 할당한다.
         cameraNode.position = SCNVector3(x: 0, y: 0, z: 10) //노드의 위치를 설정한다.
         scnScene.rootNode.addChildNode(cameraNode) //루트 노드의 자식 노드로 scene에 추가한다. //scene graph 구조를 이룬다.
+        
+        //Cameras
+        //카메라가 있는 노드의 위치에 따라 scene를 보는 시점이 결정된다. p.49
+        //• 카메라의 방향은 항상 카메라가 포함 된 노드의 -z 축을 따른다.
+        //• 시야(field of view)는 카메라 가시 영역의 제한 각도이다. 좁은 각도는 좁은 시야를, 넓은 각도는 넓은 시야를 제공한다.
+        //• viewing frustum은 카메라의 가시적인 깊이를 결정한다.
+        //이 영역 밖의 모든 것, 즉 카메라에서 너무 가깝거나 너무 멀리있는 부분은 클리핑되어 화면에 나타나지 않는다.
+        //SceneKit camera는 SCNCamera로 표현되며, xPov와 yPov 속성을 사용해 시야(field of view)를 조정할 수 있고,
+        //zNear와 zFar를 사용해 viewing frustum을 조정할 수 있다.
+        //기억해야할 핵심 사항은 카메라가 노드 계층의 일부가 아니라면, 카메라 자체는 아무것도 하지 않는다.
+    }
+    
+    func spawnShape() {
+        var geometry: SCNGeometry //Scene에 표시할 수 있는 meterial을 포함한 3차원 기하 도형(model 이나 mesh 라고도 한다).
+        
+        switch ShapeType.random() { //반환된 모양을 처리할 switch
+        case .box:
+            geometry = SCNBox(width: 1.0, height: 1.0, length: 1.0, chamferRadius: 0.0)
+            //상자 모양의 기하 도형을 생성한다. //너비, 높이, 길이, 모서리
+        case .sphere:
+            geometry = SCNSphere(radius: 0.5)
+        case .pyramid:
+            geometry = SCNPyramid(width: 1.0, height: 1.0, length: 1.0)
+        case .torus:
+            geometry = SCNTorus(ringRadius: 0.5, pipeRadius: 0.25)
+        case .capsule:
+            geometry = SCNCapsule(capRadius: 0.3, height: 2.5)
+        case .cylinder:
+            geometry = SCNCylinder(radius: 0.3, height: 2.5)
+        case .cone:
+            geometry = SCNCone(topRadius: 0.25, bottomRadius: 0.5, height: 1.0)
+        case .tube:
+            geometry = SCNTube(innerRadius: 0.25, outerRadius: 0.5, height: 1.0)
+        }
+        
+        let geometryNode = SCNNode(geometry: geometry) //기하 도형(geometry)으로 SCNNode를 생성한다.
+        //geometry 매개 변수를 사용해 노드를 만들고 해당 geometry를 자동으로 연결한다.
+        scnScene.rootNode.addChildNode(geometryNode) //노드를 scene의 루트 노드 자식으로 추가한다. //scene graph 구조를 이룬다.
+        
+        //각 요소로 노드를 만들고, 그 노드를 루트 노드의 자식으로 추가해야 한다. 루트 노드는 scene 좌표계를 정의한다.
+        //이들을 연결해 scene graph 구조를 이룬다.
+        
+        //Geometry
+        //기하 도형은 3차원 도형을 나타내며 폴리곤을 정의하는 정점(vertices)으로부터 생성된다. Geometry에는 material 객체가 포함될 수 있다.
+        //material을 사용하면 기하 도형의 색상, 텍스처, 시각 효과, 광원 등의 정보를 지정해 줄 수 있다.
+        //정점(vertices)과 재료(materials)의 모음을 model 혹은 mesh라 한다. p.51
     }
 }
 
@@ -96,25 +159,3 @@ class GameViewController: UIViewController {
 //SceneKit은 SCNVector3 데이터 형식을 사용해 3 차원 벡터로 나타낸다.
 //scene에 추가된 노드의 기본 위치는 (x : 0, y : 0, z : 0)이며 항상 부모 노드를 기준으로 한다.
 //노드를 원하는 위치에 배치하려면 부모 노드의 위치(local)를 기준으로(world 가 아님을 유의) 조정해야 한다.
-
-
-
-
-//Cameras
-//카메라가 있는 노드의 위치에 따라 scene를 보는 시점이 결정된다. p.49
-//• 카메라의 방향은 항상 카메라가 포함 된 노드의 -z 축을 따른다.
-//• 시야(field of view)는 카메라 가시 영역의 제한 각도이다. 좁은 각도는 좁은 시야를, 넓은 각도는 넓은 시야를 제공한다.
-//• viewing frustum은 카메라의 가시적인 깊이를 결정한다. 이 영역 밖의 모든 것, 즉 카메라에서 너무 가깝거나 너무 멀리있는 부분은 클리핑되어 화면에 나타나지 않는다.
-//SceneKit camera는 SCNCamera로 표현되며, xPov와 yPov 속성을 사용해 시야(field of view)를 조정할 수 있고,
-//zNear와 zFar를 사용해 viewing frustum을 조정할 수 있다.
-//기억해야할 핵심 사항은 카메라가 노드 계층의 일부가 아니라면, 카메라 자체는 아무것도 하지 않는다.
-
-
-
-
-//Geometry
-//기하 도형은 3차원 도형을 나타내며 폴리곤을 정의하는 정점(vertices)으로부터 생성된다. Geometry에는 material 객체가 포함될 수 있다.
-//material을 사용하면 기하 도형의 색상, 텍스처, 시각 효과, 광원 등의 정보를 지정해 줄 수 있다.
-//정점(vertices)과 재료(materials)의 모음을 model 혹은 mesh라 한다. p.51
-
-

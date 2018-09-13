@@ -14,6 +14,13 @@
 		EFCCDD7B2147D17000CF379D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EFCCDD792147D17000CF379D /* LaunchScreen.storyboard */; };
 		EFCCDD832147D2C200CF379D /* GeometryFighter.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = EFCCDD822147D2C200CF379D /* GeometryFighter.scnassets */; };
 		EFCCDD8521482FD500CF379D /* ShapeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCCDD8421482FD500CF379D /* ShapeType.swift */; };
+		EFCCDD8E2149910600CF379D /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCCDD872149910600CF379D /* Int+Extensions.swift */; };
+		EFCCDD8F2149910600CF379D /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCCDD882149910600CF379D /* UIColor+Extensions.swift */; };
+		EFCCDD902149910600CF379D /* GameHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCCDD892149910600CF379D /* GameHelper.swift */; };
+		EFCCDD912149910600CF379D /* SCNAction+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCCDD8A2149910600CF379D /* SCNAction+Extensions.swift */; };
+		EFCCDD922149910600CF379D /* Generics.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCCDD8B2149910600CF379D /* Generics.swift */; };
+		EFCCDD932149910600CF379D /* Float+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCCDD8C2149910600CF379D /* Float+Extensions.swift */; };
+		EFCCDD942149910600CF379D /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCCDD8D2149910600CF379D /* Double+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +33,13 @@
 		EFCCDD7C2147D17000CF379D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EFCCDD822147D2C200CF379D /* GeometryFighter.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = GeometryFighter.scnassets; sourceTree = "<group>"; };
 		EFCCDD8421482FD500CF379D /* ShapeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeType.swift; sourceTree = "<group>"; };
+		EFCCDD872149910600CF379D /* Int+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
+		EFCCDD882149910600CF379D /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
+		EFCCDD892149910600CF379D /* GameHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameHelper.swift; sourceTree = "<group>"; };
+		EFCCDD8A2149910600CF379D /* SCNAction+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SCNAction+Extensions.swift"; sourceTree = "<group>"; };
+		EFCCDD8B2149910600CF379D /* Generics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Generics.swift; sourceTree = "<group>"; };
+		EFCCDD8C2149910600CF379D /* Float+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Float+Extensions.swift"; sourceTree = "<group>"; };
+		EFCCDD8D2149910600CF379D /* Double+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +72,7 @@
 		EFCCDD6D2147D16E00CF379D /* GeometryFighter */ = {
 			isa = PBXGroup;
 			children = (
+				EFCCDD862149910600CF379D /* GameUtils */,
 				EFCCDD6E2147D16E00CF379D /* AppDelegate.swift */,
 				EFCCDD722147D16E00CF379D /* GameViewController.swift */,
 				EFCCDD8421482FD500CF379D /* ShapeType.swift */,
@@ -68,6 +83,20 @@
 				EFCCDD7C2147D17000CF379D /* Info.plist */,
 			);
 			path = GeometryFighter;
+			sourceTree = "<group>";
+		};
+		EFCCDD862149910600CF379D /* GameUtils */ = {
+			isa = PBXGroup;
+			children = (
+				EFCCDD872149910600CF379D /* Int+Extensions.swift */,
+				EFCCDD882149910600CF379D /* UIColor+Extensions.swift */,
+				EFCCDD892149910600CF379D /* GameHelper.swift */,
+				EFCCDD8A2149910600CF379D /* SCNAction+Extensions.swift */,
+				EFCCDD8B2149910600CF379D /* Generics.swift */,
+				EFCCDD8C2149910600CF379D /* Float+Extensions.swift */,
+				EFCCDD8D2149910600CF379D /* Double+Extensions.swift */,
+			);
+			path = GameUtils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -143,8 +172,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				EFCCDD732147D16E00CF379D /* GameViewController.swift in Sources */,
+				EFCCDD922149910600CF379D /* Generics.swift in Sources */,
+				EFCCDD8F2149910600CF379D /* UIColor+Extensions.swift in Sources */,
+				EFCCDD8E2149910600CF379D /* Int+Extensions.swift in Sources */,
+				EFCCDD942149910600CF379D /* Double+Extensions.swift in Sources */,
 				EFCCDD8521482FD500CF379D /* ShapeType.swift in Sources */,
+				EFCCDD912149910600CF379D /* SCNAction+Extensions.swift in Sources */,
 				EFCCDD6F2147D16E00CF379D /* AppDelegate.swift in Sources */,
+				EFCCDD932149910600CF379D /* Float+Extensions.swift in Sources */,
+				EFCCDD902149910600CF379D /* GameHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

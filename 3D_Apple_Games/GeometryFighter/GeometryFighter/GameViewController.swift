@@ -159,3 +159,9 @@ class GameViewController: UIViewController {
 //SceneKit은 SCNVector3 데이터 형식을 사용해 3 차원 벡터로 나타낸다.
 //scene에 추가된 노드의 기본 위치는 (x : 0, y : 0, z : 0)이며 항상 부모 노드를 기준으로 한다.
 //노드를 원하는 위치에 배치하려면 부모 노드의 위치(local)를 기준으로(world 가 아님을 유의) 조정해야 한다.
+
+
+
+
+//Introducing the game utilities
+//SceneKit 물리 엔진을 사용하면 객체에 간단하게 중력 및 충돌 등의 효과를 추가해 줄 수 있다.

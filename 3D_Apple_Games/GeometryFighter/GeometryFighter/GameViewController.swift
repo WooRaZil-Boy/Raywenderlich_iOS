@@ -17,6 +17,8 @@ class GameViewController: UIViewController {
     var spawnTime: TimeInterval = 0 //타이머
     //타이머로 객체가 생성되는 속도를 조절해, 디바이스가 지원할 수 있는 프레임 속도에 관계없이 일관된 속도로 애니메이션을 만들어야 한다.
     //타이머를 사용하는 것은 게임에서 매우 흔한 객체 관리 기법이다.
+    var game = GameHelper.sharedInstance
+    var splashNodes: [String: SCNNode] = [:] //게임 상황(시작, 종료)를 보여주는 스크린(plane) 노드
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +28,9 @@ class GameViewController: UIViewController {
         setupCamera()
 //        spawnShape()
         //렌더링 루프 내부에서 delegate 메서드로 호출되므로 필요없어 진다.
+        setupHUD()
+        setupSplash()
+        setupSounds()
     }
     
     override var shouldAutorotate: Bool { //디바이스의 회전 여부 처리
@@ -50,7 +55,7 @@ class GameViewController: UIViewController {
         // • Frame time : 단일 프레임을 그리는데 걸린 총 시간. 60fps 일 때 16.7ms의 시간이 걸린다.
         // • The color chart : 프레임을 그리는 데 걸린 대략적인 시간의 백분율을 표시한다.
         
-        scnView.allowsCameraControl = true //제스처로 활성화된 camera를 수동으로 제어할 수 있다.
+        scnView.allowsCameraControl = false //제스처로 활성화된 camera를 수동으로 제어할 수 있다.
         //SceneKit이 카메라 노드를 생성하고 터치 이벤트를 처리하여 사용자가 scene의 제스처 처리를 할 수 있도록 한다.
         // • Single finger swipe : 회전
         // • Two finger swipe: 이동
@@ -113,7 +118,8 @@ class GameViewController: UIViewController {
             geometry = SCNTube(innerRadius: 0.25, outerRadius: 0.5, height: 1.0)
         }
         
-        geometry.materials.first?.diffuse.contents = UIColor.random() //색상 지정
+        let color = UIColor.random() //랜덤 색상
+        geometry.materials.first?.diffuse.contents = color //색상 지정
         //geometry의 material을 가져와 임의의 UIColor로 설정한다.
         //diffusesms material 표면의 각 점에서 모든 방향으로 똑같이 반사되는 빛의 양과 색상을 나타낸다. 기본 색이나 기본 질감으로 생각하면 된다.
         
@@ -179,6 +185,16 @@ class GameViewController: UIViewController {
         //SceneKit의 물리 엔진의 측정 단위는 국제 단위(International System of Units, SI) 를 사용한다.
         //Mass : Kilograms, Force : Newtons, Impulse : Newton-second, Torque : Newton-meter
         
+        let trailEmitter = createTrail(color: color, geometry: geometry) //Particle System 생성
+        geometryNode.addParticleSystem(trailEmitter) //geometry 노드에 Particle System을 추가한다.
+        //particle system은 개별 입자를 scene graph 자체에 추가하지 않으므로 각 입자에 직접 액세스할 수는 없다.
+        
+        if color == UIColor.black { //객체의 상태를 지정해 준다.
+            geometryNode.name = "BAD"
+        } else {
+            geometryNode.name = "GOOD"
+        }
+        
         scnScene.rootNode.addChildNode(geometryNode) //노드를 scene의 루트 노드 자식으로 추가한다. //scene graph 구조를 이룬다.
         
         //각 요소로 노드를 만들고, 그 노드를 루트 노드의 자식으로 추가해야 한다. 루트 노드는 scene 좌표계를 정의한다.
@@ -201,8 +217,6 @@ class GameViewController: UIViewController {
         //성능과 프레임 속도를 고려하면, 사라진 노드는 삭제해 줘야 한다. 렌더링 loop에서 이를 처리해 줄 수 있다.
         //물체가 경계선에 도달하면 제거해 준다.
     }
-    
-    
 }
 
 //A history of SceneKit
@@ -289,5 +303,234 @@ extension GameViewController: SCNSceneRendererDelegate {
         //현재 시스템 시간이 spawnTime보다 크지 않다면 아무런 행동도 하지 않는다.
         
         cleanScene() //노드가 경계선에 도달하면 제거해 준다.
+        game.updateHUD() //HUD를 최신으로 업데이트 해 준다.
+    }
+}
+
+extension GameViewController {
+    //Creating a trail particle system
+    //New File - iOS/Resource/SceneKit Particle System 에서 Particle system template를 생성해 줄 수 있다. p.82
+    //편집기의 각 섹션 설명은 p.83
+    
+    //Configuring the trail particle system
+    //Emitter attributes
+    //Emitter 속성은 모든 입자가 생성되는 원점을 설정한다. p.84
+    
+    //Simulation attributes
+    //시뮬레이션 속성은 입자가 보이는 시간 동안 모션을 관리한다. 이를 설정해 물리 엔진을 사용하지 않고도 움직임을 관리할 수 있다. p.85
+    
+    //Image attributes
+    //이미지 속성은 입자의 시각적 측면을 제어한다. 입자의 모양이 보여지는 시간 동안 어떻게 변할 수 있는지 관리한다. p.86
+    
+    //Image sequence attributes
+    //이미지 시퀀스 속성을 사용해 입자의 기본 애니메이션 속성을 제어한다.
+    //입자에 대한 애니메이션 이미지를 만들려면 애니메이션의 각 프레임을 단일 이미지로 그리드 배열해야 한다.
+    //그 후, 그리드 이미지를 입자 emitter의 이미지로 사용하면 된다. p.87
+    
+    //Rendering attributes
+    //렌더링 속성은 렌더링 단계에서 입자를 처리하는 방법을 정의한다. p.88
+    
+    //Physics attributes
+    //물리 속성은 물리 시뮬레이션에서 입자가 어떻게 작동하는 지 지정한다. p.88
+    
+    //Life cycle attributes
+    //수명 주기 속성을 사용해 입자 시스템(particle system)의 전체 수명주기를 제어할 수 있다.
+    
+    func createTrail(color: UIColor, geometry: SCNGeometry) -> SCNParticleSystem {
+        //SCNParticleSystem는  작은 이미지 스프라이트를 애니메이션화하고 렌더링하는 객체이다.
+        
+        let trail = SCNParticleSystem(named: "Trail.scnp", inDirectory: nil)! //Particle system 객체 생성
+        trail.particleColor = color //tint color 설정
+        trail.emitterShape = geometry //emitter의 모양 지정
+        
+        return trail
+        
+        //Particle systems
+        //particle system 을 사용하면, 순간 이동, 로켓 부스터, 비 눈, 스파크, 폭발 같은 다양한 특수 효과를 더 해 줄 수 있다.
+        //SceneKit에서 SCNParticleSystem은 scene graph에서 입자의 생성, 애니메이션, 제거를 관리한다.
+        //Particle은 기본적으로 작은 이미지 스프라이트이다. particle system은 개별 입자를 scene graph 자체에 추가하지 않아 각 입자에 직접 액세스할 수는 없다.
+        //particle system 은 입자의 모양, 크기, 위치를 관리하며, 다음과 같은 속성으로 particle을 변경할 수 있다.
+        //• Appearance : 모양. 시스템의 각 입자는 단일 이미지 또는 애니메이션 시퀀스로 렌더링 될 수 있다.
+        //  생성된 입자의 size, tint color, blending mode, other rendering parameter를 조정할 수 있다.
+        //• Life Span : 수명. 시스템은 각 입자를 생성하는 particle emitter를 사용한다. scene에서 보이는 시간을 결정한다.
+        //• Emitter behavior : 입자가 생성되는 위치 및 속도와 같은 emitter의 다양한 매개변수를 제어할 수 있다.
+        //• Variation : 변형. 분산. 입자를 더 많거나 적게 혹은 무작위로 설정해 줄 수 있다.
+        //• Movement : 입자가 생성된 후 어떻게 움직이는 지 조절할 수 있다. Particle은 성능 향상을 위해 단순화된 물리 시뮬레이션을 사용하지만,
+        //  Particle는 여전히 물리 엔진이 관리하는 객체와 상호작용할 수 있다.
+    }
+    
+    func createExplosion(geometry: SCNGeometry, position: SCNVector3, rotation: SCNVector4) {
+        //매개변수의 geometry는 입자 효과의 모양을 정의하고, position과 rotation은 위치와 회전을 정의해 준다.
+        let explosion = SCNParticleSystem(named: "Explode.scnp", inDirectory: nil)! //Particle system 객체 생성
+        explosion.emitterShape = geometry //emitter의 모양 지정
+        explosion.birthLocation = .surface //입자는 도형의 표면에서 방출된다.
+        
+        let rotationMatrix = SCNMatrix4MakeRotation(rotation.w, rotation.x, rotation.y, rotation.z) //회전
+        let translationMatrix = SCNMatrix4MakeTranslation(position.x, position.y, position.z) //위치
+        let transformMatrix = SCNMatrix4Mult(rotationMatrix, translationMatrix) //변환 행렬
+        
+        scnScene.addParticleSystem(explosion, transform: transformMatrix) //scnScene에 Particle System을 추가한다.
+        //particle system은 개별 입자를 scene graph 자체에 추가하지 않으므로 각 입자에 직접 액세스할 수는 없다.
+    }
+}
+
+
+
+
+extension GameViewController {
+    func setupHUD() {
+        game.hudNode.position = SCNVector3(x: 0.0, y: 10.0, z: 0.0) //HUD 위치 설정하고
+        scnScene.rootNode.addChildNode(game.hudNode) //root node에 추가한다.
+        
+        //Heads-up displays
+        //SKLabelNode(레이블을 보여주는 노드)를 사용해, 게임의 상태를 표시해 준다.
+    }
+    
+//    func handleTouchFor(node: SCNNode) {
+//        if node.name == "GOOD" {
+//            game.score += 1
+//            createExplosion(geometry: node.geometry!, position: node.presentation.position, rotation: node.presentation.rotation)
+//            //explosion 효과 추가
+//            //presentation 속성을 사용하여 노드의 position 과 rotation 변수를 가져온다.
+//            //물리 시뮬레이션이 노드를 이동 중이기 때문에, presentation 속성을 가져와야 한다.
+//            //SceneKit은 애니메이션 중에 객체의 복사본을 유지하고, 애니메이션이 끝날 때까지 재생한다.
+//            //따라서 단순하게 node.position 으로 가져오면 안 되고, presentation 속성에서 현재 값을 가져와야 한다.
+//            node.removeFromParentNode()
+//        } else if node.name == "BAD" {
+//            game.lives -= 1
+//            createExplosion(geometry: node.geometry!, position: node.presentation.position, rotation: node.presentation.rotation)
+//            //explosion 효과 추가
+//            //presentation 속성을 사용하여 노드의 position 과 rotation 변수를 가져온다.
+//            //물리 시뮬레이션이 노드를 이동 중이기 때문에, presentation 속성을 가져와야 한다.
+//            //SceneKit은 애니메이션 중에 객체의 복사본을 유지하고, 애니메이션이 끝날 때까지 재생한다.
+//            //따라서 단순하게 node.position 으로 가져오면 안 되고, presentation 속성에서 현재 값을 가져와야 한다.
+//            node.removeFromParentNode()
+//        }
+//
+//        //Adding touch handling
+//        //특정 노드를 터치했을 때 호출된다.
+//        //터치된 노드를 검사해, "GOOD" 노드인 경우 점수를 높이고, "BAD" 노드인 경우 생명을 줄인다.
+//    }
+    //공통된 부분을 묶어준다.
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if game.state == .GameOver { //게임 종료 화면
+            return //메서드를 종료한다.
+        }
+        
+        if game.state == .TapToPlay { //게임 시작 화면
+            game.reset() //게임 리셋. 게임이 시작된다.
+            game.state = .Playing //TapToPlay의 상태를 Playing로 바꾼다.
+            showSplash(splashName: "") //빈 이름의 splashName을 전달해, TapToPlay 스크린과 GameOver 스크린 모두 보이지 않게 한다.
+            
+            return
+        }
+        
+        let touch = touches.first! //다중 터치되는 경우 둘 이상이 있을 수 있다.
+        let location = touch.location(in: scnView) //터치된 위치를 scnView의 상대적인 좌표 기준으로 변환한다.
+        let hitResults = scnView.hitTest(location, options: nil)
+        //사용자가 터치한 위치에서 광선을 쏴서 모든 교차되는 객체를 배열로 반환한다.
+        
+        if let result = hitResults.first { //첫 번째 결과 노드를 가져와 핸들러에 전달한다.
+            if result.node.name == "HUD" || result.node.name == "GAMEOVER" || result.node.name == "TAPTOPLAY" {
+                //HUD, GAMEOVER, TAPTOPLAY 의 노드를 터치한 경우 메서드를 종료한다.
+                return
+            } else if result.node.name == "GOOD" {
+                handleGoodCollision()
+            } else if result.node.name == "BAD" {
+                handleBadCollision()
+            }
+            
+            createExplosion(geometry: result.node.geometry!, position: result.node.presentation.position, rotation: result.node.presentation.rotation) //explosion 효과 추가
+            //presentation 속성을 사용하여 노드의 position 과 rotation 변수를 가져온다.
+            //물리 시뮬레이션이 노드를 이동 중이기 때문에, presentation 속성을 가져와야 한다.
+            //SceneKit은 애니메이션 중에 객체의 복사본을 유지하고, 애니메이션이 끝날 때까지 재생한다.
+            //따라서 단순하게 node.position 으로 가져오면 안 되고, presentation 속성에서 현재 값을 가져와야 한다.
+            
+            result.node.removeFromParentNode() //터치된 노드를 제거해 준다.
+            
+//            handleTouchFor(node: result.node)
+            //위의 코드로 대체
+        }
+        
+        //Using the touch handler
+    }
+    
+    func handleGoodCollision() {
+        game.score += 1
+        game.playSound(scnScene.rootNode, name: "ExplodeGood") //SCNAction로 사운드를 실행
+    }
+    
+    func handleBadCollision() {
+        game.lives -= 1
+        game.playSound(scnScene.rootNode, name: "ExplodeBad") //SCNAction로 사운드를 실행
+        game.shakeNode(cameraNode) //SCNAction로 간단한 애니메이션 동작을 구현한다(camera를 움직인다).
+        
+        if game.lives <= 0 { //게임 종료의 경우
+            game.saveState() //게임의 점수를 기록한다.
+            showSplash(splashName: "GameOver") //GameOver(종료) 스크린을 보이게 한다.
+            game.playSound(scnScene.rootNode, name: "GameOver") //SCNAction로 사운드를 실행
+            
+            scnScene.rootNode.runAction(SCNAction.waitForDurationThenRunBlock(5) { (node:SCNNode!) -> Void in
+                //SCNAction.wait 으로 해당 시간(5) 만큼 기다린 후
+                //SCNAction.run 으로 다시 진행한다.
+                self.showSplash(splashName: "TapToPlay") //TapToPlay(시작) 스크린을 보이게 한다.
+                self.game.state = .TapToPlay //게임 상태 변환
+                //재 시작을 해 준다.
+            })
+        }
+    }
+    
+    //Touch handling
+    //스크린의 view에서 일어난 터치를 SceneKit이 3D scene로 변환하여 터치된 객체를 결정한다(ARKit의 방식과 유사하다). 다음과 같은 과정을 거친다. p.93
+    //1. Get touch location : 터치된 위치 가져오기. 스크린에서 사용자가 터치한 위치를 가져온다.
+    //2. Convert to view coordinates : view의 좌표로 변환. 터치된 위치를 scene를 표시하는 SCNView 객체의 상대적인 위치로 변환한다.
+    //3. Fire a ray for a hit test : Hit test ray. 설정된 scene의 상대적인 위치에 광선을 쏴서 Hit test를 진행한다. 광선과 교차하는 객체 목록을 반환한다.
+}
+
+
+
+
+//Adding juice
+extension GameViewController {
+    func createSplash(name: String, imageFileName: String) -> SCNNode {
+        //게임 상황(시작, 종료)를 알려주는 화면을 생성한다.
+        let plane = SCNPlane(width: 5, height: 5)
+        let splashNode = SCNNode(geometry: plane) //기하 도형(geometry)으로 SCNNode를 생성한다.
+        //geometry 매개 변수를 사용해 노드를 만들고 해당 geometry를 자동으로 연결한다.
+        splashNode.position = SCNVector3(x: 0, y: 5, z: 0)
+        splashNode.name = name //scene graph를 쉽게 관리하기 위해, 노드에 설명이 포함된 name 을 지정해 줄 수 있다.
+        //childNode(withName: recursively:) 나 childNodes(passingTest:) 등의 메서드를 이용해 scene graph에서 해당 노드를 검색할 수 있다.
+        splashNode.geometry?.materials.first?.diffuse.contents = imageFileName
+        //geometry의 material을 가져와 content를 설정해 준다.
+        //diffusesms material 표면의 각 점에서 모든 방향으로 똑같이 반사되는 빛의 양과 색상을 나타낸다. 기본 색이나 기본 질감으로 생각하면 된다.
+        
+        scnScene.rootNode.addChildNode(splashNode) //루트 노드의 자식 노드로 scene에 추가한다. //scene graph 구조를 이룬다.
+        
+        return splashNode
+    }
+    
+    func showSplash(splashName: String) { //해당 name을 가진 node를 scene에서 보이게 한다.
+        for (name, node) in splashNodes {
+            if name == splashName {
+                node.isHidden = false
+            } else {
+                node.isHidden = true
+            }
+        }
+    }
+    
+    func setupSplash() {
+        splashNodes["TapToPlay"] = createSplash(name: "TAPTOPLAY", imageFileName: "GeometryFighter.scnassets/Textures/TapToPlay_Diffuse.png") //TapToPlay(시작) 스크린
+        splashNodes["GameOver"] = createSplash(name: "GAMEOVER", imageFileName: "GeometryFighter.scnassets/Textures/GameOver_Diffuse.png") //GameOver(종료) 스크린
+        showSplash(splashName: "TapToPlay") //TapToPlay(시작) 스크린을 보이게 한다.
+    }
+    
+    func setupSounds() { //게임 사운드를 가져온다.
+        game.loadSound("ExplodeGood", fileNamed: "GeometryFighter.scnassets/Sounds/ExplodeGood.wav")
+        game.loadSound("SpawnGood", fileNamed: "GeometryFighter.scnassets/Sounds/SpawnGood.wav")
+        game.loadSound("ExplodeBad", fileNamed: "GeometryFighter.scnassets/Sounds/ExplodeBad.wav")
+        game.loadSound("SpawnBad", fileNamed: "GeometryFighter.scnassets/Sounds/SpawnBad.wav")
+        game.loadSound("GameOver", fileNamed: "GeometryFighter.scnassets/Sounds/GameOver.wav")
     }
 }

@@ -9,6 +9,21 @@
 import UIKit
 import SceneKit
 
+enum ColliderType: Int {
+    //충돌을 처리할 때 ColliderType.ball.rawValue 로 비트 마스크 값을 사용할 수 있다.
+    case ball     = 0b0001
+    case barrier  = 0b0010
+    case brick    = 0b0100
+    case paddle   = 0b1000
+    
+    //Detecting contact with bitmasks
+    //Ball :      1 (Decimal) = 00000001 (Binary)
+    //Barrier :   2 (Decimal) = 00000010 (Binary)
+    //Brick :     4 (Decimal) = 00000100 (Binary)
+    //Paddle :    8 (Decimal) = 00001000 (Binary)
+}
+
+
 class GameViewController: UIViewController {
     var scnView: SCNView! //SCNView는 SCNScene의 내용을 scene에 표시한다.
     var scnScene: SCNScene! //SCNScene 클래스는 scene를 나타낸다. SCNView의 인스턴스에 scene를 표시한다.
@@ -20,6 +35,16 @@ class GameViewController: UIViewController {
     
     var ballNode: SCNNode! //볼
     var paddleNode: SCNNode! //패들
+    
+    var lastContactNode: SCNNode! //볼과 접촉한 마지막 노드
+    //두 노드가 충돌했을 때, ball과 brick이라면, brick을 깨뜨려야 한다.
+    //또, ball과 다른 노드는 두 번 충돌할 수 없으므로 한 번만 충돌하도록 관리해 줘야 한다.
+    
+    var touchX: CGFloat = 0 //터치 시 x 위치
+    var paddleX: Float = 0 //터치 시 패들의 x 위치
+    //터치 컨트롤
+    
+    var floorNode: SCNNode! //바닥. 카메라 움직임 제한하기 위해 필요하다.
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +71,8 @@ class GameViewController: UIViewController {
         
         scnScene = SCNScene(named: "Breaker.scnassets/Scenes/Game.scn") //scn file로 scene 초기화
         scnView.scene = scnScene //scnView에서 사용할 scene 설정
+        
+        scnScene.physicsWorld.contactDelegate = self //충돌 delegate 설정
     }
     
     func setupNodes() {
@@ -63,10 +90,28 @@ class GameViewController: UIViewController {
         
         paddleNode = scnScene.rootNode.childNode(withName: "Paddle", recursively: true)!
         //패들 노드를 root node 에 추가한다.
+        
+        ballNode.physicsBody?.contactTestBitMask =
+            ColliderType.barrier.rawValue | ColliderType.brick.rawValue | ColliderType.paddle.rawValue
+        //서로 충돌이 발생하는 BitMask를 물리엔진에 설정해 준다. 공이 각각 2, 4, 8 의 비트 마스크 그룹 노드와 충돌할 때 delegate 메서드를 호출한다.
+        //물리 엔진은 모든 충돌에 대해 default로 physicsWorld(_: didBegin:)를 호출하지 않는다.
+        //따라서 contactTestBitMask 를 설정하여, 충돌이 발생할 때 delegate 메서드를 실행하도록 설정해 줘야 한다.
+        
+        floorNode = scnScene.rootNode.childNode(withName: "Floor", recursively: true)!
+        //바닥 노드를 root node 에 추가한다.
+        verticalCameraNode.constraints = [SCNLookAtConstraint(target: floorNode)]
+        horizontalCameraNode.constraints = [SCNLookAtConstraint(target: floorNode)]
+        //카메라에 제약조건을 추가해 카메라가 대상 노드를 향하도록 한다.
+        //Floor 노드는 scene의 중앙 아래에 위치하고 있다. 따라서 카메라를 어디로 옮기더라도 항상 공간의 중심을 보도록 한다.
     }
     
     func setupSounds() {
-        
+        game.loadSound(name: "Paddle", fileNamed: "Breaker.scnassets/Sounds/Paddle.wav")
+        game.loadSound(name: "Block0", fileNamed: "Breaker.scnassets/Sounds/Block0.wav")
+        game.loadSound(name: "Block1", fileNamed: "Breaker.scnassets/Sounds/Block1.wav")
+        game.loadSound(name: "Block2", fileNamed: "Breaker.scnassets/Sounds/Block2.wav")
+        game.loadSound(name: "Barrier", fileNamed: "Breaker.scnassets/Sounds/Barrier.wav")
+        //SCNAction로 사운드를 실행
     }
 }
 
@@ -228,5 +273,157 @@ extension GameViewController {
 //복사한 노드를 다른 노드로 설정하려면 복사한 객체에서 Attributes Inspector - Geometry Sharing - Unshare 버튼을 클릭해 공유를 해제해야 한다.
 //그룹 노드(scene graph 노드에서 상위 노드)의 위치를 조정하면, 모든 자식 노드의 위치가 offset 된다.
 //노드의 위치, 회전, 크기는 항상 부모를 기준으로 하므로 scene graph를 재정렬하면 SceneKit editor가 노드의 속성을 자동으로 다시 계산해 형상을 유지한다.
-//노드 그룹도 같은 방식으로 복사할 수 있다. 드래그하는 동안 Command 키를 누르면 SceneKit은 노드를 그리드와 근처의 노드에 스냅합니다.
+//노드 그룹도 같은 방식으로 복사할 수 있다. 드래그하는 동안 Command 키를 누르면 SceneKit은 노드를 그리드와 근처의 노드에 스냅한다.
 
+
+
+
+//Add physics
+//physics body type 은 객체의 물리 상호작용 방식을 정의한다. 3가지 유형이 있다.
+//• Static : 움직이지 않는다. 다른 물체는 이 물체와 충돌할 수 있지만, static 물체 자체는 모든 힘과 충돌에 영향을 받지 않는다(ex. 벽, 바위).
+//• Dynamic : 물리 엔진이 힘과 충돌에 대응해 물체를 이동 시킨다(ex. 의자, 테이블, 컵).
+//• Kinematic : 수동으로 힘과 충돌에 대응해 물체를 이동 시켜야 한다.
+//  Dynamic 물체와 Kinematic 물체가 충돌하면, Dynamic 물체는 움직이지만, Kinematic 물체는 움직이지 않는다.
+//  하지만 코드로 움직여 줄 수 있다(ex. 이동하는 엘리베이터, 개폐 가능한 문과 같이 수동으로 제어되는 물체).
+
+//Adding physics for the ball
+//scene에 추가하는 모든 노드는 default로 물리 설정이 적용되지 않는다. Ball의 경우 Physics Body의 Type을 Dynamic으로 바꿔 적용 가능하다. p.175
+//Velocity에 값을 주면, scene가 실행되면서 해당 객체(ball)에 힘을 가한다.
+//Bit Masks는 충돌을 설정하는 데 사용된다. 이 마스크는 충돌 그룹을 만들고 특정 노드를 고유하게 식별하는 데 사용된다.
+//물리엔진은 이 충돌 그룹의 정보를 사용하여 충돌 계산을 적용하고 서로 충돌할 객체를 결정한다.
+
+//Adding physics for the barriers
+//장벽의 경우에는 여러 노드를 선택해 동시에 물리 설정을 적용해 줄 수 있다. Barrier의 경우 Physics Body의 Type을 Static으로 바꿔 적용 가능하다. p.177
+//SceneKit editor의 play button을 눌러 확인해 볼 수 있다.
+
+//Adding physics for the bricks
+//블록의 경우에는 여러 노드를 선택해 동시에 물리 설정을 적용해 줄 수 있다. Brick의 경우 Physics Body의 Type을 Static으로 바꿔 적용 가능하다. p.179
+
+//Adding physics for the paddle
+//패들의 경우에는 여러 노드를 선택해 동시에 물리 설정을 적용해 줄 수 있다. Paddle 경우 Physics Body의 Type을 Kinematic으로 바꿔 적용 가능하다. p.179
+
+//Bit mask를 각각 ball에 1, barrier에 2, brick에 4, paddle에 8을 지정해 줬다. 또한, Collision mask 는 각각 -1, 1, 1, 1 을 지정해 줬다.
+//Bit mask 값이 다르므로, 다른 범주인 객체와 충돌하게 된다(ball이 brick을 깨야 되기 때문).
+//Bit mask는 bitwise 이므로 2진수로 생각해서 값을 줘야 한다. (1 = 1, 2 = 10, 4 = 100, 8 = 1000)
+
+
+
+
+extension GameViewController: SCNPhysicsContactDelegate {
+    //Handling collision detection
+    //SceneKit editor에서 각 노드에 물리 설정을 적용했지만, 이는 기본적인 물리 논리를 설정해 준 것일 뿐, 충돌이 발생하는 순간을 제어할 수는 없다.
+    //SCNPhysicsContactDelegate 를 구현해 충돌 이벤트가 일어나는 상황을 제어해 줄 수 있다.
+    
+    func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
+        //두 물리 객체가 서로 접촉하면 호출된다. 하지만, 충돌은 이 메서드를 default로 호출하지 않는다. 따라서 이 메서드를 호출하도록 설정해 줘야 한다.
+        var contactNode: SCNNode! //Ball과 접촉한 노드
+        
+        if contact.nodeA.name == "Ball" {
+            contactNode = contact.nodeB
+        } else {
+            contactNode = contact.nodeA
+        }
+        //contact.nodeA, contact.nodeB로 충돌한 각 노드를 가져올 수 있다. 이 게임에서는 (Ball) 이거나 (Brick, Barrier, Paddle)이 된다.
+        
+        if lastContactNode != nil && lastContactNode == contactNode { //Ball이 동일한 노드와 두 번이상 접촉하는 것을 방지한다.
+            return
+        }
+        
+        lastContactNode = contactNode //마지막으로 충돌한 노드를 설정해 준다.
+        
+        //마지막으로 충돌한 노드의 categoryBitMask를 확인해 각 노드에 맞는 작업을 해 준다.
+        if contactNode.physicsBody?.categoryBitMask == ColliderType.barrier.rawValue { //공이 벽과 충돌했는지 확인
+            if contactNode.name == "Bottom" { //바닥의 벽과 충돌 했다면(SceneKit editor 에서 노드 별로 name을 설정했다)
+                game.lives -= 1 //life을 하나 줄인다.
+                
+                if game.lives == 0 { //life가 0이 됐다면
+                    game.saveState() //점수를 기록하고
+                    game.reset() //게임을 재시작한다.
+                }
+            }
+            
+            game.playSound(node: scnScene.rootNode, name: "Barrier") //사운드 실행
+        }
+        
+        if contactNode.physicsBody?.categoryBitMask == ColliderType.brick.rawValue { //공이 벽돌과 충돌했는지 확인
+            game.score += 1 //score 증가
+            
+            contactNode.isHidden = true //마지막으로 충돌한 노드를 감춘다.
+            contactNode.runAction(SCNAction.waitForDurationThenRunBlock(duration: 120) { (node: SCNNode!) -> Void in
+                //120초 후
+                node.isHidden = false //사라진 벽돌 노드를 다시 보이게 한다.
+            })
+            
+            game.playSound(node: scnScene.rootNode, name: "Block\(arc4random() % 3)") //사운드 실행
+            //랜덤한 사운드가 실행된다.
+        }
+        
+        if contactNode.physicsBody?.categoryBitMask == ColliderType.paddle.rawValue { //공이 패들과 충돌했는지 확인
+            if contactNode.name == "Left" { //패들의 왼쪽 부분에 충돌 했다면(SceneKit editor 에서 노드 별로 name을 설정했다)
+                ballNode.physicsBody?.velocity.xzAngle -= (convertToRadians(angle: 20))
+                //왼쪽 방향으로 공을 20도 움직여 튕기도록 한다.
+            }
+            
+            if contactNode.name == "Right" { //패들의 오른쪽 부분에 충돌 했다면(SceneKit editor 에서 노드 별로 name을 설정했다)
+                ballNode.physicsBody?.velocity.xzAngle += (convertToRadians(angle: 20))
+                //오른쪽 방향으로 공을 20도 움직여 튕기도록 한다.
+            }
+            
+            game.playSound(node: scnScene.rootNode, name: "Paddle") //사운드 실행
+            
+            //이 외에 패들의 가운데 부분에 충돌 했다면, 물리 엔진의 설정대로 튕기도록 한다.
+        }
+        
+        ballNode.physicsBody?.velocity.length = 5.0
+        //공을 일정한 속도로 강제 이동 시킨다.
+    }
+    
+    // • physicsWorld (_: didBegin:) : 두 개의 노드가 충돌하면 호출 된다.
+    // • physicsWorld (_: didUpdate:) : 충돌 후 트리거되며 충돌 중인 두 노드 사이에 추가 정보를 설정해 줄 수 있다.
+    // • physicsWorld (_: didEnd :) : 충돌이 끝나면 호출됩니다.
+}
+
+
+
+
+extension GameViewController {
+    //Adding touch controls
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        //터치가 시작되면 호출된다.
+        for touch in touches {
+            let location = touch.location(in: scnView) //scnView에서 터치된 location을 가져온다.
+            touchX = location.x
+            paddleX = paddleNode.position.x
+        }
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        //터치가 되고 있을 때 호출된다.
+        for touch in touches {
+            let location = touch.location(in: scnView)
+            paddleNode.position.x = paddleX + (Float(location.x - touchX) * 0.1)
+            //paddle의 위치를 업데이트 한다. 왼쪽, 오른쪽으로 움직이다.
+            
+            if paddleNode.position.x > 4.5 {
+                paddleNode.position.x = 4.5
+            } else if paddleNode.position.x < -4.5 {
+                paddleNode.position.x = -4.5
+            }
+            //외벽을 넘어가지 않도록 paddle의 움직임을 제한한다.
+            
+            verticalCameraNode.position.x = paddleNode.position.x
+            horizontalCameraNode.position.x = paddleNode.position.x
+            //카메라의 위치를 업데이트 한다.
+            
+            //Camera tracking
+            //게임의 3D를 보여주는 간단하면서도 효과적인 방법은 카메라가 paddle을 추적하게 해서 움직이는 효과를 내는 것이다.
+        }
+    }
+}
+
+
+
+
+//Add a trailing effect
+//Particle System 도 SceneKit editor에서 추가해 줄 수 있다. p.191 속성에 대한 설명은 p.192

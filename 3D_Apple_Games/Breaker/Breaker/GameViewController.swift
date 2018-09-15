@@ -19,6 +19,7 @@ class GameViewController: UIViewController {
     var verticalCameraNode: SCNNode! //수직 카메라
     
     var ballNode: SCNNode! //볼
+    var paddleNode: SCNNode! //패들
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +60,9 @@ class GameViewController: UIViewController {
         
         ballNode = scnScene.rootNode.childNode(withName: "Ball", recursively: true)!
         //볼 노드를 root node 에 추가한다.
+        
+        paddleNode = scnScene.rootNode.childNode(withName: "Paddle", recursively: true)!
+        //패들 노드를 root node 에 추가한다.
     }
     
     func setupSounds() {
@@ -121,6 +125,9 @@ extension GameViewController: SCNSceneRendererDelegate {
 //Adding a sphere node
 //sphere와 geosphere 의 차이는 geodesic 체크박스에 있다. sphere의 polygon mesh 가 사각형이지만, geosphere는 삼각형이다. p.139
 //구는 작은 폴리곤들이 결합한 구조이다. 따라서 Segment의 수가 많을 수록 구체가 부드럽지만, 렌더링에 부하가 걸린다.
+
+//Geometric shapes
+//기하 도형을 editor에서 scene로 드래그 한 후, Attributes Inspector에서 shape node의 속성을 조정해 줘야 한다.
 
 
 
@@ -215,11 +222,11 @@ extension GameViewController {
 
 
 
-
-
-
-
-
-
-
+//Build barriers
+//SceneKit editor에서 노드를 복사하려면 복사 할 노드에서 Option 키를 누른 상태로 드래그하면 된다.
+//이렇게 복사된 노드는 여전히 원래 노드의 형상을 공유한다(노드를 그릴 때 부하를 줄이기 위해 default로 설정되어 있다).
+//복사한 노드를 다른 노드로 설정하려면 복사한 객체에서 Attributes Inspector - Geometry Sharing - Unshare 버튼을 클릭해 공유를 해제해야 한다.
+//그룹 노드(scene graph 노드에서 상위 노드)의 위치를 조정하면, 모든 자식 노드의 위치가 offset 된다.
+//노드의 위치, 회전, 크기는 항상 부모를 기준으로 하므로 scene graph를 재정렬하면 SceneKit editor가 노드의 속성을 자동으로 다시 계산해 형상을 유지한다.
+//노드 그룹도 같은 방식으로 복사할 수 있다. 드래그하는 동안 Command 키를 누르면 SceneKit은 노드를 그리드와 근처의 노드에 스냅합니다.
 

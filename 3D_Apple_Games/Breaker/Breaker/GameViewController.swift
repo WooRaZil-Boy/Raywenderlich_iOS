@@ -18,6 +18,8 @@ class GameViewController: UIViewController {
     var horizontalCameraNode: SCNNode! //수평 카메라
     var verticalCameraNode: SCNNode! //수직 카메라
     
+    var ballNode: SCNNode! //볼
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,6 +56,9 @@ class GameViewController: UIViewController {
         //scene 노드가 이미 로드되어 있으므로, rootNode.childNode 를 사용해 name으로 쉽게 가져올 수 있다.
         //recursively 매개 변수를 true로 하면 노드의 전체 하위 트리를 검색해서 해당 노드를 찾는다.
         //false일 시에는 직접적인 하위 노드만을 검색한다.
+        
+        ballNode = scnScene.rootNode.childNode(withName: "Ball", recursively: true)!
+        //볼 노드를 root node 에 추가한다.
     }
     
     func setupSounds() {
@@ -113,6 +118,10 @@ extension GameViewController: SCNSceneRendererDelegate {
 //Identity의 name에서 코드로 지정해 준 것과 같은 name 을 지정해 줄 수 있다.
 //floor node 를 만들어도, 색이 없다면 볼 수 없다. Material을 설정해 줘야 한다.
 
+//Adding a sphere node
+//sphere와 geosphere 의 차이는 geodesic 체크박스에 있다. sphere의 polygon mesh 가 사각형이지만, geosphere는 삼각형이다. p.139
+//구는 작은 폴리곤들이 결합한 구조이다. 따라서 Segment의 수가 많을 수록 구체가 부드럽지만, 렌더링에 부하가 걸린다.
+
 
 
 
@@ -169,6 +178,39 @@ extension GameViewController {
     //디바이스가 회전하면, scene의 asset 들도 방향이 변경된다. 여기에는 카메라 노드가 2개 있으므로, 디바이스의 방향에 알맞은 카메라를 사용하도록 한다. p.133
     //하나의 카메라만 사용하도록 할 수 있지만(Sweet-spot) scene의 일부가 가려 보이지 않을 수 있다.
 }
+
+
+
+
+//Lights
+//조명에 영향을 주는 요소는 Color(색), Direction(방향), Position(위치) 이다.
+//SceneKit은 광원이 따로 추가되지 않아도 일정한 광원을 사용하긴 한다.
+
+//Surface normal
+//Surface normal는 폴리곤 표면에 수직인 가상의 벡터(또는 선) 으로 생각할 수 있다.
+//3D 에서 조명으로 사용될 뿐 아니라, 폴리곤이 카메라를 향해 있는지 여부를 결정하는 데 사용하는 중요한 벡터이다. p.137
+//Light source vector와 Normal vector의 각이 작을 수록 표면이 밝아지고, 클수록 어두워 진다.
+//Light 오브젝트는 여러 가지가 있다.
+// • Omni light : 태양의 빛을 생각하면 된다. 모든 방향으로 빛을 방출한다. ex. 촛불, 전구 (오히려 태양을 모방할 때는 적합하지 않다)
+// • Directional light : 특정 방향으로 평행한 빛을 방출한다. ex. 태양
+// • Spot light : 단일 지점에서 특정 방향으로 빛을 방출하지만, 원추형으로 빛이 퍼진다. ex. 손전등, 헬리콥터에의 라이트
+// • Ambient light : scene의 전체적인 밝기를 제어한다. 어두운 부분의 어두움 정도를 제어할 수 있다.
+// • IES light : 광도계 광원. 조명의 모양, 방향 강도를 정의한다. Illuminating Engineering Society (IES)에서 정의한 표준 형식 파일을 사용한다.
+//  조명의 유형을 SCNLightTypeIES 을 사용하며, IES 파일에 대한 URL로 가져온다.
+// • Light Probe : 실제 광원은 아니지만, scene에 배치해 가능한 모든 방향에서 한 지점으로 조명의 색상과 강도를 샘플링한다.
+//  scene의 위치에 따라 material에 음영을 적용하는 데 사용된다.
+//  ex. 흰색 물체를 밝은 색상의 벽에 가깝게 배치하면, 일반적으로 가까운 벽의 색상이 벽에 접한 표면에 반영된다.
+//  일반적으로 SCNLight 속성은 광원을 생성하지 않으므로 Light Probe에 적용되지 않는다.
+//  전체적인 scene에 Light Probe를 배치하여 렌더링 중에 Probe 조명 정보를 사용한다.
+
+//Three-point lighting
+//3D 그래픽을 현실감 있게 만드는 비결 중 하나는 실제 조명 기술을 사용하는 것이다. Three-point lighting은 사진 촬영에서 흔히 사용되는 효과적인 조명 기술이다.
+//3개의 조명을 사용해 설정에 따라 끄거나 키면서 피사체를 비춘다. p.144
+//조명의 각도를 조정하여 객체에 그림자를 추가하고 제어할 수 있다.
+// • Key light : 피사체 정면에서 비추는 기본 광원
+// • Back light : 피사체 뒤의 조명이며, Key light 의 반대쪽에 위치한다. 피사체의 가장자리를 강조하는 테두리 효과를 만든다.
+// • Fill light : Key light의 수직 방향에 위치하며, 피사체의 어두움 정도를 제어한다.
+//광원 추가에 대한 속성은 p.145 Three-point lighting 에서 각 조명이 어떻게 작동하는 지는 p.149 참고
 
 
 

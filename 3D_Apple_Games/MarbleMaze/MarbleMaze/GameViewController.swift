@@ -181,12 +181,40 @@ extension GameViewController: SCNSceneRendererDelegate {
 
 
 
+//The main character
+//ball에 Material을 설정해 준다. Material Inspector 설명은 p.219
+//Diffuse - Normal - Specular - Reflective - Emission 을 설정해 준다. p.222
+//하지만 이런 식으로 많은 텍스처를 추가하게 되면, 성능에 큰 영향을 미치게 된다. 원거리에서 객체를 볼 때 고해상도 텍스처를 모두 적용하는 것은 낭비가 될 수 있다.
+//mip map filtering 을 사용해, 고해상도 텍스처를 사용하면서 성능을 최적화할 수 있다.
+
+
+
+
+//Texture filtering
+//3D 렌더링 엔진은 mip map filtering 기술을 사용해, 원거리에서 객체의 질감 렌더링 성능을 향상시킨다. 기본적으로 원본 텍스처로 미리 생성한 작은 텍스처를 사용한다.
+//SceneKit은 mip map filtering을 지원하며, default 옵션이다. 각 map(Diffuse, Normal, Specular, Reflective, Emission...) 을 설정할 때
+//mip filter 옵션을 지정해 줄 수 있다. 지정할 수 있는 옵션은 다음과 같다. p.223
+// • None : mip mapping 을 사용하지 않는다.
+// • Nearest : 가장 가까운 레벨의 mip map 에서 텍스처를 샘플링 한다.
+// • Linear : 가장 가까운 두 개의 mip map 에서 샘플링하고 이를 보간해서 적용한다. 텍스처 선택시 Linear 옵션이 default 이다.
+//확대, 축소에도 같은 기술이 적용된다.
+
+
+
+
 //Reference node
 //참조 노드를 사용해, scene에서 객체에 대한 참조를 가져와 수정해 줄 수 있다.
 
+//Adding the ball as a reference node
+//단순히 scn 파일에서 다른 scn 파일을 drag and drop 해서 추가해 줄 수 있다.
+
+// • WrapS : repeat을 설정하면, 가로방향으로 텍스처를 반복 래핑 한다.
+// • WrapT : repeat을 설정하면, 세로방향으로 텍스처를 반복 래핑한다.
+//매핑 과정은 p.228
 
 
 
 
-
+//Shadows
+//모든 조명이 그림자를 만들 수 있는 거은 아니다. spot light 와 directional light 만이 그림자를 만든다.
 

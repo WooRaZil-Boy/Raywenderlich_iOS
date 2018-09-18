@@ -218,3 +218,63 @@ extension GameViewController: SCNSceneRendererDelegate {
 //Shadows
 //모든 조명이 그림자를 만들 수 있는 거은 아니다. spot light 와 directional light 만이 그림자를 만든다.
 
+//Directional shadows
+//streaming light(지향성 빛)은 평행하게 스트리밍되는 여러 개의 작은 레이저 빛으로 생각할 수 있다.
+//spot light의 그림자와 달리 directional light는 광원까지의 거리가 변해도 그림자의 크기가 변하지 않는다.
+//그러나 그림자 길이는 일몰 때 더 길어지는 것 처럼 조명이 3D 객체에 닿는 각도에 영향을 받는다.
+//directional light은 노드의 스케일 속성이 그림자의 영역을 결정하는 데 큰 역할을 한다.
+//SceneKit은 light 노드 관점에서 2D 쉐도우 맵을 생성한다. Directional light는 조명이 일정한 방향을 가지기 때문에 위치 정보를 무시한다.
+//대신 정사영(orthographic projection)이 필요한데, 이것이 스케일 속성이 가시 범위를 제어하는 이유이다.
+//scene에서 directional light를 사용하고 그림자가 보이지 않으면 노드의 scale을 조정해야 한다. p.231
+//directional shadow의 속성에 관한 정보는 p.232
+// • Sample count 를 증가시키면 부드러운 그림자가 생성된다.
+// • Shadow scale 을 낮추면 선명한 그림자가 생성되고, 높이면 블러가 생성된다.
+//Sample count 와 Shadow scale를 잘 조절해야 한다. 부드러운 블러 그림자가 프로그램 리소스를 많이 사용한다.
+
+//Spot shadows
+//spot light는 원뿔 구조이므로 물체가 광원에 가까울 수록 투사되는 그림자가 커진다.
+//spot shadow의 속성에 관한 정보는 p.234
+// • Sample count 를 증가시키면 부드러운 그림자가 생성된다.
+
+
+
+
+//Lighting
+//Light 오브젝트는 여러 가지가 있다.
+// • Omni light : 태양의 빛을 생각하면 된다. 모든 방향으로 빛을 방출한다. ex. 촛불, 전구 (오히려 태양을 모방할 때는 적합하지 않다)
+// • Directional light : 특정 방향으로 평행한 빛을 방출한다. ex. 태양
+// • Spot light : 단일 지점에서 특정 방향으로 빛을 방출하지만, 원추형으로 빛이 퍼진다. ex. 손전등, 헬리콥터에의 라이트
+// • Ambient light : scene의 전체적인 밝기를 제어한다. 어두운 부분의 어두움 정도를 제어할 수 있다.
+// • IES light : 광도계 광원. 조명의 모양, 방향 강도를 정의한다. Illuminating Engineering Society (IES)에서 정의한 표준 형식 파일을 사용한다.
+//  조명의 유형을 SCNLightTypeIES 을 사용하며, IES 파일에 대한 URL로 가져온다.
+// • Light Probe : 실제 광원은 아니지만, scene에 배치해 가능한 모든 방향에서 한 지점으로 조명의 색상과 강도를 샘플링한다.
+//  scene의 위치에 따라 material에 음영을 적용하는 데 사용된다.
+//  ex. 흰색 물체를 밝은 색상의 벽에 가깝게 배치하면, 일반적으로 가까운 벽의 색상이 벽에 접한 표면에 반영된다.
+//  일반적으로 SCNLight 속성은 광원을 생성하지 않으므로 Light Probe에 적용되지 않는다.
+//  전체적인 scene에 Light Probe를 배치하여 렌더링 중에 Probe 조명 정보를 사용한다.
+
+//두 개의 광원을 추가한다. 하나는 static light으로 움직이지 않는다. 다른 하나는 follow light로 볼이 이동하면 따라 움직이며 scene에 spot light를 추가한다.
+//이 spot light가 scene의 그림자를 생성한다.
+
+//Adding static lights
+//static light는 scene에 기본 조명을 제공하고, 어두움의 정도를 줘서 normal map에 도움을 준다.
+//ambient light 와 omni light로 이를 구현한다. graph에서의 순서도 중요하다. ambient light에 어두운 회색을 주면, 어두운 그림자가 약간 보이게 할 수 있다.
+
+//Adding a follow light
+//follow light는 spot light 로 구현한다. follow_light 노드의 하위 노드로 추가하면서 z 좌표만 값을 주면 셀피를 찍는 것 처럼 직접 빛을 비추게 할 수 있다.
+//이 게임에서는 follow_light 노드의 위치가 relic과 일치하는 지를 확인하고 맞춰줘야 한다.
+//spot light의 Attributes Inspector에서 color를 설정해 빛의 색상을 줄 수 있다.
+//shadow 섹션에서 Casts shadows를 체크해 그림자를 줄 수 있다.
+
+
+
+
+//Re-usable sets
+//일반적인 패턴과 구조를 재사용 가능한 세트로 만들어 필요할 때마다 다시 사용할 수 있다.
+
+
+
+
+//
+
+

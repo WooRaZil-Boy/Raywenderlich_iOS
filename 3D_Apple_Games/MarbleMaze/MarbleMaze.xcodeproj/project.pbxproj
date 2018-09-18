@@ -7,16 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EF881B6721512A23003A4A56 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = EF881B6621512A23003A4A56 /* art.scnassets */; };
 		EFD8D4DC214D7E24007A75D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD8D4DB214D7E24007A75D2 /* AppDelegate.swift */; };
 		EFD8D4E0214D7E24007A75D2 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD8D4DF214D7E24007A75D2 /* GameViewController.swift */; };
 		EFD8D4E3214D7E24007A75D2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EFD8D4E1214D7E24007A75D2 /* Main.storyboard */; };
 		EFD8D4E5214D7E26007A75D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFD8D4E4214D7E26007A75D2 /* Assets.xcassets */; };
 		EFD8D4E8214D7E26007A75D2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EFD8D4E6214D7E26007A75D2 /* LaunchScreen.storyboard */; };
-		EFD8D4F0214D7E4E007A75D2 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = EFD8D4EF214D7E4E007A75D2 /* art.scnassets */; };
-		EFF3F599214EC7B4003F69B1 /* obj_ball.scn in Resources */ = {isa = PBXBuildFile; fileRef = EFF3F598214EC7B4003F69B1 /* obj_ball.scn */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EF881B6621512A23003A4A56 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		EFD8D4D8214D7E24007A75D2 /* MarbleMaze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarbleMaze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFD8D4DB214D7E24007A75D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EFD8D4DF214D7E24007A75D2 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -24,8 +24,6 @@
 		EFD8D4E4214D7E26007A75D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EFD8D4E7214D7E26007A75D2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EFD8D4E9214D7E26007A75D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EFD8D4EF214D7E4E007A75D2 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
-		EFF3F598214EC7B4003F69B1 /* obj_ball.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; name = obj_ball.scn; path = art.scnassets/obj_ball.scn; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,11 +56,10 @@
 		EFD8D4DA214D7E24007A75D2 /* MarbleMaze */ = {
 			isa = PBXGroup;
 			children = (
-				EFF3F598214EC7B4003F69B1 /* obj_ball.scn */,
 				EFD8D4DB214D7E24007A75D2 /* AppDelegate.swift */,
 				EFD8D4DF214D7E24007A75D2 /* GameViewController.swift */,
 				EFD8D4E1214D7E24007A75D2 /* Main.storyboard */,
-				EFD8D4EF214D7E4E007A75D2 /* art.scnassets */,
+				EF881B6621512A23003A4A56 /* art.scnassets */,
 				EFD8D4E4214D7E26007A75D2 /* Assets.xcassets */,
 				EFD8D4E6214D7E26007A75D2 /* LaunchScreen.storyboard */,
 				EFD8D4E9214D7E26007A75D2 /* Info.plist */,
@@ -128,9 +125,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFF3F599214EC7B4003F69B1 /* obj_ball.scn in Resources */,
 				EFD8D4E8214D7E26007A75D2 /* LaunchScreen.storyboard in Resources */,
-				EFD8D4F0214D7E4E007A75D2 /* art.scnassets in Resources */,
+				EF881B6721512A23003A4A56 /* art.scnassets in Resources */,
 				EFD8D4E5214D7E26007A75D2 /* Assets.xcassets in Resources */,
 				EFD8D4E3214D7E24007A75D2 /* Main.storyboard in Resources */,
 			);

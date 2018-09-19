@@ -51,6 +51,13 @@ class GameViewController: UIViewController {
     
     // Nodes
     var ballNode:SCNNode!
+    var cameraNode:SCNNode! //카메라가 공에 지속적으로 초점을 맞춰야 한다. 카메라의 위치(position)은 변경되지 않지만, 회전(rotation)이 공을 따라 조정된다.
+    var cameraFollowNode:SCNNode!
+    var lightFollowNode:SCNNode!
+    
+    var game = GameHelper.sharedInstance
+    var motion = CoreMotionHelper()
+    var motionForce = SCNVector3(x:0, y:0, z:0) //공을 움직이기 위한 힘 벡터
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +65,8 @@ class GameViewController: UIViewController {
         setupScene()
         setupNodes()
         setupSounds()
+        
+        resetGame() //waitForTap 상태가 된다.
     }
     
     override var shouldAutorotate: Bool { //디바이스의 회전 여부 처리
@@ -75,14 +84,14 @@ class GameViewController: UIViewController {
         
         scnView.delegate = self //delegate 설정
         
-        scnView.allowsCameraControl = true //제스처로 활성화된 camera를 수동으로 제어할 수 있다.
+//        scnView.allowsCameraControl = true //제스처로 활성화된 camera를 수동으로 제어할 수 있다.
         //SceneKit이 카메라 노드를 생성하고 터치 이벤트를 처리하여 사용자가 scene의 제스처 처리를 할 수 있도록 한다.
         // • Single finger swipe : 회전
         // • Two finger swipe: 이동
         // • Two finger pinch: 줌 인/아웃
         // • Double-tap : 여러 개의 camera 객체 있는 경우 전환. 하나 밖에 없는 경우에는 기본 위치와 설정으로 camera를 재설정한다.
         
-        scnView.showsStatistics = true //실시간 통계 패널 보기
+//        scnView.showsStatistics = true //실시간 통계 패널 보기
         // • fps : 초당 프레임. 60fps 이상이 나와야 쾌적하게 게임이 실행된다. 높을 수록 좋다.
         // • ◆ : 프레임 당 총 draw 호출 수. 단일 프레임 당 그려져(draw) 표시되는 객체의 총량. 광원 효과도 이 양을 증가 시킬 수 있다. 낮을 수록 좋다.
         // • ▲ : 프레임 당 총 폴리곤 수. 보여지는 모든 geometry에 대한 단일 프레임을 그릴(draw) 때 사용되는 폴리곤의 총량. 낮을 수록 좋다.
@@ -105,6 +114,9 @@ class GameViewController: UIViewController {
         //recursively 매개 변수를 true로 하면 노드의 전체 하위 트리를 검색해서 해당 노드를 찾는다.
         //false일 시에는 직접적인 하위 노드만을 검색한다.
         
+        
+        
+        
         ballNode.physicsBody?.contactTestBitMask = CollisionCategoryPillar | CollisionCategoryCrate | CollisionCategoryPearl
         //모든 category mask에 대해 OR 연산으로 contactTestBitMask를 설정한다.
         //서로 충돌이 발생하는 BitMask를 물리엔진에 설정해 준다. 물리 엔진은 모든 충돌에 대해 default로 physicsWorld(_: didBegin:)를 호출하지 않는다.
@@ -112,10 +124,36 @@ class GameViewController: UIViewController {
         
         //Scene Editor에서 category mask와 collision mask를 설정할 수도 있다.
         //하지만 코드로 이를 설정하는 것의 이점은 상수 값을 바로 이진수로 나타내 OR(논리 합) 연산을 하기 쉽다는 것이다.
+
+        
+        
+        
+        cameraNode = scnScene.rootNode.childNode(withName: "camera", recursively: true)! //카메라 노드 추가
+        let constraint = SCNLookAtConstraint(target: ballNode) //제약 조건
+        cameraNode.constraints = [constraint] //조건 추가
+        //카메라에 제약조건을 추가해 카메라가 대상 노드를 향하도록 한다.
+        constraint.isGimbalLockEnabled = true //카메라가 대상을 따라 갈 때, 수평으로 정렬되도록 한다.
+
+        //이 게임에서는 공이 굴러가면, 카메라와 조명이 이에 따라 움직여야 한다. 이는 3인칭 게임에 공통적으로 사용되는 기술로 카메라가 수평으로 주인공 뒤를 쫓는 방식이다.
+        
+        //Binding to the camera node
+        //카메라가 공에 지속적으로 초점을 맞춰야 한다. 카메라의 위치(position)은 변경되지 않지만, 회전(rotation)이 공을 따라 조정된다.
+        
+        //Gimbal locking
+        //카메라에 SCNLookAtConstraint가 적용되면, SceneKit은 공을 굴릴 때 공을 향해 카메라를 회전 시키는 데 필요한 작업을 수행한다.
+        //이는 원하지 않는 방향으로 회전하여 카메라가 기울어질 수 있다. 따라서 카메라를 항상 수평으로 유지해야 한다.
+        
+        cameraFollowNode = scnScene.rootNode.childNode(withName: "follow_camera", recursively: true)! //follow_camera
+        cameraNode.addChildNode(game.hudNode) //HUD 추가하여, 어떤 방향으로 카메라를 보든 HUD가 카메라의 시점에 들어온다.
+
+        lightFollowNode = scnScene.rootNode.childNode(withName: "follow_light", recursively: true)! //follow_light
     }
     
-    func setupSounds() {
-        
+    func setupSounds() { //게임 사운드를 가져온다.
+        game.loadSound(name: "GameOver", fileNamed: "GameOver.wav")
+        game.loadSound(name: "Powerup", fileNamed: "Powerup.wav")
+        game.loadSound(name: "Reset", fileNamed: "Reset.wav")
+        game.loadSound(name: "Bump", fileNamed: "Bump.wav")
     }
 }
 
@@ -142,9 +180,18 @@ extension GameViewController: SCNSceneRendererDelegate {
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         //SceneKit의 렌더링 루프의 첫 시작이 된다. 액션, 애니메이션, 물리 법칙이 적용 되기 전에 해야하는 모든 업데이트를 수행한다.
-        //SCNView 객체(혹은 SCNSceneRenderer)가 일시 중지되지 않는 한 한 프레임 당 한 번씩 이 메서드를 호출한다.
+        //SCNView 객체(혹은 SCNSceneRenderer)가 일시 중지되지 않는 한 한 프레임 당 한 번씩 이 메서드를 호출한다(60fps).
         //이 메서드를 구현해 게임 논리를 렌더링 루프에 추가한다. 이 메서드에서 scene graph를 변경하면 scene에 즉시 반영된다.
+        updateMotionControl() //모션 업데이트
+        //60fps이지만, 모션 센서가 최적화를 위해 초당 60번 호출되도 실제로 적용은 훨씬 적은 숫자로 된다.
         
+        updateCameraAndLights() //카메라, 조명 업데이트
+        updateHUD() //HUD 업데이트
+        
+        if game.state == GameStateType.playing { //게임이 플레이 중이라면
+            testForGameOver() //게임이 끝난 상태인지 체크한다.
+            diminishLife() //지속적으로 life를 감소시킨다.
+        }
     }
 }
 
@@ -355,6 +402,8 @@ extension GameViewController: SCNPhysicsContactDelegate {
         //contact.nodeA, contact.nodeB로 충돌한 각 노드를 가져올 수 있다. 이 게임에서는 (Ball) 이거나 나머지가 된다.
         
         if contactNode.physicsBody?.categoryBitMask == CollisionCategoryPearl { //충돌한 노드가 Pearl 인경우
+            replenishLife() //life 증가
+            
             contactNode.isHidden = true //보이지 않게 한다.
             contactNode.runAction(SCNAction.waitForDurationThenRunBlock(duration: 30) { (node: SCNNode!) -> Void in //30초 후
                 node.isHidden = false //다시 보이게 한다.
@@ -363,10 +412,161 @@ extension GameViewController: SCNPhysicsContactDelegate {
         
         if contactNode.physicsBody?.categoryBitMask == CollisionCategoryPillar ||
             contactNode.physicsBody?.categoryBitMask == CollisionCategoryCrate { //충돌한 노드가 기둥이나 상자 등이라면
-            
+            game.playSound(node: ballNode, name: "Bump") //사운드 재생
         }
     }
 }
+
+
+
+
+extension GameViewController {
+    func playGame() {
+        game.state = GameStateType.playing
+        cameraFollowNode.eulerAngles.y = 0 //각도
+        cameraFollowNode.position = SCNVector3Zero //위치
+        
+        replenishLife() //life 업데이트
+    }
+    
+    func resetGame() {
+        game.state = GameStateType.tapToPlay
+        game.playSound(node: ballNode, name: "Reset") //사운드 재생
+        ballNode.physicsBody!.velocity = SCNVector3Zero
+        ballNode.position = SCNVector3(x:0, y:10, z:0) //볼을 위로 약간 띄워서 떨어지는 효과를 낸다.
+        cameraFollowNode.position = ballNode.position //카메라 노드 위치 재설정
+        lightFollowNode.position = ballNode.position //조명 노드 위치 재설정
+        scnView.isPlaying = true //waitForTap 상태에서는 활성화된 애니메이션이나 물리 엔진 업데이트가 없고 모든 프레임이 중지된다.
+        //기본적으로 SceneKit은 재생할 애니메이션이 없으면 "일시 중지"된다.
+        //이 속성을 true로 하면 view가 무한 재생모드로 강제 전환되어 재생할 애니메이션이 없어도 중지되지 않는다.
+        game.reset()
+    }
+    
+    func testForGameOver() {
+        if ballNode.presentation.position.y < -5 { //볼이 -5보다 낮은 위치로 떨어졌다면
+            game.state = GameStateType.gameOver
+            game.playSound(node: ballNode, name: "GameOver") //사운드 재생
+            ballNode.runAction(SCNAction.waitForDurationThenRunBlock(duration: 5) { (node:SCNNode!) -> Void in //5초후 리셋
+                self.resetGame()
+            })
+        }
+    }
+    
+    //Game state management
+    //이 게임의 상태는 3가지가 있다.
+    // • waitForTap : 플레이어가 아직 공을 제어하기 전의 상태. 이 상태에서는 카메라가 공 주위를 돌고 게임이 대기 중임을 나타내는 메시지를 표시한다.
+    // • playing : 사용자가 게임을 시작하기 위해 화면을 탭하면 트리거 된다. 플레이어는 이 상태에서 공을 컨트롤 할 수 있다.
+    // • gameOver : 게임 종료. 얼마 후 자동으로 waitForTap 상태로 이동한다.
+}
+
+extension GameViewController {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if game.state == GameStateType.tapToPlay {
+            playGame() //게임 시작
+        }
+    }
+}
+
+
+
+
+//Motion control
+extension GameViewController {
+    func updateMotionControl() {
+        if game.state == GameStateType.playing { //현재 게임이 실행 중이라면
+            motion.getAccelerometerData(interval: 0.1) { (x, y, z) in
+                self.motionForce = SCNVector3(x: Float(x) * 0.05, y:0, z: Float(y+0.8) * -0.05)
+                //힘 벡터를 업데이트 한다.
+            }
+            
+            ballNode.physicsBody!.velocity += motionForce //물리 엔진의 공 속도를 업데이트 한다.
+        }
+    }
+}
+
+
+
+
+//Health indicators
+extension GameViewController {
+    func replenishLife() {
+        let material = ballNode.geometry!.firstMaterial! //공에서 material을 가져온다.
+        
+        SCNTransaction.begin() //SceneKit 애니메이션 트랜잭션 시퀀스를 시작
+        //모든 animatable SceneKit 속성을 설정할 수 있다.
+        SCNTransaction.animationDuration = 1.0 //지속 시간
+        material.emission.intensity = 1.0 //재질의 방사 강도
+        //실제 값이 설정되는 것이 아니라, 애니메이션이 완료되면 이 값이 된다.
+        SCNTransaction.commit() //트랜잭션 시퀀스 커밋.
+        //material.emission.intensity 의 값을 1.0 초 동안 1.0으로 점차 변경시킨다.
+        
+        game.score += 1
+        game.playSound(node: ballNode, name: "Powerup") //사운드 재생
+        
+        //이 게임에서 공의 life는 지속적으로 감소한다. pearl을 획득해야 다시 life가 복원된다.
+        //시작 될 때도 pearl을 획득하고 시작하므로 이 메서드가 트리거 된다.
+    }
+    
+    func diminishLife() {
+        let material = ballNode.geometry!.firstMaterial! //공에서 material을 가져온다.
+        
+        if material.emission.intensity > 0 { //재질의 방사 강도가 0보다 큰 경우
+            material.emission.intensity -= 0.001 //0.001 단위로 천천히 값을 줄인다.
+        } else { //방사강도가 0 이하 이면 life가 0이 된 것이다.
+            resetGame() //게임 재시작
+        }
+    }
+}
+
+
+
+
+//Camera and lights
+extension GameViewController {
+    //cameraFollowNode가 카메라 노드를 따라 다니도록 설정을 해줘야 한다.
+    //단순하게 이 노드를 공의 자식 노드로 만들어선 안 된다. 이렇게 설정하면, 공을 굴러갈 때마다 카메라고 함께 굴러가서 회전하기 때문이다.
+    //대신 rootNode에 cameraFollowNode 노드를 만들었으므로 공과 같은 위치에 배치해야 한다.
+    //따라서 공이 굴러갈 때 공의 위치와 일치하도록 노드의 위치를 업데이트해야 한다.
+    
+    func updateCameraAndLights() {
+        let lerpX = (ballNode.presentation.position.x - cameraFollowNode.position.x) * 0.01
+        let lerpY = (ballNode.presentation.position.y - cameraFollowNode.position.y) * 0.01
+        let lerpZ = (ballNode.presentation.position.z - cameraFollowNode.position.z) * 0.01
+        //단순하게 cameraFollowNode의 위치를 ballNode와 일치 시키지 않고, 보간된 위치를 사용해서 천천히 따라가도록 한다.
+        
+        cameraFollowNode.position.x += lerpX
+        cameraFollowNode.position.y += lerpY
+        cameraFollowNode.position.z += lerpZ
+        //카메라의 위치를 공보다 약간 늦게 따라가도록 업데이트 시켜준다.
+        
+        lightFollowNode.position = cameraFollowNode.position
+        //lightFollowNode의 위치를 cameraFollowNode와 일치시켜 준다.
+
+        if game.state == GameStateType.tapToPlay { //tapToPlay 상태에 있으면, 카메라를 회전시켜서 효과를 만들어 준다.
+            cameraFollowNode.eulerAngles.y += 0.005
+        }
+    }
+}
+
+
+
+
+//HUD updates
+extension GameViewController {
+    func updateHUD() {
+        switch game.state { //게임 상태에 따라 HUD를 업데이트 한다.
+        case .playing:
+            game.updateHUD()
+        case .gameOver:
+            game.updateHUD(s: "-GAME OVER-")
+        case .tapToPlay:
+            game.updateHUD(s: "-TAP TO PLAY-")
+        }
+    }
+}
+
+
+
 
 
 

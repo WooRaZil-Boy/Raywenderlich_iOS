@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A463C2BA2152269E00552981 /* Powerup.wav in Resources */ = {isa = PBXBuildFile; fileRef = A463C2B62152269E00552981 /* Powerup.wav */; };
+		A463C2BB2152269E00552981 /* Bump.wav in Resources */ = {isa = PBXBuildFile; fileRef = A463C2B72152269E00552981 /* Bump.wav */; };
+		A463C2BC2152269E00552981 /* Reset.wav in Resources */ = {isa = PBXBuildFile; fileRef = A463C2B82152269E00552981 /* Reset.wav */; };
+		A463C2BD2152269E00552981 /* GameOver.wav in Resources */ = {isa = PBXBuildFile; fileRef = A463C2B92152269E00552981 /* GameOver.wav */; };
 		EF881B6721512A23003A4A56 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = EF881B6621512A23003A4A56 /* art.scnassets */; };
 		EF881B6E2151721A003A4A56 /* SCNVector3+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF881B692151721A003A4A56 /* SCNVector3+Extensions.swift */; };
 		EF881B6F2151721A003A4A56 /* GameUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF881B6A2151721A003A4A56 /* GameUtils.swift */; };
@@ -21,6 +25,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A463C2B62152269E00552981 /* Powerup.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Powerup.wav; sourceTree = "<group>"; };
+		A463C2B72152269E00552981 /* Bump.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Bump.wav; sourceTree = "<group>"; };
+		A463C2B82152269E00552981 /* Reset.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Reset.wav; sourceTree = "<group>"; };
+		A463C2B92152269E00552981 /* GameOver.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = GameOver.wav; sourceTree = "<group>"; };
 		EF881B6621512A23003A4A56 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		EF881B692151721A003A4A56 /* SCNVector3+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SCNVector3+Extensions.swift"; sourceTree = "<group>"; };
 		EF881B6A2151721A003A4A56 /* GameUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameUtils.swift; sourceTree = "<group>"; };
@@ -47,6 +55,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A463C2B52152269E00552981 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				A463C2B62152269E00552981 /* Powerup.wav */,
+				A463C2B72152269E00552981 /* Bump.wav */,
+				A463C2B82152269E00552981 /* Reset.wav */,
+				A463C2B92152269E00552981 /* GameOver.wav */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
 		EF881B682151721A003A4A56 /* GameUtils */ = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				EF881B682151721A003A4A56 /* GameUtils */,
+				A463C2B52152269E00552981 /* Sounds */,
 				EFD8D4DB214D7E24007A75D2 /* AppDelegate.swift */,
 				EFD8D4DF214D7E24007A75D2 /* GameViewController.swift */,
 				EFD8D4E1214D7E24007A75D2 /* Main.storyboard */,
@@ -149,9 +169,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				EFD8D4E8214D7E26007A75D2 /* LaunchScreen.storyboard in Resources */,
+				A463C2BC2152269E00552981 /* Reset.wav in Resources */,
 				EF881B6721512A23003A4A56 /* art.scnassets in Resources */,
 				EFD8D4E5214D7E26007A75D2 /* Assets.xcassets in Resources */,
 				EFD8D4E3214D7E24007A75D2 /* Main.storyboard in Resources */,
+				A463C2BB2152269E00552981 /* Bump.wav in Resources */,
+				A463C2BD2152269E00552981 /* GameOver.wav in Resources */,
+				A463C2BA2152269E00552981 /* Powerup.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

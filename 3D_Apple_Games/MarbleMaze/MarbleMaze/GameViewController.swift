@@ -10,9 +10,47 @@ import UIKit
 import SceneKit
 
 class GameViewController: UIViewController {
+    // Bit Masks
+    let CollisionCategoryBall = 1
+    let CollisionCategoryStone = 2
+    let CollisionCategoryPillar = 4
+    let CollisionCategoryCrate = 8
+    let CollisionCategoryPearl = 16
+    //Bit-masks
+    //비트는 0과 1로 이루어져 이진수를 나타내는 데 사용된다. 각 비트는 특정 숫자 값을 나타내며 최하위 비트에서 최 상위 비트까지 반대 방향으로 읽는다(그냥 이진수 표기).
+    //비트가 1이면 On으로 간주되고 0이면 Off이다. p.254 Bit mask는 이진수로 매핑한다. 비트 마스킹은 물리 시뮬레이션의 모든 객체에 id를 부여하는 방법이다.
+    //비트 마스크를 사용해 서로 충돌이 난 객체를 필터링할 수 있다. 이 방법은 충돌을 탐지할 때, 관련된 객체의 양을 줄이므로 프로세스가 빨라진다.
+    
+    //Category masks
+    //Category mask는 객체에 충돌 감지를 위한 고유한 id를 제공한다. 객체에 고유한 id를 부여하는 것 외에도 그룹화할 수 있다.
+    //Pac-Man에서 팩맨과 충돌할 수 있는 것은 Good과 Bad 두 가지로 나눠 볼 수 있다. p.255
+    //예시에서 Good은 6번째 비트(2의 5승: 64)가 true이면 되고 Bad는 7번째 비트(2의 6승: 128)이 true이면 된다.
+    //조건문에서 각 해당 비트단위를 비교하여(&, 논리곱) 결과를 판단한다. p.256 https://blog.naver.com/badwin/221178028123
+    
+    //Defining category masks
+    //해당 프로젝트의 Category mask는 좀 더 간단하게 구현할 수 있다. p.256
+    
+    //Collision masks
+    //collision mask를 사용해, 물리 엔진이 일부 객체가 서로 충돌하도록 지정해 줄 수 있다. 물리엔진은 이 객체들이 서로 통과하지 못하게 하고 충돌효과를 트리거 한다.
+    //충돌 마스크를 정의하려면 객체와 충돌하는 모든 category mask를 함께 추가해야 한다. 이 게임에서는 Pearl을 제외한 모든 것과 충돌해야 한다. p.257
+    //collision mask 와 category mask 를 비교해서 봐야 한다. 충돌하는 카테고리가 true가 된다.
+    //CollisionMask = Stone + Pillar + Crate = 2 + 4 + 8 = 14
+    
+    //Contact masks
+    //contact mask 는 물리 엔진이 어떤 객체가 충돌시 이벤트가 일어나는 지 알려준다. 이는 물리 엔진에 직접 영향을 미치지 않고, 프로그래밍 코드로 트리거 해야 한다.
+    //collision mask와 같은 방법으로 contact mask를 설정한다. p.258
+    //ContactMask = Pearl + Pillar + Crate = 16 + 8 + 4 = 28
+    
+    
+    
+    
+    // Scene
     var scnView:SCNView! //SCNView는 SCNScene의 내용을 scene에 표시한다.
     var scnScene:SCNScene! //SCNScene 클래스는 scene를 나타낸다. SCNView의 인스턴스에 scene를 표시한다.
     //scene에 필요한, 조명, 카메라, 기하 도형, 입자 emitter 등을 이 scene의 자식으로 사용한다.
+    
+    // Nodes
+    var ballNode:SCNNode!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,10 +94,24 @@ class GameViewController: UIViewController {
         
         scnScene = SCNScene(named: "art.scnassets/game.scn") //scn file로 scene 초기화
         scnView.scene = scnScene //scnView에서 사용할 scene 설정
+        
+        scnScene.physicsWorld.contactDelegate = self //충돌 delegate 설정
     }
     
     func setupNodes() {
+        ballNode = scnScene.rootNode.childNode(withName: "ball", recursively: true)!
+        //볼 노드를 root node 에 추가한다.
+        //scene 노드가 이미 로드되어 있으므로, rootNode.childNode 를 사용해 name으로 쉽게 가져올 수 있다.
+        //recursively 매개 변수를 true로 하면 노드의 전체 하위 트리를 검색해서 해당 노드를 찾는다.
+        //false일 시에는 직접적인 하위 노드만을 검색한다.
         
+        ballNode.physicsBody?.contactTestBitMask = CollisionCategoryPillar | CollisionCategoryCrate | CollisionCategoryPearl
+        //모든 category mask에 대해 OR 연산으로 contactTestBitMask를 설정한다.
+        //서로 충돌이 발생하는 BitMask를 물리엔진에 설정해 준다. 물리 엔진은 모든 충돌에 대해 default로 physicsWorld(_: didBegin:)를 호출하지 않는다.
+        //따라서 contactTestBitMask 를 설정하여, 충돌이 발생할 때 delegate 메서드를 실행하도록 설정해 줘야 한다.
+        
+        //Scene Editor에서 category mask와 collision mask를 설정할 수도 있다.
+        //하지만 코드로 이를 설정하는 것의 이점은 상수 값을 바로 이진수로 나타내 OR(논리 합) 연산을 하기 쉽다는 것이다.
     }
     
     func setupSounds() {
@@ -275,6 +327,59 @@ extension GameViewController: SCNSceneRendererDelegate {
 
 
 
-//
+//Enabling physics
+//객체의 Physics Body 타입을 Dynamic 등으로 설정해 줘야 물리적 특성이 적용된다.
+//이때, game.scn의 객체에 직접 적용할 필요 없이, 각 객체 scene(obj_ball.scn ...)에 적용해 주면 된다.
+//Bit mask는 bitwise 이므로 2진수로 생각해서 값을 줘야 한다. (1 = 1, 2 = 10, 4 = 100, 8 = 1000)
+//pearl은 ball과 실제 충돌을 일으키지 않으므로, Collision mask를 -1로 설정해 준다.
+//Physics shape의 type을 설정해 줘야 한다. pearl은 구형이므로 Convex, 나머지는 박스형이므로 Bounding Box를 설정한다.
+//sphere가 가장 효율적으로 사용할 수 있는 물리 형태이다, 두 번째는 bounding box.
+
+
+
+
+extension GameViewController: SCNPhysicsContactDelegate {
+    //SceneKit editor에서 각 노드에 물리 설정을 적용했지만, 이는 기본적인 물리 논리를 설정해 준 것일 뿐, 충돌이 발생하는 순간을 제어할 수는 없다.
+    //SCNPhysicsContactDelegate 를 구현해 충돌 이벤트가 일어나는 상황을 제어해 줄 수 있다.
+    
+    func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
+        //두 물리 객체가 서로 접촉하면 호출된다. 하지만, 충돌은 이 메서드를 default로 호출하지 않는다. 따라서 이 메서드를 호출하도록 설정해 줘야 한다.
+        var contactNode: SCNNode! //Ball과 충돌한 노드
+        
+        if contact.nodeA.name == "ball" {
+            contactNode = contact.nodeB
+        } else {
+            contactNode = contact.nodeA
+        }
+        
+        //contact.nodeA, contact.nodeB로 충돌한 각 노드를 가져올 수 있다. 이 게임에서는 (Ball) 이거나 나머지가 된다.
+        
+        if contactNode.physicsBody?.categoryBitMask == CollisionCategoryPearl { //충돌한 노드가 Pearl 인경우
+            contactNode.isHidden = true //보이지 않게 한다.
+            contactNode.runAction(SCNAction.waitForDurationThenRunBlock(duration: 30) { (node: SCNNode!) -> Void in //30초 후
+                node.isHidden = false //다시 보이게 한다.
+            })
+        }
+        
+        if contactNode.physicsBody?.categoryBitMask == CollisionCategoryPillar ||
+            contactNode.physicsBody?.categoryBitMask == CollisionCategoryCrate { //충돌한 노드가 기둥이나 상자 등이라면
+            
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

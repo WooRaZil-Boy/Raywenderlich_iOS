@@ -16,6 +16,12 @@ class ViewController: UIViewController {
     var gameScene: SCNScene! //SCNScene 클래스는 scene를 나타낸다. SCNView의 인스턴스에 scene를 표시한다.
     var splashScene: SCNScene! //SCNScene 클래스는 scene를 나타낸다. SCNView의 인스턴스에 scene를 표시한다.
     
+    var pigNode: SCNNode!
+    var cameraNode: SCNNode!
+    var cameraFollowNode: SCNNode!
+    var lightFollowNode: SCNNode!
+    var trafficNode: SCNNode!
+    
     let game = GameHelper.sharedInstance
     
     override func viewDidLoad() {
@@ -56,7 +62,37 @@ class ViewController: UIViewController {
     }
     
     func setupNodes() {
+        pigNode = gameScene.rootNode.childNode(withName: "MrPig", recursively: true)!
+        //scene 노드가 이미 로드되어 있으므로, rootNode.childNode 를 사용해 name으로 쉽게 가져올 수 있다.
+        //recursively 매개 변수를 true로 하면 노드의 전체 하위 트리를 검색해서 해당 노드를 찾는다.
+        //false일 시에는 직접적인 하위 노드만을 검색한다.
+        //참조 노드이지만, 일반 노드인 것처럼 액세스할 수 있다.
         
+        
+        
+        
+        //Creating the follow camera node
+        cameraNode = gameScene.rootNode.childNode(withName: "camera", recursively: true)! //카메라 노드 추가
+        cameraNode.addChildNode(game.hudNode) //HUD 추가
+        
+        cameraFollowNode = gameScene.rootNode.childNode(withName: "FollowCamera", recursively: true)!
+        //cameraFollowNode는 카메라가 돼지를 따라갈 때, 위치를 돼지와 동일하게 업데이트한다.
+        
+        //카메라와 조명은 빈 노드를 생성하고, 셀피를 찍는 것처럼 위치를 설정해 두는 것이 사용하기 편리하다(selfie stick).
+        
+        //Creating the follow light node
+        lightFollowNode = gameScene.rootNode.childNode(withName: "FollowLight", recursively: true)!
+        //FollowCamera와 같은 위치로 하여, 해당 영역에 보이는 객체에 그림자를 줄 수 있다.
+        
+        //전체적으로 scene을 채우는 주변 조명인 ambient light와 햇빛을 모방하는 directional light(그림자 생성) 두 가지 조명이 있다.
+        //그림자 설정 시 Sample radius를 0으로 하면, 그림자가 생기는 가장자리에 흐린 부분을 선명하게 해 준다.
+        //이 게임은 야외의 환경을 모방하기 때문에 햇빛과 그 빛으로 만들어지는 그림자를 모방해야 한다.
+        //여기서는 햇빛(directional light)이 돼지를 따라가도록 설정되는데, 이는 실제 햇빛과는 다르다.
+        //그림자가 directional light로 생기기 때문에 실제 디바이스에서 표시되는 이외의 영역은 광원이 없어 그림자를 생성하지 않는다.
+        //따라서 성능을 최적화할 수 있고, 카메라가 계속해서 돼지를 따라가면서 보여지는 영역을 정렬해야 한다.
+        
+        trafficNode = gameScene.rootNode.childNode(withName: "Traffic", recursively: true)!
+        //각 참조 노드에 대한 속성을 만드는 대신 하나의 컨테이너 노드를 사용해 모든 차량을 관리한다.
     }
     
     func setupActions() {
@@ -163,3 +199,32 @@ extension ViewController{
         }
     }
 }
+
+
+
+
+//Add trees
+//tree line과 tree patch 두 가지 유형의 나무 그룹을 생성한다.
+
+//나무를 하나씩 심는 것 보다 한 무리의 나무로 구성된 재사용 가능한 scene를 만든 후 참조노드로 사용하는 것이 편리하다.
+//그리드를 보며 나무를 심는다. p.377, p.379
+
+//모든 나무들을 Trees 노드 안에서 관리한다.
+
+
+
+
+//Add coins
+//모든 코인들은 Coins 노드 안에서 관리한다.
+
+
+
+
+
+
+
+
+
+
+
+

@@ -22,6 +22,18 @@ class ViewController: UIViewController {
     var lightFollowNode: SCNNode!
     var trafficNode: SCNNode!
     
+    var driveLeftAction: SCNAction!
+    var driveRightAction: SCNAction!
+    //차량의 Action
+    
+    var jumpLeftAction: SCNAction!
+    var jumpRightAction: SCNAction!
+    var jumpForwardAction: SCNAction!
+    var jumpBackwardAction: SCNAction!
+    //돼지의 Action
+    
+    var triggerGameOver: SCNAction!
+    
     let game = GameHelper.sharedInstance
     
     override func viewDidLoad() {
@@ -96,15 +108,109 @@ class ViewController: UIViewController {
     }
     
     func setupActions() {
+        //Animating the traffic
+        driveLeftAction = SCNAction.repeatForever(SCNAction.move(by: SCNVector3Make(-2.0, 0, 0), duration: 1.0))
+        driveRightAction = SCNAction.repeatForever(SCNAction.move(by: SCNVector3Make(2.0, 0, 0), duration: 1.0))
+        //SCNAction.repeatForever(_:) 메서드는 단순히 다른 Action을 반복하거나 반복하는 특수 Action을 만든다.
+        //SCNAction.move(by:duration:) 메서드는 특정 시간 동안 지정된 벡터만큼 노드를 이동하게 한다.
         
+        
+        
+        
+        //Adding pig movement
+        let duration = 0.2 //변수를 사용해, 애니메이션의 시간을 일괄적으로 제어할 수 있다.
+        
+        let bounceUpAction = SCNAction.moveBy(x: 0, y: 1.0, z: 0, duration: duration * 0.5)
+        let bounceDownAction = SCNAction.moveBy(x: 0, y: -1.0, z: 0, duration: duration * 0.5)
+        //돼지를 뛰어 오르게 하는 Action(Splash Scene에서 사용한 것과 비슷)
+        
+        bounceUpAction.timingMode = .easeOut
+        bounceDownAction.timingMode = .easeIn
+        //Timing function을 추가 시켜 준다.
+        
+        let bounceAction = SCNAction.sequence([bounceUpAction, bounceDownAction])
+        //Action을 조합해 Sequence로 만든다.
+        
+        let moveLeftAction = SCNAction.moveBy(x: -1.0, y: 0, z: 0, duration: duration)
+        let moveRightAction = SCNAction.moveBy(x: 1.0, y: 0, z: 0, duration: duration)
+        let moveForwardAction = SCNAction.moveBy(x: 0, y: 0, z: -1.0, duration: duration)
+        let moveBackwardAction = SCNAction.moveBy(x: 0, y: 0, z: 1.0, duration: duration)
+        //각 4방향으로 한 칸 이동하는 Action
+        
+        let turnLeftAction = SCNAction.rotateTo(x: 0, y: convertToRadians(angle: -90), z: 0, duration: duration, usesShortestUnitArc: true)
+        let turnRightAction = SCNAction.rotateTo(x: 0, y: convertToRadians(angle:90), z: 0, duration: duration, usesShortestUnitArc: true)
+        let turnForwardAction = SCNAction.rotateTo(x: 0, y: convertToRadians(angle: 180), z: 0, duration: duration, usesShortestUnitArc: true)
+        let turnBackwardAction = SCNAction.rotateTo(x: 0, y: convertToRadians(angle: 0), z: 0, duration: duration, usesShortestUnitArc: true)
+        //각 4방향으로 회전하는 Action
+        
+        jumpLeftAction = SCNAction.group([turnLeftAction, bounceAction, moveLeftAction])
+        jumpRightAction = SCNAction.group([turnRightAction, bounceAction, moveRightAction])
+        jumpForwardAction = SCNAction.group([turnForwardAction, bounceAction, moveForwardAction])
+        jumpBackwardAction = SCNAction.group([turnBackwardAction, bounceAction, moveBackwardAction])
+        //각 Action들을 합쳐 그룹을 만들어 준다. Sequence와 다르게 Group은 해당 Action을 모두 병렬로 실행한다.
+        
+        
+        
+        
+        //Creating the game over sequence
+        let spinAround = SCNAction.rotateBy(x: 0, y: convertToRadians(angle: 720), z: 0, duration: 2.0) //돼지를 회전 시킨다.
+        let riseUp = SCNAction.moveBy(x: 0, y: 10, z: 0, duration: 2.0) //돼지를 하늘로 이동시킨다.
+        let fadeOut = SCNAction.fadeOpacity(to: 0, duration: 2.0) //돼지를 fadeOut 해 사라지게 한다.
+        let goodByePig = SCNAction.group([spinAround, riseUp, fadeOut]) //Action을 그룹화 해, gameOver 되었을 때 돼지의 액션을 만들어 준다.
+        
+        let gameOver = SCNAction.run { (node: SCNNode) -> Void in
+            //The SCNAction.runAction(_:) 클래스 메서드는 Action에 코드 로직을 삽입할 수 있는 특수한 action을 생성한다.
+            self.pigNode.position = SCNVector3(x: 0, y: 0, z: 0)
+            self.pigNode.opacity = 1.0
+            self.startSplash()
+            //돼지의 위치와 방향을 원래대로 되돌리고 보이게 한다. 또한, 시작 scene로 이동한다.
+        }
+        
+        triggerGameOver = SCNAction.sequence([goodByePig, gameOver]) //게임 종료시 실행할 Action을 시퀀스로 만든다.
+        
+        //코드에서 액션은 SCNAction 인스턴스로 표현된다. 위의 기본 Action을 코드로도 생성할 수 있다. ex. 이동 액션은 SCNAction.move(by:duration:)
     }
     
     func setupTraffic() {
-        
+        for node in trafficNode.childNodes {
+            //setupNodes에서 이미 scene의 traffic 노드에 연결된 trafficNode를 초기화했다.
+            //SCNNode의 childNodes 들을 loop로 각 노드를 가져온다(모든 차량 노드들을 loop에서 가져오게 된다).
+            
+            //Buses are slow, the rest are speed demons
+            if node.name?.contains("Bus") == true { //해당 노드가 버스인 경우
+                driveLeftAction.speed = 1.0
+                driveRightAction.speed = 1.0
+            } else { //버스가 아닌 다른 차량인 경우(버스 보다 속도가 빠르게 설정한다).
+                driveLeftAction.speed = 2.0
+                driveRightAction.speed = 2.0
+            }
+            
+            //Let vehicle drive towards its facing direction
+            if node.eulerAngles.y > 0 { //차량들은 좌 우로 움직인다. 방향을 확인한 후, 노드에 action을 실행한다(올바른 방향으로 이동시킨다).
+                node.runAction(driveLeftAction)
+            } else {
+                node.runAction(driveRightAction)
+            }
+        }
     }
     
     func setupGestures() {
+        //각 제스처를 등록해 준다.
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.handleGesture(_:)))
+        swipeRight.direction = .right
+        scnView.addGestureRecognizer(swipeRight)
         
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.handleGesture(_:)))
+        swipeLeft.direction = .left
+        scnView.addGestureRecognizer(swipeLeft)
+        
+        let swipeForward = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.handleGesture(_:)))
+        swipeForward.direction = .up
+        scnView.addGestureRecognizer(swipeForward)
+        
+        let swipeBackward = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.handleGesture(_:)))
+        swipeBackward.direction = .down
+        scnView.addGestureRecognizer(swipeBackward)
     }
     
     func setupSounds() {
@@ -157,6 +263,8 @@ extension ViewController {
     func stopGame() {
         game.state = .gameOver //게임 상태를 gameOver로
         game.reset() //게임을 리셋
+        
+        pigNode.runAction(triggerGameOver)
     }
     
     func startSplash() {
@@ -218,6 +326,109 @@ extension ViewController{
 //모든 코인들은 Coins 노드 안에서 관리한다.
 
 
+
+
+//Actions
+//action을 사용하면 scene 내의 노드의 위치, 크기, 회전, 불투명도를 조작할 수 있다.
+//ex. 제스처로 왼쪽 swipe하면, 돼지는 왼쪽으로 한 칸 뒤면서 회전한다.
+//이러한 기본 동작은 돼지 노드에서 연속적인 그룹을 병렬로 실행한 결과이다.
+//노드가 선택된 상태에서 editor의 아래 보조 편집기를 Drag and Drop하여 액션 시퀀스를 빌드할 수 있다.
+//코딩 관점에서 먼저 SCNAction 객체를 생성하고, 원하는 경우 해당 timingMode를 설정한 다음 노드에서 runAction(_:) 메서드를 사용해서
+//SCNNode 인스턴스에서 해당 작업을 실행할 수 있다. 기본 동작에는 네 가지 범주가 있다(Move, Scale, Rotate, Fade).
+//두 개의 특수한 작업을 실행하는 범주가 있는데 이것은 Sequence 또는 Group 이라 한다.
+//Mr.Pig 는 물리 엔진이 아닌, 수동으로(사용자의 조작으로) 캐릭터를 움직인다.
+
+//Moving actions
+//한 지점에서 다른 지점으로 노드를 이동하는 경우 Move를 사용한다. p.387
+// • Move Action : 노드의 현재 위치에서(오프셋) 노드를 이동한다.
+// • MoveTo Action : 노드의 현재 위치에 관계 없이 노드를 3D 공간의 저징된 위치로 이동한다.
+//상하좌우로 이동하는 액션을 만들 수 있다. p.388
+
+//Scaling actions
+//확대 축소에 Scaling을 사용한다. p.388
+// • Scale Action : 노드의 현재 비율을 기준으로 조정한다.
+// • ScaleTo Action : 노드의 현재 비율에 관계 없이 노드를 지정된 비율로 조정한다.
+//각 축을 독립적으로 확대/축소할 수 있다(ex. 마리오 파워 업). p.389
+
+//Rotating actions
+//이 게임에서는 돼지가 점프할 때 그 방향으로 Rotating이 일어난다. p.389
+// • Rotate Action : 노드의 현재 회전 각도 기준에서 회전한다.
+// • RotateTo Action : 현재 회전 각도에 상관없이 노드를 지정된 각도로 회전한다.
+// • RotateTo Action (Shortest) : 노드의 현재 회전 각도에 상관없이 노드를 지정된 각도로 회전한다. 가장 짧은 경로로 회전한다.
+// • RotateBy Axis Angle Action : 노드의 현재 회전 각도에서 지정한 축의 각도만큼 회전한다.
+// • RotateTo Axis Angle Action : 노드의 현재 회전 각도에 상관없이 지정한 축의 각도만큼 회전한다.
+//RotateTo Action (Shortest)를 사용한 예는 p.390 회전을 사용해, 돼지의 위쪽이나 아래를 보이게 하거나 뒤쪽으로 넘어뜨릴 수도 있다.
+
+//Fade actions
+//객체를 반 투명 상태로 만든다. p.391
+// • FadeOut Action : 완전히 보이지 않게 해 사라지게 한다.
+// • FadeIn Action : 완전히 볼 수 있게 해 나타나게 한다.
+// • FadeOpacityTo Action : 불투명도를 지정된 값으로 전환한다.
+//게임에서 쓰일 FadeOut의 예시는 p.391
+
+//Sequenced and grouped actions
+//기본 Action을 sequence와 group으로 함께 연결해 Action이 차례대로 실행(sequence)하거나 동시에 실행(group)되게 할 수 있다. p.392
+// • Actions : 기본 Action들로 지정되며, Action editor time line에 위치가 표시된다.
+// • Sequence : 시간에 따라 순차적으로 진행되는 동작들
+// • Group : 그룹화되어 병렬적으로 실행되는 동작들
+//p.392의 다이어그램과 p.393의 스크린샷을 비교해 보면 쉽게 이해할 수 있다.
+
+
+
+
+//Action timing functions
+//SceneKit은 시간이 지남에 따라 Action의 진행 상태를 제어하는 데 사용할 수 있는 몇 가지 기본 타이밍 기능을 제공한다.
+//이 기능이 없으면, 돼지는 단순히 정의된 지점으로 점프 후 다시 지상으로 내려오는 데 선형적인 방식으로 진행되므로 이상해 보일 수 있다.
+//일반적인 상황을 생각해 보면, 물리학적으로 중력의 영향으로 속도가 일정할 수 없다.
+//네 가지 기본 타이밍이 있다. p.394
+// • Linear : 모든 동작에 사용되는 기본 타이밍. 동작이 지속되는 동안 동일한 속도로 재생된다.
+// • Ease-In : 느리게 시작하여 나머지 시간 동안 최고 속도까지 가속된다.
+// • Ease-Out : 최고 속도로 시작하여, 끝날 때 느려진다.
+// • East-In-Out : 느리게 시작후, 가속하여 중간에서 최고 속도가 된후, 끝날 때까지 감속된다.
+//SCNAction에서 timingMode 속성을 사용해 코드에서 함수를 정의할 수 있다.
+
+//The action editor
+//SceneKit 에서 보조 편집기로 노드에 대한 action을 지정해 줄 수 있다. p.396
+//단순히 library에서 해당 action을 editor에 Drag and Drop 해 주면 된다.
+//우 클릭으로 Create Loop을 선택한 후 루프 설정을 한다. 설정 후 Edit Loop로 에디팅해 줄 수 있다.
+//주의할 점은 여기서 X 를 누르면 loop를 삭제하므로 빈 영역을 눌러 Loop 에디터를 나와야 한다.
+
+//Animating the coins
+//loop를 만들 때 여러 가지 Action을 함께 선택 한 후, 그룹으로 루프를 설정해 줄 수 있다.
+
+
+
+
+//Add movement gestures
+extension ViewController {
+    @objc func handleGesture(_ sender: UISwipeGestureRecognizer) {
+//        stopGame()
+//        return
+        //게임 종료 시 테스트 위한 코드
+        
+        //돼지가 제스처에 응답하도록 연결 시켜 준다.
+        guard game.state == .playing else { //게임이 playing 상태가 아니라면 종료
+            return
+        }
+        
+        switch sender.direction { //제스처 인식기의 방향을 확인한다.
+        case UISwipeGestureRecognizer.Direction.up:
+            pigNode.runAction(jumpForwardAction)
+        case UISwipeGestureRecognizer.Direction.down:
+            pigNode.runAction(jumpBackwardAction)
+        case UISwipeGestureRecognizer.Direction.left:
+            if pigNode.position.x > -15 { //가장 좌측을 벗어나지 않게 하기 위해
+                pigNode.runAction(jumpLeftAction)
+            }
+        case UISwipeGestureRecognizer.Direction.right:
+            if pigNode.position.x < 15 { //가장 우측을 벗어나지 않게 하기 위해
+                pigNode.runAction(jumpRightAction)
+            }
+        default:
+            break
+        }
+    }
+}
 
 
 

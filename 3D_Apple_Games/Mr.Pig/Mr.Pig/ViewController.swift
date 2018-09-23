@@ -22,6 +22,12 @@ class ViewController: UIViewController {
     var lightFollowNode: SCNNode!
     var trafficNode: SCNNode!
     
+    var collisionNode: SCNNode!
+    var frontCollisionNode: SCNNode!
+    var backCollisionNode: SCNNode!
+    var leftCollisionNode: SCNNode!
+    var rightCollisionNode: SCNNode!
+    
     var driveLeftAction: SCNAction!
     var driveRightAction: SCNAction!
     //차량의 Action
@@ -33,6 +39,42 @@ class ViewController: UIViewController {
     //돼지의 Action
     
     var triggerGameOver: SCNAction!
+    
+    let BitMaskPig = 1
+    let BitMaskVehicle = 2
+    let BitMaskObstacle = 4
+    let BitMaskFront = 8
+    let BitMaskBack = 16
+    let BitMaskLeft = 32
+    let BitMaskRight = 64
+    let BitMaskCoin = 128
+    let BitMaskHouse = 256
+    //Collision mask
+    
+    //Bit-masks
+    //비트는 0과 1로 이루어져 이진수를 나타내는 데 사용된다. 각 비트는 특정 숫자 값을 나타내며 최하위 비트에서 최 상위 비트까지 반대 방향으로 읽는다(그냥 이진수 표기).
+    //비트가 1이면 On으로 간주되고 0이면 Off이다. p.254 Bit mask는 이진수로 매핑한다. 비트 마스킹은 물리 시뮬레이션의 모든 객체에 id를 부여하는 방법이다.
+    //비트 마스크를 사용해 서로 충돌이 난 객체를 필터링할 수 있다. 이 방법은 충돌을 탐지할 때, 관련된 객체의 양을 줄이므로 프로세스가 빨라진다.
+    
+    //Category masks
+    //Category mask는 객체에 충돌 감지를 위한 고유한 id를 제공한다. 객체에 고유한 id를 부여하는 것 외에도 그룹화할 수 있다.
+    //Pac-Man에서 팩맨과 충돌할 수 있는 것은 Good과 Bad 두 가지로 나눠 볼 수 있다. p.255
+    //예시에서 Good은 6번째 비트(2의 5승: 64)가 true이면 되고 Bad는 7번째 비트(2의 6승: 128)이 true이면 된다.
+    //조건문에서 각 해당 비트단위를 비교하여(&, 논리곱) 결과를 판단한다. p.256 https://blog.naver.com/badwin/221178028123
+    
+    //Defining category masks
+    //해당 프로젝트의 Category mask는 좀 더 간단하게 구현할 수 있다. p.256
+    
+    //Collision masks
+    //collision mask를 사용해, 물리 엔진이 일부 객체가 서로 충돌하도록 지정해 줄 수 있다. 물리엔진은 이 객체들이 서로 통과하지 못하게 하고 충돌효과를 트리거 한다.
+    //충돌 마스크를 정의하려면 객체와 충돌하는 모든 category mask를 함께 추가해야 한다. 이 게임에서는 Pearl을 제외한 모든 것과 충돌해야 한다. p.257
+    //collision mask 와 category mask 를 비교해서 봐야 한다. 충돌하는 카테고리가 true가 된다.
+    
+    //Contact masks
+    //contact mask 는 물리 엔진이 어떤 객체가 충돌시 이벤트가 일어나는 지 알려준다. 이는 물리 엔진에 직접 영향을 미치지 않고, 프로그래밍 코드로 트리거 해야 한다.
+    //collision mask와 같은 방법으로 contact mask를 설정한다. p.258
+    
+    var activeCollisionsBitMask: Int = 0 //활성된 충돌을 추적할 bit mask
     
     let game = GameHelper.sharedInstance
     
@@ -71,6 +113,10 @@ class ViewController: UIViewController {
         
         scnView.scene = splashScene //scnView에서 사용할 scene 설정
         //splashScene 부터 시작한다.
+        
+        scnView.delegate = self //delegate 설정
+        
+        gameScene.physicsWorld.contactDelegate = self //물리 엔진 delegate 설정
     }
     
     func setupNodes() {
@@ -105,6 +151,30 @@ class ViewController: UIViewController {
         
         trafficNode = gameScene.rootNode.childNode(withName: "Traffic", recursively: true)!
         //각 참조 노드에 대한 속성을 만드는 대신 하나의 컨테이너 노드를 사용해 모든 차량을 관리한다.
+        
+        
+        
+        
+        //Adding the collision reference node
+        collisionNode = gameScene.rootNode.childNode(withName: "Collision", recursively: true)!
+        frontCollisionNode = gameScene.rootNode.childNode(withName: "Front", recursively: true)!
+        backCollisionNode = gameScene.rootNode.childNode(withName: "Back", recursively: true)!
+        leftCollisionNode = gameScene.rootNode.childNode(withName: "Left", recursively: true)!
+        rightCollisionNode = gameScene.rootNode.childNode(withName: "Right", recursively: true)!
+        
+        
+        
+        
+        //Setting contact bit masks
+        pigNode.physicsBody?.contactTestBitMask = BitMaskVehicle | BitMaskCoin | BitMaskHouse
+        //돼지는 차량, 동전, 집과 충돌할 수 있다.
+        frontCollisionNode.physicsBody?.contactTestBitMask = BitMaskObstacle
+        backCollisionNode.physicsBody?.contactTestBitMask = BitMaskObstacle
+        leftCollisionNode.physicsBody?.contactTestBitMask = BitMaskObstacle
+        rightCollisionNode.physicsBody?.contactTestBitMask = BitMaskObstacle
+        //hidden geometry의 각 box는 Obstacle을 감지한다.
+        
+        //SceneKit editor에서 Contact Mask를 설정할 수 있지만, 코드에서 수동으로 설정해 줄 수도 있다.
     }
     
     func setupActions() {
@@ -411,6 +481,24 @@ extension ViewController {
             return
         }
         
+        let activeFrontCollision = activeCollisionsBitMask & BitMaskFront == BitMaskFront
+        let activeBackCollision = activeCollisionsBitMask & BitMaskBack == BitMaskBack
+        let activeLeftCollision = activeCollisionsBitMask & BitMaskLeft == BitMaskLeft
+        let activeRightCollision = activeCollisionsBitMask & BitMaskRight == BitMaskRight
+        //비트 AND로 activeCollisionsBitMask에 저장된 각 방향의 활성 충돌을 확인하고 개별 상수에 저장한다.
+        
+        guard (sender.direction == .up && !activeFrontCollision) ||
+            (sender.direction == .down && !activeBackCollision) ||
+            (sender.direction == .left && !activeLeftCollision) ||
+            (sender.direction == .right && !activeRightCollision) else {
+                return
+                //제스처 방향에 활성 충돌이 없는 경우에만 계속 진행한다.
+        }
+        
+        
+        
+        
+        
         switch sender.direction { //제스처 인식기의 방향을 확인한다.
         case UISwipeGestureRecognizer.Direction.up:
             pigNode.runAction(jumpForwardAction)
@@ -429,6 +517,155 @@ extension ViewController {
         }
     }
 }
+
+
+
+
+//Hidden geometry for collisions
+//숨겨진 geometry를 사용해 충돌을 감지할 수 있다. 이 geometry는 보이지 않지만 여전히 물리 엔진과 상호작용한다.
+//돼지는 4 방향으로 움직일 수 있다. 따라서 각 방향에 네 개의 hidden box를 만들면, 돼지 주변의 충돌을 추적할 수 있다.
+//이 Hidden geometry(box)와 충돌하는 객체가 없다면 돼지는 점프해서 이동할 수 있다. 객체가 있다면, 그 방향으로는 이동할 수 없다. p.415
+
+//Create a hidden collision node
+//Collision.scn 을 만들어 충돌을 감지하는 객체를 만든다.
+
+//Enabling physics
+//각 box(hidden geometry)에는 category bit mask가 있어야 장애물과의 충돌에서 어느 것이 관련되어 있는 지 확인할 수 있다.
+//여러 노드를 함께 선택한 후, 노드의 속성과 물리 속성을 편집할 수 있다(비슷한 특성이나 동일한 값을 가진 경우에만 가능).
+//여기서는 Hidden geometry의 물리엔진을 Kinematic 타입으로 설정한다.
+//Node inspector에서 Visibility를 0으로 한다(테스트 중에는 0.5 정도로 해서 확인해 주는 것이 좋다).
+//여기서 Visibility를 제어하지 않고, Hidden으로 설정하면, 노드가 완전히 제거되어 물리 특성이 적용되지 않는다(충돌이 일어나지 않는다).
+//Casts Shadow 체크 박스도 해제해, 그림자가 생기지 않도록 한다.
+//각 Hidden geometry에 bit mask를 설정해 준다. p.421
+
+//physics body type 은 객체의 물리 상호작용 방식을 정의한다. 3가지 유형이 있다.
+//• Static : 움직이지 않는다. 다른 물체는 이 물체와 충돌할 수 있지만, static 물체 자체는 모든 힘과 충돌에 영향을 받지 않는다(ex. 벽, 바위).
+//• Dynamic : 물리 엔진이 힘과 충돌에 대응해 물체를 이동 시킨다(ex. 의자, 테이블, 컵).
+//• Kinematic : 수동으로 힘과 충돌에 대응해 물체를 이동 시켜야 한다.
+//  Dynamic 물체와 Kinematic 물체가 충돌하면, Dynamic 물체는 움직이지만, Kinematic 물체는 움직이지 않는다.
+//  하지만 코드로 움직여 줄 수 있다(ex. 이동하는 엘리베이터, 개폐 가능한 문과 같이 수동으로 제어되는 물체).
+
+
+
+
+extension ViewController {
+    //Create the render loop
+    //collision Node는 돼지를 따라가야 한다. 가장 간단히 구현하는 방법은 collision node의 위치를 렌더링 루프에서 돼지 노드의 위치와 동일하게 만드는 것이다.
+    func updatePositions() { //render loop 에서 노드의 위치를 업데이트 한다.
+        collisionNode.position = pigNode.position //collision node의 위치를 돼지 노드의 위치와 동일하게 되도록 업데이트한다.
+    }
+}
+
+extension ViewController: SCNSceneRendererDelegate {
+    //SceneKit은 SCNView 객체를 사용해 scene의 내용을 렌더링 한다. SCNView 에 SCNSceneRendererDelegate 프로토콜을 구현 하면,
+    //SCNView는 애니메이션 이벤트가 발생하고 각 프레임의 렌더링 프로세스가 진행될 때 해당 delegate 대한 메서드를 호출한다.
+    //이런 식으로 SceneKit이 scene의 각 프레임을 렌더링 할 때 각 step을 거치게 된다. 이 step 들이 반복되는 loop를 구성한다.
+    //render loop의 step은 다음과 같다. p.72
+    //1. Update : view가 delegate의 renderer(_: updateAtTime:)를 호출한다. 기본적인 scene 업데이트 로직을 진행한다.
+    //2. Execute Actions & Animations : SceneKit이 모든 액션을 실행하고 scene graph 노드에 attach된 모든 애니메이션을 실행한다.
+    //3. Did Apply Animations : delegate의 renderer(_: didApplyAnimationsAtTime:)를 호출한다.
+    //  이 시점에서 scene의 모든 노드들은 적용된 액션과 애니메이션을 기반으로 단일 프레임 애니메이션을 완성한다.
+    //4. Simulates Physics : SceneKit은 scene의 모든 physics body에 물리 시뮬레이션의 single step을 적용한다.
+    //5. Did Simulate Physics : delegate의 renderer(_: didSimulatePhysicsAtTime:)를 호출한다.
+    //  이 시점에서 물리 시뮬레이션 step이 완료되며, 물리에 대한 논리를 추가할 수 있다.
+    //6. Evaluates Constraints : SceneKit은 제약 조건을 평가하고 적용한다.
+    //  제약조건은 SceneKit 에서 노드의 transformation을 자동으로 조정하도록 하는 규칙이다.
+    //7. Will Render Scene : delegate의 renderer(_: willRenderScene: atTime:)를 호출한다.
+    //  이 시점에서 view는 scene의 렌더링 정보를 가져오기 때문에 변경할 수 있는 마지막 지점이 된다.
+    //8. Renders Scene In View : SceneKit가 view의 scene를 렌더링한다.
+    //9. Did Render Scene : delegate의 renderer(_: didRenderScene: atTime:)를 호출한다. 렌더 루프의 한 사이클이 끝이 나는 곳으로
+    //  이곳에 게임의 로직을 넣을 수 있다. 이 게임 로직은 프로세스가 새로 시작하기 전에 실행해야 한다.
+    
+    func renderer(_ renderer: SCNSceneRenderer, didApplyAnimationsAtTime time: TimeInterval) {
+        //애니메이션 Action이 render loop 내에서 완료된 직후에 호출된다. 각 노드들의 scene에서의 정확한 위치를 알 수 있다.
+        guard game.state == .playing else { //playing 상태에서만 메서드 실행
+            return
+        }
+        
+        game.updateHUD() //HUD 업데이트
+        updatePositions() //collisionNode와 pigNode 위치 동기화
+    }
+}
+
+
+
+
+extension ViewController: SCNPhysicsContactDelegate {
+    func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
+        //두 객체가 충돌하는 이벤트가 발생시 호출된다.
+        guard game.state == .playing else { //게임이 실행 중인지 확인
+            return
+        }
+        
+        var collisionBoxNode: SCNNode! //충돌 상자
+        if contact.nodeA.physicsBody?.categoryBitMask == BitMaskObstacle {
+            collisionBoxNode = contact.nodeB
+        } else {
+            collisionBoxNode = contact.nodeA
+        }
+        
+        activeCollisionsBitMask |= collisionBoxNode.physicsBody!.categoryBitMask
+        //충돌 상자의 category bit mask를 activeCollisionsBitMask에 추가하기 위해 비트 OR 연산을 한다.
+        
+        
+        
+        
+        //Collisions with vehicles
+        var contactNode: SCNNode! //돼지가 아닌 노드를 찾는다.
+        if contact.nodeA.physicsBody?.categoryBitMask == BitMaskPig {
+            contactNode = contact.nodeB
+        } else {
+            contactNode = contact.nodeA
+        }
+        
+        if contactNode.physicsBody?.categoryBitMask == BitMaskVehicle { //해당 노드가 차량이면 게임을 종료시킨다.
+            stopGame()
+        }
+        
+        
+        
+        
+        //Collisions with coins
+        if contactNode.physicsBody?.categoryBitMask == BitMaskCoin { //해당 노드가 코인이면
+            contactNode.isHidden = true //코인 노드를 숨긴다.
+            contactNode.runAction(SCNAction.waitForDurationThenRunBlock(duration: 60) { (node: SCNNode!) -> Void in
+                //60초 후에 코인을 다시 보이게 한다.
+                node.isHidden = false
+            })
+            
+            game.collectCoin() //점수 업데이트
+        }
+    }
+    
+    func physicsWorld(_ world: SCNPhysicsWorld, didEnd contact: SCNPhysicsContact) {
+        //두 객체가 충돌하는 이벤트가 완료될 시 호출된다.
+        guard game.state == .playing else { //게임이 실행 중인지 확인
+            return
+        }
+        
+        var collisionBoxNode: SCNNode! //충돌 상자
+        if contact.nodeA.physicsBody?.categoryBitMask == BitMaskObstacle {
+            collisionBoxNode = contact.nodeB
+        } else {
+            collisionBoxNode = contact.nodeA
+        }
+        
+        activeCollisionsBitMask &= ~collisionBoxNode.physicsBody!.categoryBitMask
+        //비트 NOT 연산 이후, AND 연산을 수행하여 activeCollisionsBitMask에서 충돌 상자의 category bit mask를 제거한다.
+    }
+    
+    //Handling collisions
+    //mask 값과 일치하는 category mask를 가진 다른 physics body와 충돌할 때마다 알림을 보내 해당 physics body의 contactTestBitMask를 설정한다.
+    //활성화된 collision을 추적하려면 activeCollisionsBitMask라는 특수 속성을 만든다. 네 방향의 충돌 박스 중 하나가 장애물과 충돌하면, physicsWorld(_:didBegin:)가 호출된다.
+    //그 후 해당 충돌 박스의 category mask를 사용해 OR(|) 연산으로 activeCollisionsBitMask에 추가한다.
+    //그 후 gesture handler에서 activeCollisionsBitMask를 검사하고 활성된 충돌 방향의 제스처를 차단한다.
+    //충돌이 끝나면, physicsWorld(_:didEnd:)이 호출된다. 이 때, activeCollisionsBitMask에서 해당 상자의 category bit mask를 제거할 수 있다.
+    //이 작업은 NOT(~) 연산 결과를 AND(&) 하여 진행한다.
+}
+
+
+
+
 
 
 

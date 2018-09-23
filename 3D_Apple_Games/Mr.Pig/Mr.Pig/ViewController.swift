@@ -109,6 +109,23 @@ class ViewController: UIViewController {
         //storyboard에서 SCNView로 연결할 수도 있다.
         
         gameScene = SCNScene(named: "/MrPig.scnassets/GameScene.scn") //scn file로 scene 초기화
+        
+        // Bugfix
+        let trees = gameScene.rootNode.childNode(withName: "Trees", recursively: false)
+        for treeNode in trees!.childNodes {
+            treeNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
+            treeNode.physicsBody?.collisionBitMask = -1
+            treeNode.physicsBody?.categoryBitMask = 4
+        }
+        
+        // Bugfix: Moved "Home Reference" under new parent node called "Home" for this to work
+        let home = gameScene.rootNode.childNode(withName: "Home", recursively: false)
+        for homeNode in home!.childNodes {
+            homeNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
+            homeNode.physicsBody?.collisionBitMask = -1
+            homeNode.physicsBody?.categoryBitMask = 4
+        }
+        
         splashScene = SCNScene(named: "/MrPig.scnassets/SplashScene.scn") //scn file로 scene 초기화
         
         scnView.scene = splashScene //scnView에서 사용할 scene 설정
@@ -284,7 +301,46 @@ class ViewController: UIViewController {
     }
     
     func setupSounds() {
+        //Add music
+        if game.state == .tapToPlay { //splashScene에서만 음악을 재생한다.
+            let music = SCNAudioSource(fileNamed: "MrPig.scnassets/Audio/Music.mp3")! //SCNAudioSource 객체 생성
+            music.volume = 0.3 //음량
+            music.loops = true //반복 여부
+            music.shouldStream = true //스트리밍되거나 메모리에 미리 로드되는 지 여부
+            //일반적으로 대용량 오디오 파일은 스트리밍해야 하지만, 크기가 작은 경우 빠른 미리보기를 위해 메모리에 미리 로드하는 것이 좋다.
+            music.isPositional = false //오디오 소스에서 3D spatialized playback 사용 여부
+            
+            let musicPlayer = SCNAudioPlayer(source: music) //오디오 소스를 사용하는 오디오 플레이어
+            splashScene.rootNode.addAudioPlayer(musicPlayer) //오디오 플레이어를 rootNode에 추가하여 음악 스트림을 시작한다.
+        }
         
+        
+        
+        
+        //Adding ambiance
+        else if game.state == .playing { //playing 상태에서만
+            let traffic = SCNAudioSource(fileNamed: "MrPig.scnassets/Audio/Traffic.mp3")! //오디오 소스 설정
+            traffic.volume = 0.3
+            traffic.loops = true
+            traffic.shouldStream = true
+            traffic.isPositional = true
+            
+            let trafficPlayer = SCNAudioPlayer(source: traffic) //오디오 소스를 사용하는 오디오 플레이어
+            gameScene.rootNode.addAudioPlayer(trafficPlayer) //오디오 플레이어를 rootNode에 추가하여 음악 스트림을 시작한다.
+            //오디오 소스가 rootNode에 추가되자마자 오디오 소스가 재생된다.
+            
+            game.loadSound(name: "Jump", fileNamed: "MrPig.scnassets/Audio/Jump.wav")
+            game.loadSound(name: "Blocked", fileNamed: "MrPig.scnassets/Audio/Blocked.wav")
+            game.loadSound(name: "Crash", fileNamed: "MrPig.scnassets/Audio/Crash.wav")
+            game.loadSound(name: "CollectCoin", fileNamed: "MrPig.scnassets/Audio/CollectCoin.wav")
+            game.loadSound(name: "BankCoin", fileNamed: "MrPig.scnassets/Audio/BankCoin.wav")
+            //사용할 사운드 효과 로드(sound effect), Music과는 다르다.
+        }
+        
+        //Audio in SceneKit
+        // • SCNAudioSource : 오디오 소스는 음악이나 사운드 효과와 같은 오디오 파일을 나타내는 개체이다. 메모리에 미리 로드되거나 실시간으로 스트리밍된다.
+        // • SCNAudioPlayer : 오디오 소스를 SCNNode 객체의 위치를 사용해, 3D 공간 오디오로 재생할 수 있다.
+        // • SCNAction.playAudio(_:waitForCompletion:) : 오디오 소스를 재생할 SCNNode에서 실행할 수 있는 특수 액션
     }
 }
 
@@ -315,6 +371,9 @@ class ViewController: UIViewController {
 //Transitions
 extension ViewController {
     func startGame() {
+        resetCoins()
+        setupTraffic()
+        
         splashScene.isPaused = true //게임은 splashScene에서만 시작할 수 있다. splashScene의 모든 동작과 물리 시뮬레이션을 일시 중지시킨다.
         
         let transition = SKTransition.doorsOpenVertical(withDuration: 1.0) //전환 효과
@@ -331,6 +390,8 @@ extension ViewController {
     }
     
     func stopGame() {
+        stopTraffic() //차량의 애니메이션 제거
+        
         game.state = .gameOver //게임 상태를 gameOver로
         game.reset() //게임을 리셋
         
@@ -490,10 +551,12 @@ extension ViewController {
         guard (sender.direction == .up && !activeFrontCollision) ||
             (sender.direction == .down && !activeBackCollision) ||
             (sender.direction == .left && !activeLeftCollision) ||
-            (sender.direction == .right && !activeRightCollision) else {
+            (sender.direction == .right && !activeRightCollision) else { //장애물에 걸린 겅유
+                game.playSound(node: pigNode, name: "Blocked") //장애물에 걸린 경우 사운드 효과
                 return
-                //제스처 방향에 활성 충돌이 없는 경우에만 계속 진행한다.
         }
+        
+        //제스처 방향에 활성 충돌이 없는 경우에만 계속 진행한다.
         
         
         
@@ -515,6 +578,13 @@ extension ViewController {
         default:
             break
         }
+        
+        
+        
+        
+        //Add sound effects
+        game.playSound(node: pigNode, name: "Jump") //유효한 제스처가 처리될 때마다 사운드 효과를 재생
+        
     }
 }
 
@@ -553,6 +623,26 @@ extension ViewController {
     //collision Node는 돼지를 따라가야 한다. 가장 간단히 구현하는 방법은 collision node의 위치를 렌더링 루프에서 돼지 노드의 위치와 동일하게 만드는 것이다.
     func updatePositions() { //render loop 에서 노드의 위치를 업데이트 한다.
         collisionNode.position = pigNode.position //collision node의 위치를 돼지 노드의 위치와 동일하게 되도록 업데이트한다.
+        
+        
+        
+        
+        //Update the cameraʼs position
+        let lerpX = (pigNode.position.x - cameraFollowNode.position.x) * 0.05
+        let lerpZ = (pigNode.position.z - cameraFollowNode.position.z) * 0.05
+        //카메라가 돼지를 따라가도록 한다(보간된 계수로 살짝 느리게 따라가게 해 부드럽게 움직인다).
+        //0.05가 아닌 1이 되면 실시간으로 추적한다.
+        
+        cameraFollowNode.position.x += lerpX
+        cameraFollowNode.position.z += lerpZ
+        //카메라의 위치를 돼지보다 약간 늦게 따라가도록 업데이트 시켜준다.
+        
+        
+        
+        
+        //Update the lightʼs position
+        lightFollowNode.position = cameraFollowNode.position
+        //조명 노드의 위치를 카메라 노드와 동일하게 업데이트 하여 동기화한다.
     }
 }
 
@@ -584,6 +674,7 @@ extension ViewController: SCNSceneRendererDelegate {
         
         game.updateHUD() //HUD 업데이트
         updatePositions() //collisionNode와 pigNode 위치 동기화
+        updateTraffic() //차량 업데이트
     }
 }
 
@@ -619,6 +710,7 @@ extension ViewController: SCNPhysicsContactDelegate {
         }
         
         if contactNode.physicsBody?.categoryBitMask == BitMaskVehicle { //해당 노드가 차량이면 게임을 종료시킨다.
+            game.playSound(node: pigNode, name: "Crash") //효과 사운드 재생
             stopGame()
         }
         
@@ -634,6 +726,16 @@ extension ViewController: SCNPhysicsContactDelegate {
             })
             
             game.collectCoin() //점수 업데이트
+            game.playSound(node: pigNode, name: "CollectCoin") //효과 사운드 재생
+        }
+        
+        
+        
+        
+        if contactNode.physicsBody?.categoryBitMask == BitMaskHouse { //돼지가 집으로 온 경우
+            if game.bankCoins() == true {
+                game.playSound(node: pigNode, name: "BankCoin") //효과 사운드 재생
+            }
         }
     }
     
@@ -662,6 +764,50 @@ extension ViewController: SCNPhysicsContactDelegate {
     //충돌이 끝나면, physicsWorld(_:didEnd:)이 호출된다. 이 때, activeCollisionsBitMask에서 해당 상자의 category bit mask를 제거할 수 있다.
     //이 작업은 NOT(~) 연산 결과를 AND(&) 하여 진행한다.
 }
+
+
+
+
+//Update traffic bounds
+extension ViewController {
+    func updateTraffic() {
+        for node in trafficNode.childNodes { //trafficNode 아래의 모든 node loop
+            if node.position.x > 25 { //트래픽의 x 위치가 25 이상이 되면,
+                node.position.x = -25 //-25로 재이동한다.
+            } else if node.position.x < -25 { //트래픽의 x 위치가 -25 이하가 되면,
+                node.position.x = 25 //25로 재 이동한다.
+            }
+        }
+    }
+}
+
+
+
+
+//Oh, thereʼs one more thing! :]
+extension ViewController {
+    func stopTraffic() {
+        //여러 번 게임을 진행하면, 차량이 서로 겹쳐지기 시작한다. 액션 애니메이션이 제대로 멈추지 않기 때문이다.
+        for node in trafficNode.childNodes {
+            //이를 해결하기 위해 모든 차량 노드들의 액션 애니메이션을 제거한다.
+            node.removeAllActions()
+        }
+    }
+    
+    func resetCoins() { //게임이 재시작 될때 코인도 다시 재설정한다.
+        let coinsNode = gameScene.rootNode.childNode(withName: "Coins", recursively: true)!
+        
+        for node in coinsNode.childNodes {
+            for child in node.childNodes {
+                child.isHidden = false
+            }
+        }
+    }
+}
+
+
+
+
 
 
 

@@ -808,6 +808,35 @@ extension ViewController {
 
 
 
+//3D Art for Programmers
+//MagicaVoxel의 메뉴 확인은 p.455
+
+
+
+
+//Exporting the voxel model
+//SceneKit는 .vox 파일을 지원하지 않는다. 보다 일반적으로 사용되는 .obj 파일로 내보내서 가져온다.
+//.obj는 Wavefront Technologies에서 개발하고 많은 3D Tool에서 지원하는 형식이다.
+//export하면 3개의 파일이 생성된다.
+// .mtl : 색, 텍스처 및 reflection map에 대한 정의가 있는 material library
+// .obj : 복셀 모델의 geometry 정보가 있는 파일
+// .png : 복셀 모델의 diffuse texture map. 사용된 모든 색상이 포함되어 있다.
+
+
+
+
+//Importing voxel models
+// .mtl, .obj, .png 세 개의 파일을 MrPig.scnassets 에 가져온다.
+
+//Converting .obj into .scn
+//Scene Editor에서 .obj 파일을 선택하면 모델이 검은 색으로 나온다. Editor - Convert to SceneKit file format(.scn) 으로 변환해 줘야 한다. p.468
+// .scn 파일이 생성된다. 여기서 Material Inspector를 열고 Lighting model(shading)을 Lambert로, Diffuse를 .png 파일로 바꿔준다.
+
+
+
+
+
+
 
 
 

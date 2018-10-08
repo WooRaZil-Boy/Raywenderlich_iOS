@@ -94,8 +94,57 @@ extension ViewController: UIImagePickerControllerDelegate {
 extension ViewController: UINavigationControllerDelegate {
 }
 
-// MARK: - Methods
+//Core ML과 Vison은 iOS 11에서 새로 추가된 Framework 이다.
+//여기서는 이 프로엠워크들과 Places205-GoogLeNet 모델을 사용해 이미지의 scene 분석을 한다.
+
+
+
+
+//iOS Machine Learning
+//기계 학습은 명시적으로 프로그래밍되지 않아도 컴퓨터가 학습하는 인공 지능의 한 유형이다.
+//알고리즘을 코딩하는 대신 기계 학습 도구를 사용하면 컴퓨터가 방대한 양의 데이터 패턴을 찾아 알고리즘을 개발하고 수정한다.
+
+//Deep Learning
+//Apple의 Core ML 프레임워크는 neural networks, tree ensembles, support vector machines,
+//generalized linear models, feature engineering, pipeline models 등을 지원한다.
+//neural network는 최근에 많은 성공 사례를 만들어 내고 있는 인공지능 모델이다. Siri와 Alexa 같은 앱 또한 neural network를 사용한다.
+//neural network는 서로 다른 방식으로 연결되어 있는 노드 계층으로 인간의 두뇌를 모방한다. 기본적으로 추가 계층이 누적될 수록 성능이 향상된다.
+//계산은 행렬 곱으로 이루어지며, GPU가 이를 효율적으로 처리할 수 있다. neural network는 많은 양의 training 데이터를 필요한다.
+//학습은 neural network에 데이터를 제공해 적합한 매개 변수 값을 계산하는 것이다.
+//deep neural network는 완벽하지 않다. 학습을 위한 데이터 세트를 만드는 것이 어렵고 오버피팅도 잘 일어난다.
+
+//What Does Apple Provide?
+//NSLinguisticTagger은 iOS 5에서 natural language 를 분석하기 위해 도입했다.
+//Metal은 iOS 8부터 포함된 GPU에 대한 low-level access 를 제공한다.
+//2016년에 Apple은 Accelerate framework에 Basic Neural Network Subroutines(BNNS)를 추가하여,
+//training이 아닌 inferencing을 위한 네트워크를 구축할 수 있도록 했다.
+//그리고 2017년, Core ML과 Vision을 추가했다.
+// • Core ML을 사용해 훈련된 모델을 앱에서 쉽게 사용할 수 있다.
+// • Vision을 사용해, 얼굴, 얼굴 요소, 텍스트, 사각형, 바코드, 객체를 감지하는 Apple 모델에 쉽게 액세스할 수 있다.
+//Vision 모델에서 image-analysis Core ML 모델을 래핑할 수 도 있다.
+//이 두 framework는 Metal을 기반으로 하므로, 디바이스에서 효율적으로 실행된다(서버로 데이터를 보낼 필요 없다).
+
+
+
+
+//Integrating a Core ML Model Into Your App
+//이 프로젝트는 Places205-GoogLeNet 모델을 사용한다.
+//Cafe, Keras, scikikit-learn 과 같은 기계 학습 도구를 사용해 모델을 만든 경우 Core ML 로 변환 할 수도 있다.
+//https://developer.apple.com/documentation/coreml/converting_trained_models_to_core_ml
+
+//Adding a Model to Your Project
+//추가한 mlmodel 모델을 코드로도 볼 수 있다.
+//GoogLeNetPlaces는 model 프로퍼티와 두 개의 prediction 메서드를 가지고 있다.
+//GoogLeNetPlacesInput는 CVPixelBuffer type의 sceneImage 속성을 가지고 있다.
+//Vision framework로 CVPixelBuffer type을 익숙한 type으로 변환할 수 있다.
+//또, Vision frmaework는 GoogLeNetPlacesOutput 속성을 results type으로 변환하고, prediction 메서드를 관리한다.
+//이렇게 Vision framework에서 다른 속성과 메서드를 관리하므로, 개발자는 model 속성만 사용해 모델을 사용할 수 있다.
+
+
+
+
 //Wrapping the Core ML Model in a Vision Model
+// MARK: - Methods
 extension ViewController {
   func detectScene(image: CIImage) {
     answerLabel.text = "detecting scene..."
@@ -143,50 +192,4 @@ extension ViewController {
     //표준적인 Vision의 workflow는 model을 만들고 하나 이상의 request를 생성한 후, request handler를 실행하는 것이다.
   }
 }
-
-//Core ML과 Vison은 iOS 11에서 새로 추가된 Framework 이다.
-//여기서는 이 프로엠워크들과 Places205-GoogLeNet 모델을 사용해 이미지의 scene 분석을 한다.
-
-
-
-
-//iOS Machine Learning
-//기계 학습은 명시적으로 프로그래밍되지 않아도 컴퓨터가 학습하는 인공 지능의 한 유형이다.
-//알고리즘을 코딩하는 대신 기계 학습 도구를 사용하면 컴퓨터가 방대한 양의 데이터 패턴을 찾아 알고리즘을 개발하고 수정한다.
-
-//Deep Learning
-//Apple의 Core ML 프레임워크는 neural networks, tree ensembles, support vector machines,
-//generalized linear models, feature engineering, pipeline models 등을 지원한다.
-//neural network는 최근에 많은 성공 사례를 만들어 내고 있는 인공지능 모델이다. Siri와 Alexa 같은 앱 또한 neural network를 사용한다.
-//neural network는 서로 다른 방식으로 연결되어 있는 노드 계층으로 인간의 두뇌를 모방한다. 기본적으로 추가 계층이 누적될 수록 성능이 향상된다.
-//계산은 행렬 곱으로 이루어지며, GPU가 이를 효율적으로 처리할 수 있다. neural network는 많은 양의 training 데이터를 필요한다.
-//학습은 neural network에 데이터를 제공해 적합한 매개 변수 값을 계산하는 것이다.
-//deep neural network는 완벽하지 않다. 학습을 위한 데이터 세트를 만드는 것이 어렵고 오버피팅도 잘 일어난다.
-
-//What Does Apple Provide?
-//NSLinguisticTagger은 iOS 5에서 natural language 를 분석하기 위해 도입했다.
-//Metal은 iOS 8부터 포함된 GPU에 대한 low-level access 를 제공한다.
-//2016년에 Apple은 Accelerate framework에 Basic Neural Network Subroutines(BNNS)를 추가하여,
-//training이 아닌 inferencing을 위한 네트워크를 구축할 수 있도록 했다.
-//그리고 2017년, Core ML과 Vision을 추가했다.
-// • Core ML을 사용해 훈련된 모델을 앱에서 쉽게 사용할 수 있다.
-// • Vision을 사용해, 얼굴, 얼굴 요소, 텍스트, 사각형, 바코드, 객체를 감지하는 Apple 모델에 쉽게 액세스할 수 있다.
-//Vision 모델에서 image-analysis Core ML 모델을 래핑할 수 도 있다.
-//이 두 framework는 Metal을 기반으로 하므로, 디바이스에서 효율적으로 실행된다(서버로 데이터를 보낼 필요 없다).
-
-
-
-
-//Integrating a Core ML Model Into Your App
-//이 프로젝트는 Places205-GoogLeNet 모델을 사용한다.
-//Cafe, Keras, scikikit-learn 과 같은 기계 학습 도구를 사용해 모델을 만든 경우 Core ML 로 변환 할 수도 있다.
-//https://developer.apple.com/documentation/coreml/converting_trained_models_to_core_ml
-
-//Adding a Model to Your Project
-//추가한 mlmodel 모델을 코드로도 볼 수 있다.
-//GoogLeNetPlaces는 model 프로퍼티와 두 개의 prediction 메서드를 가지고 있다.
-//GoogLeNetPlacesInput는 CVPixelBuffer type의 sceneImage 속성을 가지고 있다.
-//Vision framework로 CVPixelBuffer type을 익숙한 type으로 변환할 수 있다.
-//또, Vision frmaework는 GoogLeNetPlacesOutput 속성을 results type으로 변환하고, prediction 메서드를 관리한다.
-//이렇게 Vision framework에서 다른 속성과 메서드를 관리하므로, 개발자는 model 속성만 사용해 모델을 사용할 수 있다.
 

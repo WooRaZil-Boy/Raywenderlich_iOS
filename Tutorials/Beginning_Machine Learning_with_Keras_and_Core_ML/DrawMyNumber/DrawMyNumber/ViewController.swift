@@ -74,6 +74,7 @@ class ViewController: UIViewController {
     }
   }
 
+  //표준적인 Vision의 workflow는 model을 만들고 하나 이상의 request를 생성한 후, request handler를 실행하는 것이다.
 }
 
 extension ViewController {
@@ -95,5 +96,7 @@ extension ViewController {
       self.predictLabel.text = best.identifier
       self.predictLabel.isHidden = false
     }
+    
+    //request를 생성할 뿐, 실제로 실행하지는 않는다(네트워크에서 Session 처럼). 실제 실행은 VNImageRequestHandler로 perform 해 줘야 한다.
   }
 }

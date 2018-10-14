@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ApprovalViewController" customModule="Coordinators" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dI3-Z9-6OO">
+                    <rect key="frame" x="67" y="113" width="240" height="240"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="240" id="BjZ-B7-VYm"/>
+                        <constraint firstAttribute="width" secondItem="dI3-Z9-6OO" secondAttribute="height" multiplier="1:1" id="yJ3-aT-0nb"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Congratulations!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Zo-1g-Afd">
+                    <rect key="frame" x="94" y="400" width="186" height="32"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dnb-ro-9Tv">
+                    <rect key="frame" x="169" y="495" width="37" height="30"/>
+                    <state key="normal" title="Done"/>
+                    <connections>
+                        <action selector="doneButtonTouched:" destination="-1" eventType="touchUpInside" id="3Uh-Rx-HhE"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoDark" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LuL-3U-NCu">
+                    <rect key="frame" x="337" y="625" width="22" height="22"/>
+                    <connections>
+                        <action selector="approvalInfoButtonTapped:" destination="-1" eventType="touchUpInside" id="ptq-uc-hJG"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="dnb-ro-9Tv" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="8yc-5E-Wej"/>
+                <constraint firstItem="dI3-Z9-6OO" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="93" id="BJ1-OG-rPi"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="LuL-3U-NCu" secondAttribute="bottom" constant="20" id="SSE-t5-1eY"/>
+                <constraint firstItem="0Zo-1g-Afd" firstAttribute="top" secondItem="dI3-Z9-6OO" secondAttribute="bottom" constant="47" id="V6e-jx-i9P"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="LuL-3U-NCu" secondAttribute="trailing" constant="16" id="ilB-0Z-5Y2"/>
+                <constraint firstItem="dI3-Z9-6OO" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="isu-U6-fkm"/>
+                <constraint firstItem="dnb-ro-9Tv" firstAttribute="top" secondItem="0Zo-1g-Afd" secondAttribute="bottom" constant="63" id="j9O-2T-LL0"/>
+                <constraint firstItem="0Zo-1g-Afd" firstAttribute="centerX" secondItem="dI3-Z9-6OO" secondAttribute="centerX" id="mIj-NB-2o3"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+        </view>
+    </objects>
+</document>

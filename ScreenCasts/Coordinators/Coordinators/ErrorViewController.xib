@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ErrorViewController" customModule="Coordinators" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zz4-eq-rMO">
+                    <rect key="frame" x="67" y="113" width="240" height="240"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="zz4-eq-rMO" secondAttribute="height" multiplier="1:1" id="Lbh-9D-aAm"/>
+                        <constraint firstAttribute="width" constant="240" id="v1i-5d-b4c"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Something went wrong..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ag-bM-GFK">
+                    <rect key="frame" x="48" y="400" width="278.5" height="32"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fVc-S3-3Hi">
+                    <rect key="frame" x="135" y="495" width="105" height="30"/>
+                    <state key="normal" title="Back to Review"/>
+                    <connections>
+                        <action selector="returnButtonTouched:" destination="-1" eventType="touchUpInside" id="hry-qp-NbV"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoDark" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TP2-dH-71E">
+                    <rect key="frame" x="337" y="625" width="22" height="22"/>
+                    <connections>
+                        <action selector="errorInfoButtonTapped:" destination="-1" eventType="touchUpInside" id="U8c-cw-Ld8"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="fVc-S3-3Hi" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="1d0-Te-xgM"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="TP2-dH-71E" secondAttribute="trailing" constant="16" id="4BQ-6A-bRl"/>
+                <constraint firstItem="zz4-eq-rMO" firstAttribute="width" secondItem="zz4-eq-rMO" secondAttribute="height" multiplier="1:1" id="4Cb-90-P4I"/>
+                <constraint firstItem="7ag-bM-GFK" firstAttribute="top" secondItem="zz4-eq-rMO" secondAttribute="bottom" constant="47" id="JiH-I0-PT5"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="TP2-dH-71E" secondAttribute="bottom" constant="20" id="TpR-1U-Y4l"/>
+                <constraint firstItem="fVc-S3-3Hi" firstAttribute="top" secondItem="7ag-bM-GFK" secondAttribute="bottom" constant="63" id="fg0-c0-JNL"/>
+                <constraint firstItem="7ag-bM-GFK" firstAttribute="centerX" secondItem="zz4-eq-rMO" secondAttribute="centerX" id="kET-if-IHa"/>
+                <constraint firstItem="zz4-eq-rMO" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="93" id="nV9-st-wWy"/>
+                <constraint firstItem="zz4-eq-rMO" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="uqM-Sa-Jd8"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+        </view>
+    </objects>
+</document>

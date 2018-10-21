@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="N9W-Bv-N7R">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Poem View Controller-->
+        <scene sceneID="GoK-TC-9x2">
+            <objects>
+                <viewController id="N9W-Bv-N7R" customClass="PoemViewController" customModule="KeatsOrYeats" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ltk-ze-IkE">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Insert Poem Text Below:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rAd-0K-i66">
+                                <rect key="frame" x="96" y="20" width="183.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="KGU-Wg-kFi">
+                                <rect key="frame" x="4" y="43" width="367" height="333.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="go" enablesReturnKeyAutomatically="YES" smartDashesType="no" smartInsertDeleteType="yes" smartQuotesType="no"/>
+                                <connections>
+                                    <outlet property="delegate" destination="ltk-ze-IkE" id="chh-Fd-W0O"/>
+                                </connections>
+                            </textView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JMJ-IR-7ED">
+                                <rect key="frame" x="4" y="384.5" width="367" height="262.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="xru-5y-Gln" customClass="ResultTableViewCell" customModule="KeatsOrYeats" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="367" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xru-5y-Gln" id="XVY-hA-qfx">
+                                            <rect key="frame" x="0.0" y="0.0" width="367" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="6fB-tK-2OE">
+                                                    <rect key="frame" x="20" y="0.0" width="339" height="43.5"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="VsG-7p-Q5w">
+                                                            <rect key="frame" x="0.0" y="11.5" width="167.5" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <progressView opaque="NO" tag="1001" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="wOF-u0-DPy">
+                                                            <rect key="frame" x="171.5" y="21" width="167.5" height="2.5"/>
+                                                            <color key="trackTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </progressView>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="6fB-tK-2OE" secondAttribute="trailing" constant="8" id="0JB-Se-SVJ"/>
+                                                <constraint firstItem="6fB-tK-2OE" firstAttribute="height" secondItem="XVY-hA-qfx" secondAttribute="height" id="7Or-sr-EW0"/>
+                                                <constraint firstItem="6fB-tK-2OE" firstAttribute="leading" secondItem="XVY-hA-qfx" secondAttribute="leading" constant="20" id="EbH-ia-LmP"/>
+                                                <constraint firstItem="6fB-tK-2OE" firstAttribute="top" secondItem="XVY-hA-qfx" secondAttribute="top" id="LHl-31-iXM"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="poetNameLabel" destination="VsG-7p-Q5w" id="G3G-8F-XAc"/>
+                                            <outlet property="progressView" destination="wOF-u0-DPy" id="jIb-ZZ-LsM"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="N9W-Bv-N7R" id="Oa9-rQ-Bgn"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="KGU-Wg-kFi" firstAttribute="height" secondItem="ltk-ze-IkE" secondAttribute="height" multiplier="0.5" id="2ga-lR-eJs"/>
+                            <constraint firstItem="JMJ-IR-7ED" firstAttribute="top" secondItem="KGU-Wg-kFi" secondAttribute="bottom" constant="8" id="6YN-h0-zCh"/>
+                            <constraint firstItem="JMJ-IR-7ED" firstAttribute="trailing" secondItem="KGU-Wg-kFi" secondAttribute="trailing" id="79A-bX-yha"/>
+                            <constraint firstItem="KGU-Wg-kFi" firstAttribute="trailing" secondItem="rx3-JQ-lgd" secondAttribute="trailing" constant="-4" id="DJG-nu-52W"/>
+                            <constraint firstItem="rx3-JQ-lgd" firstAttribute="bottom" secondItem="JMJ-IR-7ED" secondAttribute="bottom" constant="20" id="FZA-we-BMe"/>
+                            <constraint firstItem="rAd-0K-i66" firstAttribute="centerX" secondItem="rx3-JQ-lgd" secondAttribute="centerX" id="UJk-el-cfB"/>
+                            <constraint firstItem="KGU-Wg-kFi" firstAttribute="top" secondItem="rAd-0K-i66" secondAttribute="bottom" constant="2" id="gWU-0T-3f1"/>
+                            <constraint firstItem="rx3-JQ-lgd" firstAttribute="top" secondItem="rAd-0K-i66" secondAttribute="top" id="ilX-20-5ct"/>
+                            <constraint firstItem="JMJ-IR-7ED" firstAttribute="leading" secondItem="KGU-Wg-kFi" secondAttribute="leading" id="mRA-pD-WjD"/>
+                            <constraint firstItem="KGU-Wg-kFi" firstAttribute="leading" secondItem="rx3-JQ-lgd" secondAttribute="leading" constant="4" id="r6P-V2-9aA"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="rx3-JQ-lgd"/>
+                    </view>
+                    <connections>
+                        <outlet property="poemTextView" destination="KGU-Wg-kFi" id="nei-4Q-jOc"/>
+                        <outlet property="resultTable" destination="JMJ-IR-7ED" id="yfO-yb-1mQ"/>
+                        <outlet property="titleLabel" destination="rAd-0K-i66" id="v4p-0l-D3V"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aSW-Ie-RQi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="240.80000000000001" y="137.18140929535232"/>
+        </scene>
+    </scenes>
+</document>

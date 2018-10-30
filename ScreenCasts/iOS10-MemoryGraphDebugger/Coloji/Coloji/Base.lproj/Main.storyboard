@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11163.2" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Dds-ot-lJ2">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11133"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Coloji-->
+        <scene sceneID="U7b-W4-beM">
+            <objects>
+                <tableViewController id="bNE-Is-pGk" customClass="ColojiTableViewController" customModule="Coloji" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="64g-sT-287">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="colojiCell" id="jBm-o5-SWR" customClass="ColojiTableViewCell" customModule="Coloji" customModuleProvider="target">
+                                <frame key="frameInset" minY="92" width="375" height="100"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jBm-o5-SWR" id="lEK-T3-Y18">
+                                    <frame key="frameInset" width="375" height="99.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="w0h-6c-1Nv" kind="show" id="B9C-8a-Jh5"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="bNE-Is-pGk" id="2d8-iI-5Pr"/>
+                            <outlet property="delegate" destination="bNE-Is-pGk" id="ylt-4h-6r1"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Coloji" id="jnj-NO-Bou"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="t52-Q6-BIB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1024.8" y="-28.335832083958024"/>
+        </scene>
+        <!--Coloji View Controller-->
+        <scene sceneID="NxE-Cp-Kzv">
+            <objects>
+                <viewController id="w0h-6c-1Nv" customClass="ColojiViewController" customModule="Coloji" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="YDp-Hs-PSZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="abF-58-zJo"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dmv-CP-qTT">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="pRQ-xF-Guk"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FTl-Ef-HgS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1902" y="-28"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="NOh-lV-8Cp">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Dds-ot-lJ2" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ONJ-t2-cZU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="bNE-Is-pGk" kind="relationship" relationship="rootViewController" id="1GC-Yd-9zu"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jAH-NL-hFA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="85.599999999999994" y="-28.335832083958024"/>
+        </scene>
+    </scenes>
+</document>

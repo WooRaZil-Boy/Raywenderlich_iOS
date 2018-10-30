@@ -1,0 +1,364 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2201FF381D35090E002A80E7 /* ColojiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2201FF371D35090E002A80E7 /* ColojiViewController.swift */; };
+		2299AB471D363D0A000A4912 /* ColojiDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2299AB461D363D0A000A4912 /* ColojiDataStore.swift */; };
+		2299AB491D364813000A4912 /* ColojiTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2299AB481D364813000A4912 /* ColojiTableViewCell.swift */; };
+		22CB5BDD1D34F21F00F41F7A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CB5BDC1D34F21F00F41F7A /* AppDelegate.swift */; };
+		22CB5BE21D34F21F00F41F7A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22CB5BE01D34F21F00F41F7A /* Main.storyboard */; };
+		22CB5BE41D34F21F00F41F7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22CB5BE31D34F21F00F41F7A /* Assets.xcassets */; };
+		22CB5BE71D34F21F00F41F7A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22CB5BE51D34F21F00F41F7A /* LaunchScreen.storyboard */; };
+		22CB5BEF1D34F27B00F41F7A /* ColojiTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CB5BEE1D34F27B00F41F7A /* ColojiTableViewController.swift */; };
+		22CB5BF11D34F2D400F41F7A /* Coloji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CB5BF01D34F2D400F41F7A /* Coloji.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2201FF371D35090E002A80E7 /* ColojiViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColojiViewController.swift; sourceTree = "<group>"; };
+		2299AB461D363D0A000A4912 /* ColojiDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColojiDataStore.swift; sourceTree = "<group>"; };
+		2299AB481D364813000A4912 /* ColojiTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColojiTableViewCell.swift; sourceTree = "<group>"; };
+		22CB5BD91D34F21F00F41F7A /* Coloji.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Coloji.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		22CB5BDC1D34F21F00F41F7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		22CB5BE11D34F21F00F41F7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		22CB5BE31D34F21F00F41F7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		22CB5BE61D34F21F00F41F7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		22CB5BE81D34F21F00F41F7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		22CB5BEE1D34F27B00F41F7A /* ColojiTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColojiTableViewController.swift; sourceTree = "<group>"; };
+		22CB5BF01D34F2D400F41F7A /* Coloji.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coloji.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		22CB5BD61D34F21F00F41F7A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2299AB4A1D365F2A000A4912 /* Guff */ = {
+			isa = PBXGroup;
+			children = (
+				22CB5BE31D34F21F00F41F7A /* Assets.xcassets */,
+				22CB5BE81D34F21F00F41F7A /* Info.plist */,
+				22CB5BDC1D34F21F00F41F7A /* AppDelegate.swift */,
+			);
+			name = Guff;
+			sourceTree = "<group>";
+		};
+		2299AB4B1D36630D000A4912 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				22CB5BE01D34F21F00F41F7A /* Main.storyboard */,
+				22CB5BE51D34F21F00F41F7A /* LaunchScreen.storyboard */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		2299AB4C1D366349000A4912 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				22CB5BEE1D34F27B00F41F7A /* ColojiTableViewController.swift */,
+				2201FF371D35090E002A80E7 /* ColojiViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		2299AB4D1D366350000A4912 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2299AB481D364813000A4912 /* ColojiTableViewCell.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		2299AB4E1D366355000A4912 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2299AB461D363D0A000A4912 /* ColojiDataStore.swift */,
+				22CB5BF01D34F2D400F41F7A /* Coloji.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		22CB5BD01D34F21F00F41F7A = {
+			isa = PBXGroup;
+			children = (
+				22CB5BDB1D34F21F00F41F7A /* Coloji */,
+				22CB5BDA1D34F21F00F41F7A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		22CB5BDA1D34F21F00F41F7A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				22CB5BD91D34F21F00F41F7A /* Coloji.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		22CB5BDB1D34F21F00F41F7A /* Coloji */ = {
+			isa = PBXGroup;
+			children = (
+				2299AB4C1D366349000A4912 /* Controllers */,
+				2299AB4A1D365F2A000A4912 /* Guff */,
+				2299AB4E1D366355000A4912 /* Models */,
+				2299AB4B1D36630D000A4912 /* UI */,
+				2299AB4D1D366350000A4912 /* Views */,
+			);
+			path = Coloji;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		22CB5BD81D34F21F00F41F7A /* Coloji */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 22CB5BEB1D34F21F00F41F7A /* Build configuration list for PBXNativeTarget "Coloji" */;
+			buildPhases = (
+				22CB5BD51D34F21F00F41F7A /* Sources */,
+				22CB5BD61D34F21F00F41F7A /* Frameworks */,
+				22CB5BD71D34F21F00F41F7A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Coloji;
+			productName = Coloji;
+			productReference = 22CB5BD91D34F21F00F41F7A /* Coloji.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		22CB5BD11D34F21F00F41F7A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0800;
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = Razeware;
+				TargetAttributes = {
+					22CB5BD81D34F21F00F41F7A = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = D23W9URMHY;
+						DevelopmentTeamName = "Sam Davies";
+						LastSwiftMigration = 1000;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 22CB5BD41D34F21F00F41F7A /* Build configuration list for PBXProject "Coloji" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 22CB5BD01D34F21F00F41F7A;
+			productRefGroup = 22CB5BDA1D34F21F00F41F7A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				22CB5BD81D34F21F00F41F7A /* Coloji */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		22CB5BD71D34F21F00F41F7A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				22CB5BE71D34F21F00F41F7A /* LaunchScreen.storyboard in Resources */,
+				22CB5BE41D34F21F00F41F7A /* Assets.xcassets in Resources */,
+				22CB5BE21D34F21F00F41F7A /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		22CB5BD51D34F21F00F41F7A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2201FF381D35090E002A80E7 /* ColojiViewController.swift in Sources */,
+				22CB5BF11D34F2D400F41F7A /* Coloji.swift in Sources */,
+				22CB5BDD1D34F21F00F41F7A /* AppDelegate.swift in Sources */,
+				2299AB471D363D0A000A4912 /* ColojiDataStore.swift in Sources */,
+				22CB5BEF1D34F27B00F41F7A /* ColojiTableViewController.swift in Sources */,
+				2299AB491D364813000A4912 /* ColojiTableViewCell.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		22CB5BE01D34F21F00F41F7A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				22CB5BE11D34F21F00F41F7A /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		22CB5BE51D34F21F00F41F7A /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				22CB5BE61D34F21F00F41F7A /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		22CB5BE91D34F21F00F41F7A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		22CB5BEA1D34F21F00F41F7A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		22CB5BEC1D34F21F00F41F7A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Coloji/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.Coloji;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
+			};
+			name = Debug;
+		};
+		22CB5BED1D34F21F00F41F7A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Coloji/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.Coloji;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		22CB5BD41D34F21F00F41F7A /* Build configuration list for PBXProject "Coloji" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				22CB5BE91D34F21F00F41F7A /* Debug */,
+				22CB5BEA1D34F21F00F41F7A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		22CB5BEB1D34F21F00F41F7A /* Build configuration list for PBXNativeTarget "Coloji" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				22CB5BEC1D34F21F00F41F7A /* Debug */,
+				22CB5BED1D34F21F00F41F7A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 22CB5BD11D34F21F00F41F7A /* Project object */;
+}

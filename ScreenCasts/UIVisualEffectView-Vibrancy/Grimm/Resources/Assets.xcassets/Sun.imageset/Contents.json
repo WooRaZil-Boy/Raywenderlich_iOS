@@ -1,0 +1,28 @@
+{
+  "images" : [
+    {
+      "idiom" : "universal",
+      "filename" : "sun-icon.pdf"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "1x",
+      "filename" : "Sun.png"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x",
+      "filename" : "Sun@2x.png"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x",
+      "filename" : "sun-icon@3x.png"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode",
+    "template-rendering-intent" : "template"
+  }
+}

@@ -1,0 +1,656 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FA206DC01FCA6310004E35EA /* Frederick and Catherine.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA206DBF1FCA6310004E35EA /* Frederick and Catherine.grm */; };
+		FA26237E1FF43F0000DF9094 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA26237D1FF43F0000DF9094 /* LaunchScreen.xib */; };
+		FA4FD3901FC28A4B00CF6B5C /* StoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4FD38F1FC28A4B00CF6B5C /* StoryViewController.swift */; };
+		FA4FD3921FC28C2B00CF6B5C /* StoryListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4FD3911FC28C2B00CF6B5C /* StoryListController.swift */; };
+		FA4FD3941FC28EC700CF6B5C /* OptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4FD3931FC28EC700CF6B5C /* OptionsController.swift */; };
+		FA4FD3961FC28F9700CF6B5C /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4FD3951FC28F9700CF6B5C /* Colors.swift */; };
+		FA4FD39C1FC2905B00CF6B5C /* StoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4FD39B1FC2905B00CF6B5C /* StoryView.swift */; };
+		FA4FD39E1FC2905F00CF6B5C /* StoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4FD39D1FC2905F00CF6B5C /* StoryCell.swift */; };
+		FA4FD3A01FC2906300CF6B5C /* OptionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD39F1FC2906300CF6B5C /* OptionsView.xib */; };
+		FA4FD3A21FC2941600CF6B5C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD3A11FC2941600CF6B5C /* Assets.xcassets */; };
+		FA4FD3AD1FC296CA00CF6B5C /* SIL Open Font License.txt in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD3AA1FC296CA00CF6B5C /* SIL Open Font License.txt */; };
+		FA4FD3AE1FC296CA00CF6B5C /* FiraSans-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD3AB1FC296CA00CF6B5C /* FiraSans-Regular.otf */; };
+		FA4FD3AF1FC296CA00CF6B5C /* FiraSans-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD3AC1FC296CA00CF6B5C /* FiraSans-SemiBold.otf */; };
+		FA4FD3B81FC2970F00CF6B5C /* NotoSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD3B51FC2970F00CF6B5C /* NotoSans-Bold.ttf */; };
+		FA4FD3B91FC2970F00CF6B5C /* NotoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD3B61FC2970F00CF6B5C /* NotoSans-Regular.ttf */; };
+		FA4FD3BD1FC2971500CF6B5C /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD3BA1FC2971500CF6B5C /* OpenSans-Semibold.ttf */; };
+		FA4FD3BE1FC2971500CF6B5C /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD3BB1FC2971500CF6B5C /* OpenSans-Regular.ttf */; };
+		FA4FD3BF1FC2971500CF6B5C /* Apache License.txt in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD3BC1FC2971500CF6B5C /* Apache License.txt */; };
+		FA4FD3C31FC2971A00CF6B5C /* PTS55F.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD3C01FC2971A00CF6B5C /* PTS55F.ttf */; };
+		FA4FD3C41FC2971A00CF6B5C /* Paratype PT Sans Free Font License.txt in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD3C11FC2971A00CF6B5C /* Paratype PT Sans Free Font License.txt */; };
+		FA4FD3C51FC2971A00CF6B5C /* PTS75F.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD3C21FC2971A00CF6B5C /* PTS75F.ttf */; };
+		FA4FD3C91FC2972000CF6B5C /* SourceSansPro-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD3C61FC2972000CF6B5C /* SourceSansPro-Regular.otf */; };
+		FA4FD3CA1FC2972000CF6B5C /* SourceSansPro-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD3C71FC2972000CF6B5C /* SourceSansPro-Semibold.otf */; };
+		FA4FD46C1FC2977E00CF6B5C /* The Water of Life.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD4481FC2977B00CF6B5C /* The Water of Life.grm */; };
+		FA4FD46D1FC2977E00CF6B5C /* Jorinda And Jorindel.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD4491FC2977B00CF6B5C /* Jorinda And Jorindel.grm */; };
+		FA4FD46E1FC2977E00CF6B5C /* The Miser In The Bush.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD44A1FC2977B00CF6B5C /* The Miser In The Bush.grm */; };
+		FA4FD46F1FC2977E00CF6B5C /* Tom Thumb.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD44B1FC2977B00CF6B5C /* Tom Thumb.grm */; };
+		FA4FD4701FC2977E00CF6B5C /* Hans In Luck.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD44C1FC2977B00CF6B5C /* Hans In Luck.grm */; };
+		FA4FD4711FC2977E00CF6B5C /* The Dog and The Sparrow.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD44D1FC2977B00CF6B5C /* The Dog and The Sparrow.grm */; };
+		FA4FD4721FC2977E00CF6B5C /* Lily and The Lion.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD44E1FC2977B00CF6B5C /* Lily and The Lion.grm */; };
+		FA4FD4731FC2977E00CF6B5C /* Snow White and Rose Red.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD44F1FC2977B00CF6B5C /* Snow White and Rose Red.grm */; };
+		FA4FD4751FC2977E00CF6B5C /* The Adventures of Chanticleer and Partlet.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD4511FC2977B00CF6B5C /* The Adventures of Chanticleer and Partlet.grm */; };
+		FA4FD4761FC2977E00CF6B5C /* King Grisly-Beard.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD4521FC2977C00CF6B5C /* King Grisly-Beard.grm */; };
+		FA4FD4771FC2977E00CF6B5C /* The Little Peasant.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD4531FC2977C00CF6B5C /* The Little Peasant.grm */; };
+		FA4FD4781FC2977E00CF6B5C /* Rapunzel.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD4541FC2977C00CF6B5C /* Rapunzel.grm */; };
+		FA4FD4791FC2977E00CF6B5C /* The Goose Girl.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD4551FC2977C00CF6B5C /* The Goose Girl.grm */; };
+		FA4FD47A1FC2977E00CF6B5C /* The Raven.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD4561FC2977C00CF6B5C /* The Raven.grm */; };
+		FA4FD47B1FC2977E00CF6B5C /* The Blue Light.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD4571FC2977C00CF6B5C /* The Blue Light.grm */; };
+		FA4FD47C1FC2977E00CF6B5C /* The White Snake.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD4581FC2977C00CF6B5C /* The White Snake.grm */; };
+		FA4FD47D1FC2977E00CF6B5C /* The Mouse, The Bird, and The Sausage.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD4591FC2977C00CF6B5C /* The Mouse, The Bird, and The Sausage.grm */; };
+		FA4FD47E1FC2977E00CF6B5C /* The Robber Bridegroom.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD45A1FC2977C00CF6B5C /* The Robber Bridegroom.grm */; };
+		FA4FD47F1FC2977E00CF6B5C /* Hansel and Gretel.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD45B1FC2977C00CF6B5C /* Hansel and Gretel.grm */; };
+		FA4FD4811FC2977E00CF6B5C /* The Juniper Tree.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD45D1FC2977C00CF6B5C /* The Juniper Tree.grm */; };
+		FA4FD4821FC2977E00CF6B5C /* The Golden Goose.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD45E1FC2977C00CF6B5C /* The Golden Goose.grm */; };
+		FA4FD4831FC2977E00CF6B5C /* Fundevogel.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD45F1FC2977C00CF6B5C /* Fundevogel.grm */; };
+		FA4FD4841FC2977E00CF6B5C /* Iron Hans.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD4601FC2977C00CF6B5C /* Iron Hans.grm */; };
+		FA4FD4851FC2977E00CF6B5C /* The Four Clever Brothers.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD4611FC2977C00CF6B5C /* The Four Clever Brothers.grm */; };
+		FA4FD4861FC2977E00CF6B5C /* Doctor Knowall.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD4621FC2977D00CF6B5C /* Doctor Knowall.grm */; };
+		FA4FD4871FC2977E00CF6B5C /* The Three Languages.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD4631FC2977D00CF6B5C /* The Three Languages.grm */; };
+		FA4FD4881FC2977E00CF6B5C /* The Fox and The Horse.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD4641FC2977D00CF6B5C /* The Fox and The Horse.grm */; };
+		FA4FD4891FC2977E00CF6B5C /* The Wolf and The Seven Little Kids.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD4651FC2977D00CF6B5C /* The Wolf and The Seven Little Kids.grm */; };
+		FA4FD48A1FC2977E00CF6B5C /* Clever Hans.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD4661FC2977D00CF6B5C /* Clever Hans.grm */; };
+		FA4FD48B1FC2977E00CF6B5C /* Old Sultan.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD4671FC2977D00CF6B5C /* Old Sultan.grm */; };
+		FA4FD48C1FC2977E00CF6B5C /* The Travelling Musicians.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD4681FC2977D00CF6B5C /* The Travelling Musicians.grm */; };
+		FA4FD48D1FC2977E00CF6B5C /* The Willow Wren and The Bear.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD4691FC2977D00CF6B5C /* The Willow Wren and The Bear.grm */; };
+		FA4FD48E1FC2977E00CF6B5C /* Briar Rose.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD46A1FC2977D00CF6B5C /* Briar Rose.grm */; };
+		FA4FD48F1FC2977E00CF6B5C /* The Pink.grm in Resources */ = {isa = PBXBuildFile; fileRef = FA4FD46B1FC2977D00CF6B5C /* The Pink.grm */; };
+		FA7B5E931FC23A9300EC0FF4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7B5E921FC23A9300EC0FF4 /* AppDelegate.swift */; };
+		FA7B5E981FC23A9300EC0FF4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA7B5E961FC23A9300EC0FF4 /* Main.storyboard */; };
+		FA7B5EAD1FC23C6000EC0FF4 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7B5EAC1FC23C6000EC0FF4 /* Theme.swift */; };
+		FA7B5EAF1FC2409B00EC0FF4 /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7B5EAE1FC2409B00EC0FF4 /* Story.swift */; };
+		FA7B5EB11FC2474100EC0FF4 /* ThemedNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7B5EB01FC2474100EC0FF4 /* ThemedNavigationController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		FA206DBF1FCA6310004E35EA /* Frederick and Catherine.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Frederick and Catherine.grm"; sourceTree = "<group>"; };
+		FA26237D1FF43F0000DF9094 /* LaunchScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		FA4FD38F1FC28A4B00CF6B5C /* StoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryViewController.swift; sourceTree = "<group>"; };
+		FA4FD3911FC28C2B00CF6B5C /* StoryListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListController.swift; sourceTree = "<group>"; };
+		FA4FD3931FC28EC700CF6B5C /* OptionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsController.swift; sourceTree = "<group>"; };
+		FA4FD3951FC28F9700CF6B5C /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		FA4FD39B1FC2905B00CF6B5C /* StoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryView.swift; sourceTree = "<group>"; };
+		FA4FD39D1FC2905F00CF6B5C /* StoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryCell.swift; sourceTree = "<group>"; };
+		FA4FD39F1FC2906300CF6B5C /* OptionsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OptionsView.xib; sourceTree = "<group>"; };
+		FA4FD3A11FC2941600CF6B5C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FA4FD3AA1FC296CA00CF6B5C /* SIL Open Font License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SIL Open Font License.txt"; sourceTree = "<group>"; };
+		FA4FD3AB1FC296CA00CF6B5C /* FiraSans-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FiraSans-Regular.otf"; sourceTree = "<group>"; };
+		FA4FD3AC1FC296CA00CF6B5C /* FiraSans-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FiraSans-SemiBold.otf"; sourceTree = "<group>"; };
+		FA4FD3B41FC2970F00CF6B5C /* Apache License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Apache License.txt"; sourceTree = "<group>"; };
+		FA4FD3B51FC2970F00CF6B5C /* NotoSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSans-Bold.ttf"; sourceTree = "<group>"; };
+		FA4FD3B61FC2970F00CF6B5C /* NotoSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSans-Regular.ttf"; sourceTree = "<group>"; };
+		FA4FD3BA1FC2971500CF6B5C /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
+		FA4FD3BB1FC2971500CF6B5C /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
+		FA4FD3BC1FC2971500CF6B5C /* Apache License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Apache License.txt"; sourceTree = "<group>"; };
+		FA4FD3C01FC2971A00CF6B5C /* PTS55F.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PTS55F.ttf; sourceTree = "<group>"; };
+		FA4FD3C11FC2971A00CF6B5C /* Paratype PT Sans Free Font License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Paratype PT Sans Free Font License.txt"; sourceTree = "<group>"; };
+		FA4FD3C21FC2971A00CF6B5C /* PTS75F.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PTS75F.ttf; sourceTree = "<group>"; };
+		FA4FD3C61FC2972000CF6B5C /* SourceSansPro-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Regular.otf"; sourceTree = "<group>"; };
+		FA4FD3C71FC2972000CF6B5C /* SourceSansPro-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Semibold.otf"; sourceTree = "<group>"; };
+		FA4FD3C81FC2972000CF6B5C /* SIL Open Font License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SIL Open Font License.txt"; sourceTree = "<group>"; };
+		FA4FD4481FC2977B00CF6B5C /* The Water of Life.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The Water of Life.grm"; sourceTree = "<group>"; };
+		FA4FD4491FC2977B00CF6B5C /* Jorinda And Jorindel.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Jorinda And Jorindel.grm"; sourceTree = "<group>"; };
+		FA4FD44A1FC2977B00CF6B5C /* The Miser In The Bush.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The Miser In The Bush.grm"; sourceTree = "<group>"; };
+		FA4FD44B1FC2977B00CF6B5C /* Tom Thumb.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Tom Thumb.grm"; sourceTree = "<group>"; };
+		FA4FD44C1FC2977B00CF6B5C /* Hans In Luck.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Hans In Luck.grm"; sourceTree = "<group>"; };
+		FA4FD44D1FC2977B00CF6B5C /* The Dog and The Sparrow.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The Dog and The Sparrow.grm"; sourceTree = "<group>"; };
+		FA4FD44E1FC2977B00CF6B5C /* Lily and The Lion.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Lily and The Lion.grm"; sourceTree = "<group>"; };
+		FA4FD44F1FC2977B00CF6B5C /* Snow White and Rose Red.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Snow White and Rose Red.grm"; sourceTree = "<group>"; };
+		FA4FD4511FC2977B00CF6B5C /* The Adventures of Chanticleer and Partlet.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The Adventures of Chanticleer and Partlet.grm"; sourceTree = "<group>"; };
+		FA4FD4521FC2977C00CF6B5C /* King Grisly-Beard.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "King Grisly-Beard.grm"; sourceTree = "<group>"; };
+		FA4FD4531FC2977C00CF6B5C /* The Little Peasant.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The Little Peasant.grm"; sourceTree = "<group>"; };
+		FA4FD4541FC2977C00CF6B5C /* Rapunzel.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Rapunzel.grm; sourceTree = "<group>"; };
+		FA4FD4551FC2977C00CF6B5C /* The Goose Girl.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The Goose Girl.grm"; sourceTree = "<group>"; };
+		FA4FD4561FC2977C00CF6B5C /* The Raven.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The Raven.grm"; sourceTree = "<group>"; };
+		FA4FD4571FC2977C00CF6B5C /* The Blue Light.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The Blue Light.grm"; sourceTree = "<group>"; };
+		FA4FD4581FC2977C00CF6B5C /* The White Snake.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The White Snake.grm"; sourceTree = "<group>"; };
+		FA4FD4591FC2977C00CF6B5C /* The Mouse, The Bird, and The Sausage.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The Mouse, The Bird, and The Sausage.grm"; sourceTree = "<group>"; };
+		FA4FD45A1FC2977C00CF6B5C /* The Robber Bridegroom.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The Robber Bridegroom.grm"; sourceTree = "<group>"; };
+		FA4FD45B1FC2977C00CF6B5C /* Hansel and Gretel.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Hansel and Gretel.grm"; sourceTree = "<group>"; };
+		FA4FD45D1FC2977C00CF6B5C /* The Juniper Tree.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The Juniper Tree.grm"; sourceTree = "<group>"; };
+		FA4FD45E1FC2977C00CF6B5C /* The Golden Goose.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The Golden Goose.grm"; sourceTree = "<group>"; };
+		FA4FD45F1FC2977C00CF6B5C /* Fundevogel.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Fundevogel.grm; sourceTree = "<group>"; };
+		FA4FD4601FC2977C00CF6B5C /* Iron Hans.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Iron Hans.grm"; sourceTree = "<group>"; };
+		FA4FD4611FC2977C00CF6B5C /* The Four Clever Brothers.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The Four Clever Brothers.grm"; sourceTree = "<group>"; };
+		FA4FD4621FC2977D00CF6B5C /* Doctor Knowall.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Doctor Knowall.grm"; sourceTree = "<group>"; };
+		FA4FD4631FC2977D00CF6B5C /* The Three Languages.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The Three Languages.grm"; sourceTree = "<group>"; };
+		FA4FD4641FC2977D00CF6B5C /* The Fox and The Horse.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The Fox and The Horse.grm"; sourceTree = "<group>"; };
+		FA4FD4651FC2977D00CF6B5C /* The Wolf and The Seven Little Kids.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The Wolf and The Seven Little Kids.grm"; sourceTree = "<group>"; };
+		FA4FD4661FC2977D00CF6B5C /* Clever Hans.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Clever Hans.grm"; sourceTree = "<group>"; };
+		FA4FD4671FC2977D00CF6B5C /* Old Sultan.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Old Sultan.grm"; sourceTree = "<group>"; };
+		FA4FD4681FC2977D00CF6B5C /* The Travelling Musicians.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The Travelling Musicians.grm"; sourceTree = "<group>"; };
+		FA4FD4691FC2977D00CF6B5C /* The Willow Wren and The Bear.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The Willow Wren and The Bear.grm"; sourceTree = "<group>"; };
+		FA4FD46A1FC2977D00CF6B5C /* Briar Rose.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Briar Rose.grm"; sourceTree = "<group>"; };
+		FA4FD46B1FC2977D00CF6B5C /* The Pink.grm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The Pink.grm"; sourceTree = "<group>"; };
+		FA7B5E8F1FC23A9300EC0FF4 /* Grimm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Grimm.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA7B5E921FC23A9300EC0FF4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		FA7B5E971FC23A9300EC0FF4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FA7B5E9E1FC23A9300EC0FF4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA7B5EAC1FC23C6000EC0FF4 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		FA7B5EAE1FC2409B00EC0FF4 /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
+		FA7B5EB01FC2474100EC0FF4 /* ThemedNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemedNavigationController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FA7B5E8C1FC23A9300EC0FF4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FA4FD3A81FC296BA00CF6B5C /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				FA4FD3A91FC296BE00CF6B5C /* Fira Sans */,
+				FA4FD3B01FC296D300CF6B5C /* Noto Sans */,
+				FA4FD3B11FC296E600CF6B5C /* Open Sans */,
+				FA4FD3B21FC296EB00CF6B5C /* PT Sans */,
+				FA4FD3B31FC296F100CF6B5C /* Source Sans Pro */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		FA4FD3A91FC296BE00CF6B5C /* Fira Sans */ = {
+			isa = PBXGroup;
+			children = (
+				FA4FD3AB1FC296CA00CF6B5C /* FiraSans-Regular.otf */,
+				FA4FD3AC1FC296CA00CF6B5C /* FiraSans-SemiBold.otf */,
+				FA4FD3AA1FC296CA00CF6B5C /* SIL Open Font License.txt */,
+			);
+			path = "Fira Sans";
+			sourceTree = "<group>";
+		};
+		FA4FD3B01FC296D300CF6B5C /* Noto Sans */ = {
+			isa = PBXGroup;
+			children = (
+				FA4FD3B41FC2970F00CF6B5C /* Apache License.txt */,
+				FA4FD3B51FC2970F00CF6B5C /* NotoSans-Bold.ttf */,
+				FA4FD3B61FC2970F00CF6B5C /* NotoSans-Regular.ttf */,
+			);
+			path = "Noto Sans";
+			sourceTree = "<group>";
+		};
+		FA4FD3B11FC296E600CF6B5C /* Open Sans */ = {
+			isa = PBXGroup;
+			children = (
+				FA4FD3BC1FC2971500CF6B5C /* Apache License.txt */,
+				FA4FD3BB1FC2971500CF6B5C /* OpenSans-Regular.ttf */,
+				FA4FD3BA1FC2971500CF6B5C /* OpenSans-Semibold.ttf */,
+			);
+			path = "Open Sans";
+			sourceTree = "<group>";
+		};
+		FA4FD3B21FC296EB00CF6B5C /* PT Sans */ = {
+			isa = PBXGroup;
+			children = (
+				FA4FD3C11FC2971A00CF6B5C /* Paratype PT Sans Free Font License.txt */,
+				FA4FD3C01FC2971A00CF6B5C /* PTS55F.ttf */,
+				FA4FD3C21FC2971A00CF6B5C /* PTS75F.ttf */,
+			);
+			path = "PT Sans";
+			sourceTree = "<group>";
+		};
+		FA4FD3B31FC296F100CF6B5C /* Source Sans Pro */ = {
+			isa = PBXGroup;
+			children = (
+				FA4FD3C81FC2972000CF6B5C /* SIL Open Font License.txt */,
+				FA4FD3C61FC2972000CF6B5C /* SourceSansPro-Regular.otf */,
+				FA4FD3C71FC2972000CF6B5C /* SourceSansPro-Semibold.otf */,
+			);
+			path = "Source Sans Pro";
+			sourceTree = "<group>";
+		};
+		FA4FD4471FC2975A00CF6B5C /* Stories */ = {
+			isa = PBXGroup;
+			children = (
+				FA4FD46A1FC2977D00CF6B5C /* Briar Rose.grm */,
+				FA4FD4661FC2977D00CF6B5C /* Clever Hans.grm */,
+				FA4FD4621FC2977D00CF6B5C /* Doctor Knowall.grm */,
+				FA206DBF1FCA6310004E35EA /* Frederick and Catherine.grm */,
+				FA4FD45F1FC2977C00CF6B5C /* Fundevogel.grm */,
+				FA4FD44C1FC2977B00CF6B5C /* Hans In Luck.grm */,
+				FA4FD45B1FC2977C00CF6B5C /* Hansel and Gretel.grm */,
+				FA4FD4601FC2977C00CF6B5C /* Iron Hans.grm */,
+				FA4FD4491FC2977B00CF6B5C /* Jorinda And Jorindel.grm */,
+				FA4FD4521FC2977C00CF6B5C /* King Grisly-Beard.grm */,
+				FA4FD44E1FC2977B00CF6B5C /* Lily and The Lion.grm */,
+				FA4FD4671FC2977D00CF6B5C /* Old Sultan.grm */,
+				FA4FD4541FC2977C00CF6B5C /* Rapunzel.grm */,
+				FA4FD44F1FC2977B00CF6B5C /* Snow White and Rose Red.grm */,
+				FA4FD4511FC2977B00CF6B5C /* The Adventures of Chanticleer and Partlet.grm */,
+				FA4FD4571FC2977C00CF6B5C /* The Blue Light.grm */,
+				FA4FD44D1FC2977B00CF6B5C /* The Dog and The Sparrow.grm */,
+				FA4FD4611FC2977C00CF6B5C /* The Four Clever Brothers.grm */,
+				FA4FD4641FC2977D00CF6B5C /* The Fox and The Horse.grm */,
+				FA4FD45E1FC2977C00CF6B5C /* The Golden Goose.grm */,
+				FA4FD4551FC2977C00CF6B5C /* The Goose Girl.grm */,
+				FA4FD45D1FC2977C00CF6B5C /* The Juniper Tree.grm */,
+				FA4FD4531FC2977C00CF6B5C /* The Little Peasant.grm */,
+				FA4FD44A1FC2977B00CF6B5C /* The Miser In The Bush.grm */,
+				FA4FD4591FC2977C00CF6B5C /* The Mouse, The Bird, and The Sausage.grm */,
+				FA4FD46B1FC2977D00CF6B5C /* The Pink.grm */,
+				FA4FD4561FC2977C00CF6B5C /* The Raven.grm */,
+				FA4FD45A1FC2977C00CF6B5C /* The Robber Bridegroom.grm */,
+				FA4FD4631FC2977D00CF6B5C /* The Three Languages.grm */,
+				FA4FD4681FC2977D00CF6B5C /* The Travelling Musicians.grm */,
+				FA4FD4481FC2977B00CF6B5C /* The Water of Life.grm */,
+				FA4FD4581FC2977C00CF6B5C /* The White Snake.grm */,
+				FA4FD4691FC2977D00CF6B5C /* The Willow Wren and The Bear.grm */,
+				FA4FD4651FC2977D00CF6B5C /* The Wolf and The Seven Little Kids.grm */,
+				FA4FD44B1FC2977B00CF6B5C /* Tom Thumb.grm */,
+			);
+			path = Stories;
+			sourceTree = "<group>";
+		};
+		FA7B5E861FC23A9300EC0FF4 = {
+			isa = PBXGroup;
+			children = (
+				FA7B5E911FC23A9300EC0FF4 /* Grimm */,
+				FA7B5E901FC23A9300EC0FF4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FA7B5E901FC23A9300EC0FF4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FA7B5E8F1FC23A9300EC0FF4 /* Grimm.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FA7B5E911FC23A9300EC0FF4 /* Grimm */ = {
+			isa = PBXGroup;
+			children = (
+				FA7B5E921FC23A9300EC0FF4 /* AppDelegate.swift */,
+				FA4FD3931FC28EC700CF6B5C /* OptionsController.swift */,
+				FA4FD3911FC28C2B00CF6B5C /* StoryListController.swift */,
+				FA4FD38F1FC28A4B00CF6B5C /* StoryViewController.swift */,
+				FA7B5EB01FC2474100EC0FF4 /* ThemedNavigationController.swift */,
+				FA4FD39D1FC2905F00CF6B5C /* StoryCell.swift */,
+				FA4FD39B1FC2905B00CF6B5C /* StoryView.swift */,
+				FA4FD39F1FC2906300CF6B5C /* OptionsView.xib */,
+				FA7B5EA51FC23BDA00EC0FF4 /* Extensions */,
+				FA7B5EA81FC23BF200EC0FF4 /* Resources */,
+				FA7B5EA71FC23BEB00EC0FF4 /* Models */,
+				FA7B5EA91FC23BF700EC0FF4 /* Interface Builder */,
+				FA7B5EAA1FC23BFD00EC0FF4 /* Supporting Files */,
+			);
+			path = Grimm;
+			sourceTree = "<group>";
+		};
+		FA7B5EA51FC23BDA00EC0FF4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FA4FD3951FC28F9700CF6B5C /* Colors.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		FA7B5EA71FC23BEB00EC0FF4 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FA7B5EAC1FC23C6000EC0FF4 /* Theme.swift */,
+				FA7B5EAE1FC2409B00EC0FF4 /* Story.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		FA7B5EA81FC23BF200EC0FF4 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FA4FD4471FC2975A00CF6B5C /* Stories */,
+				FA4FD3A81FC296BA00CF6B5C /* Fonts */,
+				FA4FD3A11FC2941600CF6B5C /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		FA7B5EA91FC23BF700EC0FF4 /* Interface Builder */ = {
+			isa = PBXGroup;
+			children = (
+				FA7B5E961FC23A9300EC0FF4 /* Main.storyboard */,
+				FA26237D1FF43F0000DF9094 /* LaunchScreen.xib */,
+			);
+			path = "Interface Builder";
+			sourceTree = "<group>";
+		};
+		FA7B5EAA1FC23BFD00EC0FF4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FA7B5E9E1FC23A9300EC0FF4 /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FA7B5E8E1FC23A9300EC0FF4 /* Grimm */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA7B5EA11FC23A9300EC0FF4 /* Build configuration list for PBXNativeTarget "Grimm" */;
+			buildPhases = (
+				FA7B5E8B1FC23A9300EC0FF4 /* Sources */,
+				FA7B5E8C1FC23A9300EC0FF4 /* Frameworks */,
+				FA7B5E8D1FC23A9300EC0FF4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Grimm;
+			productName = Grimm;
+			productReference = FA7B5E8F1FC23A9300EC0FF4 /* Grimm.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FA7B5E871FC23A9300EC0FF4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0910;
+				LastUpgradeCheck = 1000;
+				ORGANIZATIONNAME = "Ray Wenderlich";
+				TargetAttributes = {
+					FA7B5E8E1FC23A9300EC0FF4 = {
+						CreatedOnToolsVersion = 9.1;
+						LastSwiftMigration = 1000;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = FA7B5E8A1FC23A9300EC0FF4 /* Build configuration list for PBXProject "Grimm" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FA7B5E861FC23A9300EC0FF4;
+			productRefGroup = FA7B5E901FC23A9300EC0FF4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FA7B5E8E1FC23A9300EC0FF4 /* Grimm */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FA7B5E8D1FC23A9300EC0FF4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA4FD4851FC2977E00CF6B5C /* The Four Clever Brothers.grm in Resources */,
+				FA4FD47F1FC2977E00CF6B5C /* Hansel and Gretel.grm in Resources */,
+				FA4FD46D1FC2977E00CF6B5C /* Jorinda And Jorindel.grm in Resources */,
+				FA4FD4761FC2977E00CF6B5C /* King Grisly-Beard.grm in Resources */,
+				FA4FD4871FC2977E00CF6B5C /* The Three Languages.grm in Resources */,
+				FA4FD3B91FC2970F00CF6B5C /* NotoSans-Regular.ttf in Resources */,
+				FA4FD3AD1FC296CA00CF6B5C /* SIL Open Font License.txt in Resources */,
+				FA4FD47B1FC2977E00CF6B5C /* The Blue Light.grm in Resources */,
+				FA4FD47D1FC2977E00CF6B5C /* The Mouse, The Bird, and The Sausage.grm in Resources */,
+				FA4FD4751FC2977E00CF6B5C /* The Adventures of Chanticleer and Partlet.grm in Resources */,
+				FA4FD47A1FC2977E00CF6B5C /* The Raven.grm in Resources */,
+				FA4FD4891FC2977E00CF6B5C /* The Wolf and The Seven Little Kids.grm in Resources */,
+				FA4FD3AE1FC296CA00CF6B5C /* FiraSans-Regular.otf in Resources */,
+				FA4FD4721FC2977E00CF6B5C /* Lily and The Lion.grm in Resources */,
+				FA4FD4771FC2977E00CF6B5C /* The Little Peasant.grm in Resources */,
+				FA4FD3BD1FC2971500CF6B5C /* OpenSans-Semibold.ttf in Resources */,
+				FA4FD4811FC2977E00CF6B5C /* The Juniper Tree.grm in Resources */,
+				FA4FD3CA1FC2972000CF6B5C /* SourceSansPro-Semibold.otf in Resources */,
+				FA4FD48D1FC2977E00CF6B5C /* The Willow Wren and The Bear.grm in Resources */,
+				FA4FD3AF1FC296CA00CF6B5C /* FiraSans-SemiBold.otf in Resources */,
+				FA4FD48F1FC2977E00CF6B5C /* The Pink.grm in Resources */,
+				FA4FD47C1FC2977E00CF6B5C /* The White Snake.grm in Resources */,
+				FA4FD3C51FC2971A00CF6B5C /* PTS75F.ttf in Resources */,
+				FA4FD48B1FC2977E00CF6B5C /* Old Sultan.grm in Resources */,
+				FA4FD4791FC2977E00CF6B5C /* The Goose Girl.grm in Resources */,
+				FA4FD4711FC2977E00CF6B5C /* The Dog and The Sparrow.grm in Resources */,
+				FA4FD3C91FC2972000CF6B5C /* SourceSansPro-Regular.otf in Resources */,
+				FA4FD3B81FC2970F00CF6B5C /* NotoSans-Bold.ttf in Resources */,
+				FA4FD4781FC2977E00CF6B5C /* Rapunzel.grm in Resources */,
+				FA4FD4831FC2977E00CF6B5C /* Fundevogel.grm in Resources */,
+				FA4FD3BF1FC2971500CF6B5C /* Apache License.txt in Resources */,
+				FA4FD48E1FC2977E00CF6B5C /* Briar Rose.grm in Resources */,
+				FA4FD4821FC2977E00CF6B5C /* The Golden Goose.grm in Resources */,
+				FA4FD3C41FC2971A00CF6B5C /* Paratype PT Sans Free Font License.txt in Resources */,
+				FA4FD4881FC2977E00CF6B5C /* The Fox and The Horse.grm in Resources */,
+				FA4FD46E1FC2977E00CF6B5C /* The Miser In The Bush.grm in Resources */,
+				FA4FD48A1FC2977E00CF6B5C /* Clever Hans.grm in Resources */,
+				FA4FD4861FC2977E00CF6B5C /* Doctor Knowall.grm in Resources */,
+				FA4FD4731FC2977E00CF6B5C /* Snow White and Rose Red.grm in Resources */,
+				FA206DC01FCA6310004E35EA /* Frederick and Catherine.grm in Resources */,
+				FA4FD3A21FC2941600CF6B5C /* Assets.xcassets in Resources */,
+				FA4FD3BE1FC2971500CF6B5C /* OpenSans-Regular.ttf in Resources */,
+				FA4FD47E1FC2977E00CF6B5C /* The Robber Bridegroom.grm in Resources */,
+				FA4FD3C31FC2971A00CF6B5C /* PTS55F.ttf in Resources */,
+				FA7B5E981FC23A9300EC0FF4 /* Main.storyboard in Resources */,
+				FA4FD4701FC2977E00CF6B5C /* Hans In Luck.grm in Resources */,
+				FA4FD46C1FC2977E00CF6B5C /* The Water of Life.grm in Resources */,
+				FA4FD3A01FC2906300CF6B5C /* OptionsView.xib in Resources */,
+				FA26237E1FF43F0000DF9094 /* LaunchScreen.xib in Resources */,
+				FA4FD48C1FC2977E00CF6B5C /* The Travelling Musicians.grm in Resources */,
+				FA4FD46F1FC2977E00CF6B5C /* Tom Thumb.grm in Resources */,
+				FA4FD4841FC2977E00CF6B5C /* Iron Hans.grm in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FA7B5E8B1FC23A9300EC0FF4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA4FD39C1FC2905B00CF6B5C /* StoryView.swift in Sources */,
+				FA4FD3901FC28A4B00CF6B5C /* StoryViewController.swift in Sources */,
+				FA4FD3961FC28F9700CF6B5C /* Colors.swift in Sources */,
+				FA7B5EB11FC2474100EC0FF4 /* ThemedNavigationController.swift in Sources */,
+				FA7B5E931FC23A9300EC0FF4 /* AppDelegate.swift in Sources */,
+				FA7B5EAD1FC23C6000EC0FF4 /* Theme.swift in Sources */,
+				FA4FD3941FC28EC700CF6B5C /* OptionsController.swift in Sources */,
+				FA7B5EAF1FC2409B00EC0FF4 /* Story.swift in Sources */,
+				FA4FD39E1FC2905F00CF6B5C /* StoryCell.swift in Sources */,
+				FA4FD3921FC28C2B00CF6B5C /* StoryListController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		FA7B5E961FC23A9300EC0FF4 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA7B5E971FC23A9300EC0FF4 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FA7B5E9F1FC23A9300EC0FF4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FA7B5EA01FC23A9300EC0FF4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FA7B5EA21FC23A9300EC0FF4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = M4RRC46V96;
+				INFOPLIST_FILE = "Grimm/Supporting Files/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.raywenderlich.Grimm;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		FA7B5EA31FC23A9300EC0FF4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = M4RRC46V96;
+				INFOPLIST_FILE = "Grimm/Supporting Files/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.raywenderlich.Grimm;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FA7B5E8A1FC23A9300EC0FF4 /* Build configuration list for PBXProject "Grimm" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA7B5E9F1FC23A9300EC0FF4 /* Debug */,
+				FA7B5EA01FC23A9300EC0FF4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FA7B5EA11FC23A9300EC0FF4 /* Build configuration list for PBXNativeTarget "Grimm" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA7B5EA21FC23A9300EC0FF4 /* Debug */,
+				FA7B5EA31FC23A9300EC0FF4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FA7B5E871FC23A9300EC0FF4 /* Project object */;
+}

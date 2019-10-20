@@ -85,8 +85,8 @@ extension BetamaxAPI: TargetType { //Moya의 TargetType 구현
     }
 }
 
-let userId = "<USER ID>"
-let authToken = "<AUTH TOKEN>"
+let userId = "3cd53f80-4092-11e6-a911-07cbd6133361"
+let authToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzY2Q1M2Y4MC00MDkyLTExZTYtYTkxMS0wN2NiZDYxMzMzNjEiLCJpYXQiOjE1MjYwNjEwNTV9.o85W4lIR9SfU9AqLhqw4kaHcdIIcrLOhU5HF4x8EXWo"
 
 let provider = MoyaProvider<BetamaxAPI>(plugins: [AccessTokenPlugin(tokenClosure: authToken)]) //API 사용 //GET
 //토큰을 사용해 접속한다. BetamaxAPI가 AccessTokenAuthorizable를 구현해야 한다.

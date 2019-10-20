@@ -1,0 +1,12 @@
+ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
+CODE_SIGN_IDENTITY =
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/Alamofire-macOS" "${PODS_CONFIGURATION_BUILD_DIR}/Kingfisher-macOS" "${PODS_CONFIGURATION_BUILD_DIR}/Reachability-macOS" "${PODS_CONFIGURATION_BUILD_DIR}/Realm-macOS" "${PODS_CONFIGURATION_BUILD_DIR}/RealmSwift-macOS" "${PODS_CONFIGURATION_BUILD_DIR}/RxCocoa-macOS" "${PODS_CONFIGURATION_BUILD_DIR}/RxRealm-macOS" "${PODS_CONFIGURATION_BUILD_DIR}/RxRealmDataSources-macOS" "${PODS_CONFIGURATION_BUILD_DIR}/RxSwift-macOS" "${PODS_CONFIGURATION_BUILD_DIR}/Then-macOS" "${PODS_CONFIGURATION_BUILD_DIR}/Unbox-macOS"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/../Frameworks' '@loader_path/Frameworks'
+OTHER_CFLAGS = $(inherited) -iquote "${PODS_CONFIGURATION_BUILD_DIR}/Alamofire-macOS/Alamofire.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/Kingfisher-macOS/Kingfisher.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/Reachability-macOS/Reachability.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/Realm-macOS/Realm.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/RealmSwift-macOS/RealmSwift.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/RxCocoa-macOS/RxCocoa.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/RxRealm-macOS/RxRealm.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/RxRealmDataSources-macOS/RxRealmDataSources.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/RxSwift-macOS/RxSwift.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/Then-macOS/Then.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/Unbox-macOS/Unbox.framework/Headers"
+OTHER_LDFLAGS = $(inherited) -ObjC -framework "Alamofire" -framework "Kingfisher" -framework "Reachability" -framework "Realm" -framework "RealmSwift" -framework "RxCocoa" -framework "RxRealm" -framework "RxRealmDataSources" -framework "RxSwift" -framework "Then" -framework "Unbox"
+OTHER_SWIFT_FLAGS = $(inherited) "-D" "COCOAPODS"
+PODS_BUILD_DIR = ${BUILD_DIR}
+PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
+PODS_ROOT = ${SRCROOT}/Pods

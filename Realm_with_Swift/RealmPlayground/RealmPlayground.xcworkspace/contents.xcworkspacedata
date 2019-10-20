@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:RealmPlayground/Ch3_ObjectBasicsAndDataTypes.playground">
+   </FileRef>
+   <FileRef
+      location = "group:RealmPlayground/Ch4_SchemaRelationships.playground">
+   </FileRef>
+   <FileRef
+      location = "group:RealmPlayground/Ch5_ReadingAndWritingObjects.playground">
+   </FileRef>
+   <FileRef
+      location = "group:RealmPlayground/Ch6_NotificationsAndReactiveApps.playground">
+   </FileRef>
+   <FileRef
+      location = "group:RealmPlayground/Ch7_RealmConfigurations.playground">
+   </FileRef>
+   <FileRef
+      location = "group:RealmPlayground/Ch11_BeginningRealmMigrations.playground">
+   </FileRef>
+   <FileRef
+      location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
+</Workspace>

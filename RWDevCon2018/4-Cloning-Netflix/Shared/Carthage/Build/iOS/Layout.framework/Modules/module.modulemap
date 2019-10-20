@@ -1,0 +1,11 @@
+framework module Layout {
+  umbrella header "Layout.h"
+
+  export *
+  module * { export * }
+}
+
+module Layout.Swift {
+    header "Layout-Swift.h"
+    requires objc
+}

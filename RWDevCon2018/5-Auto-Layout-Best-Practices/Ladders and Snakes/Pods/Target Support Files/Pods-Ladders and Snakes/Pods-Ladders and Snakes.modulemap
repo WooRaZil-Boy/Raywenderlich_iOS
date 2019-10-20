@@ -1,0 +1,6 @@
+framework module Pods_Ladders_and_Snakes {
+  umbrella header "Pods-Ladders and Snakes-umbrella.h"
+
+  export *
+  module * { export * }
+}

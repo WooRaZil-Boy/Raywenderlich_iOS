@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7DA39EC4235D8EF200C2CA3D /* TimeCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA39EC3235D8EF200C2CA3D /* TimeCounter.swift */; };
 		EFEB28E3235C99980037CD84 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEB28E2235C99980037CD84 /* AppDelegate.swift */; };
 		EFEB28E5235C99980037CD84 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEB28E4235C99980037CD84 /* SceneDelegate.swift */; };
 		EFEB28E7235C99980037CD84 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEB28E6235C99980037CD84 /* ContentView.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7DA39EC3235D8EF200C2CA3D /* TimeCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCounter.swift; sourceTree = "<group>"; };
 		EFEB28DF235C99980037CD84 /* RGBullsEye.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RGBullsEye.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFEB28E2235C99980037CD84 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EFEB28E4235C99980037CD84 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 				EFEB28E2235C99980037CD84 /* AppDelegate.swift */,
 				EFEB28E4235C99980037CD84 /* SceneDelegate.swift */,
 				EFEB28E6235C99980037CD84 /* ContentView.swift */,
+				7DA39EC3235D8EF200C2CA3D /* TimeCounter.swift */,
 				EFEB28E8235C999A0037CD84 /* Assets.xcassets */,
 				EFEB28ED235C999A0037CD84 /* LaunchScreen.storyboard */,
 				EFEB28F0235C999A0037CD84 /* Info.plist */,
@@ -149,6 +152,7 @@
 				EFEB28E3235C99980037CD84 /* AppDelegate.swift in Sources */,
 				EFEB28E5235C99980037CD84 /* SceneDelegate.swift in Sources */,
 				EFEB28E7235C99980037CD84 /* ContentView.swift in Sources */,
+				7DA39EC4235D8EF200C2CA3D /* TimeCounter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

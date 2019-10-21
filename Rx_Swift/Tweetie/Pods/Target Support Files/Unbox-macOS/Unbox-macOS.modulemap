@@ -1,0 +1,6 @@
+framework module Unbox {
+  umbrella header "Unbox-macOS-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -31,7 +31,7 @@ import RealmSwift
 
 struct RealmProvider {
   struct ServerConfig {
-    static let host = "" //Realm Flatform의 인스턴스 경로
+    static let host = "refined-plastic-salad.us1.cloud.realm.io" //Realm Flatform의 인스턴스 경로
     static let user = "chatuser"
     static let password = "chatuser"
   }

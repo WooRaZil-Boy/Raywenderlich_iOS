@@ -1,0 +1,4 @@
+github "schibsted/Layout" ~> 0.6
+github "Moya/Moya"
+github "realm/realm-cocoa"
+github "rs/SDWebImage"

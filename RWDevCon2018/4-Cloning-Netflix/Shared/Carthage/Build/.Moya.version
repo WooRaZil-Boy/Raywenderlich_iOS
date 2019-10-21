@@ -1,0 +1,9 @@
+{
+  "commitish" : "299caed49cf2873ba953af6b69568ba1a3cb4c15",
+  "iOS" : [
+    {
+      "name" : "Moya",
+      "hash" : "c1ea19232c51e015bf20ae5249f254e19e68afc22aaa55ccebcc5bc2244845dc"
+    }
+  ]
+}

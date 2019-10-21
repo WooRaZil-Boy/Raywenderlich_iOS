@@ -1,0 +1,6 @@
+github "Alamofire/Alamofire" "4.6.0"
+github "antitypical/Result" "3.2.4"
+github "realm/realm-cocoa" "v3.1.1"
+github "rs/SDWebImage" "4.3.0"
+github "sammyd/Moya" "299caed49cf2873ba953af6b69568ba1a3cb4c15"
+github "schibsted/Layout" "0.6.16"

@@ -1,0 +1,45 @@
+/*
+ * Copyright (c) 2016-2017 Razeware LLC
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+import Cocoa
+import Accounts
+
+@NSApplicationMain
+class AppDelegate: NSObject, NSApplicationDelegate {
+
+  let navigator = Navigator()
+
+  func applicationDidFinishLaunching(_ aNotification: Notification) {
+    guard let splitController = NSApp.windows.first?.contentViewController as? NSSplitViewController else {
+      fatalError("Can't find content controller")
+    }
+
+    TwitterAccount.set(key: "xaT5gyi3fbiLndR82Ecz1O4Ba",
+                       secret: "q3Nxjm75aF27qx17SiuBDTU8Xt6vN92h2oE3lbps6iBRex5xtO")
+
+    let account = TwitterAccount().default
+    let list = (username: "icanzilb", slug: "RxSwift")
+
+    navigator.show(segue: .listPeople(account, list), sender: splitController)
+    navigator.show(segue: .listTimeline(account, list), sender: splitController)
+  }
+}

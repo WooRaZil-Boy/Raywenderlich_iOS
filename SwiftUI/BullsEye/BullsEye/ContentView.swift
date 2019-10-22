@@ -42,120 +42,112 @@ struct ContentView: View {
     }
     
     var body: some View {
-        NavigationView {
-            //Dart 모드로 preview 하기 위해서 NavigationView가 필요하다.
-            //NavigationLink를 사용하기 위해 NavigationView가 필요하다.
-            
-            VStack {
-                NavigationLink(destination: ViewControllerRepresentation()) {
-                    Text("Play BullsEye")
-                }.padding(.bottom)
-                
-                HStack {
-                    VStack {
-                        Color(red: rTarget, green: gTarget, blue: bTarget)
-                        //랜덤한 색상이 업데이트 된다.
-                        self.showAlert ? Text("R: \(Int(rTarget * 255.0))"
-                            + " G: \(Int(gTarget * 255.0))"
-                            + " B: \(Int(bTarget * 255.0))")
-                            : Text("Match this color")
-                        
-                        //Showing conditional views
-                        //명시적인 조건(explicit condition)에 따라 다르게 표시 된다.
-                        //showAlert이 true가 되면, 해당 Text가 자동으로 바뀐다.
-                        //선언형으로 구현되었기 때문에, 따로 메서드를 작성해 줄 필요 없이
-                        //showAlert의 state가 변경되면 자동으로 동기화 된다.
-                    }
+        //Dart 모드로 preview 하기 위해서 NavigationView가 필요하다.
+        VStack {
+            HStack {
+                VStack {
+                    Color(red: rTarget, green: gTarget, blue: bTarget)
+                    //랜덤한 색상이 업데이트 된다.
+                    self.showAlert ? Text("R: \(Int(rTarget * 255.0))"
+                        + " G: \(Int(gTarget * 255.0))"
+                        + " B: \(Int(bTarget * 255.0))")
+                        : Text("Match this color")
                     
-                    VStack {
-                        ZStack(alignment: .center) {
-                            //Text가 중앙에 오도록 정렬
-                            Color(red: rGuess, green: gGuess, blue: bGuess)
-                            Text(String(timer.counter))
-                                //타이머가 매초마다 counter를 업데이트 하며, UI도 업데이트 된다.
-                                .padding(.all, 5)
-                                .background(Color.white)
-                                .mask(Circle())
-                                .foregroundColor(.black)
-                                //Dark mode에서는 흰색이 기본이 되어 배경색에 가려지기 때문에 지정해 준다.
-                            //Using ZStack
-                            //Color 위에 Text를 추가하는데, 이러한 경우에는 ZStack을 사용할 수 있다.
-                            //Command-click을 선택해도, Embed in ZStack은 없다.
-                            //Hstack이나, VStack을 선택하고, Z로 바꿔주면 된다.
-                            //ZStack은 화면의 수직인 Stack이다. 순서에 신경 써줘야 한다.
-                        }
-                        
-                        
-                        Text("R: \(Int(rGuess * 255.0))"
-                            + " G: \(Int(gGuess * 255.0))"
-                            + " B: \(Int(bGuess * 255.0))")
-                        //여기에서는 Guess 값을 read-only 로 사용하고,
-                        //값을 직접 변경하지 않으므로 $ 접두사가 필요하지 않다.
-                    }
+                    //Showing conditional views
+                    //명시적인 조건(explicit condition)에 따라 다르게 표시 된다.
+                    //showAlert이 true가 되면, 해당 Text가 자동으로 바뀐다.
+                    //선언형으로 구현되었기 때문에, 따로 메서드를 작성해 줄 필요 없이
+                    //showAlert의 state가 변경되면 자동으로 동기화 된다.
                 }
                 
-                Button(action: {
-                    self.timer.killTimer() //timer 삭제
-                    self.showAlert = true
-                    //클로저 내부 이므로, self 를 사용해야 한다.
-                }) {
-                    //Button은 UIButton과 마찬가지로 Action과 Label이 있다.
-                    //하지만, Button action에서 Alert을 만들면 실행이 되지 않는다.
-                    //대신 ContentView의 subView 중 하나로 Alert을 작성해야 한다.
-                    //Bool 타입의 @State 변수를 추가해 해당 변수가 true가 될 때 Alert을 호출한다.
-                    Text("Hit Me!")
-                }.alert(isPresented: $showAlert) {
-                    Alert(title: Text("Your Score"), message: Text(String(computeScore())))
-                    //Alert에는 기본 OK 버튼이 포함되어 있다.
-                }.padding() //패딩 추가
-                
-                
-                
-                
-                //Creating the button and slider
-                //Library 를 계속 활성화 시켜 놓으려면, + 버튼을 Option-click 하면 된다.
-                //Button을 Canvas 영역에 Drag and drop 해도 되지만, 코드 영역에 적용할 수도 있다.
-                //Slider도 같은 방법으로 추가한다.
-                
                 VStack {
-                    ColorSlider(value: $rGuess, textColor: UIColor.red)
-                    ColorSlider(value: $gGuess, textColor: UIColor.green)
-                    ColorSlider(value: $bGuess, textColor: UIColor.blue)
-                }.padding(.horizontal)
-                //재사용 가능한 View로 대체한다.
-                
-                //Modifying reusable views
-                //Command-click, Embed in VStack를 선택해 처리할 수 있다.
-                //Canvas가 있어야 Embed in VStack 메뉴가 활성화된다.
-                
-                //padding()은 모든 View에 적용할 수 있는 modifier 이다.
-                //3개의 Slider의 padding을 한 번에 처리 할 수 있다.
+                    ZStack(alignment: .center) {
+                        //Text가 중앙에 오도록 정렬
+                        Color(red: rGuess, green: gGuess, blue: bGuess)
+                        Text(String(timer.counter))
+                            //타이머가 매초마다 counter를 업데이트 하며, UI도 업데이트 된다.
+                            .padding(.all, 5)
+                            .background(Color.white)
+                            .mask(Circle())
+                            .foregroundColor(.black)
+                            //Dark mode에서는 흰색이 기본이 되어 배경색에 가려지기 때문에 지정해 준다.
+                        //Using ZStack
+                        //Color 위에 Text를 추가하는데, 이러한 경우에는 ZStack을 사용할 수 있다.
+                        //Command-click을 선택해도, Embed in ZStack은 없다.
+                        //Hstack이나, VStack을 선택하고, Z로 바꿔주면 된다.
+                        //ZStack은 화면의 수직인 Stack이다. 순서에 신경 써줘야 한다.
+                    }
+                    
+                    
+                    Text("R: \(Int(rGuess * 255.0))"
+                        + " G: \(Int(gGuess * 255.0))"
+                        + " B: \(Int(bGuess * 255.0))")
+                    //여기에서는 Guess 값을 read-only 로 사용하고,
+                    //값을 직접 변경하지 않으므로 $ 접두사가 필요하지 않다.
+                }
             }
-
             
-            //Creating the target color block
-            //Text를 Command-click 하면, 해당 부분이 선택되면서, 추가 메뉴가 활성화 된다.
-            //여기서, Embed in VStack를 선택하면, VStack으로 해당 부분을 감싸게 된다.
-            //Canvas의 preview에서도 같은 방법으로 사용 가능하다.
-            //Text의 String을 변경하는 것을 코드에서 해도 되지만,
-            //Canvas에서 Command-click 하여, Show SwiftUI Inspectord에서 변경해도 된다.
-            //우측 Inspector 바에 표시되는 것과 같다.
+            Button(action: {
+                self.timer.killTimer() //timer 삭제
+                self.showAlert = true
+                //클로저 내부 이므로, self 를 사용해야 한다.
+            }) {
+                //Button은 UIButton과 마찬가지로 Action과 Label이 있다.
+                //하지만, Button action에서 Alert을 만들면 실행이 되지 않는다.
+                //대신 ContentView의 subView 중 하나로 Alert을 작성해야 한다.
+                //Bool 타입의 @State 변수를 추가해 해당 변수가 true가 될 때 Alert을 호출한다.
+                Text("Hit Me!")
+            }.alert(isPresented: $showAlert) {
+                Alert(title: Text("Your Score"), message: Text(String(computeScore())))
+                //Alert에는 기본 OK 버튼이 포함되어 있다.
+            }.padding() //패딩 추가
             
-            //도구모음에서 + 버튼을 선택해서 라이브러리를 열 수 있다.
-            //필요한 객체를 검색해 drag 해서 Canvas에 drop한다.
-            //코드로 직접 입력해도 된다.
-            //Interface Builder에서는 여러 객체를 drag 한 다음 다중 선택하여 Stack에 포함할 수 있었지만,
-            //SwiftUI Embed는 단일 객체에서만 작동한다.
             
-            //SwiftUI에서는 최상위 Body에서 두 개 이상의 View를 가질 수 없다.
             
-            //Creating the guess color block
-            //이전에 생성한 Stack의 오른쪽에 비슷한 형태의 Stack을 생성한다(HStack을 최상위로 사용).
-            //코드를 작성할 수도 있지만, VStack를 Command-click 해, Embed in HStack로 중첩한다.
             
-    //        .environment(\.colorScheme, .dark)
-            //Dark Mode를 기본으로 설정
+            //Creating the button and slider
+            //Library 를 계속 활성화 시켜 놓으려면, + 버튼을 Option-click 하면 된다.
+            //Button을 Canvas 영역에 Drag and drop 해도 되지만, 코드 영역에 적용할 수도 있다.
+            //Slider도 같은 방법으로 추가한다.
+            
+            VStack {
+                ColorSlider(value: $rGuess, textColor: .red)
+                ColorSlider(value: $gGuess, textColor: .green)
+                ColorSlider(value: $bGuess, textColor: .blue)
+            }.padding(.horizontal)
+            //재사용 가능한 View로 대체한다.
+            
+            //Modifying reusable views
+            //Command-click, Embed in VStack를 선택해 처리할 수 있다.
+            //Canvas가 있어야 Embed in VStack 메뉴가 활성화된다.
+            
+            //padding()은 모든 View에 적용할 수 있는 modifier 이다.
+            //3개의 Slider의 padding을 한 번에 처리 할 수 있다.
         }
+
+        
+        //Creating the target color block
+        //Text를 Command-click 하면, 해당 부분이 선택되면서, 추가 메뉴가 활성화 된다.
+        //여기서, Embed in VStack를 선택하면, VStack으로 해당 부분을 감싸게 된다.
+        //Canvas의 preview에서도 같은 방법으로 사용 가능하다.
+        //Text의 String을 변경하는 것을 코드에서 해도 되지만,
+        //Canvas에서 Command-click 하여, Show SwiftUI Inspectord에서 변경해도 된다.
+        //우측 Inspector 바에 표시되는 것과 같다.
+        
+        //도구모음에서 + 버튼을 선택해서 라이브러리를 열 수 있다.
+        //필요한 객체를 검색해 drag 해서 Canvas에 drop한다.
+        //코드로 직접 입력해도 된다.
+        //Interface Builder에서는 여러 객체를 drag 한 다음 다중 선택하여 Stack에 포함할 수 있었지만,
+        //SwiftUI Embed는 단일 객체에서만 작동한다.
+        
+        //SwiftUI에서는 최상위 Body에서 두 개 이상의 View를 가질 수 없다.
+        
+        //Creating the guess color block
+        //이전에 생성한 Stack의 오른쪽에 비슷한 형태의 Stack을 생성한다(HStack을 최상위로 사용).
+        //코드를 작성할 수도 있지만, VStack를 Command-click 해, Embed in HStack로 중첩한다.
+        
+//        .environment(\.colorScheme, .dark)
+        //Dark Mode를 기본으로 설정
     }
 }
 
@@ -178,30 +170,21 @@ struct ColorSlider: View {
     //UI에 따라 달라지는 값이지만, ColorSlider가 이 값을 소유하지 않기 때문에
     //@State 대신, @Binding을 써준다. source of truth는 하나여야 한다.
     //부모 View에서 초기 값을 가져와 변경한다.
-//    var textColor: Color
-    var textColor: UIColor //ColorUISlider 사용하면서 교체
+    var textColor: Color
     
     var body: some View {
         HStack {
-//            Text("0").foregroundColor(textColor)
-//            Slider(value: $value)
-//            //gGuess 자체는 read-only 이다. 여기에 $를 붙여주면, read-write 로 사용할 수 있다.
-//            //Slider의 값을 변경하면서 색상을 업데이트 하려면 $를 붙여줘야 한다.
-//                .background(textColor) //배경색 추가
-//                .cornerRadius(10) //모서리 둥글게
-//
-//            //Adding modifiers in the right order
-//            //순서대로 적용 되므로, background와 cornerRadius의 순서가 바뀌면, 다르게 적용된다.
-//            //cornerRadius를 먼저 적용하면, 모서리를 둥글게 할 객체가 없으므로 아무것도 적용되지 않는다.
-//            Text("256").foregroundColor(textColor)
+            Text("0").foregroundColor(textColor)
+            Slider(value: $value)
+            //gGuess 자체는 read-only 이다. 여기에 $를 붙여주면, read-write 로 사용할 수 있다.
+            //Slider의 값을 변경하면서 색상을 업데이트 하려면 $를 붙여줘야 한다.
+                .background(textColor) //배경색 추가
+                .cornerRadius(10) //모서리 둥글게
             
-            
-            
-            
-            Text("0").foregroundColor(Color(textColor))
-            ColorUISlider(color: textColor, value: $value)
-            //UISlider의 속성을 사용하는 SwiftUI View
-            Text("255").foregroundColor(Color(textColor))
+            //Adding modifiers in the right order
+            //순서대로 적용 되므로, background와 cornerRadius의 순서가 바뀌면, 다르게 적용된다.
+            //cornerRadius를 먼저 적용하면, 모서리를 둥글게 할 객체가 없으므로 아무것도 적용되지 않는다.
+            Text("256").foregroundColor(textColor)
         }
         //padding(.horizontal)을 각 Slider에 추가하는 것이 아니라 전체 Slider Stack에 추가해 준다.
     }
@@ -209,7 +192,7 @@ struct ColorSlider: View {
     //추출할 객체에서 Command-click을 하고, Extract Subview를 선택해 따로 추출할 수 있다.
 }
 
-//DEBUG에서 ContentView를 보여준다. //Xcode11 정식 버전 부터는 #DEBUG 붙일 필요 없다.
+//DEBUG에서 ContentView를 보여준다.
 //Chapter 1: Introduction
 //SwiftUI는 Swift를 사용해 모든 Apple 플랫폼의 UI 인터페이스를 구축하는 혁신적이고 매우 간단한 방법이다.
 //2019년에 발표된 SwiftUI는 UIKit과 AppKit를 사용해 앱 UI를 새로 만들 수있는 새로운 방법이다.
@@ -470,75 +453,6 @@ struct ColorSlider: View {
 // 3. Hosting Controller를 StoryBoard로 끌어서 Segue를 만든다.
 // 4. Segue를 ViewController 코드의 @IBSegueAction에 연결하고 Hosting Controller의
 //  rootView를 SwiftUI View의 인스턴스로 설정한다.
-//ContentView.swift를 BullsEye 프로젝트로 drag-and-drop 한다. Copy items if needed 체크한다.
-//StoryBoard에서 Library를 열고 Button을 추가하고 제약 조건을 설정한다.
-//Library에서 Hosting Controller를 StoryBoard로 끌어와 생성한다.
-//이후, 이전에 생성한 Button에서 Control-drag 해서 Hosting Controller에 drop하고 Show를 선택한다.
-//UIHostingController는 콘텐츠가 SwiftUI인 UIViewController이다.
-//SwiftUI로 새 프로젝트를 시작한 경우, SceneDelegate에서 ContentView를 생성할 때 사용하기도 한다.
-//StoryBoard에서 ViewController를 선택하고,
-//Assistant Editor(Control-Option-Command-Return)를 연다. SwiftUI를 import 하고
-//StoryBoard의 segue에서 ViewController로 Control-drag 해서 @IBSegueAction를 만든다.
-//@IBSegueAction는 UIKit에서 prepare(for:sender:)을 대신하는 Xcode 11의 새 기능이다.
-//대상 ViewController를 생성할 때 속성을 설정하는 경우 유용하다.
-//또한, segue에 직접 연결되어 있기 때문에 식별자가 따로 필요하지 않다.
-
-
-
-
-//Hosting a view controller in a SwiftUI project
-//이전 작업과 반대로 UIKit 앱을 SwiftUI로 호스팅하는 작업은 다음과 같다.
-// 1. UIKit 앱의 ViewController.swift와 Main.storyboard를 SwiftUI 앱에 추가한다.
-// 2. Storyboard의 identity inspector에서 Storyboard ID를 설정해 준다.
-// 3. ViewController에 표현할 구조체를 생성한다.
-// 4. ContentView에 NavigationLink를 추가한다.
-//BullsEye 프로젝트에서 ViewController.swift 와 Main.storyboard 를 Drag-and-drop 해서 가져온다.
-//복사 시, Copy items if needed에 체크한다.
-//StoryBoard에서 ViewController를 선택하고, Storyboard ID를 ViewController로 설정한다.
-
-//Conforming to UIViewControllerRepresentable
-//UIViewControllerRepresentable를 구현하는 구조체를 생성한다.
-
-//Navigating to the view controller
-//ContentView의 최상위 VStack 아래에 NavigationLink 코드를 추가한다.
-//상단에 NavigationView도 추가해 준다.
-
-//Previewing UIKit views
-//SwiftUI 앱에서 Viewcontroller를 Hosting 하지 않더라도, UIViewControllerRepresentable을
-//구현하면, Xcode에서 preview를 할 수 있다.
-
-
-
-
-//Hosting a UIKit view with data dependencies
-//지금까지 UIKit 앱과 SwiftUI 앱의 호스팅은 매우 간단했다.
-//하지만 이는 두 앱 간에 종속되는 데이터가 없었기 때문이다.
-//SwiftUI Slider를 UISlider로 수정한다. UISlider에는 thumbTintColor 속성이 있지만,
-//SwiftUI Slider에는 이 속성이 없다. 따라서 이 속성에 액세스하려면 UISlider를 사용해야 한다.
-//이 프로세스는 ViewController Hosting과 유사하다.
-// 1. UIViewRepresentable를 구현하는 SwiftUI View를 작성한다.
-// 2. UIKit View를 인스턴스화하는 make 메서드를 구현한다.
-// 3. update 메서드를 구현하여 SwiftUI View에서 UIKit View를 업데이트 한다.
-// 4. Coordinator를 생성해, valueChanged 메서드를 구현하여 UIKit View에서 SwiftUI View를 업데이트 한다.
-
-//Conforming to UIViewRepresentable
-//새 파일을 생성한다. iOS ▸ User Interface ▸ SwiftUI View 를 선택한다.
-//UIViewRepresentable 프로토콜을 구현한다.
-//UIViewControllerRepresentable 처럼 make와 update를 구현해야 한다.
-
-//Updating the UIView from SwiftUI
-//UIKit에서만 구현할 수 있는 속성들이 있는 경우, 이를 사용해 SwiftUI View를 만든다.
-
-//Coordinating data between UIView and SwiftUI view
-//UISlider(Float)와 SwiftUI의 Slider(Double) 자료형 타입이 다르다.
-//SwiftUI View인 ColorUISlider의 데이터와 UIKit의 UISlider 데이터가 동기화되도록
-//coordinator를 생성해 줘야 한다.
-
-//Making it all happen!
-//ColorUISlider 를 사용하면서, 필요한 부분의 코드를 수정해 준다.
-
-
-
-
+//ContentView.swift를 BullsEye 프로젝트로 drag-and-drop 한다.
 
 

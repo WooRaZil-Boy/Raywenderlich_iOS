@@ -17,6 +17,8 @@
 		EF72A3012360C482004FDC37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF72A3002360C482004FDC37 /* Assets.xcassets */; };
 		EF72A3032360C48F004FDC37 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF72A3022360C48F004FDC37 /* LaunchScreen.storyboard */; };
 		EF72A3052360C509004FDC37 /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF72A3042360C509004FDC37 /* QuestionView.swift */; };
+		EF81534523622393008C005A /* SelectQuestionGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF81534423622393008C005A /* SelectQuestionGroupViewController.swift */; };
+		EF81534723622582008C005A /* QuestionGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF81534623622582008C005A /* QuestionGroupCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		EF72A3002360C482004FDC37 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EF72A3022360C48F004FDC37 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EF72A3042360C509004FDC37 /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
+		EF81534423622393008C005A /* SelectQuestionGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectQuestionGroupViewController.swift; sourceTree = "<group>"; };
+		EF81534623622582008C005A /* QuestionGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionGroupCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +92,7 @@
 				EF72A3022360C48F004FDC37 /* LaunchScreen.storyboard */,
 				EF72A2E62360BCCE004FDC37 /* Main.storyboard */,
 				EF72A3042360C509004FDC37 /* QuestionView.swift */,
+				EF81534623622582008C005A /* QuestionGroupCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -106,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				EF72A2E42360BCCD004FDC37 /* QuestionViewController.swift */,
+				EF81534423622393008C005A /* SelectQuestionGroupViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -195,7 +201,9 @@
 				EF72A2E12360BCCD004FDC37 /* AppDelegate.swift in Sources */,
 				EF72A3052360C509004FDC37 /* QuestionView.swift in Sources */,
 				EF72A2FF2360C440004FDC37 /* QuestionGroupData.swift in Sources */,
+				EF81534723622582008C005A /* QuestionGroupCell.swift in Sources */,
 				EF72A2FD2360C32C004FDC37 /* QuestionGroup.swift in Sources */,
+				EF81534523622393008C005A /* SelectQuestionGroupViewController.swift in Sources */,
 				EF72A2E32360BCCD004FDC37 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

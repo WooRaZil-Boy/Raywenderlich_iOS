@@ -8,6 +8,13 @@
 
 import UIKit
 
+public protocol QuestionViewControllerDelegate: class {
+    func questionViewController(_ viewController: QuestionViewController, didCancel questionGroup: QuestionGroup, at questionIndex: Int)
+    //cancel 버튼을 누르는 경우 호출
+    func questionViewController(_ viewController: QuestionViewController, didComplete questionGroup: QuestionGroup)
+    //모든 question을 완료한 경우 호출
+}
+
 public class QuestionViewController: UIViewController {
     //public 키워드를 추가해 준다. 다른 type, property, method 등이 공개적으로 접근할 수 있다.
     //private의 경우에는 자체에서만 접근할 경우 붙여준다.
@@ -17,7 +24,14 @@ public class QuestionViewController: UIViewController {
     //처음부터 access control를 사용하는 습관을 들이는 것이 좋다.
     
     //MARK: - Instance Properties
-    public var questionGroup = QuestionGroup.basicPhrases()
+    public weak var delegate: QuestionViewControllerDelegate? //custom delegate
+    
+    public var questionGroup: QuestionGroup! {
+        didSet {
+            navigationItem.title = questionGroup.title
+            //네비게이션 상단에 title을 지정해 준다.
+        }
+    }
     public var questionIndex = 0 //현재 Question index. 다음 question으로 넘어갈 때 +1
     
     public var correctCount = 0
@@ -29,10 +43,33 @@ public class QuestionViewController: UIViewController {
         return (view as! QuestionView)
     }
     
+    private lazy var questionIndexItem: UIBarButtonItem = {
+        let item = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        item.tintColor = .black
+        navigationItem.rightBarButtonItem = item
+        //네비게이션 오른쪽에 barButtonItem 추가
+        
+        return item
+    }()
+    
     //MARK: - View Lifecycle
     public override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupCancelButton()
         showQuestion()
+    }
+    
+    private func setupCancelButton() {
+        let action = #selector(handleCancelPressed(sender:))
+        let image = UIImage(named: "ic_menu")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, landscapeImagePhone: nil, style: .plain, target: self, action: action)
+        //네비게이션 왼쪽에 barButtonItem 추가
+        //버튼을 누르면, delegate에 연결된 메서드가 실행된다.
+    }
+    
+    @objc private func handleCancelPressed(sender: UIBarButtonItem) {
+        delegate?.questionViewController(self, didCancel: questionGroup, at: questionIndex)
     }
     
     private func showQuestion() {
@@ -44,6 +81,8 @@ public class QuestionViewController: UIViewController {
         
         questionView.answerLabel.isHidden = true
         questionView.hintLabel.isHidden = true
+        
+        questionIndexItem.title = "\(questionIndex + 1)/" + "\(questionGroup.questions.count)"
     }
     
     //MARK: - Actions
@@ -73,13 +112,15 @@ public class QuestionViewController: UIViewController {
         
         guard questionIndex < questionGroup.questions.count else {
             //남은 question이 있어야 한다.
-            //TODO: - Handle this...!
+            delegate?.questionViewController(self, didComplete: questionGroup)
             return
         }
         
         showQuestion()
     }
 }
+
+//Chapter 3: Model-View-Controller Pattern
 
 //Tutorial project
 //언어 학습 앱을 만든다. 새 프로젝트를 생성하고 설정을 완료한다.
@@ -106,11 +147,4 @@ public class QuestionViewController: UIViewController {
 
 //Creating the controller
 //Controller를 작업한다. Tap Gesture Recognizer를 IBAction에 연결한다.
-
-
-
-
-
-
-
-
+//------------------------------------------------------------------------------------

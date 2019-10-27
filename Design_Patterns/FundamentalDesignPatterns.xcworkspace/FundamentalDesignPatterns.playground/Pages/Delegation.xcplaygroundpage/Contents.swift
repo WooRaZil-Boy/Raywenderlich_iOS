@@ -37,6 +37,7 @@
 
 
 
+//Playground example
 //Delegate 패턴은 Behavioral Pattern 중 하나로, 한 객체가 다른 객체와 통신하는 것을 정의한다.
 
 import UIKit

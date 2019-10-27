@@ -63,7 +63,18 @@ extension SelectQuestionGroupViewController: UITableViewDelegate {
         guard let viewController = segue.destination as? QuestionViewController else { return }
         //전환할 ViewController 확인
         
-        viewController.questionGroup = selectedQuestionGroup
+//        viewController.questionGroup = selectedQuestionGroup
+        
+        
+        
+        
+        viewController.questionStrategy = RandomQuestionStrategy(questionGroup: selectedQuestionGroup) //랜덤
+//        viewController.questionStrategy = SequentialQuestionStrategy(questionGroup: selectedQuestionGroup) //순서
+        
+        //Strategy Pattern으로 변경
+        //필요에 따라 다양한 Strategy로 변경할 수 있다.
+        //실제 앱에서는 사용자의 선택에 따라 달라지게 구현할 수도 있다.
+        
         viewController.delegate = self //delegate를 설정해 준다.
         //self이므로 해당 ViewController에서 QuestionViewControllerDelegate를 구현해 줘야 한다.
     }
@@ -71,11 +82,24 @@ extension SelectQuestionGroupViewController: UITableViewDelegate {
 
 //MARK: - QuestionViewControllerDelegate
 extension SelectQuestionGroupViewController: QuestionViewControllerDelegate {
-    public func questionViewController(_ viewController: QuestionViewController, didCancel questionGroup: QuestionGroup, at questionIndex: Int) {
+//    public func questionViewController(_ viewController: QuestionViewController, didCancel questionGroup: QuestionGroup, at questionIndex: Int) {
+//        navigationController?.popToViewController(self, animated: true)
+//    }
+//
+//    public func questionViewController(_ viewController: QuestionViewController, didComplete questionGroup: QuestionGroup) {
+//        navigationController?.popToViewController(self, animated: true)
+//    }
+    
+    
+    
+    
+    //Strategy Pattern으로 변경
+
+    public func questionViewController(_ viewController: QuestionViewController, didCancel questionGroup: QuestionStrategy) {
         navigationController?.popToViewController(self, animated: true)
     }
     
-    public func questionViewController(_ viewController: QuestionViewController, didComplete questionGroup: QuestionGroup) {
+    public func questionViewController(_ viewController: QuestionViewController, didComplete questionGroup: QuestionStrategy) {
         navigationController?.popToViewController(self, animated: true)
     }
 }
@@ -103,9 +127,4 @@ extension SelectQuestionGroupViewController: QuestionViewControllerDelegate {
 //현재 Controller에서 Cancel을 누르면 일반적으로 delegate로 caller에게 알리는 것이 일반적이다.
 //Cancel button이 따로 없는 경우, back button을 주로 사용한다.
 //QuestionViewController에 사용자 지정 delegate protocol을 작성한다.
-
-
-
-
-
 //------------------------------------------------------------------------------------

@@ -7,6 +7,25 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--App Settings-->
+        <scene sceneID="LKw-ZL-BGE">
+            <objects>
+                <tableViewController title="App Settings" id="xYx-mk-J73" customClass="AppSettingsViewController" customModule="RabbleWabble" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Set-u0-XDX">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="xYx-mk-J73" id="T8V-ab-joO"/>
+                            <outlet property="delegate" destination="xYx-mk-J73" id="Out-Je-d2k"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="1S3-jX-LQy"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0jj-Wb-UXG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="258" y="823"/>
+        </scene>
         <!--Select Question Group-->
         <scene sceneID="D5i-Aw-8Us">
             <objects>
@@ -71,7 +90,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="k1e-DO-VY9"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Select Question Group" id="rQe-z2-02m"/>
+                    <navigationItem key="navigationItem" title="Select Question Group" id="rQe-z2-02m">
+                        <barButtonItem key="leftBarButtonItem" image="ic_settings" id="uby-E2-Ju0">
+                            <connections>
+                                <segue destination="xYx-mk-J73" kind="show" id="DQ4-Ba-TD3"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="Frh-ia-pKt" id="g87-ys-4dg"/>
                     </connections>
@@ -191,11 +216,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tnm-lZ-GAz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-561" y="139"/>
+            <point key="canvasLocation" x="-543" y="139"/>
         </scene>
     </scenes>
     <resources>
         <image name="ic_circle_check" width="80" height="80"/>
         <image name="ic_circle_x" width="80" height="80"/>
+        <image name="ic_settings" width="26" height="26"/>
     </resources>
 </document>

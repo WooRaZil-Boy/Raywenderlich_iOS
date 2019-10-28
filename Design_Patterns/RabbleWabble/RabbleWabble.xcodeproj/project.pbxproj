@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D6A96882366EA1C00346036 /* AppSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6A96872366EA1C00346036 /* AppSettingsViewController.swift */; };
+		7DE3FFB7236690AB0042AA8C /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE3FFB6236690AB0042AA8C /* AppSettings.swift */; };
 		EF72A2E12360BCCD004FDC37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF72A2E02360BCCD004FDC37 /* AppDelegate.swift */; };
 		EF72A2E32360BCCD004FDC37 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF72A2E22360BCCD004FDC37 /* SceneDelegate.swift */; };
 		EF72A2E52360BCCD004FDC37 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF72A2E42360BCCD004FDC37 /* QuestionViewController.swift */; };
@@ -25,6 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7D6A96872366EA1C00346036 /* AppSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsViewController.swift; sourceTree = "<group>"; };
+		7DE3FFB6236690AB0042AA8C /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		EF72A2DD2360BCCD004FDC37 /* RabbleWabble.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RabbleWabble.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF72A2E02360BCCD004FDC37 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EF72A2E22360BCCD004FDC37 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -110,6 +114,7 @@
 				EF72A2FA2360C2DC004FDC37 /* Question.swift */,
 				EF72A2FC2360C32C004FDC37 /* QuestionGroup.swift */,
 				EF72A2FE2360C440004FDC37 /* QuestionGroupData.swift */,
+				7DE3FFB6236690AB0042AA8C /* AppSettings.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -119,6 +124,7 @@
 			children = (
 				EF72A2E42360BCCD004FDC37 /* QuestionViewController.swift */,
 				EF81534423622393008C005A /* SelectQuestionGroupViewController.swift */,
+				7D6A96872366EA1C00346036 /* AppSettingsViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -213,6 +219,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DE3FFB7236690AB0042AA8C /* AppSettings.swift in Sources */,
 				EF72A2E52360BCCD004FDC37 /* QuestionViewController.swift in Sources */,
 				EF72A2FB2360C2DC004FDC37 /* Question.swift in Sources */,
 				EF72A2E12360BCCD004FDC37 /* AppDelegate.swift in Sources */,
@@ -223,6 +230,7 @@
 				EF9CC6252365B5F300173E5A /* RandomQuestionStrategy.swift in Sources */,
 				EF9CC6212364E70B00173E5A /* QuestionStrategy.swift in Sources */,
 				EF72A2FD2360C32C004FDC37 /* QuestionGroup.swift in Sources */,
+				7D6A96882366EA1C00346036 /* AppSettingsViewController.swift in Sources */,
 				EF81534523622393008C005A /* SelectQuestionGroupViewController.swift in Sources */,
 				EF72A2E32360BCCD004FDC37 /* SceneDelegate.swift in Sources */,
 			);

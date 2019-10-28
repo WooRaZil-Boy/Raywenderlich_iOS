@@ -21,6 +21,7 @@ public class SelectQuestionGroupViewController: UIViewController {
     }
     
     //MARK: - Properties
+    private let appSettings = AppSettings.shared //Singleton
     public let questionGroups = QuestionGroup.allGroups() //모든 QuestionGroup
     private var selectedQuestionGroup: QuestionGroup! //사용자가 선택한 QuestionGroup
 }
@@ -68,7 +69,7 @@ extension SelectQuestionGroupViewController: UITableViewDelegate {
         
         
         
-        viewController.questionStrategy = RandomQuestionStrategy(questionGroup: selectedQuestionGroup) //랜덤
+//        viewController.questionStrategy = RandomQuestionStrategy(questionGroup: selectedQuestionGroup) //랜덤
 //        viewController.questionStrategy = SequentialQuestionStrategy(questionGroup: selectedQuestionGroup) //순서
         
         //Strategy Pattern으로 변경
@@ -77,6 +78,12 @@ extension SelectQuestionGroupViewController: UITableViewDelegate {
         
         viewController.delegate = self //delegate를 설정해 준다.
         //self이므로 해당 ViewController에서 QuestionViewControllerDelegate를 구현해 줘야 한다.
+        
+        
+        
+        
+        //Singleton Pattern으로 변경
+        viewController.questionStrategy = appSettings.questionStrategy(for: selectedQuestionGroup)
     }
 }
 

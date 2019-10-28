@@ -238,6 +238,8 @@ public class QuestionViewController: UIViewController {
 
 
 //Chapter 5: Strategy Pattern
+
+//Tutorial project
 //Strategy Pattern을 사용해 Question이 순서대로 표시되거나 무작위로 표시 하는 두 옵션을 허용하도록 한다.
 //Strategies 그룹을 만들어 프로토콜을 작성하고, 각 class를 구현한다.
 //이후 QuestionViewController에서 Strategy Pattern을 구현한다.

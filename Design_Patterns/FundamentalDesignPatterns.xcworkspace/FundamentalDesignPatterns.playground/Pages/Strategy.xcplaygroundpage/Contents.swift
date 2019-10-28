@@ -101,7 +101,8 @@ public class MovieRatingViewController: UIViewController {
         guard let movieTitle = movieTitleTextField.text else { return }
         
         movieRatingClient.fetchRating(for: movieTitle) { (rating, review) in
-            self.ratingLabel.text = rating self.reviewLabel.text = review
+            self.ratingLabel.text = rating
+            self.reviewLabel.text = review
         }
     }
 }

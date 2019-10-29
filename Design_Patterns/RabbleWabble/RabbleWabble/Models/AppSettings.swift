@@ -37,9 +37,17 @@ public class AppSettings { //Singleton
     private init() {}
     
     //MARK: - Instance Methods
-    public func questionStrategy(for questionGroup: QuestionGroup) -> QuestionStrategy {
-        //선택한 questionStrategyType에 맞게, QuestionStrategy를 가져온다.
-        return questionStrategyType.questionStrategy(for: questionGroup)
+//    public func questionStrategy(for questionGroup: QuestionGroup) -> QuestionStrategy {
+//        //선택한 questionStrategyType에 맞게, QuestionStrategy를 가져온다.
+//        return questionStrategyType.questionStrategy(for: questionGroup)
+//    }
+    
+    
+    
+    
+    //Memento Pattern으로 변경
+    public func questionStrategy(for questionGroupCaretaker: QuestionGroupCaretaker) -> QuestionStrategy {
+        return questionStrategyType.questionStrategy(for: questionGroupCaretaker)
     }
 }
 
@@ -61,12 +69,25 @@ public enum QuestionStrategyType: Int, CaseIterable {
         }
     }
     
-    public func questionStrategy(for questionGroup: QuestionGroup) -> QuestionStrategy {
+//    public func questionStrategy(for questionGroup: QuestionGroup) -> QuestionStrategy {
+//        switch self {
+//        case .random:
+//            return RandomQuestionStrategy(questionGroup: questionGroup)
+//        case .sequential:
+//            return SequentialQuestionStrategy(questionGroup: questionGroup)
+//        }
+//    }
+    
+    
+    
+    
+    //Memento Pattern으로 변경
+    public func questionStrategy(for questionGroupCaretaker: QuestionGroupCaretaker) -> QuestionStrategy {
         switch self {
         case .random:
-            return RandomQuestionStrategy(questionGroup: questionGroup)
+            return RandomQuestionStrategy(questionGroupCaretaker: questionGroupCaretaker)
         case .sequential:
-            return SequentialQuestionStrategy(questionGroup: questionGroup)
+            return SequentialQuestionStrategy(questionGroupCaretaker: questionGroupCaretaker)
         }
     }
 }

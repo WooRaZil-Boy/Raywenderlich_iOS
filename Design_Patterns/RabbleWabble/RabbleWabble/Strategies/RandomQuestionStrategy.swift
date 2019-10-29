@@ -10,55 +10,73 @@ import GameplayKit.GKRandomSource
 //Ramdom을 직접 구현할 수 있지만, 이미 작성된 로직을 가져와 쓸 수 있다.
 //GameplayKit.GKRandomSource는 크기가 매우 작고 범위를 지정할 수 있기 때문에 효율이 좋다.
 
-public class RandomQuestionStrategy: QuestionStrategy { //QuestionStrategy 구현
-    //RandomQuestionStrategy는 임의의 순대대로 question이 표시된다.
-    //MARK: - Properties
-    public var correctCount: Int = 0
-    public var incorrectCount: Int = 0
-    private let questionGroup: QuestionGroup
-    private var questionIndex = 0
-    private let questions: [Question]
-    
-    //MARK: - Object Lifecycle
-    public init(questionGroup: QuestionGroup) {
-        self.questionGroup = questionGroup
-        
-        let randomSource = GKRandomSource.sharedRandom() //Singleton
-        self.questions = randomSource.arrayByShufflingObjects(in: questionGroup.questions) as! [Question]
+//public class RandomQuestionStrategy: QuestionStrategy { //QuestionStrategy 구현
+//    //RandomQuestionStrategy는 임의의 순대대로 question이 표시된다.
+//    //MARK: - Properties
+//    public var correctCount: Int = 0
+//    public var incorrectCount: Int = 0
+//    private let questionGroup: QuestionGroup
+//    private var questionIndex = 0
+//    private let questions: [Question]
+//
+//    //MARK: - Object Lifecycle
+//    public init(questionGroup: QuestionGroup) {
+//        self.questionGroup = questionGroup
+//
+//        let randomSource = GKRandomSource.sharedRandom() //Singleton
+//        self.questions = randomSource.arrayByShufflingObjects(in: questionGroup.questions) as! [Question]
+//        //arrayByShufflingObjects 메서드는 배열을 인자로 받아, 임의의 순서로 섞는다.
+//        //NSArray를 반환하기 때문에 캐스팅 해 준다.
+//    }
+//
+//    //MARK: - QuestionStrategy
+//    public var title: String {
+//        return questionGroup.title
+//    }
+//
+//    public func currentQuestion() -> Question {
+//        return questions[questionIndex]
+//    }
+//
+//    public func advanceToNextQuestion() -> Bool {
+//        guard questionIndex + 1 < questions.count else {
+//            return false
+//        }
+//
+//        questionIndex += 1
+//
+//        return true
+//    }
+//
+//    public func markQuestionCorrect(_ question: Question) {
+//        correctCount += 1
+//    }
+//
+//    public func markQuestionIncorrect(_ question: Question) {
+//        incorrectCount += 1
+//    }
+//
+//    public func questionIndexTitle() -> String {
+//        return "\(questionIndex + 1)/\(questions.count)"
+//    }
+//}
+
+
+
+
+//Memento Pattern을 구현하면서 공통의 로직은 BaseQuestionStrategy로 이동한다.
+public class RandomQuestionStrategy: BaseQuestionStrategy {
+    public convenience init(questionGroupCaretaker: QuestionGroupCaretaker) {
+        let questionGroup = questionGroupCaretaker.selectedQuestionGroup!
+        let randomSource = GKRandomSource.sharedRandom()
+        let questions = randomSource.arrayByShufflingObjects(in: questionGroup.questions) as! [Question]
         //arrayByShufflingObjects 메서드는 배열을 인자로 받아, 임의의 순서로 섞는다.
         //NSArray를 반환하기 때문에 캐스팅 해 준다.
-    }
-    
-    //MARK: - QuestionStrategy
-    public var title: String {
-        return questionGroup.title
-    }
-    
-    public func currentQuestion() -> Question {
-        return questions[questionIndex]
-    }
-    
-    public func advanceToNextQuestion() -> Bool {
-        guard questionIndex + 1 < questions.count else {
-            return false
-        }
         
-        questionIndex += 1
-        
-        return true
-    }
-    
-    public func markQuestionCorrect(_ question: Question) {
-        correctCount += 1
-    }
-    
-    public func markQuestionIncorrect(_ question: Question) {
-        incorrectCount += 1
-    }
-    
-    public func questionIndexTitle() -> String {
-        return "\(questionIndex + 1)/\(questions.count)"
+        self.init(questionGroupCaretaker: questionGroupCaretaker, questions: questions)
+        //임의의 순서대로 questions를 전달한다.
     }
 }
+//논리의 대부분이 BaseQuestionStrategy에서 처리되므로 코드가 훨씬 짧아진다.
 
 

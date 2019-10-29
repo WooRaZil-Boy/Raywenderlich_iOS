@@ -22,8 +22,33 @@ public class SelectQuestionGroupViewController: UIViewController {
     
     //MARK: - Properties
     private let appSettings = AppSettings.shared //Singleton
-    public let questionGroups = QuestionGroup.allGroups() //모든 QuestionGroup
-    private var selectedQuestionGroup: QuestionGroup! //사용자가 선택한 QuestionGroup
+//    public let questionGroups = QuestionGroup.allGroups() //모든 QuestionGroup
+//    private var selectedQuestionGroup: QuestionGroup! //사용자가 선택한 QuestionGroup
+    
+    
+    
+    
+    //Memento Pattern으로 변경
+    private let questionGroupCaretaker = QuestionGroupCaretaker()
+    private var questionGroups: [QuestionGroup] {
+        return questionGroupCaretaker.questionGroups
+    }
+    private var selectedQuestionGroup: QuestionGroup! {
+        get { return questionGroupCaretaker.selectedQuestionGroup }
+        set { questionGroupCaretaker.selectedQuestionGroup = newValue }
+    }
+    
+    //MARK: - View Lifecycle
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        questionGroups.forEach {
+          print("\($0.title): " +
+            "correctCount \($0.score.correctCount), " +
+            "incorrectCount \($0.score.incorrectCount)")
+        }
+        //콘솔에 각 QuestionGroup의 title과 score를 출력한다.
+    }
 }
 
 //MARK: - UITableViewDataSource
@@ -83,7 +108,13 @@ extension SelectQuestionGroupViewController: UITableViewDelegate {
         
         
         //Singleton Pattern으로 변경
-        viewController.questionStrategy = appSettings.questionStrategy(for: selectedQuestionGroup)
+//        viewController.questionStrategy = appSettings.questionStrategy(for: selectedQuestionGroup)
+        
+        
+        
+        
+        //Memento Pattern으로 변경
+        viewController.questionStrategy = appSettings.questionStrategy(for: questionGroupCaretaker)
     }
 }
 

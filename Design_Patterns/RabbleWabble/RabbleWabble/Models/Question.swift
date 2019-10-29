@@ -8,8 +8,16 @@
 
 import Foundation
 
-public struct Question {
+public class Question: Codable {
+    //Memento Pattern을 구현하면서 struct에서 class로 변경해 준다.
     public let answer: String
     public let hint: String?
     public let prompt: String
+    
+    public init(answer: String, hint: String?, prompt: String) {
+        self.answer = answer
+        self.hint = hint
+        self.prompt = prompt
+    }
+    //class는 생성자를 추가해 줘야 한다.
 }

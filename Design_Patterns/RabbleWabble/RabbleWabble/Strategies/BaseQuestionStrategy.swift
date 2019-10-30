@@ -31,8 +31,14 @@ public class BaseQuestionStrategy: QuestionStrategy {
         //QuestionGroup 대신 QuestionGroupCaretaker를 사용하는 생성자
         self.questionGroupCaretaker = questionGroupCaretaker //디스크에 대한 변경사항 유지
         self.questions = questions
-        self.questionGroupCaretaker.selectedQuestionGroup.score = QuestionGroup.Score()
+//        self.questionGroupCaretaker.selectedQuestionGroup.score = QuestionGroup.Score()
         //새 인스턴스를 생성하므로, score는 앱을 시작할 때 마다 새로 작성된다.
+        
+        
+        
+        
+        //Observer Pattern으로 변경
+        self.questionGroupCaretaker.selectedQuestionGroup.score.reset()
     }
     
     //MARK: - QuestionStrategy

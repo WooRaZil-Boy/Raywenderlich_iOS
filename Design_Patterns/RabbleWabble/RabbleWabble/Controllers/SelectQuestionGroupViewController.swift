@@ -62,6 +62,20 @@ extension SelectQuestionGroupViewController: UITableViewDataSource {
         let questionGroup = questionGroups[indexPath.row]
         cell.titleLabel.text = questionGroup.title
         
+        
+        
+        
+        //Observer Pattern
+        cell.percentageSubscriber = questionGroup.score.$runningPercentage
+            //subscriber로 설정한다. cell이 해제되면, subscriber도 자동으로 해제된다.
+            .receive(on: DispatchQueue.main) //이벤트가 기본 큐에 전달되도록 한다.
+            //UI 업데이트는 메인 큐에서 이루어 져야 한다.
+            .map() { //map을 이용해서 백분율 문자열로 변환한다.
+                return String(format: "%.0f %%", round(100 * $0))
+            }.assign(to: \.text, on: cell.percentageLabel)
+            //assign으로 해당 값을 설정한다.
+            //값이 변경되면, Label의 text도 자동으로 업데이트 된다.
+        
         return cell
     }
 }
@@ -165,4 +179,18 @@ extension SelectQuestionGroupViewController: QuestionViewControllerDelegate {
 //현재 Controller에서 Cancel을 누르면 일반적으로 delegate로 caller에게 알리는 것이 일반적이다.
 //Cancel button이 따로 없는 경우, back button을 주로 사용한다.
 //QuestionViewController에 사용자 지정 delegate protocol을 작성한다.
+//------------------------------------------------------------------------------------
+
+
+
+
+//Chapter 8: Observer Pattern
+
+//Observer Pattern을 사용하여 유저의 최신 점수를 표시한다.
+//이전 프로젝트에서 Score를 만들었지만, 점수를 변경할 수 없다.
+//Combine 프레임워크의 Publisher를 사용해 Observer Pattern을 구현한다.
+//Model을 먼저 업데이트 한다. QuestionGroup의 Score를 변경해 준다.
+//해당 속성이 Codable을 준수하도록 코드를 추가해 준다.
+//Publisher를 Cell에 추가하고 SelectQuestionGroupViewController에 코드를 작성한다.
+//Memento Pattern으로 값을 저장하기 때문에 앱을 종료해도 Score가 유지된다.
 //------------------------------------------------------------------------------------

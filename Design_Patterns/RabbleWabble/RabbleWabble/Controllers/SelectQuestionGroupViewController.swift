@@ -100,7 +100,7 @@ extension SelectQuestionGroupViewController: UITableViewDelegate {
     
     public override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         //segue가 실행되기 전에 호출된다.
-        guard let viewController = segue.destination as? QuestionViewController else { return }
+//        guard let viewController = segue.destination as? QuestionViewController else { return }
         //전환할 ViewController 확인
         
 //        viewController.questionGroup = selectedQuestionGroup
@@ -115,7 +115,7 @@ extension SelectQuestionGroupViewController: UITableViewDelegate {
         //필요에 따라 다양한 Strategy로 변경할 수 있다.
         //실제 앱에서는 사용자의 선택에 따라 달라지게 구현할 수도 있다.
         
-        viewController.delegate = self //delegate를 설정해 준다.
+//        viewController.delegate = self //delegate를 설정해 준다.
         //self이므로 해당 ViewController에서 QuestionViewControllerDelegate를 구현해 줘야 한다.
         
         
@@ -128,7 +128,21 @@ extension SelectQuestionGroupViewController: UITableViewDelegate {
         
         
         //Memento Pattern으로 변경
-        viewController.questionStrategy = appSettings.questionStrategy(for: questionGroupCaretaker)
+//        viewController.questionStrategy = appSettings.questionStrategy(for: questionGroupCaretaker)
+        
+        
+        
+        
+        //Builser Pattern으로 변경
+        if let viewController = segue.destination as? QuestionViewController {
+            //QuestionViewController로 연결된 segue
+            viewController.questionStrategy = appSettings.questionStrategy(for: questionGroupCaretaker)
+            viewController.delegate = self
+        } else if let navController = segue.destination as? UINavigationController,
+            let viewController = navController.topViewController as? CreateQuestionGroupViewController {
+            //CreateQuestionGroupViewController로 연결된 segue
+            viewController.delegate = self
+        }
     }
 }
 
@@ -154,6 +168,24 @@ extension SelectQuestionGroupViewController: QuestionViewControllerDelegate {
     public func questionViewController(_ viewController: QuestionViewController, didComplete questionGroup: QuestionStrategy) {
         navigationController?.popToViewController(self, animated: true)
     }
+}
+
+//MARK: - CreateQuestionGroupViewControllerDelegate
+extension SelectQuestionGroupViewController: CreateQuestionGroupViewControllerDelegate {
+    public func createQuestionGroupViewControllerDidCancel(_ viewController: CreateQuestionGroupViewController) { //취소
+        dismiss(animated: true, completion: nil)
+    }
+    
+    public func createQuestionGroupViewController(_ viewController: CreateQuestionGroupViewController, created questionGroup: QuestionGroup) { //작성
+        questionGroupCaretaker.questionGroups.append(questionGroup)
+        
+        try? questionGroupCaretaker.save() //저장
+        
+        dismiss(animated: true, completion: nil)
+        tableView.reloadData()
+    }
+    
+    //Builser Pattern 추가
 }
 
 //Chapter 4: Delegate Pattern

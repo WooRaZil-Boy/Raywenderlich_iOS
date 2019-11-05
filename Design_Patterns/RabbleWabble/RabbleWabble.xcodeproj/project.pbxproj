@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		7D6A96882366EA1C00346036 /* AppSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6A96872366EA1C00346036 /* AppSettingsViewController.swift */; };
+		7D921636237153890087234C /* CreateQuestionGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D921635237153890087234C /* CreateQuestionGroupViewController.swift */; };
+		7D92163B237155540087234C /* CreateQuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D921637237155540087234C /* CreateQuestionCell.swift */; };
+		7D92163C237155540087234C /* JapaneseTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D921638237155540087234C /* JapaneseTextField.swift */; };
+		7D92163D237155540087234C /* CreateQuestionGroupTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D921639237155540087234C /* CreateQuestionGroupTitleCell.swift */; };
+		7D92163E237155540087234C /* NewQuestionGroup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D92163A237155540087234C /* NewQuestionGroup.storyboard */; };
 		7DE3FFB7236690AB0042AA8C /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE3FFB6236690AB0042AA8C /* AppSettings.swift */; };
 		EF72A2E12360BCCD004FDC37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF72A2E02360BCCD004FDC37 /* AppDelegate.swift */; };
 		EF72A2E32360BCCD004FDC37 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF72A2E22360BCCD004FDC37 /* SceneDelegate.swift */; };
@@ -20,6 +25,7 @@
 		EF72A3052360C509004FDC37 /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF72A3042360C509004FDC37 /* QuestionView.swift */; };
 		EF81534523622393008C005A /* SelectQuestionGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF81534423622393008C005A /* SelectQuestionGroupViewController.swift */; };
 		EF81534723622582008C005A /* QuestionGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF81534623622582008C005A /* QuestionGroupCell.swift */; };
+		EF9BECE82371BCA800EBE6FA /* QuestionGroupBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9BECE72371BCA800EBE6FA /* QuestionGroupBuilder.swift */; };
 		EF9CC6212364E70B00173E5A /* QuestionStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9CC6202364E70B00173E5A /* QuestionStrategy.swift */; };
 		EF9CC6232365B53100173E5A /* SequentialQuestionStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9CC6222365B53100173E5A /* SequentialQuestionStrategy.swift */; };
 		EF9CC6252365B5F300173E5A /* RandomQuestionStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9CC6242365B5F300173E5A /* RandomQuestionStrategy.swift */; };
@@ -31,6 +37,11 @@
 
 /* Begin PBXFileReference section */
 		7D6A96872366EA1C00346036 /* AppSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsViewController.swift; sourceTree = "<group>"; };
+		7D921635237153890087234C /* CreateQuestionGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateQuestionGroupViewController.swift; sourceTree = "<group>"; };
+		7D921637237155540087234C /* CreateQuestionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateQuestionCell.swift; sourceTree = "<group>"; };
+		7D921638237155540087234C /* JapaneseTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JapaneseTextField.swift; sourceTree = "<group>"; };
+		7D921639237155540087234C /* CreateQuestionGroupTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateQuestionGroupTitleCell.swift; sourceTree = "<group>"; };
+		7D92163A237155540087234C /* NewQuestionGroup.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NewQuestionGroup.storyboard; sourceTree = "<group>"; };
 		7DE3FFB6236690AB0042AA8C /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		EF72A2DD2360BCCD004FDC37 /* RabbleWabble.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RabbleWabble.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF72A2E02360BCCD004FDC37 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -45,6 +56,7 @@
 		EF72A3042360C509004FDC37 /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
 		EF81534423622393008C005A /* SelectQuestionGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectQuestionGroupViewController.swift; sourceTree = "<group>"; };
 		EF81534623622582008C005A /* QuestionGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionGroupCell.swift; sourceTree = "<group>"; };
+		EF9BECE72371BCA800EBE6FA /* QuestionGroupBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionGroupBuilder.swift; sourceTree = "<group>"; };
 		EF9CC6202364E70B00173E5A /* QuestionStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionStrategy.swift; sourceTree = "<group>"; };
 		EF9CC6222365B53100173E5A /* SequentialQuestionStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequentialQuestionStrategy.swift; sourceTree = "<group>"; };
 		EF9CC6242365B5F300173E5A /* RandomQuestionStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomQuestionStrategy.swift; sourceTree = "<group>"; };
@@ -84,6 +96,7 @@
 		EF72A2DF2360BCCD004FDC37 /* RabbleWabble */ = {
 			isa = PBXGroup;
 			children = (
+				EF9BECE62371BC9200EBE6FA /* Builders */,
 				EF72A2F42360BFD4004FDC37 /* AppDelegate */,
 				EFC47FCE236871B3002CCAF2 /* Caretakers */,
 				EF72A2F82360C05A004FDC37 /* Controllers */,
@@ -107,10 +120,14 @@
 		EF72A2F52360C04C004FDC37 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7D921637237155540087234C /* CreateQuestionCell.swift */,
+				7D921639237155540087234C /* CreateQuestionGroupTitleCell.swift */,
+				7D921638237155540087234C /* JapaneseTextField.swift */,
 				EF72A3022360C48F004FDC37 /* LaunchScreen.storyboard */,
 				EF72A2E62360BCCE004FDC37 /* Main.storyboard */,
-				EF72A3042360C509004FDC37 /* QuestionView.swift */,
+				7D92163A237155540087234C /* NewQuestionGroup.storyboard */,
 				EF81534623622582008C005A /* QuestionGroupCell.swift */,
+				EF72A3042360C509004FDC37 /* QuestionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -128,9 +145,10 @@
 		EF72A2F82360C05A004FDC37 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				7D6A96872366EA1C00346036 /* AppSettingsViewController.swift */,
+				7D921635237153890087234C /* CreateQuestionGroupViewController.swift */,
 				EF72A2E42360BCCD004FDC37 /* QuestionViewController.swift */,
 				EF81534423622393008C005A /* SelectQuestionGroupViewController.swift */,
-				7D6A96872366EA1C00346036 /* AppSettingsViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -143,6 +161,14 @@
 				EFC47FD3236877C8002CCAF2 /* QuestionGroupData.json */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		EF9BECE62371BC9200EBE6FA /* Builders */ = {
+			isa = PBXGroup;
+			children = (
+				EF9BECE72371BCA800EBE6FA /* QuestionGroupBuilder.swift */,
+			);
+			path = Builders;
 			sourceTree = "<group>";
 		};
 		EF9CC61F2364E6D000173E5A /* Strategies */ = {
@@ -223,6 +249,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D92163E237155540087234C /* NewQuestionGroup.storyboard in Resources */,
 				EF72A3032360C48F004FDC37 /* LaunchScreen.storyboard in Resources */,
 				EFC47FD4236877C8002CCAF2 /* QuestionGroupData.json in Resources */,
 				EF72A3012360C482004FDC37 /* Assets.xcassets in Resources */,
@@ -239,17 +266,22 @@
 			files = (
 				7DE3FFB7236690AB0042AA8C /* AppSettings.swift in Sources */,
 				EF72A2E52360BCCD004FDC37 /* QuestionViewController.swift in Sources */,
+				7D92163C237155540087234C /* JapaneseTextField.swift in Sources */,
 				EF72A2FB2360C2DC004FDC37 /* Question.swift in Sources */,
 				EF72A2E12360BCCD004FDC37 /* AppDelegate.swift in Sources */,
 				EF72A3052360C509004FDC37 /* QuestionView.swift in Sources */,
 				EF81534723622582008C005A /* QuestionGroupCell.swift in Sources */,
+				EF9BECE82371BCA800EBE6FA /* QuestionGroupBuilder.swift in Sources */,
 				EF9CC6232365B53100173E5A /* SequentialQuestionStrategy.swift in Sources */,
+				7D92163B237155540087234C /* CreateQuestionCell.swift in Sources */,
 				EF9CC6252365B5F300173E5A /* RandomQuestionStrategy.swift in Sources */,
 				EF9CC6212364E70B00173E5A /* QuestionStrategy.swift in Sources */,
 				EF72A2FD2360C32C004FDC37 /* QuestionGroup.swift in Sources */,
 				7D6A96882366EA1C00346036 /* AppSettingsViewController.swift in Sources */,
+				7D921636237153890087234C /* CreateQuestionGroupViewController.swift in Sources */,
 				EFC47FD623687B74002CCAF2 /* BaseQuestionStrategy.swift in Sources */,
 				EF81534523622393008C005A /* SelectQuestionGroupViewController.swift in Sources */,
+				7D92163D237155540087234C /* CreateQuestionGroupTitleCell.swift in Sources */,
 				EFC47FD0236871DC002CCAF2 /* DiskCaretaker.swift in Sources */,
 				EFC47FD2236875C5002CCAF2 /* QuestionGroupCaretaker.swift in Sources */,
 				EF72A2E32360BCCD004FDC37 /* SceneDelegate.swift in Sources */,

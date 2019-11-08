@@ -35,6 +35,7 @@ public class ViewController: UIViewController {
   private var businesses: [YLPBusiness] = []
   private let client = YLPClient(apiKey: YelpAPIKey)
   private let locationManager = CLLocationManager()
+  public let annotationFactory = AnnotationFactory() //Factory Pattern
   
   // MARK: - Outlets
   @IBOutlet public var mapView: MKMapView! {
@@ -100,39 +101,52 @@ extension ViewController: MKMapViewDelegate {
     }
   }
   
+//  private func addAnnotations() {
+//    for business in businesses {
+//      guard let yelpCoordinate = business.location.coordinate else {
+//        continue
+//      }
+//
+//      let coordinate = CLLocationCoordinate2D(latitude: yelpCoordinate.latitude,
+//                                              longitude: yelpCoordinate.longitude)
+//      let name = business.name
+//      let rating = business.rating
+//      let image: UIImage
+//
+//      switch rating {
+//      case 0.0..<3.5:
+//        image = UIImage(named: "bad")!
+//      case 3.5..<4.0:
+//        image = UIImage(named: "meh")!
+//      case 4.0..<4.75:
+//        image = UIImage(named: "good")!
+//      case 4.75...5.0: //... 는 <=
+//        image = UIImage(named: "great")!
+//      default:
+//        image = UIImage(named: "bad")!
+//      }
+//
+//
+//      let annotation = BusinessMapViewModel(coordinate: coordinate,
+//                              name: name,
+//                              rating: rating,
+//                              image: image)
+//      mapView.addAnnotation(annotation)
+//    }
+//  }
+  
+  
+  
+  
   private func addAnnotations() {
     for business in businesses {
-      guard let yelpCoordinate = business.location.coordinate else {
+      guard let viewModel = annotationFactory.createBusinessMapViewModel(for: business) else {
         continue
       }
-
-      let coordinate = CLLocationCoordinate2D(latitude: yelpCoordinate.latitude,
-                                              longitude: yelpCoordinate.longitude)
-      let name = business.name
-      let rating = business.rating
-      let image: UIImage
-      
-      switch rating {
-      case 0.0..<3.5:
-        image = UIImage(named: "bad")!
-      case 3.5..<4.0:
-        image = UIImage(named: "meh")!
-      case 4.0..<4.75:
-        image = UIImage(named: "good")!
-      case 4.75...5.0: //... 는 <=
-        image = UIImage(named: "great")!
-      default:
-        image = UIImage(named: "bad")!
-      }
-      
-      
-      let annotation = BusinessMapViewModel(coordinate: coordinate,
-                              name: name,
-                              rating: rating,
-                              image: image)
-      mapView.addAnnotation(annotation)
+      mapView.addAnnotation(viewModel)
     }
   }
+  //Factory Pattern으로 변경
   
   public func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
     guard let viewModel = annotation as? BusinessMapViewModel else {
@@ -173,5 +187,17 @@ extension ViewController: MKMapViewDelegate {
 //하지만, build 후 실행해 봐도 아무런 변화가 없다. 지도는 image에 대해 알지 못하기 때문이다.
 //custom pin의 annotation image를 제공하기 위해 delegate method를 재정의해야 한다.
 //mapView(_: viewFor:)를 재정의한다.
+//------------------------------------------------------------------------------------
+
+
+
+
+//Chapter 11: Factory Pattern
+
+//Tutorial project
+//Factory Pattern을 사용하여 Yelp 등급에 따라 아이콘 바꾸는 메커니즘을 개선한다.
+//Factories라는 새 그룹을 작성하고, AnnotationFactory.swift를 생성한다.
+//이전 MVVM 패턴을 구현하면서, addAnnotations()에서 구현한 코드와 비슷하다.
+//이렇게 Factory Pattern을 구현하면, 변환 로직이 한 곳에 포함되므로 유지 보수성이 좋아진다.
 //------------------------------------------------------------------------------------
 

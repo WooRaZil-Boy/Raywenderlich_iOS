@@ -69,6 +69,7 @@ class ViewController: UIViewController {
 }
 
 //Chapter 4: Integrating SwiftUI
+
 //기존의 UIKit에 SwiftUI를 추가할 수 있고, 반대로 SwiftUI 앱에서 UIKit을 추가할 수 도 있다.
 //또한, SwiftUI와 데이터를 교환하는 UIKit도 작성할 수 있다.
 //이를 "호스팅(Hosting)이라 한다. UIKit 앱은 SwiftUI View를 호스팅 할 수 있고,

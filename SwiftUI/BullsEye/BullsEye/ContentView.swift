@@ -192,20 +192,8 @@ struct ColorSlider: View {
     //추출할 객체에서 Command-click을 하고, Extract Subview를 선택해 따로 추출할 수 있다.
 }
 
-//DEBUG에서 ContentView를 보여준다.
-//Chapter 1: Introduction
-//SwiftUI는 Swift를 사용해 모든 Apple 플랫폼의 UI 인터페이스를 구축하는 혁신적이고 매우 간단한 방법이다.
-//2019년에 발표된 SwiftUI는 UIKit과 AppKit를 사용해 앱 UI를 새로 만들 수있는 새로운 방법이다.
-//SwiftUI는 단순하고 강력한 크로스 플랫폼 도구이다.
-//가장 중요한 것 중 하나는 SwiftUI가 선언적 특성이라는 것이다.
-//그동안 개발자들은 상태 관리 문제와 복잡한 코드를 다루는 명령형 프로그래밍 모델을 사용해 왔다.
-//또한, UIKit 혹은 AppKit 프레임 워크를 SwiftUI 코드와 통합 할 수도 있다.
-
-
-
-
-//-----------------------------------------------------------------------------------
 //Chapter 2: Getting Started
+
 //Getting started
 //슬라이더를 움직혀 현재 색상의 RGB 값을 맞추는 게임을 만든다.
 
@@ -301,6 +289,7 @@ struct ColorSlider: View {
 
 //-----------------------------------------------------------------------------------
 //Chapter 3: Understanding SwiftUI
+
 //SwiftUI는 선언적(declarative) UI와 선언적인 데이터 종속성을 사용한다.
 
 //Why SwiftUI?
@@ -429,6 +418,7 @@ struct ColorSlider: View {
 
 //-----------------------------------------------------------------------------------
 //Chapter 4: Integrating SwiftUI
+
 //기존의 UIKit에 SwiftUI를 추가할 수 있고, 반대로 SwiftUI 앱에서 UIKit을 추가할 수 도 있다.
 //또한, SwiftUI와 데이터를 교환하는 UIKit도 작성할 수 있다.
 //이를 "호스팅(Hosting)이라 한다. UIKit 앱은 SwiftUI View를 호스팅 할 수 있고,

@@ -194,8 +194,14 @@ struct ColorSlider: View {
 
 //Chapter 2: Getting Started
 
+//SwiftUI는 Apple이 2014년 Swift를 발표한 이후, 가장 흥미로운 업데이트 중 하나이다.
+//기본 구현 사항을 단순화하여 사용자 친화적인 기능에 더 많은 시간을 투자할 수 있다.
+
+
+
+
 //Getting started
-//슬라이더를 움직혀 현재 색상의 RGB 값을 맞추는 게임을 만든다.
+//슬라이더를 움직여 현재 색상의 RGB 값을 맞추는 게임을 만든다.
 
 //Creating a new SwiftUI project
 //SwiftUI를 사용하려면, 새 프로젝트를 생성할 때, User Interface에서 SwiftUI를 선택하면 된다.
@@ -204,6 +210,7 @@ struct ColorSlider: View {
 //앱이 시작되면, ContentView.swift에 정의된 인스턴스가 보여진다. View protocol을 준수하는 구조체이다.
 
 //Previewing your ContentView
+//ContentView.swift의 밑에 ContentView_Previews에서 설정하면, 미리보기를 볼 수 있다.
 //우측의 창에서 preview를 확인할 수 있다. Resume 버튼을 누르면 새로고침을 한다.
 //preview가 보이지 않는다면, Editor Options 버튼를 눌러, Canvas를 선택하면 된다(macOS 10.15 이상).
 //버튼을 누르는 대신, Option-Command-P 단축키를 사용할 수도 있다.
@@ -227,12 +234,13 @@ struct ColorSlider: View {
 // • Container views : HStack 이나 VStack 를 사용하여 SwiftUI에서 앱의 스택 UI를 쉽게 만들 수 있다.
 //    이외에도 ZStack 이나 Group 등을 사용할 수 있다.
 //Container view 외에도, Text, Button, Slider와 같은 UIKit 객체들에 대한 SwiftUI View가 있다.
-//툴바의 + 버튼로 SwiftUI View의 Library를 확인할 수 있다.
-//UIKit 객체에 속성을 설정하는 대신 Modifier를 사용해, 색상, 글꼴, 패딩 등을 추가해 줄 수 있다.
+//툴바의 + 버튼을 눌러 SwiftUI의 Library를 확인할 수 있다.
+//UIKit 객체에 속성을 설정하는 대신 Library의 Modifier탭에서 색상, 글꼴, 패딩 등을 추가해 줄 수 있다.
 
 //Creating the target color block
 //SwiftUI에서는 최상위 Body에서 두 개 이상의 View를 가질 수 없다.
 //따라서, container view(여기서는 VStack, vertical stack) 안에 View를 배치해야 한다.
+//코드의 해당 부분이나 canvas에서 Command-click 한 후, 원하는 stack을 embed선택해 추가해 줄 수 있다.
 
 //Creating the guess color block
 //해당 부분의 코드를 Command-click 해서, 쉽게 Stack을 중첩할 수 있다.

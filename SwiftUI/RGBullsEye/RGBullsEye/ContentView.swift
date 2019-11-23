@@ -77,9 +77,11 @@ struct ContentView: View {
                                 .background(Color.white)
                                 .mask(Circle())
                                 .foregroundColor(.black)
-                                //Dark mode에서는 흰색이 기본이 되어 배경색에 가려지기 때문에 지정해 준다.
+                                //Dark mode에서는 흰색이 기본이 되어 배경색에 가려지기 때문에
+                                //background와 foregroundColor를 지정해 준다.
                             //Using ZStack
-                            //Color 위에 Text를 추가하는데, 이러한 경우에는 ZStack을 사용할 수 있다.
+                            //Color 객체 위에 Text를 추가하는데,
+                            //이러한 경우에는 ZStack을 사용할 수 있다.
                             //Command-click을 선택해도, Embed in ZStack은 없다.
                             //Hstack이나, VStack을 선택하고, Z로 바꿔주면 된다.
                             //ZStack은 화면의 수직인 Stack이다. 순서에 신경 써줘야 한다.
@@ -126,7 +128,7 @@ struct ContentView: View {
                 
                 //Modifying reusable views
                 //Command-click, Embed in VStack를 선택해 처리할 수 있다.
-                //Canvas가 있어야 Embed in VStack 메뉴가 활성화된다.
+                //Canvas가 표시되고 있어야 Embed in VStack 메뉴가 활성화된다.
                 
                 //padding()은 모든 View에 적용할 수 있는 modifier 이다.
                 //3개의 Slider의 padding을 한 번에 처리 할 수 있다.
@@ -169,7 +171,8 @@ struct ContentView_Previews: PreviewProvider {
         //매개변수 값을 넣어 초기화 한다.
        
 //        .environment(\.colorScheme, .dark)
-        //환경 변수를 설정해 준다.
+        //환경 변수를 설정해 준다. //다크모드
+        //이 환경 변수 설정을 위해서는 최상위 View가 NavigationView이어야 한다.
     }
 }
 
@@ -317,15 +320,19 @@ struct ColorSlider: View {
 
 //SwiftUI는 선언적(declarative) UI와 선언적인 데이터 종속성을 사용한다.
 
+
+
+
 //Why SwiftUI?
-//Interface Builder와 StoryBoard는 UI를 쉽게 적용하고, 레이아웃 전환 segue를 설정할 수 있었다.
+//Interface Builder와 StoryBoard는 UI를 쉽게 적용하고, 레이아웃 전환 segue를 설정할 수 있다.
 //그러나, IB는 코드로 복사하거나 편집하기 어려운 단점이 있었다.
 //또한 IBAction이나 IBOutlet의 이름을 변경하면, 코드의 변경 사항이 표시되지 않아 앱이 중단되며
 //segue, TableViewCell 등에서 문자열 식별자를 사용하지만, 이를 확인하는 것도 힘들었다.
 //SwiftUI를 사용하면, IB나 StoryBoard를 사용하지 않고도, UI의 자세한 단계별 구조를 정의할 수 있다.
 //코드와 함께 Canvas로 preview를 확인하며, 한 쪽을 변경하면, 다른 쪽도 동기화 된다.
 //코드의 양도 UIKit으로 작성하는 것보다 훨씬 적어, 코드 관리와 디버그가 쉽다.
-//SwiftUI는 UIKit과 동시에 사용할 수 있으며, 변환(SwiftUI <-> UIKit) 또한 매우 쉽다.
+//UIKit과 SwiftUI는 대체하는 관계가 아니라 동시에 사용할 수 있으며,
+//변환(SwiftUI <-> UIKit) 또한 매우 쉽다.
 //SwiftUI API는 Cross-Platform이기 때문에, 여러 플랫폼에서 동일한 앱을 쉽게 개발할 수 있다.
 
 //Declarative app development
@@ -347,6 +354,7 @@ struct ColorSlider: View {
 
 
 //Getting started
+
 //SwiftUI vs. UIKit
 //UIKit 앱을 만드려면, StoryBoard에 여러 Lable, Button, Slider 등의 객체를 배치하고
 //ViewController에 연결한 다음, UI와 변경 사항을 동기화 하는 코드를 메서드나 함수에 따로 작성한다.
@@ -360,19 +368,26 @@ struct ColorSlider: View {
 //SwiftUI View는 UI의 일부이다. 작은 View를 결합해서 더 큰 View를 만든다.
 //Text, Color와 같은 기본 View를 커스텀 뷰의 구성 요소로 사용할 수 있다.
 //View는 툴바의 + 버튼을 눌러 추가할 수 있다. (Command-Shift-L: Library)
-//첫 번째 탭에는 View, 두 번재 탭에는 Modifier가 있다.
-//View는 UIKit에서 사용하던 컨트롤러들과 비슷하고, Modifier는 효과 등을 추가해 주는 객체이다.
+//첫 번째 탭에는 Primitive View, 두 번재 탭에는 Modifier가 있다.
+//View는 UIKit에서 사용하던 컨트롤러들과 비슷하지만 고유한 SwiftUI 객체이고,
+//Modifier는 레이아웃, 접근성, 효과 등을 추가해 주는 객체이다.
+//Modifier로 기존의 View를 새로운 View로 작성할 수 있다.
+//pipeline과 같은 modifier를 연결해, 어떤 View든 Custom View로 재정의할 수 있다.
 //SwiftUI를 사용하면 재사용 가능한 작은 View를 만든 다음 특정 상황에 맞게 modifier를 사용할 수 있다.
 //이때 SwiftUI는 효율적으로 데이터를 축소하므로, 성능 저하에 대한 걱정을 할 필요가 없다.
+//모든 유형의 View에 modifier를 적용할 수 있다.
+//modifier가 적용되는 순서에 따라 구현이 달라질 수 있으므로 이에 유의해야 한다.
 
 
 
 
 //Environment values
 //accessibility, locale, calendar, color scheme 와 같은 환경 값은 전체 앱에 영향을 준다.
-//사용자 디바이스의 이런 설정에서 발생할 수 있는 문제를 예상하고 해결해야 한다.
+//사용자 디바이스의 이런 설정에서 발생할 수 있는 문제를 예상하고 해결하기 위해
+//preview에서 환경 값을 설정한다.
 //EnvironmentValues 리스트 링크 : apple.co/2yJJk7T
 //앱의 기본모드로 다크모드를 설정하려면, 앱의 최상위 View에 대한 환경 값을 설정해야 한다.
+//preview 새로고침 단축키는 Option-Command-P
 
 //Modifying reusable views
 //이전에 ColorSlider에 각각 padding을 추가했다.
@@ -388,19 +403,23 @@ struct ColorSlider: View {
 
 //Using ZStack
 //score에 시간 점수를 추가하여, 빠르게 Hit Me! 버튼을 누를 수록 추가적인 점수를 준다.
-//Color 위에 Text를 추가하는데, 이러한 경우에는 ZStack을 사용할 수 있다.
-//ZStack은 화면의 수직인 Stack이다. ZStack에서 나중에 넣은 item이 더 높은 위치에 있게 된다(stack이니까).
+//Color 객체 위에 Text를 추가하는데, 이러한 경우에는 ZStack을 사용할 수 있다.
+//ZStack은 화면에 수직인 Stack이다. ZStack에서 나중에 넣은 item이 더 높은 위치에 있게 된다(stack이니까).
 
 //Debugging
 //Live Preview 버튼을 Control-click 하거나 Right-click 하여 Debug Preview 선택해
-//런타임 디버깅을 할 수 있다.
+//런타임 디버깅을 할 수 있다. 콘솔 창에서, 일반 디버깅 도구와 함께 environment overrides,
+//runtime issue scanning, runtime issue breakpoints 등을 사용할 수 있다.
+//디버그 세션은 preview와 life-cycle을 공유하기 때문에 디버거를 사용하는 동안 preview를 활성화 해야 한다.
 //아래 디버그 콘솔에서 Environment Overrides 버튼을 눌러서 UI디버깅을 할 수 있다.
-//Dark mode를 적용해 보거나 Text 크기 변경 등을 디버깅해 볼 수 있다.
+//Interface Style을 변경해 Dark mode를 적용해 보거나 Text 크기 변경 등을 디버깅해 볼 수 있다.
+//apple.co/2Kfcm5F
 
 
 
 
 //Declaring data dependencies
+
 //Guiding principles
 //SwiftUI에는 앱에서 데이터를 관리하는 두 가지 원칙이 있다.
 // • Data access = dependency: View에서 데이터를 읽으면,
@@ -428,7 +447,7 @@ struct ColorSlider: View {
 // • @ObservedObject: @ObservedObject는 ObservedObject 프로토콜을
 //  구현하는 참조 유형의 종속성을 선언한다. 데이터 변경을 위해, objectWillChange 속성을 구현해야 한다.
 // • @EnvironmentObject: @EnvironmentObject는 공유 데이터(앱의 모든 View에서 표시되는 데이터)에
-//  대한 종속성을 선언한다. 부모 View에서 자식 View와 손녀 View로 데이터를 전달할 때,
+//  대한 종속성을 선언한다. 부모 View에서 자식 View와 손자 View로 데이터를 전달할 때,
 //  자식 View에서는 필요하지 않는 데이터를 간접적으로 전달하는 편리한 방법이다.
 //일반적으로 재사용 View에서는 @State 변수를 사용하지 않는다.
 //대신에 @Binding 변수 또는 @ObservedObject 변수를 사용한다.

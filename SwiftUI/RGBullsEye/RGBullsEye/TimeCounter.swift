@@ -10,18 +10,22 @@ import Foundation
 import Combine //Counter를 만드는데, Combine을 사용한다.
 
 class TimeCounter: ObservableObject { //ObservableObject 프로토콜을 구현한다.
-    let objectWillChange = PassthroughSubject<TimeCounter, Never>()
+//    let objectWillChange = PassthroughSubject<TimeCounter, Never>()
     //ObservableObject 프로토콜은 objectWillChange 속성을 구현해야 한다.
     //PassthroughSubject는 범용 Combine publisher 이다.
     //Timer Class의 Combine 게시자 TimerPublisher를 사용할 수도 있다.
+    //업데이트 되면서 삭제
     
     var timer: Timer?
-    var counter = 0
+    @Published var counter = 0
     
     @objc func updateCounter() {
         counter += 1
-        objectWillChange.send(self)
+        //counter가 변경될 때 마다, subscriber에게 publish 한다.
+        
+//        objectWillChange.send(self)
         //counter가 변경될 때 마다, objectWillChange는 subscriber에게 자신을 publish 한다.
+        //업데이트 되면서 삭제
     }
     
     init() {
@@ -38,3 +42,5 @@ class TimeCounter: ObservableObject { //ObservableObject 프로토콜을 구현�
 //Observing a reference type object
 //새로운 Asynchronous 프레임워크인 Combine으로 Counter를 생성한다.
 //TimeCounter를 게시자(publisher)로 설정하면, ContentView(subscriber)가 구독자가 된다.
+//ObservableObject와 Published는 요구에 맞는 특정 Combine publisher가 없을 때,
+//범용 publisher (general-purpose Combine publisher)를 제공한다.

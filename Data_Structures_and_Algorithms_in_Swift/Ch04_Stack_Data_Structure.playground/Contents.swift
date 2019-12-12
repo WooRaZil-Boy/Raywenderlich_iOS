@@ -78,10 +78,15 @@ example(of: "using a stack") {
     stack.push(4)
     
     print(stack) //CustomStringConvertible에서 정의한 대로 출력 된다.
+    // ----top----
+    // 4
+    // 3
+    // 2
+    // 1 -----------
     
     if let poppedElement = stack.pop() {
         assert(4 == poppedElement)
-        print("Popped: \(poppedElement)")
+        print("Popped: \(poppedElement)") // Popped: 4
     }
 }
 //push와 pop은 모두 O(1) 시간 복잡도를 가진다.
@@ -122,6 +127,12 @@ example(of: "initializing a stack from an array") {
     let array = ["A", "B", "C", "D"]
     var stack = Stack(array) // D가 가장 위의 요소가 된다.
     print(stack)
+    // ----top----
+    // D
+    // C
+    // B
+    // A
+    // -----------
     stack.pop()
 }
 
@@ -137,6 +148,12 @@ extension Stack: ExpressibleByArrayLiteral {
 example(of: "initializing a stack from an array literal") {
     var stack: Stack = [1.0, 2.0, 3.0, 4.0] //4.0이 가장 위의 요소가 된다.
     print(stack)
+    // ----top----
+    // 4.0
+    // 3.0
+    // 2.0
+    // 1.0
+    // -----------
     stack.pop()
 }
 

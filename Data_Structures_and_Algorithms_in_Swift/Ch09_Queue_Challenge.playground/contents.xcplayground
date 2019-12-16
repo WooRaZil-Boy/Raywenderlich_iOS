@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='ios' display-mode='rendered'>
+    <pages>
+        <page name='1. Stack vs. Queue'/>
+        <page name='2. Step-by-step Diagrams'/>
+        <page name='3. Whose turn is it?'/>
+        <page name='4. Reverse Queue'/>
+        <page name='5. Double-ended queue'/>
+    </pages>
+</playground>

@@ -89,9 +89,6 @@ class OboePlayer: BandMember {
 //이러한 서브 클래스 체인을 클래스 계층 구조라고 한다. 여기서 계층은  OboePlayer-> BandMember-> Student-> Person 이다.
 //클래스 계층은 가계도와 유사하다. 이러한 비유 때문에, 슈퍼 클래스는 자식 클래스(child class)의 부모 클래스(parent class)라고도 한다.
 
-
-
-
 //Polymorphism
 //Student / Person의 관계는 컴퓨터 과학에서 다형성으로 알려진 개념을 보여준다. 간단히 말해, 다형성은 프로그래밍 언어가 상황에 따라 객체를 다르게 처리하는 능력이다.
 //OboePlayer는 Person 이기도 하다. Person 객체를 사용하는 모든 곳에서 OboePlayer 객체를 사용할 수 있다.
@@ -139,9 +136,6 @@ func afterClassActivity(for student: BandMember) -> String {
 //하지만, oboePlayer를 사용하더라도 Student로 캐스팅하는 경우에는 Student 매개변수를 사용하는 함수가 호출된다.
 afterClassActivity(for: oboePlayer) // Goes to practice!
 afterClassActivity(for: oboePlayer as Student) // Goes home!
-
-
-
 
 //Inheritance, methods and overrides
 //서브 클래스는 슈퍼 클래스에 정의된 모든 속성 및 메서드와 서브 클래스에서 자체적으로 정의한 추가 속성 및 메서드를 사용할 수 있다. 그런 의미에서 서브 클래스는 추가적이다.

@@ -135,9 +135,6 @@ if let indexOfJohn = imposters.firstIndex(where:{ $0 === john }) {
 }
 john.fullName // John Bananapeel
 
-
-
-
 //Methods and mutability
 //클래스 인스턴스는 변경 가능한 객체(mutable object)인 반면, 구조체 인스턴스는 변경할 수 없는 값이다(immutable value).
 struct Grade {
@@ -186,6 +183,9 @@ jane1 = Student(firstName: "John", lastName: "Appleseed") //참조가 새 Studen
 //ex. 참조를 상수로 가지고 있는 것이지, 해당 참조 인스턴스의 멤버 변수의 값까지 변경할 수 없는 것이 아니다.
 // 위의 예에서 jane은 상수로 선언 되었기 때문에 다른 인스턴스로 할당할 수 없다. 하지만, jane 인스턴스의 property인 firstName, lastName, grades는 모두 var로 선언되었기 때문에 변경 가능하다.
 // jane은 상수이지만, jane.firstName는 변수이므로 jane.firstName = "John" 등 으로 변경할 수 있다. 이런 변경을 막으려면, jane.firstName 를 let으로 선언해야 한다.
+
+
+
 
 //Understanding state and side effects
 //클래스는 참조 가능하고(reference) 가변적이라(mutable)는 특성때문에 많은 가능성이 있지만, 우려 또한 존재한다.

@@ -3,6 +3,9 @@
 //메서드는 구조체(struct)안에 있는 함수이다.
 //메서드는 구조체 외에도, 클래스(class), 열거형(enum) 등에서도 사용할 수 있다.
 
+
+
+
 //Method refresher
 //Array.removeLast() 메서드는 Array에서 마지막 항목을 삭제한다(pop).
 var numbers = [1, 2, 3]

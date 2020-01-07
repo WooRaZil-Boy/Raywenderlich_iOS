@@ -30,9 +30,6 @@ func isInDeliveryRange(location: (x: Int, y: Int)) -> Bool {
 }
 //하지만 이런 구현은 지점 수가 늘어나면 모든 좌표와 범위를 확인하고 계산해야 하기 때문에 한계가 있다. 좌표를 튜플로 묶어 Array에 유지할 수 있지만 읽고 쓰기가 비효율적이다.
 
-
-
-
 //Your first structure
 //구조체는 관련 속성과 동작들을 캡슐화(encapsulate) 할 수 있는 Swift의 named type 중 하나이다.
 //새로운 유형을 선언하고, 이름을 지정한 다음 코드에서 사용할 수 있다. 위의 피자 가게 예에서는 좌표를 x, y 튜플로 나타냈다. 이를 구조체로 표현할 수도 있다.
@@ -83,6 +80,9 @@ struct DeliveryArea: CustomStringConvertible {
 var storeArea = DeliveryArea(center: storeLocation, radius: 4)
 //구조체 안에 구조체가 있을 수도 있다(DeliveryArea의 center 속성).
 
+
+
+
 //Accessing members
 //String, Array, Dictionary 등과 마찬가지로, dot syntax를 사용해 member에 액세스할 수 있다.
 print(storeArea.radius) // 4.0
@@ -95,6 +95,9 @@ storeArea.radius = 250 //var로 선언했기에 접근 가능하다.
 let fixedArea = DeliveryArea(center: storeLocation, radius: 4)
 //fixedArea.radius = 250 // Error: Cannot assign to property.
 //변수가 var이라도 let으로 인스턴스를 선언했다면 변경 불가능하다.
+
+
+
 
 //Introducing methods
 //추가적인 구조체 기능을 위해(여기서는 피자 배달 범위를 계산) 함수를 추가해 준다.

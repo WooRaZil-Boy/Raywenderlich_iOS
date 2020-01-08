@@ -86,7 +86,7 @@ example(of: "tree diagram") {
 // • 이후, 기존의 노드를 방문한다(가운데, parent)(P).
 // • 현재 노드에서 오른쪽 자식이 있으면, 재귀적으로 순회한다(R).
 //위의 트리에서 중위 순회는 다음과 같다. [0, 1, 5, 7, 8, 9] //p.148
-//트리가 특정 방식으로 구조화되면(이진 검색 트리), 중위순회는 오름차순으로 출력된다.
+//트리가 특정 방식으로 구조화되면(이진 탐색 트리), 중위순회는 오름차순으로 출력된다.
 extension BinaryNode {
     public func traverseInOrder(visit: (Element) -> Void) {
         leftChild?.traverseInOrder(visit: visit)
@@ -148,5 +148,5 @@ example(of: "post-order traversal") {
     // 7
 }
 //이러한 순회 알고리즘은 각각 시간과 공간 복잡도가 모두 O(n)이다.
-//이진 검색 트리를 중위 순회하면 오름차순으로 출력할 수 있다.
+//이진 탐색 트리를 중위 순회하면 오름차순으로 출력할 수 있다.
 

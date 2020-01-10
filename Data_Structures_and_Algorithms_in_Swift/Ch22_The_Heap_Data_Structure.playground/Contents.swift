@@ -266,6 +266,8 @@ extension Heap {
             //힙의 특성을 만족시키기 위해, leaf가 아닌 첫 node에서 시작하여 Array를 거꾸로 반복하면서 모든 상위 node를 선별한다.
             //leaf node를 sift down 하는 것은 의미가 없기 때문에, 요소의 절반(상위 node)만 반복한다.
             for i in stride(from: elements.count / 2 - 1, through: 0, by: -1) {
+                //stride(from:to:by:) 는 to: 뒤의 경계를 포함하지 않는다.
+                //stride(from:through:by:) 는 through: 뒤의 경계까지 포함한다.
                 siftDown(from: i)
             }
         }
@@ -280,8 +282,6 @@ extension Heap {
 
 //Testing
 var heap = Heap(sort: >, elements: [1, 12, 3, 4, 1, 6, 8, 7]) //max heap
-//stride(from:to:by:) 는 to: 뒤의 경계를 포함하지 않는다.
-//stride(from:through:by:) 는 through: 뒤의 경계까지 포함한다.
 while !heap.isEmpty {
     print(heap.remove()!)
     // 12

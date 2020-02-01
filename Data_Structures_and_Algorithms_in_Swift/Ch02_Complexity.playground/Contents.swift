@@ -76,7 +76,7 @@ func naiveContains1(_ value: Int, in array: [Int]) -> Bool {
 func naiveContains2(_ value: Int, in array: [Int]) -> Bool {
     guard !array.isEmpty else { return false }
     let middleIndex = array.count / 2
-    if value <= array[middleIndex] { //찾으려는 값이 중간값보다 작거나 같은
+    if value <= array[middleIndex] { //찾으려는 값이 중간값보다 작거나 같은 경우
         for index in 0...middleIndex { //배열의 중간값 이후의 절반은 skip할 수 있다.
             if array[index] == value {
                 return true
@@ -103,7 +103,7 @@ func naiveContains2(_ value: Int, in array: [Int]) -> Bool {
 //유사 선형 시간 복잡도는 선형(Linear) 시간보다는 성능이 떨어지지만, 이차(Quadratic) 시간보다는 훨씬 뛰어나다.
 //가장 일반적인 알고리 중 하나로, 대표적인 예는 Swift의 sort 메서드이다.
 //유사 선형 시간(Quasilinear time) 복잡도의 Big O 표기법은 선형(linear)과 로그(logarithmic)의 곱인 O(n log n)이다.
-//선형(Linear) 시간보다는 느리지만, 대다수의 다른많 시간 복잡도보다는 성눙이 뛰어나다.
+//선형(Linear) 시간보다는 느리지만, 대다수의 다른 시간 복잡도보다는 성능이 뛰어나다.
 //data와 time 사이의 그래프를 그려보면(p.34), 이차 (Quadratic) 시간 복잡도와 비슷하지만, 큰 입력 데이터에 대해 탄력적이다.
 
 //Other time complexities
@@ -112,12 +112,9 @@ func naiveContains2(_ value: Int, in array: [Int]) -> Bool {
 //시간 복잡도는 성능에 대한 높은 수준의 개요(high-level overview) 일뿐, 일반적인 순위 체계를 넘어 알고리즘 속도를 판단하지 않는다는 점을 유의해야 한다.
 //ex. 동일한 시간 복잡도의 알고리즘에서 하나의 알고리즘이 다른 하나보다 훨씬 빠를 수 있다.
 //또한, 데이터 크기가 작을 경우, 시간 복잡도로 실제 속도를 정확하게 측정하지 못할 수 있다.
-//ex. 이차(quadratic) 알고리즘인 삽입 정렬(insertion sort)의 경우 데이터가 작다면, 병합 정렬(merge sort)와 같은 유사 선형 시간(Quasilinear time)보다 빠를 수 있다.
+//ex. 이차(quadratic) 알고리즘인 삽입 정렬(insertion sort)의 경우 데이터가 작다면, 합병 정렬(merge sort)와 같은 유사 선형 시간(Quasilinear time)보다 빠를 수 있다.
 //삽입 정렬은 알고리즘 수행을 위한 추가 메모리를 할당할 필요가 없지만, 병합 정렬은 여러 배열을 할당해야 하기 때문이다.
 //입력 데이터가 작은 경우, 메모리 할당은 알고리즘이 사용해야하는 요소 수에 비해 비용이 비쌀 수 있다.
-
-
-
 
 //Comparing time complexity
 //1에서 n까지의 숫자를 더하는 코드를 작성한다.
@@ -136,7 +133,7 @@ func sumFromOne2(upto n: Int) -> Int {
 }
 sumFromOne2(upto: 10000)
 //standard library에서 컴파일된 코드를 호출하기 때문에 이 코드가 이전 코드보다 빠르다.
-//하지만, reduce()는 n번의 덧셈을 하기 때문에 여전히 시간 복잡도는 O(n)이다. 동일한 Big O를 가지지만, 컴파일된 코드가 더 성능이 좋다.
+//하지만, reduce()는 n번의 덧셈을 하기 때문에 여전히 시간 복잡도는 O(n)이다. 동일한 Big O이지만, 코드를 컴파일하기 때문에 상수가 더 작다.
 func sumFromOne3(upto n: Int) -> Int {
     (n + 1) * n / 2
 }
@@ -144,7 +141,7 @@ sumFromOne3(upto: 10000)
 //위의 함수는 Fredrick Gauss가 발견한 법칙을 사용한다. 간단한 산술을 사용해 합계를 계산할 수 있다.
 //이 알고리즘의 시간 복잡도는 O(1)으로 O(n)알고리즘은 이 보다 빠르게 완료될 수 없다.
 //항상 상수 시간 (constant time) 알고리즘이 권장된다(하지만, 현실적으로 많지 않다).
-//해당 코드를 loop에 넣으면 이전과 같이 Linear time을 가지게 된다. O(n)은 이차 시간(quadratic time)에서 하나의 외부 loop이며 느리다.
+//이 최적화된 코드도 loop 안에 있다면, Linear time이 되어 버린다. 이전의 O(n) 버전은 이차 시간(quadratic time)에서 하나의 외부(outer) loop이다.
 
 
 
@@ -160,7 +157,7 @@ func printSorted1(_ array: [Int]) {
 }
 //위 함수는 정렬된 배열의 사본을 변수에 할당하고, 배열의 요소를 출력한다. 여기서 할당되는 메모리를 분석해 보면,
 //array.sorted()는 동일한 크기의 새로운 배열을 생성하므로, printSorted() 함수의 공간 복잡도는 O(n)이다.
-//해당 함수는 단순해 사용하기 편하지만, 메모리 할당양을 줄여야 하는 상황이 종종 있을 것이다.
+//해당 함수는 단순해 사용하기 편하지만, 메모리 할당량을 줄여야 하는 상황이 종종 있을 것이다.
 func printSorted2(_ array: [Int]) {
     guard !array.isEmpty else { return } //배열이 비어 있는지 확인한다.
     
@@ -201,6 +198,18 @@ func printSorted2(_ array: [Int]) {
 
 
 //Other notations
-//Big O 표기법은 알고리즘을 평가하는 가장 일반적인 척도이다. 다른 표기법도 있다.
+//Big O 표기법이 알고리즘을 평가하는 가장 일반적인 척도이지만, 다른 표기법도 있다.
 // - Big Omega : Big O와는 반대로 최상의 소요시간을 측정한다. 하지만, 이를 얻는 것이 불가능한 경우도 있기 때문에 Big O 만큼 유용하지는 않다.
 // - Big Theta : 최상의 경우와 최악의 경우가 동일한 알고리즘의 소요시간을 측정하는 데 사용된다.
+
+
+
+
+//Key points
+// • 시간 복잡도(Time complexity)는 입력 크기가 증가함에 따라 알고리즘을 실행하는 데 필요한 시간을 측정한 것이다.
+// • 상수 시간(Constant time), 선형 시간(Linear time), 이차 시간(Quadratic time), 로그 시간(Logarithmic time), 유사 선형 시간(Quasilinear time)에 대해 알고,
+//  해당 시간 복잡도의 비용 순서를 정렬할 수 있어야 한다.
+// • 공간 복잡도(Space complexity)는 알고리즘 실행에 필요한 자원(resource, 메모리)를 측정하는 것이다.
+// • Big O 표기법은 시간 복잡도와 공간 복잡도의 일반적인 형태를 나타내기 위해 사용된다.
+// • 시간 복잡도와 공간 복잡도는 high-level 확장성 척도로, 알고리즘 자체의 실제 속도를 측정하지는 않는다.
+// • 데이터가 적은 경우, 일반적으로 시간 복잡도는 무관해 진다. 유사 선형 시간(quasilinear time) 알고리즘이 선형 시간(linear time) 알고리즘보다 느릴 수 있다.

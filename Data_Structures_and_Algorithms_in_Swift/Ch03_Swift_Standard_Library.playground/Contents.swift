@@ -12,7 +12,8 @@
 let people = ["Brian", "Stanley", "Ringo"]
 //Swift는 protocol을 사용하여 배열을 정의한다. 각 protocol은 배열에서 더 많은 기능을 계층화한다.
 //ex. Array는 Sequence이다(Sequence protocol을 구현). 즉, 배열을 한 번이상 반복(iterate)할 수 있다.
-//또한, Array는 Collection이므로(Collection protocol을 구현) 여러번 순회할 수 있고, 비파괴적이며 subscript 연산자를 사용할 수 있다.
+//또한, Array는 Collection이므로(Collection protocol을 구현) 여러번 순회할 수 있고, 비파괴적(non-destructively, 자기 자신을 변경 시키지 않는다)이며 subscript 연산자를 사용할 수 있다.
+//그리고 Array는 RandomAccessCollection이므로, 효율성(efficiency)이 보장된다.
 //Swift의 Array는 어떠한 type으로도 생성할 수 있기 때문에 generic collection이라 한다.
 //사실 대부분의 Swift standard library는 generic code로 만들어져 있다.
 
@@ -27,10 +28,11 @@ people[2] // "Ringo"
 //Random-access
 //Random-access는 자료구조가 상수 시간(constant time) 내에 요소 검색을 처리할 수 있는 특성이다.
 //ex. 위의 people 배열에서 "Ringo" 요소를 가져오는 데 상수 시간(constant time)이 걸린다(subscript 연산자 사용).
-//linked list나 tree 같은 자료 구조에서는 상수 시간(constant time)으로 요소에 접근할 수 없다.
+//Random-access을 당연한 기능으로 생각해서는 안 된다.
+//Linked list나 Tree 같은 자료 구조에서는 상수 시간(constant time)으로 요소에 접근할 수 없다.
 
 //Array performance
-//데이터의 양이 증가할 때, 다른 자료구조들과의 성능을 비교해 본다.
+//늘어나는 데이터의 양이 Array의 성능에 어떤 끼치는 영향을 알아본다. 두 가지 요소에 따라 달라진다.
 
 //Insertion location
 //배열에 하나의 요소를 삽입(insert)할 때, 가장 효율적인 방법은 배열의 끝에 추가하는 것이다.
@@ -47,7 +49,7 @@ people.insert("Andy", at: 0)
 //이 경우, 배열의 요소가 두 배가 되면, insert에 걸리는 시간 또한 두 배가 된다.
 //따라서, Collection의 가장 앞에 요소를 삽입하는 것이 일반적인 작업인 프로그램의 경우, 다른 자료 구조를 고려해야 한다.
 //insert 작업의 속도를 결정하는 또 다른 요소는 배열의 용량(capacity)이다.
-//Swift array에는 해당 요소를 위한 미리 결정된 공간이 할당된다. 최대 용량에 도달한 배열에 새 요소를 추가하려는 경우,
+//Swift array는 해당 요소를 위한 공간이 미리 결정되어 할당된다. 최대 용량에 도달한 배열에 새 요소를 추가하려는 경우,
 //공간을 확보하기 위해 배열 자체를 재구성한다. 이는 배열의 모든 요소를 더 큰 container에 복사하여 수행한다.
 //하지만, 이 작업은 각 요소를 복사해야 하기 때문에 비용이 추가적으로 발생한다.
 //즉, 배열이 최대 용량에 도달한 경우에는 새로운 요소를 끝에 추가할지라도, n단계의 추가 작업이 발생한다.
@@ -67,7 +69,7 @@ scores["Andrew"] = 0 //Dictionary에 새 항목 추가
 // ["Eric": 9, "Mark": 12, "Andrew": 0, "Wayne": 1]
 //Dictionary는 순서가 없기 때문에, 출력이 달라질 수 있다.
 //Dictionary는 Collection protocol을 구현 했기 때문에, key-value 쌍을 여러 번 탐색할 수 있다.
-//Dictionary에는 순서가 없지만, collection이 변경 되기 전 까지는, 순회 때마다 동일하다.
+//Dictionary에는 순서가 없지만, collection이 변경 되기 전 까지는, 순회 때마다 동일하게 유지된다.
 //Array와 달리, Dictionary는 요소의 삽입(insert)에 상수 시간(constant time)이 걸린다.
 //조회 작업 또한, key로 바로 찾을 수 있기 때문에, 상수 시간(constant time)이다. 따라서, 처음부터 순회하며 특정 요소를 찾아야 하는 배열보다 훨씬 빠르다.
 
@@ -90,4 +92,14 @@ for value in values {
 }
 //Array나 Dictionary만큼 Set를 자주 사용하지는 않지만, 중요한 자료구조이다.
 //Set은 Dictionary와 유사하게 순서의 개념이 없다.
+
+
+
+
+//Key points
+// • 모든 자료구조(data structure)는 장단점을 가지고 있다. 이를 이해하는 것이 고성능 소프트웨어를 작성하는 핵심이다.
+// • 배열(Array)의 insert(at:)와 같은 함수는 함부로 사용할 경우, 성능이 저하될 수 있다.
+//  배열의 시작 부근 index에 삽입을 자주해야 하는 경우에는 linked list와 같은 다른 자료 구조를 고려할 수 있다.
+// • Dictionary는 빠른 삽입(insertion) 및 검색(searching)을 위해 요소의 순서를 유지하지 않는다.
+// • 집합(Set)은 요소 값의 고유성을 보장한다. Set는 속도에 최적화되어 있으며, 요소의 순서를 유지하지 않는다.
 

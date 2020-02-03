@@ -13,9 +13,17 @@
  (hello world // unbalanced parentheses
  ```
  */
+//괄호의 균형을 확인한다. 문자열이 주어지면 '(' 과 ')' 이 있는 지 확인하고,
+//문자열의 괄호가 균형이 맞으면 true를 반환한다. 예를 들면 다음과 같다.
+//h((e))llo(world)() // balanced parentheses
+//(hello world // unbalanced parentheses
+
+
+
+
 var testString1 = "h((e))llo(world)()"
 
-//괄호가 균형으로 되어 있는지 판단하기 위해 문자열의 각 문자를 확인해야 한다.
+//문자열에 괄호가 균형으로 되어 있는지 판단하기 위해 문자열의 각 문자(character)를 확인해야 한다.
 //( 가 있으면 이를 Stack에 push한다. 반대로 )가 있다면 Stack에서 pop한다.
 
 func checkParentheses(_ string: String) -> Bool {
@@ -37,6 +45,6 @@ func checkParentheses(_ string: String) -> Bool {
 }
 //문자열의 character를 loop하여 "(" 를 push 하고 ")" 를 pop 해서 Stack이 비어 있으면 괄호가 균형적으로 된 문자열인 것이다.
 //이 알고리즘의 시간복잡도는 O(n)이고, 여기서 n은 문자열의 문자 수 이다.
-//Stack 자료구조를 사용했기 때문에 공간복잡도 역시 O(n)이다.
+//Stack 자료구조를 사용하므로, 공간복잡도 역시 O(n)이다.
 
 checkParentheses(testString1) // should be true

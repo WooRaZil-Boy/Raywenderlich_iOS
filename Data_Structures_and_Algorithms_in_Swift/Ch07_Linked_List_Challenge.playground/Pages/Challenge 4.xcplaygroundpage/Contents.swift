@@ -6,6 +6,12 @@
 
  Create a function that takes two sorted linked lists and merges them into a single sorted linked list. Your goal is to return a new linked list that contains the nodes from two lists in sorted order. You may assume the sort order is ascending.
  */
+//두 개의 정렬된 연결 리스트(Linked List)﻿를 가져와서 하나의 정렬된 연결 리스트로 병합하는 함수는 만든다.
+//두 리스트의 모든 노드가 순서대로 연결된 새로운 연결 리스트를 반환하면 된다. 정렬 순서는 오름차순(ascending)으로 구현한다.
+
+
+
+
 //두 개의 정렬된 list에서 노드를 계속 가져와 새 list에 추가한다.
 //두 list가 정렬되어 있으므로, 각 list의 next node를 비교하여 어느 것이 새 list에 추가되어야 하는지 확인할 수 있다.
 
@@ -38,7 +44,7 @@ func mergeSorted<T: Comparable>(_ left: LinkedList<T>,
         tail = newHead
     }
     
-    //위의 첫 node에 대해 작업한 것 처럼, left와 right를 iterate 해서 필요한 node를 선택해 새 list를 정렬되도록 한다.
+    //위의 첫 node에 대해 작업한 것 처럼, left와 right를 iterate 해서 필요한 node를 선택해 새 list로 정렬되도록 한다.
     while let leftNode = currentLeft, let rightNode = currentRight {
         //while loop는 list 중 하나의 끝에 도달할 때까지 반복된다.
         if leftNode.value < rightNode.value {
@@ -62,7 +68,7 @@ func mergeSorted<T: Comparable>(_ left: LinkedList<T>,
     }
     //나머지 남은 list의 node들을 추가한다.
     
-    //새 list를 인스턴스화 한다. append() 또는 insert() 메서드를 사용하여 요소를 list에 삽입하는 대신,
+    //새 list를 인스턴스화 한다. append() 또는 insert() 메서드로 요소를 삽입하는 대신,
     //list의 head와 tail에 대한 참조를 직접 설정해 주면 된다.
     var list = LinkedList<T>()
     list.head = newHead
@@ -70,6 +76,7 @@ func mergeSorted<T: Comparable>(_ left: LinkedList<T>,
         while let next = tail?.next {
             tail = next
         }
+        
         return tail
     }()
     
@@ -95,6 +102,6 @@ example(of: "merging two lists") {
     let mergedList = mergeSorted(list, anotherList)
     print("Merged list: \(mergedList)") // Merged list: -3 -> -2 -> -1 -> 1 -> 2 -> 3
 }
-//이 알고리즘의 시간 복잡도는 O(m+n)이다. m의 첫 번째 list의 node 수 이고, n은 두 번째 list의 node 수 이다.
+//이 알고리즘의 시간 복잡도는 O(m + n)이다. m의 첫 번째 list의 node 수 이고, n은 두 번째 list의 node 수 이다.
 
 //: [Next Challenge](@next)

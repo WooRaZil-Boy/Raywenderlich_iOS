@@ -6,7 +6,13 @@
 
  Create a function that prints the nodes of a linked list in reverse order.
  */
-//재귀를 사용하면, 함수 호출을 Stack 으로 작성할 수 있다. 이 호출 Stack이 unwind 될 때 print만 작성해 주면 된다.
+//연결리스트(Linked List)를 역순(revese)로 출력하는 함수를 만든다.
+
+
+
+
+//재귀(recursion)로 간단하게 구현할 수 있다. 재귀를 사용하면, 함수 호출을 Stack 으로 작성할 수 있다.
+//이 호출 Stack이 unwind 될 때 print구문을 출력해 주면 된다.
 
 private func printInReverse<T>(_ node: Node<T>?) {
     guard let node = node else { return } //재귀 종료 조건
@@ -14,7 +20,8 @@ private func printInReverse<T>(_ node: Node<T>?) {
     
     printInReverse(node.next)
     //LinkedList의 끝까지 재귀적으로 순회한다.
-    print(node.value) //printInReverse가 재귀적으로 호출되므로, LinkedList의 역순으로 print 된다.
+    print(node.value) //printInReverse가 재귀적으로 호출되므로, 리스트의 끝에 도달한 이후 호출된다.
+    //LinkedList의 역순으로 print되며 해당 구문이 완료된다.
 }
 
 func printInReverse<T>(_ list: LinkedList<T>) {

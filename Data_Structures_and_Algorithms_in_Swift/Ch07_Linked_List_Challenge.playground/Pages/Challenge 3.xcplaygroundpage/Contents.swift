@@ -6,9 +6,14 @@
 
  Create a function that reverses a linked list. You do this by manipulating the nodes so that they’re linked in the other direction.
  */
-//LinkedList를 reverse 하려면, 각 node의 next참조를 다른 node를 가리키도록 업데이트해야 한다.
+//연결리스트(Linked List)를 반대로 하는 함수를 생성한다. 노드(node)가 반대 방향으로 연결되도록  구현하면 된다. 예를 들면 다음과 같다.
+
+
+
+
+//LinkedList를 reverse 하려면, 각 node의 next참조가 다른 node를 가리키도록 업데이트해야 한다.
 //여러 node에 대한 참조를 관리해야 하므로 까다로운 작업이 될 수 있다.
-//간단한 방법은 새로운 임시 LinkedList를 만든 후, push하여 List를 reverse하는 것이다.
+//새로운 임시 LinkedList와, push를 사용하면 간단하게 List를 reverse할 수 있다.
 
 extension LinkedList {
     mutating func reverse1() {
@@ -18,13 +23,13 @@ extension LinkedList {
             //현재 LinkedList에서 tempList로 push(앞에서 삽입)한다. List가 역순으로 생성된다.
         }
         
-        head = tempList.head //head가 reverse된 list의 node를 가리킨다.
+        head = tempList.head //head가 reverse된 list의 node를 가리킨도록 한다.
     }
 }
 //시간 복잡도는 O(n)이다.
-//하지만, O(n)는 list를 reverse하기 위한 최적의 시간 복잡도 이지만, 이 알고리즘에는 상당히 큰 리소스가 사용된다.
+//O(n)는 list를 reverse하기 위한 최적의 시간 복잡도 이지만, 이 알고리즘에는 상당한 리소스가 사용된다.
 //reverse()는 임시 list에 각 value를 push할 때마다, 새 node를 생성하고 할당한다.
-//이렇게 임시 list를 완전히 사용하지 않고도, 각 node의 다음 포인터를 조작하여 list를 reverse할 수 있다.
+//하지만, 임시 list를 완전히 사용하지 않고도, 각 node의 다음 포인터를 조작하여 list를 reverse할 수 있다.
 //코드는 더 복잡해 지지만, 성능은 상당히 개선된다.
 
 extension LinkedList {
@@ -52,6 +57,8 @@ extension LinkedList {
     }
 }
 //각 노드를 순회하면서, 참조가 이전 node를 가리키게 하도록 한다.
+//current를 prev로 할당하면, 나머지 list에 대한 참조가 사라지게 된다. 따라서 세 번째 참조(next)를 관리해야 한다.
+//reverse가 진행될 때마다, 다음 node에 대한 새로운 참조가 작성된다. 모든 reverse 절차 이후에 두 포인터(prev, current)를 이동해 준다.
 
 
 
@@ -66,5 +73,5 @@ example(of: "reversing a list") {
     list.reverse2()
     print("Reversed list: \(list)") // Reversed list: 3 -> 2 -> 1
 }
-//새로운 reverse() 메서드의 시간 복잡도는 여전히 O(n)이다. 하지만, tempList를 사용하거나 새 node 객체를 생성할 필요 없어 성능은 크게 향상된다.
+//새로운 reverse() 메서드의 시간 복잡도는 여전히 O(n)이다. 하지만, tempList를 사용하거나 새 node 객체를 생성할 필요가 없어 성능은 크게 향상된다.
 //: [Next Challenge](@next)

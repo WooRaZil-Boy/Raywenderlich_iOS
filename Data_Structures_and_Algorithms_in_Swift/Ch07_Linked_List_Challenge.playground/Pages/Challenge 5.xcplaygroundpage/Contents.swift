@@ -6,8 +6,14 @@
 
  Create a function that removes all occurrences of a specific element from a linked list. The implementation is similar to the `remove(at:)` method that you implemented for the linked list.
  */
+//연결 리스트(Linked List)에서 특정 요소를 모두 제거하는 함수를 작성한다. 이 구현은 연결 리스트의 remove(at:) 메서드와 유사하다.
+
+
+
+
 //list를 순회하여 제거하려는 요소와 일치하는 모든 node를 제거한다.
 //제거 할 때마다, 선행 node와 후속 node를 다시 연결해야 해야 하므로 복잡해질 수 있다.
+//하지만, 많은 자료구조(Data Struct)와 알고리즘(Algorithm)은 포인터 연산을 다루는 경우가 많으므로, 충분한 연습이 필요하다.
 
 extension LinkedList where Value: Equatable {
     mutating func removeAll(_ value: Value) {
@@ -20,18 +26,20 @@ extension LinkedList where Value: Equatable {
             self.head = head.next
         }
         
-        //node의 연결을 해제한다.
+        //중복되는 node를 찾아 연결을 해제한다.
         var prev = head
         var current = head?.next
-        //두 개의 참조로 목록을 순회한다.
+        //두 개의 포인터로 목록을 순회한다.
         while let currentNode = current {
             if currentNode.next == nil {
-              tail
+                tail
             }
             
-            guard currentNode.value != value else { //node를 제거해야 하는 경우 guard 블록이 실행된다.
+            guard currentNode.value != value else { //node를 제거해야하는 경우 guard 블록이 실행된다.
                 prev?.next = currentNode.next
                 current = prev?.next
+                //제거한 node를 우회하도록 list의 참조를 수정한다.
+                
                 continue
             }
             

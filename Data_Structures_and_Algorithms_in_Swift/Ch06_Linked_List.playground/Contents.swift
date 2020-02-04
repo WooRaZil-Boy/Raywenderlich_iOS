@@ -1,12 +1,12 @@
 //Chapter 6: Linked List
 
-//Linked List는 단일방향 sequence를 이룬 값들의 모음이다. 이론적으로 연결 리스트는 배열에 비해 몇 가지 장점이 있다.
+//연결 리스트(Linked List)는 단방향 sequence로 배열되어 있는 값들의 모음이다. 이론적으로 연결 리스트는 배열(Array)에 비해 몇 가지 장점이 있다.
 // • 리스트의 front에서 insert, remove 할 때 상수 시간(Constant time) 시간복잡도를 가진다.
 // • 안정적인 성능
 //다이어그램(p.56)에서 알 수 있듯이 연결 리스트는 노드들이 연결되어 있는 것이다(chain of nodes). 노드는 두 가지 역할을 한다.
-// 1. 값을 유지한다.
-// 2. 다음 노드에 대한 참조(reference)를 유지한다. 해당 참조가 nil이라면 해당 노드가 리스트의 끝이라는 의미이다.
-//여기서는 기본적인 연결 리스트의 기능 외에, Swift의 간결한 기능 중 하나인 COW(copy-on-write)를 구현한다.
+// 1. 값(value)을 유지(hold)한다.
+// 2. 다음 노드에 대한 참조(reference)를 유지한다. 해당 참조가 nil이라면 해당 노드가 리스트의 끝임을 의미이다.
+//여기서는 연결 리스트와 이에 관련된 연산외에도, Swift의 간결한 기능 중 하나인 COW(copy-on-write)를 구현한다.
 
 
 
@@ -119,9 +119,9 @@ extension LinkedList {
 
 example(of: "append") {
     var list = LinkedList<Int>()
-    list.append(3)
-    list.append(2)
     list.append(1)
+    list.append(2)
+    list.append(3)
     
     print(list) // 1 -> 2 -> 3
 }
@@ -129,7 +129,7 @@ example(of: "append") {
 //insert(after:) operations
 //insert(after:) 는 list의 특정 위치에 value를 삽입하며, 두 단계로 이루어진다.
 // 1. list에서 특정 node를 찾는다.
-// 2. 새 node를 insert 한다.
+// 2. 새 node를 삽입(insert) 한다.
 extension LinkedList {
     public func node(at index: Int) -> Node<Value>? { //값을 insert할 node를 찾는다.
         //주어진 index로 list에서 node를 검색한다.
@@ -152,7 +152,7 @@ extension LinkedList {
     public mutating func insert(_ value: Value, after node: Node<Value>) -> Node<Value> {
         copyNodes()
         guard tail !== node else { //insert 하는 index가 list의 마지막이라면(tail Node), append와 같다.
-            //메모리 비교를 해야 한다.
+            //메모리 주소값을 비교 해야 한다.
             append(value)
             return tail!
         }
@@ -203,13 +203,14 @@ extension LinkedList {
         copyNodes()
         defer { //메서드에서 코드 흐름과 상관없이 가장 마지막에 defer 블록이 실행된다. //return 이후에 호출된다.
             head = head?.next //head를 두 번째 node(head의 next)로 할당한다.
-            //더 이상 head에 참조가 없으므로 ARC가 제거한다.
+            //더 이상 이전 head(첫 노드)에 참조가 없으므로 ARC가 제거한다.
             if isEmpty { //list가 비었다면, tail을 nil로 할당한다.
                 tail = nil
             }
         }
         
         return head?.value //list에서 제거된 value를 반환한다.
+        //목록이 비어 있을 수 있으므로, 이 값은 optional이어야 한다.
     }
 }
 
@@ -251,7 +252,7 @@ extension LinkedList {
             current = next
         }
         
-        //current는 마지막 node가 된다.
+        //current는 마지막 node, prev는 마지막 이전 node가 된다.
         prev.next = nil //prev.next의 참조를 제거한다.
         tail = prev //tail의 참조를 업데이트 해 준다.
         
@@ -277,18 +278,18 @@ example(of: "removing the last node") {
 //특정 node를 제거하는 remove(after:)는 insert(after :)와 유사하다.
 //제거하려는 node 바로 앞의 node를 찾은 다음 next연결을 해제해야 한다. p.66
 extension LinkedList {
-    @discardableResult
+//    @discardableResult
 //    public mutating func remove(after node: Node<Value>) -> Value? {
 //        copyNodes()
 //        defer { //메서드에서 코드 흐름과 상관없이 가장 마지막에 defer 블록이 실행된다. //return 이후에 호출된다.
 //            //defer 블록에서 Node를 연결 해제해 준다.
 //            if node.next === tail { //tail를 제거하는 경우에는 tail 참조를 업데이트 해 줘야 한다.
-//                //메모리 비교를 해야 한다.
+//                //메모리 주소를 비교 해야 한다.
 //                tail = node
 //            }
 //            node.next = node.next?.next
-//            //제거하려는 node 바로 앞의 node를 찾아 새로 next 참조를 업데이트 해 준다.
-//            //해당 node는 더 이상 참조가 없으므로 ARC에서 해제 된다.
+//            //제거하려는 node 바로 앞의 node를 찾아 next 참조를 새로 업데이트 해 준다.
+//            //삭제하는 node(node의 이전 next)는 더 이상 참조가 없으므로 ARC가 제거한다.
 //        }
 //
 //        return node.next?.value
@@ -299,6 +300,7 @@ extension LinkedList {
     
     //A minor predicament
     //COW 적용 이후, 제대로 동작하지 않는 점을 수정해 준다.
+    @discardableResult
     public mutating func remove(after node: Node<Value>) -> Value? {
         guard let node = copyNodes(returningCopyOf: node) else { //새로운 copyNodes(returningCopyOf:) 메서드를 사용한다.
             return nil
@@ -307,17 +309,18 @@ extension LinkedList {
         defer { //메서드에서 코드 흐름과 상관없이 가장 마지막에 defer 블록이 실행된다. //return 이후에 호출된다.
             //defer 블록에서 Node를 연결 해제해 준다.
             if node.next === tail { //tail를 제거하는 경우에는 tail 참조를 업데이트 해 줘야 한다.
-                //메모리 비교를 해야 한다.
+                //메모리 주소를 비교 해야 한다.
                 tail = node
             }
             node.next = node.next?.next
-            //제거하려는 node 바로 앞의 node를 찾아 새로 next 참조를 업데이트 해 준다.
-            //해당 node는 더 이상 참조가 없으므로 ARC에서 해제 된다.
+            //제거하려는 node 바로 앞의 node를 찾아 next 참조를 새로 업데이트 해 준다.
+            //삭제하는 node(node의 이전 next)는 더 이상 참조가 없으므로 ARC가 제거한다.
         }
         
         return node.next?.value
     }
 }
+//노드의 연결 해제는 defer 블록에서 발생한다. 제거하는 노드가 tail인 경우에는 참조를 업데이트 해야 하므로 주의가 필요하다.
 
 example(of: "removing a node after a particular node") {
     var list = LinkedList<Int>()
@@ -347,8 +350,10 @@ example(of: "removing a node after a particular node") {
 
 
 //Swift collection protocols
-//Swift standard library에는 특정 유형을 정의하는 protocol이 있다.
-// • Tier 1, Sequence : 해당 요소에 대한 순차적 액세스를 한다. 순차 액세스 시, desctructive한 경우도 있다.
+//Swift 표준 라이브러리(standard library)에는 특정 유형(type)을 정의하는데 도움이 되는 일련의 프로토콜(protocol)이 있다.
+//이러한 각 프로토콜은 특정 특성과 성능을 보장한다. 여기에는 4개의 Collection protocol이 있다.
+// • Tier 1, Sequence : 해당 요소에 대한 순차적 액세스를 한다. 순차 접근(sequential access) 시,
+//      요소가 desctructive한 경우도 있으니 주의해야 한다.
 //      Using the sequential access may destructively consume the elements.
 //      ex. value type에서 for in loop를 사용하는 경우, iterator는 사본이 되기 때문에 nondestructive.
 //      하지만, reference type의 경우에는 for in loop 시, iterator가 자기 자신을 참조하기 때문에, 순회 이후 desctructive하다.
@@ -356,12 +361,15 @@ example(of: "removing a node after a particular node") {
 //      https://soooprmx.com/archives/7047
 //      nondestructive를 지원하려면, Collection을 구현해야 한다.
 //      https://developer.apple.com/documentation/swift/sequence
-// • Tier 2, Collection : 추가적인 guarantee를 제공한다. nondestructive sequential access를 허용한다.
-// • Tier 3, BidirectionalColllection : 양방향(상하, 좌우)으로 이동할 수 있다.
-//      앞에서 구현한 LinkedList는 head에서 tail로 일방향으로 이동하기 때문에 BidirectionalColllection이 불가능하다.
-// • Tier 4, RandomAccessCollection : BidirectionalColllection은 특정 index로 해당 요소에 액세스하는 시간이
-//      다른 요소에 액세스하는 시간과 동일하다면 RandomAccessCollection이 될 수 있다.
-//      어느 요소에 액세스하더라도, 같은 시간 내에 호출된다. sequential access와 대조된다.
+// • Tier 2, Collection : 추가적인 보증(guarantee)을 제공하는 Sequnce type이다. Collection type은 유한(finite)하며,
+//      비파괴적 순차접근(nondestructive sequential access)를 허용한다.
+// • Tier 3, BidirectionalColllection : Sequence의 양방향(상하, 좌우)으로 이동할 수 있는 Collection type 이다.
+//      연결 리스트(Linked List)는 head에서 tail로만 이동할 수 있고, 반대방향으로 순회할 수 없으므로 BidirectionalCollection이 아니다.
+// • Tier 4, RandomAccessCollection : BidirectionalColllection이 특정 index로 해당 요소에 액세스하는 시간이
+//      다른 요소에 액세스하는 시간과 동일하다면 RandomAccessCollection이 될 수 있다. RandomAccess는 어느 요소에 액세스하더라도,
+//      같은 시간 내에 호출되는 것으로, sequential access와는 대조된다.
+//      연결 리스트는 head에 가까운 노드에 접근하는 것이 tail에 가까운 노드에 접근하는 것 보다
+//      빠르기 때문에 RandomAccessCollection이 될 수 없다.
 //      https://en.wikipedia.org/wiki/Random_access
 //앞에서 구현한, LinkedList는 두 가지의 경우에 해당한다.
 // 1. LinkedList는 Node들의 연결이므로, Sequence protocol을 채택한다.
@@ -371,14 +379,14 @@ example(of: "removing a node after a particular node") {
 
 
 //Becoming a Swift collection
-//Collection protocol은 유한(finite) sequence이며, nondestructive sequential access를 제공한다.
-//Swift Collection은 여기에 추가적으로 subscript 액세스를 허용하는데, 이를 사용해 index에 collection의 value를 매핑시킬 수 있다.
+//Collection protocol은 유한(finite) sequence이며, 피파괴적 순차 접근(nondestructive sequential access)를 제공한다.
+//Swift Collection은 여기에 추가적으로 subscript 접근을 허용하는데, 이는 index에 collection의 value를 매핑시킨다.
 //ex. Array에서 array[5]와 같이 사용한다. subscript는 대괄호로 정의되고, index와 함께 사용해 Collection의 value를 반환한다.
 
 //Custom collection indexes
 //Collection protocol 메서드의 성능은 index의 value에 매핑하는 속도로 정의된다.
-//Swift Array에서와 달리, LinkedList는 subscript 연산자를 사용하여 O(1) 연산을 할 수 없다.
-//따라서 LinkedList에서의 subscript 연산자를 사용하기 위해 해당 Node에 대한 참조가 포함된 custom index를 정의해야 한다.
+//Swift 배열(Array)과 달리, 연결 리스트(Linked List)는 기본적으로 subscript 연산자를 사용하여 O(1) 연산을 할 수 없다.
+//따라서 LinkedList에서 subscript 연산자를 사용하기 위해서는 해당 Node에 대한 참조가 포함된 custom index를 정의해야 한다.
 //https://developer.apple.com/documentation/swift/collection
 extension LinkedList {
     public struct Index: Comparable {
@@ -405,27 +413,29 @@ extension LinkedList {
         }
     }
 }
+//이 Custom Index를 사용하여 Collection의 요구사항(requirement)을 구현한다.
 
 extension LinkedList: Collection { //Collection 구현을 위해서는 다음 변수와 메서드를 구현해야 한다.
-    public var startIndex: Index {
+    public var startIndex: Index { //처음 index
         Index(node: head)
         //head를 반환한다.
     }
     
-    public var endIndex: Index {
+    public var endIndex: Index { //마지막으로 접근 가능한 value의 바로 뒤 index
         Index(node: tail?.next)
         //tail.next을 반환한다.
         //마지막으로 액세스 가능한 값 바로 다음 node를 endIndex로 지정한다.
-        //tail로 해야 하는 거 아닌가??
     }
     
-    public func index(after i: Index) -> Index { //index 증가
+    public func index(after i: Index) -> Index { //index 증가시키는 방법을 정의한다.
         Index(node: i.node?.next) //바로 다음 Node의 index를 반환한다.
     }
     
     public subscript(position: Index) -> Value {
         //subscript는 index를 Collection의 value에 매핑하는 데 사용한다.
         position.node!.value
+        //Custom으로 구현한 Index로 해당 node에 접근할 수 있다.
+        //해당 node의 value를 반환한다.
     }
 }
 
@@ -446,8 +456,11 @@ example(of: "using collection") {
 }
 //Collection을 구현하면, 해당 프로토콜에서 이미 구현된 여러 메서드와 변수들을 사용할 수 있다.
 
+
+
+
 //Value semantics and copy-on-write
-//Swift Collection의 또 다른 중요한 점은 value 들이 semantic(의미론)를 가진다는 것이다.
+//Swift Collection의 또 다른 중요한 점은 value semantic(의미론)을 가진다는 것이다.
 //이는 copy-on-write(COW)를 사용해 구현한다. COW의 개념을 배열로 확인하면 다음과 같다.
 example(of: "array cow") {
     let array1 = [1, 2]
@@ -462,7 +475,7 @@ example(of: "array cow") {
     print("array2: \(array2)") // array2: [1, 2, 3]
 }
 //array2가 수정 될 때, array1의 요소는 변경되지 않는다.
-//처음 할 당할 때가 아닌 append가 호출될 때, 사본을 만든다. p.72
+//처음 할당할 때가 아닌 append가 호출될 때, 사본을 만든다. p.72
 example(of: "linked list cow") {
     var list1 = LinkedList<Int>()
     list1.append(1)
@@ -473,45 +486,45 @@ example(of: "linked list cow") {
     
     print("After appending 3 to list2")
     list2.append(3)
-    print("List1: \(list1)") //COW 구현 전 List1: 1 -> 2 -> 3     //COW 구현 후 List2: 1 -> 2
+    print("List1: \(list1)") //COW 구현 전 List1: 1 -> 2 -> 3     //COW 구현 후 List1: 1 -> 2
     print("List2: \(list2)") // List2: 1 -> 2 -> 3
 }
-//Node가 class로 구현되었기 때문에 LinkedList에서는 semantic이 구현되지 않는다.
-//하지만, LinkedList는 struct로 구현했기 때문에 semantic이 적용되지 않는 것은 심각한 문제이다.
-//COW를 구현하면 이 문제가 해결된다. COW로 semantic을 구현하는 방법은 매우 간단하다.
-//LinkedList의 내용을 변경하기 전에, 복사본을 만들고 모든 참조(head, tail)을 복사본으로 업데이트 하면 된다.
+//Node가 class로 구현되었기 때문에 LinkedList에서는 value semantic이 구현되지 않는다.
+//하지만, LinkedList는 struct로 구현했기 때문에 value semantic이 적용되지 않는 것은 심각한 문제이다.
+//COW를 구현하면 이 문제가 해결된다. COW로 value semantic을 구현하는 방법은 매우 간단하다.
+//LinkedList의 내용을 변경하기 전에, 복사본을 만들고 모든 참조(head, tail)를 복사본으로 업데이트 하면 된다.
 extension LinkedList {
-//    private mutating func copyNodes() {
-//        guard !isKnownUniquelyReferenced(&head) else { //Optimizing COW
-//            //참조하고 있는 owner의 수를 확인해 최적화 해 준다.
-//            //하나의 list만 가지고 계속 작업하는 경우에는(LinkedList를 복사할 필요가 없는 경우)
-//            //이 guard에서 종료되므로, 복사가 일어나지 않아 오버헤드를 줄일 수 있다.
-//            return
-//        }
-//
-//        guard var oldNode = head else {
-//            return
-//        }
-//
-//        head = Node(value: oldNode.value)
-//        var newNode = head
-//
-//        while let nextOldNode = oldNode.next {
-//            newNode!.next = Node(value: nextOldNode.value)
-//            newNode = newNode!.next
-//
-//            oldNode = nextOldNode
-//        }
-//
-//        tail = newNode
-//    }
+    private mutating func copyNodes() {
+        guard !isKnownUniquelyReferenced(&head) else { //Optimizing COW
+            //참조하고 있는 owner의 수를 확인해 최적화 해 준다.
+            //하나의 list만 가지고 계속 작업하는 경우에는(LinkedList를 복사할 필요가 없는 경우)
+            //이 guard에서 종료되므로, 복사가 일어나지 않아 오버헤드를 줄일 수 있다.
+            return
+        }
+
+        guard var oldNode = head else {
+            return
+        }
+
+        head = Node(value: oldNode.value)
+        var newNode = head
+
+        while let nextOldNode = oldNode.next {
+            newNode!.next = Node(value: nextOldNode.value)
+            newNode = newNode!.next
+
+            oldNode = nextOldNode
+        }
+
+        tail = newNode
+    }
     
     
     
     
     //A minor predicament
     //remove(after:)에서 제대로 동작하지 않기 때문에 수정해 준다.
-    private mutating func copyNode(returningCopyOf node: Node<Value>?) -> Node<Value>? {
+    private mutating func copyNodes(returningCopyOf node: Node<Value>?) -> Node<Value>? {
         guard !isKnownUniquelyReferenced(&head) else { //Optimizing COW
             //참조하고 있는 owner의 수를 확인해 최적화 해 준다.
             //하나의 list만 가지고 계속 작업하는 경우에는(LinkedList를 복사할 필요가 없는 경우)
@@ -543,11 +556,14 @@ extension LinkedList {
 //COW를 구현하려면, mutating 키워드를 사용한 모든 메서드의 맨 처음에 copyNodes()를 호출하면 된다.
 //수정된 메서드는 모두 6개로 다음과 같다. push, append, insert(after:), pop, removeLast, remove(after:)
 //다시 위의 linked list cow 예제 코드를 돌려보면, COW가 구현된 것을 알 수 있다.
-//하지만, 모든 mutating 메서드를 호출할 때, copyNodes()를 먼저 호출하면서 O(n)의 오버헤드가 추가되게 된다.
+//하지만, 모든 mutating 메서드 사용시 copyNodes()가 먼저 호출되어 복사가 일어나므로 O(n) 의 오버헤드가 추가된다.
+
+
+
 
 //Optimizing COW
 //이 추가적인 오버헤드를 완화하기 위한 두 가지 방법이 있다.
-//그 중 첫 번째는 LinkedList의 node를 참조하는 owner가 오직 하나라면, 복사를 하지 않는 것이다.
+//첫 번째는 LinkedList의 node를 참조하는 owner가 오직 하나라면, 복사를 하지 않는 것이다.
 
 //isKnownUniquelyReferenced
 //Swift standard library에는 isKnownUniquelyReferenced 함수가 있다.
@@ -555,6 +571,8 @@ extension LinkedList {
 example(of: "isKnownUniquelyReferenced") {
     var list1 = LinkedList<Int>()
     list1.append(1)
+    //연결 리스트에 요소가 하나만 있을 경우에는 head가 동시에 tail이기 때문에
+    //isKnownUniquelyReferenced(&list1.head)이 false가 된다.
     list1.append(2)
     
     print("List1 uniquely referenced: \(isKnownUniquelyReferenced(&list1.head))") //List1 uniquely referenced: true
@@ -588,18 +606,18 @@ example(of: "A minor predicament") {
     print("List2: \(list2)") //List2: 1 -> 2 -> 3
 }
 //COW 최적화 이후로, remove 메서드가 더 이상 정상적으로 작동하지 않는다.
-//모든 mutate 메서드는 node들을 복사할 수 있으므로(copyNodes), remove(after:) 실행 시에도 복사되어 잘못된 구현이 된다.
+//모든 mutating 메서드는 node들을 복사할 수 있으므로(copyNodes), remove(after:) 실행 시에도 복사되어 잘못된 구현이 된다.
 //이를 수정하기 위해 새로운 버전의 copyNodes() 메서드를 작성해야 한다.
-//수정한 copyNodes() 메서드는 복사된 Node를 반환한다. remove(after:) 메서드도 수정해 줘야 한다.
+//copyNodes(returningCopyOf:) 메서드는 복사된 Node를 반환한다. remove(after:) 메서드도 수정해 줘야 한다.
 
 //Sharing nodes
-//두 번째 최적화는 부분적으로 Node를 공유하는 것이다. 이 방법을 사용해 복사를 피할 수 있는 경우가 있다.
+//오버헤드를 줄일 수 있는 두 번째 최적화 방법은 부분적으로 Node를 공유하는 것이다. 이 방법을 사용하면 복사본을 사용하지 않아도 되는 경우가 생긴다.
 //여기에서 모든 경우를 구현하기는 힘들지만, 몇 가지 경우를 구현하고, 어떤 방식으로 작동하는지 살펴본다.
 var list1 = LinkedList<Int>()
 (1...3).forEach{ list1.append($0) }
 var list2 = list1
-//이 경우, lsit1과 list2의 참조는 Node를 가리키게 된다. p.77
-//이 상태에서 COW가 비활성화된 list2에서 push를 수행한다.
+//이 경우, lsit1과 list2의 참조는 동일한 Node를 가리키고 있다. p.77
+//COW가 비활성화 된 상태에서, list2에 push를 수행한다.
 list2.push(0)
 //그러면 list1과 list2는 서로 다른 참조를 가진다. 이 경우에는 list1이 list2의 push 작업에 영향을 받지 않는다. 두 list를 출력하면 다음과 같다.
 // List1: 1 -> 2 -> 3
@@ -609,3 +627,13 @@ list1.push(100)
 // List1: 100 -> 1 -> 2 -> 3
 // List2: 0 -> 1 -> 2 -> 3
 //이와 같이 head-first insertion은 COW의 오버헤드에 영향 받지 않는다.
+
+
+
+
+//Key points
+// • 연결 리스트(Linked List)는 선형적(linear)이고 단방향적(unidirectional)이다. 한 노드에서 다른 노드로 참조를 이동하면 다시 돌아갈 수 없다.
+// • 연결 리스트의 head first insertion의 시간 복잡도는 O(1)이다. 반면, 배열(Array)의 경우에는 O(n)이다.
+// • Sequence와 Collection과 같은 Swift Collection protocol를 구현하면, 다양하고 유용한 메서드들을 사용할 수 있다.
+// • Copy-on-write을 사용해, value semantic을 구현할 수 있다.
+

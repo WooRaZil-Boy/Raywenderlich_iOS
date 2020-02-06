@@ -22,8 +22,10 @@
  */
 //Double-ended Queue는 요소를 앞, 뒤로 추가하거나 제거할 수 있는 Queue이다.
 // • Queue(FIFO)를 사용해, 후면에서 요소를 추가하고, 전면에서 제거할 수 있다.
-// • STack(LIFO)를 사용해, 후면에서 요소를 추가하고, 후면에서 제거할 수 있다.
+// • Stack(LIFO)를 사용해, 후면에서 요소를 추가하고, 후면에서 제거할 수 있다.
 //Deque는 Stack과 Queue에서 동시에 고려할 수 있다.
+//자료 구조 구축에 도움이 되는 Dequeue 프로토콜(protocol)이 제공된다.
+//또, deque가 앞 또는 뒤에서 요소를 추가하는지 제거하는지 여부를 설명하기 위한 Direction 열거형(enum)이 제공된다.
 
 //DoubleLinkedList에는 속성과 함수가 하나씩 추가 되었다.
 // 1. double-linked list에서 tail 요소를 얻기 위해 last 속성이 추가 되었다.
@@ -41,7 +43,7 @@ protocol Deque { //Deque protocol
     mutating func enqueue(_ element: Element, to direction: Direction) -> Bool
     mutating func dequeue(from direction: Direction) -> Element?
 }
-//Deque 는 일반적인 Queue의 연산들이 정의되어 있다.
+//Deque에는 Queue와 Stack의 일반적인 연산들이 정의되어 있다.
 //이를 구현하는 방법은 여러가지 있지만, 여기서는 doubly linked-list 를 사용한다.
 
 
@@ -69,7 +71,7 @@ extension DequeDoubleLinkedList {
         }
     }
 }
-//first와 last의 값을 확인하면 된다. 이는 O(1) 연산이다.
+//first와 last의 값을 확인하면 된다. 이는 head와 tail만 확인하면 되므로 O(1) 연산이다.
 
 extension DequeDoubleLinkedList {
     func enqueue(_ element: Element, to direction: Direction) -> Bool { //Deque의 양 방향에서 enqueue할 수 있어야 한다.

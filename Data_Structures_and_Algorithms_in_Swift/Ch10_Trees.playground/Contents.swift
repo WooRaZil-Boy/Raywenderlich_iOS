@@ -7,9 +7,12 @@
 // • 빠른 조회 작업을 처리한다.
 //모양과 크기가 다양한 여러 종류의 Tree가 있다.
 
+
+
+
 //Terminology
 //Tree에 관련된 여러가지 용어들이 있다. //p.132
-// • Node : Linked List와 마찬가지로, Tree는 Node로 구성된다. 각 node는 데이터를 가질 수 있으며, 자식 node를 추적한다.
+// • Node : 연결리스트(Linked List)와 마찬가지로, Tree는 Node로 구성된다. 각 node는 데이터를 가질 수 있으며, 자식 node를 추적한다.
 // • Parent and child : Tree는 실제 나무처럼 가지를 치는데, 방향은 반대로 위에서 시작해 아래로 뻗어나간다.
 //  모든 node(최상위 root 제외)는 바로 위쪽으로 하나의 node와 연결된다. 이를 parent node라 한다.
 //  바로 아래에 연결되어 있는 node는 child node라 한다. Tree에서 모든 child는 정확히 하나의 parent를 가진다.
@@ -20,6 +23,7 @@
 
 
 //Implementation
+//트리(Tree)는 노드(Node)로 구성되어 있으므로, 가장 먼저, TreeNode를 만들어야 한다.
 public class TreeNode<T> {
     public var value: T
     public var children: [TreeNode] = []
@@ -35,7 +39,7 @@ extension TreeNode {
         children.append(child)
     }
 }
-//child node르 추가한다.
+//child node를 추가한다.
 
 example(of: "creating a tree") {
     let beverages = TreeNode("Beverages")
@@ -55,6 +59,7 @@ example(of: "creating a tree") {
 //Array나 LinkedList와 같은 linear collection은 명확한 시작과 끝이 있으므로 반복하는(Iterating) 것이 간단하다.
 //하지만 Tree는 non-linear collection이므로 반복하는(Iterating) 것이 쉽지 않다.
 //어느 node를 먼저 순회할지는 해결하려는 문제에 따라 달라진다.
+//역추적(backtracking) 전에 root부터 시작해서 node를 최대한 깊이 탐색하는 깊이 우선 순회(depth-first traversal)에 대해 먼저 살펴본다.
 
 //Depth-first traversal
 //깊이 우선 탐색은 Root에서 시작하여 backtracking 전까지 최대한 깊이 탐색을 하는 방법이다.
@@ -67,7 +72,7 @@ extension TreeNode {
         }
     }
 }
-//재귀를 사용하지 않고, Stack을 사용해 구현할 수도 있다.
+//위에서는 재귀로 구현했지만, 대신 Stack을 사용해 구현할 수도 있다.
 
 func makeBeverageTree() -> TreeNode<String> {
     let tree = TreeNode("Beverages")
@@ -129,6 +134,7 @@ example(of: "depth-first traversal") {
 }
 
 //Level-order traversal
+//레벨 순서 순회(Level-order traversal)는 node의 깊이(depth)를 기준으로 각 node를 순회한다.
 extension TreeNode {
     public func forEachLevelOrder(visit: (TreeNode) -> Void) {
         visit(self) //클로저 호출 //여기서는 print($0.value) 이므로, self의 value가 출력된다.
@@ -161,11 +167,8 @@ example(of: "level-order traversal") {
     // bitter lemon
 }
 
-
-
-
 //Search
-//node를 순회하는 알고리즘을 사용해 검색을 구현할 수 있다.
+//node를 순회하는 메서드를 사용해, 검색(Search) 알고리즘을 구현할 수 있다.
 extension TreeNode where T: Equatable { //T가 Equatable를 구현해야 한다.
     public func search(_ value: T) -> TreeNode? {
         var result: TreeNode?
@@ -178,7 +181,7 @@ extension TreeNode where T: Equatable { //T가 Equatable를 구현해야 한다.
         return result
     }
 }
-//너비 우선 방식으로 Search를 구현한다.
+//level 우선 방식으로 Search를 구현한다.
 
 example(of: "searching for a node") {
     let tree = makeBeverageTree()
@@ -198,3 +201,16 @@ example(of: "searching for a node") {
 }
 //모든 node를 순회하므로, 중복되는 값이 있다면, 마지막에 찾은 node가 반환된다.
 //즉, 어떤 순회 방법을 사용하느냐에 따라 다른 객체를 얻게 될 수 있다.
+
+
+
+
+//Key points
+// • 트리(Tree)는 연결 리스트(Linked List)와 유사한 점이 많다.
+//  그러나 연결 리스트의 노드(node)는 하나의 후속(successor) 노드만 연결하지만, 트리 노드는 다수의 하위 노드를 연결 할 수 있다.
+// • root 노드를 제외한, 모든 트리 노드는 정확히 하나의 상위(parent) 노드가 있다.
+// • root 노드는 상위(parent) 노드가 없다.
+// • 잎(leaf) 노드는 하위(child) 노드가 없다.
+// • parent, child, leaf, root과 같은 트리 용어(terminology)에 익숙해져야 한다. 이 용어들은 공통적이므로 다른 tree 구조를 설명하는 데 사용된다.
+// • 깊이 우선 순회(depth-first traversal)와 레벨 순서 순회(level-order traversal) 같은 순회 알고리즘은 일반 tree에 국한되지 않는다.
+//  다른 tree에서도 같은 방식으로 작동하지만, 구조에 따라 구현 방식이 약간씩 다를 수 있다.

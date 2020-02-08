@@ -17,6 +17,11 @@
 //: ```
 //:
 //: **Hint**: Consider using a `Queue` included for you in **Sources**.
+//레벨(level)을 기준으로 tree의 모든 value를 순서대로 출력한다. 동일한 레벨의 node는 동일한 line에 출력해야 한다.
+
+
+
+
 // Build the sample tree shown in the diagram
 // Root of the tree
 let tree = TreeNode(15)
@@ -50,7 +55,8 @@ twenty.add(seven)
 
 
 
-//node를 Level 순서대로 출력하는 간단한 방법(너비 우선)은 Queue를 사용하는 것이다. 이 구현에서 까다로운 점은 개행을 결정하는 것이다.
+//node를 level 순서대로 출력하는 간단한 방법은 큐(Queue)를 사용하여 레벨 순서 순회(Level-order traversal)을 구현하는 것이다.
+//까다로운 부분은 개행을 언제해야 하는지 결정하는 것이다.
 func printEachLevel<T>(for tree: TreeNode<T>) {
     var queue = Queue<TreeNode<T>>() //Queue를 사용한다.
     var nodesLeftInCurrentLevel = 0 //남은 노드의 수 추적

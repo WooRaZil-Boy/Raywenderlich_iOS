@@ -1,6 +1,7 @@
 //Chapter 12: Binary Trees
 
-//Binary Tree(이진 트리)는 각 node에 최대 두 개의 자식이 있다. 이 자식들을 각각 위치에 따라 left, right라고 부른다. p.144
+//자식 노드의 수에 제한이 없는 일반 Tree(트리)와 달리, Binary Tree(이진 트리)는 각 node에 최대 두 개의 자식이 있다.
+//이 자식들을 각각 위치에 따라 left, right라고 부른다. //p.144
 //이진 트리는 많은 트리 구조 알고리즘의 기초가 된다.
 
 
@@ -32,12 +33,12 @@ var tree: BinaryNode<Int> = {
     nine.leftChild = eight
     
     return seven
-}()
+}() //클로저
 //다이어그램은 p.145
 
 //Building a diagram
-//자료구조의 다이어그램을 작성하면, 작동방식을 이해하는 데 도움이 될 수 있다.
-//이를 위해, 콘솔에서 이진 트리를 시각화라는 데 도움이 되는 재사용 가능한 알고리즘을 구현한다.
+//자료구조(Dats Structure)의 다이어그램을 작성하면, 작동방식을 이해하는 데 도움이 될 수 있다.
+//콘솔(Console)에서 이진 트리를 시각화하는 데 도움이 되는 재사용 가능한 알고리즘을 구현한다.
 //https://www.objc.io/books/optimizing-collections/
 extension BinaryNode: CustomStringConvertible {
     public var description: String {
@@ -58,7 +59,7 @@ extension BinaryNode: CustomStringConvertible {
             + diagram(for: node.leftChild, bottom + "│ ", bottom + "└──", bottom + " ")
     }
 }
-//이진 트리를 나타내는 문자열을 재귀적으로 생성한다.
+//이진 트리 다이어그램(diagram)을 나타내는 문자열을 재귀적으로 생성한다.
 
 example(of: "tree diagram") {
     print(tree)
@@ -92,9 +93,10 @@ extension BinaryNode {
         leftChild?.traverseInOrder(visit: visit)
         visit(value)
         rightChild?.traverseInOrder(visit: visit)
-        //위의 규칙대로 순회하면 된다.
+        //위의 규칙대로(LPR) 순회를 구현하면 된다.
     }
 }
+//가운데 value를 방문하기 전에 왼쪽 node를 먼저 방문 한다. 그런 다음, 중간을 거쳐 오른쪽 node로 이동하면서 순회하면 된다.
 //재귀적으로 호출되므로, leftChild의 leftChild, leftChild, ... 최하단의 좌측 leaf 까지 가게 된 후, visit(value)가 호출 된다.
 
 example(of: "in-order traversal") {
@@ -115,6 +117,7 @@ extension BinaryNode {
         leftChild?.traverseInOrder(visit: visit)
         rightChild?.traverseInOrder(visit: visit)
     }
+    //PLR
 }
 
 example(of: "pre-order traversal") {
@@ -129,12 +132,13 @@ example(of: "pre-order traversal") {
 
 //Post-order traversal
 //Post-order traversal(후위 순회)는 왼쪽 및 오른쪽 노드를 재귀적으로 방문한 후, 현재 노드를 방문한다(LRP). //p.149
-//즉, 해당 노드의 자식 노드를 먼저 순회한다. 따라서 Root 노드를 항상 마지막에 방문한다.
+//즉, 해당 노드는 자신을 방문하기 전에 자식 노드를 먼저 순회한다. 따라서 Root 노드를 항상 마지막에 방문한다.
 extension BinaryNode {
     public func traversePostOrder(visit: (Element) -> Void) {
         leftChild?.traverseInOrder(visit: visit)
         rightChild?.traverseInOrder(visit: visit)
         visit(value)
+        //LRP
     }
 }
 
@@ -150,3 +154,11 @@ example(of: "post-order traversal") {
 //이러한 순회 알고리즘은 각각 시간과 공간 복잡도가 모두 O(n)이다.
 //이진 탐색 트리를 중위 순회하면 오름차순으로 출력할 수 있다.
 
+
+
+
+//Key points
+// • 이진 트리(binary tree)는 가장 중요한 트리 구조의 기초가 된다.
+//  이진 검색 트리(Binary search tree)와 AVL 트리(AVL tree)는 삽입과 삭제에 제한을 주는 이진트리이다.
+// • in-order traversal(중위 순회), pre-order traversal(전위 순회), post-order traversal(후위 순회)는
+//  이진 트리에서만 중요한 것이 아니다. 어떤 트리에서든 데이터를 처리한다면, 순회를 자주 사용하게 된다.

@@ -13,7 +13,9 @@
  height of a binary tree with a single node is zero, since the single node is
  both the root and the furthest leaf.
  */
-//트리의 높이(height)는 Root와 가장 먼 leaf 사이의 거리이다. Root밖에 없는 트리의 height는 0이다.
+
+//주어진 이진 트리(Binary Tree)의 높이(height)를 계산한다. 트리의 높이는 root와 가장 먼 leaf 사이의 거리로 결정된다.
+//단일 노드로 이뤄진 트리(Root밖에 없는 트리)는, root가 가장 먼 leaf이므로 높이는 0이 된다.
 
 var tree: BinaryNode<Int> = {
   let zero = BinaryNode(value: 0)

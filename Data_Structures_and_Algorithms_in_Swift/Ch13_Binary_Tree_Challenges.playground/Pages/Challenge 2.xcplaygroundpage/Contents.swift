@@ -22,7 +22,7 @@
  binary tree. Note that there are many ways to perform serialization.
  You may choose any way you wish.
  */
-//소프트웨어 개발의 일반적인 작업을 객체를 다른 데이터 유형으로 직렬화(serialization)하는 것이다.
+//소프트웨어 개발에서 일반적인 작업은 객체를 다른 데이터 유형으로 직렬화(serialization)하는 것이다.
 //closed set of data type만 사용하는 시스템에서 Custom type을 사용할 수 있게 한다.
 //직렬화의 대표적인 예는 JSON이다.
 //여기서는 이진트리를 배열로 직렬화(serialize)하고, 다시 배열을 이진트리로 역직렬화 한다(deserialize).
@@ -83,7 +83,7 @@ func serialize<T>(_ node: BinaryNode<T>) -> [T?] {
     
     node.traversePreOrder { array.append($0) }
     
-    return array
+    return array //pre-order로 value를 가진 배열을 반환한다.
 }
 //직렬화의 시간 복잡도와 공간 복잡도는 모두 O(n)이다.
 
@@ -122,6 +122,7 @@ print(node!)
 // └──1
 //   └──0
 
+//역직렬화의 결과로 처음에 주어진 트리가 출력된다.
 //하지만, 배열에 요소 수 만큼 removeFirst를 호출하므로, 알고리즘의 시간 복잡도는 O(n^2)이다.
 //이를 해결할 수 있는 쉬운 방법이 있다.
 func deserialize<T>(_ array: [T?]) -> BinaryNode<T>? {

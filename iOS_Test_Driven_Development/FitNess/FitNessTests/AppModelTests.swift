@@ -1,14 +1,14 @@
 //
-//  FitNessTests.swift
+//  AppModelTests.swift
 //  FitNessTests
 //
-//  Created by 근성가이 on 2020/02/13.
+//  Created by 근성가이 on 2020/02/14.
 //  Copyright © 2020 Razeware. All rights reserved.
 //
 
 import XCTest
 
-class FitNessTests: XCTestCase {
+class AppModelTests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -25,7 +25,7 @@ class FitNessTests: XCTestCase {
 
     func testPerformanceExample() {
         // This is an example of a performance test case.
-        measure {
+        self.measure {
             // Put the code you want to measure the time of here.
         }
     }

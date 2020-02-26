@@ -1,13 +1,13 @@
 //Chapter 14: Binary Search Trees
 
-//binary search tree(BST)는 빠른 조회(lookup), 삽입(insert), 제거(removal) 작업을 용이하게 하는 자료 구조이다.
+//binary search tree(BST)는 빠른 조회(lookup), 삽입(insert), 제거(removal) 작업이 용이한 자료 구조이다.
 //한 쪽을 선택하면, 다른 쪽의 모든 가능성이 없어지게 되어 문제를 절반으로 줄이는 의사 결정 트리(decision tree)가 있다. p.158
-//결정을 내리고 가지를(branch) 선택하면 뒤로 돌아갈 수 없다. leaf에서 최종 결정을 내릴 때까지 계속 내려가야 한다.
+//결정을 내리고 가지를(branch) 선택하면 뒤로 돌아갈 수 없다. 잎 노드(leaf node)에서 최종 결정을 내릴 때까지 계속 내려가야 한다.
 //Binary tree는 이와 같은 작업을 수행할 수 있다. BST는 이진 트리에 두 가지 규칙을 적용한다.
-// • left child의 value는 parent의 value 보다 작아야 한다.
-// • 결과적으로 right child의 value는 parent의 value보다 크거나 같아야 한다.
-//BST는 불필요한 확인을 생략하기 위해 이 속성들을 사용한다.
-//그 결과, 조회, 삽입, 제거는 평균 O(log n)의 시간복잡도를 가지며, 이는 Array나 Linked list와 같은 선형(linear) 자료구조보다 훨씬 빠르다.
+// • 왼쪽 자식(left child)의 value는 부모(parent)의 value 보다 작아야 한다.
+// • 결과적으로 오른쪽 자식(right child)의 value는 parent의 value보다 크거나 같아야 한다.
+//BST는 불필요한 확인 작업을 생략하기 위해 이 속성들을 사용한다.
+//그 결과, 이진 탐색 트리에서 조회, 삽입, 제거 작업은 평균 O(log n)의 시간복잡도를 가지며, 이는 Array나 Linked list와 같은 선형(linear) 자료구조보다 훨씬 빠르다.
 
 
 
@@ -17,26 +17,28 @@
 
 //Lookup
 //정렬되지 않은 Array에 대한 요소 검색을 수행하는 방법은 처음부터 모든 요소를 확인하는 한 가지 방법뿐이다. p.160
-//그래서 array.contains(_ :)는 O(n) 연산이다. 그러나 BST에서는 훨씬 빠르게 수행할 수 있다.
-//검색 알고리즘이 BST의 node를 방문할 때마다, 다음 두 가지 가정을 안전하게 수행할 수 있다.
-// • 검색하는 value가 현재 value보다 작으면, 왼쪽 하위 트리에 있어야 한다.
-// • 검색하는 value가 현재 value보다 크면, 오른쪽 하위 트리에 있어야 한다.
-//BST의 규칙을 활용하면 node를 방문하고 하위 트리를 결정할 때마다, 불필요한 점검을 피하고 검색 범위를 반으로 줄일 수 있다. BST에서 element lookup이 O(log n) 연산인 이유이다.
+//그래서 array.contains(_:)는 O(n) 연산이다. 그러나 BST에서는 훨씬 빠르게 수행할 수 있다.
+//검색 알고리즘이 BST의 node를 방문할 때마다, 안전하게 다음 두 가지 가정을 할 수 있다.
+// • 찾는 value가 현재 value보다 작으면, 왼쪽 하위 트리에 있어야 한다.
+// • 찾는 value가 현재 value보다 크면, 오른쪽 하위 트리에 있어야 한다.
+//BST의 규칙을 활용하면 node를 방문하고 하위 트리를 결정할 때마다, 불필요한 방문을 피하고 검색 범위를 반으로 줄일 수 있다.
+//그렇기 때문에, BST에서 요소(element)의 조회(lookup)는 O(log n) 연산이 된다.
 
 //Insertion
 //삽입 연산에 대한 성능도 유사하다. collection에 0을 삽입하는 경우를 생각해 보면 다음과 같다. p.161
-//Array에 value를 삽입하는 작업을 수행하려면, 선택한 지점 뒤의 모든 요소를 하나씩 밀어서 공간을 만들어야 한다.
-//위의 예시에서는 Array의 가장 앞에 0이 삽입되어, 다른 모든 요소가 하나씩 뒤로 이동한다. Array에 요소를 삽입하는 시간 복잡도는 O(n)이다.
-//BST에 요소를 삽입하는 것은 훨씬 쉽다. BST 규칙을 사용하면, 삽입 위치를 찾기 위해 3번만 순회하면 되므로 모든 요소를 움직일 필요가 없다. p.161
-//BST에서 요소를 삽입하는 것은 O(log n) 작업이다.
+//배열(Array)에 value를 삽입하는 작업은새치기와 유사하다. 선택한 지점 뒤의 모든 요소를 하나씩 밀어서 공간을 만들어야 한다.
+//위의 예시에서는 Array의 가장 앞에 0이 삽입되어, 다른 모든 요소가 하나씩 뒤로 이동한다.
+//따라서 배열(Array)에 요소를 삽입하는 작업의 시간 복잡도는 O(n) 이다.
+//BST 규칙을 이용하면 삽입 위치를 찾기 위해 3번만 순회하면 되므로, 배열에서 처럼 주변의 모든 요소를 움직일 필요가 없다. p.161
+//BST에서 요소를 삽입하는 연산은 O(log n) 작업이다.
 
 //Removal
 //삽입과 마찬가지로 Array에서 요소를 제거하면, 뒤의 요소들도 움직이게 된다. p.162
-//이 동작은 줄서기의 비유와도 잘 어울린다. 줄 중간에서 사람이 이탈하면, 뒤에 있는 모든 사람이 앞으로 하나씩 이동해 빈 공간을 채워야 한다.
+//이는 줄서기의 비유와도 잘 어울린다. 줄 중간에서 사람이 이탈하면, 뒤에 있는 모든 사람이 앞으로 하나씩 이동해 빈 공간을 채워야 한다.
 //BST에서 value를 제거하는 방법은 다음과 같다. p.162
-//제거하는 node의 child가 있는 경우, 추가적인 작업이 있긴 하지만 대체로 간편하고 쉽게 처리된다.
+//제거하려는 node의 child가 있는 경우, 추가적인 작업이 있긴 하지만 대체로 간편하고 쉽게 처리된다.
 //이런 추가 작업에도 불구하고, BST에서 요소를 제거하는 것은 O(log n) 작업이다.
-//이진 탐색 트리는 추가, 제거 및 조회 작업의 단계 수를 크게 줄인다.
+//이진 탐색 트리는 추가(add), 제거(remove) 및 조회(lookup) 작업의 단계 수를 크게 줄인다.
 
 
 
@@ -58,7 +60,7 @@ extension BinarySearchTree: CustomStringConvertible {
 //Inserting elements
 //BST 규칙에 따라 left child의 node는 현재 node 보다 작은 value를 가져야 한다.
 //그리고 right child의 node는 현재 node 보다 크거나 같은 value를 가져야 한다.
-//이 규칙들을 지키면서 삽입을 구현해야 한다.
+//이 규칙들을 지키면서 삽입(insert) 메서드를  구현해야 한다.
 extension BinarySearchTree {
     public mutating func insert(_ value: Element) { //외부에 노출되는 메서드
         root = insert(from: root, value: value)
@@ -66,7 +68,7 @@ extension BinarySearchTree {
     
     private func insert(from node: BinaryNode<Element>?, value: Element) -> BinaryNode<Element> { //helper
         guard let node = node else { //재귀 종료를 위한 guard
-            return BinaryNode(value: value) //현재 node가 nil이면 삽입점을 찾은 후, 새 BinaryNode를 반환한다.
+            return BinaryNode(value: value) //현재 node가 nil이면 삽입점을 찾은 후, 다음 새 BinaryNode를 반환한다.
         }
         
         //Element가 Comparable이므로, 비교 연산을 할 수 있다.
@@ -99,8 +101,8 @@ example(of: "building a BST") {
     // └──nil
 }
 //tree가 약간 불균형 해 보이지만 bst 규칙을 따르고 있다. 하지만, 이렇게 불균형한 tree는 바람직하지 않다.
-//tree로 작업 시에는 항상 균형이 잡히도록 구현하는 것이 좋다. p.165
-//불균형한 tree는 성능에 영향을 준다. 방금 생성한 unbalanced tree에 5를 삽입하는 연산은 O(n)이 된다.
+//tree로 작업 때에는, 항상 균형이 잡히도록 구현하는 것이 좋다. p.165
+//불균형 트리(unbalanced tree)는 성능에 영향을 준다. 방금 작성한 불균형 트리에 5를 삽입하는 연산은 O(n) 이 된다.
 //자체적으로 균형을 유지하는 self-balancing tree를 만들 수 있다(ex. AVL).
 //지금은 sample tree가 균형 잡힌 tree가 되도록 간단하게 insert 순서를 바꿔 구현한다.
 var exampleTree: BinarySearchTree<Int> {
@@ -185,12 +187,12 @@ extension BinarySearchTree {
 //child가 하나인 node를 제거할 때, 그 child를 나머지 tree와 다시 연결해야 한다. //p.169
 
 //Case 3: Nodes with two children
-//child가 두 개인 node는 더 복잡하다. 단순히 node를 제거하면 다시 연결할 하위 node를 선택해야 하는 딜레마가 생긴다. //p.170
+//child가 두 개인 node는 더 복잡하다. 단순히 해당 노드(node)를 제거하면 다시 연결할 하위 node를 선택해야 하는 딜레마가 생긴다. //p.170
 //두 개의 하위 node가 있지만, 상위 node에는 하나의 공간만 있으므로, 이를 해결하려면 swap을 해야한다.
 //child가 두 개인 node를 제거할 때는 제거할 node를 오른쪽 child tree에서 가장 작은 node와 교체한다.
-//BST 규칙에 의하면, 이는 오른쪽 하위 tree에서 가장 왼쪽(leftmost) node이다. 이 작업을 해도, BST가 유지된다.
-//새 node는 오른쪽 child tree에서 가장 작은 node 였기 때문에, 오른쪽 하위 tree의 모든 node는 여전히 새 node보다 크거나 같다.
-//swap이후, leaf node가 된 복사한 node를 제거하면 된다. //p.171
+//BST 규칙에 의하면, 이는 오른쪽 하위 tree의 가장 왼쪽(leftmost) node이다. 이 작업을 해도, BST가 유지된다.
+//교체한 node는 오른쪽 child tree에서 가장 작은 node 였기 때문에, 오른쪽 하위 tree의 모든 node는 여전히 새 node보다 크거나 같다.
+//swap이후, 원본 노드를 제거한다. 이는 단순한 잎 노드(leaf node)의 제거와 같다. //p.171
 
 //Implementation
 private extension BinaryNode {
@@ -211,10 +213,13 @@ extension BinarySearchTree {
         
         if value == node.value { //이 절은 제외하면, 재귀적으로 node를 찾아가는 과정은 insert와 비슷하다.
             //해당 node를 찾은 경우
+            
+            //***** case 1 : child가 없는 leaf node 삭제
             if node.leftChild == nil && node.rightChild == nil { //leaf node인 경우
                 return nil //nil을 반환하여 현재 node를 제거한다.
             }
             
+            //***** case 2 : child가 하나인 node 삭제
             if node.leftChild == nil { //왼쪽 child가 없는 경우
                 return node.rightChild //rightChild를 반환하여 오른쪽 하위 tree를 연결한다.
             }
@@ -223,6 +228,7 @@ extension BinarySearchTree {
                 return node.leftChild //leftChild를 반환하여 왼쪽 하위 tree를 연결한다.
             }
             
+            //***** case 3 : child가 두 개인 node 삭제
             //양쪽 모두 child가 있는 경우
             node.value = node.rightChild!.min.value //오른쪽 하위 tree의 최소 node의 value로 바꾼다.
             //오른쪽 하위 tree의 가장 왼쪽 node
@@ -259,3 +265,13 @@ example(of: "removing a node") {
     // └──1
     //  └──0
 }
+
+
+
+
+//Key points
+// • 이진 탐색 트리(binary search tree)는 정렬된 데이터를 보유하기 위한 강력한 데이터 구조(data structure)이다.
+// • 이진 탐색 트리의 요소는 비교 가능(comparable)해야 한다. 이는 제네릭(generic) 제약 조건(constraint)을 사용하거나,
+//  비교할 클로저를 사용해 구현할 수 있다.
+// • BST의 삽입(insert), 제거(remove), 검색(contains)의 시간 복잡도는 O(log n)이다.
+// • 트리가 불균형하면, 성능이 O(n)으로 저하된다. 이는 바람직하지 않으므로, AVL과 같은 self-balancing binary search tree를 사용할 수 있다.

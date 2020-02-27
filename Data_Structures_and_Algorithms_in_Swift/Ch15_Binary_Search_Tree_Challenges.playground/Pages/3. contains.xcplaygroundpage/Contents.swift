@@ -5,6 +5,11 @@
  ### #3. Comparing Trees
  Create a method that checks if the current tree contains all the elements of another tree.
  */
+//현재 트리가 다른 트리의 모든 요소를 포함하고 있는지 확인하는 메서드를 만든다. 요소가 Hashable을 구현하도록 할 수도 있다.
+
+
+
+
 var bst = BinarySearchTree<Int>()
 bst.insert(3)
 bst.insert(1)

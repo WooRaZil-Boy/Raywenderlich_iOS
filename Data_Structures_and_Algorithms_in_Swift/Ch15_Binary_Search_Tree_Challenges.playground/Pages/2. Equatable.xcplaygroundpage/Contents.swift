@@ -5,6 +5,11 @@
  ### #2. Equatable
  The binary search tree currently lacks `Equatable` conformance. Your challenge is to conform adopt the `Equatable` protocol.
  */
+//앞선 이진 탐색 트리(binary search tree)는 Equatable을 구현하고 있지 않다. Equatable 프로토콜(protocol)을 준수하도록 구현한다.
+
+
+
+
 var bst = BinarySearchTree<Int>()
 bst.insert(3)
 bst.insert(1)
@@ -23,7 +28,7 @@ bst2.insert(1)
 bst2.insert(0)
 bst2.insert(4)
 
-//Equatable을 구현하려면, 두 개의 BST가 모두 동일한 순서로 동일한 요소를 가지고 있어야 한다.
+//Equatable을 구현하는 것은 간단하다. 두 개의 이진 트리(binary tree)가 모두 동일한 순서로 동일한 요소를 가지고 있으면 된다.
 
 extension BinarySearchTree: Equatable {
     public static func == (lhs: BinarySearchTree, rhs: BinarySearchTree) -> Bool {

@@ -6,6 +6,11 @@
  
  Create a function that checks if a binary tree is a binary search tree.
  */
+//해당 이진 트리(binary tree)가 이진 탐색 트리인지 확인하는 함수를 만든다.
+
+
+
+
 var bst = BinarySearchTree<Int>()
 bst.insert(3)
 bst.insert(1)
@@ -17,10 +22,10 @@ bst.insert(5)
 print(bst)
 
 //이진 탐색 트리는 모든 left child가 부모보다 작거나 같고(?), right child가 부모보다 큰 tree이다.
-//이진 탐색 트리 여부를 확인하는 함수에는 이 속성들을 확인하는 과정이 포함되어야 한다.
+//트리가 이진 탐색 트리인지 확인하는 알고리즘에는 모든 노드를 순회해 이 속성들을 확인하는 과정이 포함되어야 한다.
 
 extension BinaryNode where Element: Comparable {
-    var isBinarySearchTree: Bool { //외부에 노출되는 해당 변수로 이진 검색 트리 여부를 알 수 있다.
+    var isBinarySearchTree: Bool { //외부에 노출되는 해당 변수로 이진 탐색 트리 여부를 알 수 있다.
         isBST(self, min:nil, max: nil)
     }
     

@@ -272,4 +272,4 @@ example(of: "removing a value") {
 //Where to go from here?
 //AVL tree는 최초의 self-balancing BST 이다. 이후에 고안된 red-black tree, splay tree 등도 있다.
 //https://github.com/raywenderlich/swift-algorithm-club/tree/master/Red-Black%20Tree
-//https://github.com/raywenderlich/swift-algorithm-club/tree/master/Red-Black%20Tree
+//https://github.com/raywenderlich/swift-algorithm-club/tree/master/Splay%20Tree

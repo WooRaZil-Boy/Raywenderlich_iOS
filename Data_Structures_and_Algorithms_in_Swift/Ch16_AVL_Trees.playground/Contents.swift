@@ -7,18 +7,19 @@
 
 
 //Understanding balance
-//이진 탐색 트리의 성능을 최적화하려면 balanced tree가 중요하다. 여기에는 세 가지 주요 균형 상태가 있다.
+//균형 트리(balanced tree)가 이진 탐색 트리(binary search tree)의 성능을 최적화하는 중요한 비결이다. 여기에는 세 가지 주요 균형 상태가 있다.
 
 //Perfect balance
-//이진 탐색 트리의 이상적인 형태는 완벽하게 균형 잡힌 상태이다. 이는 위에서 아래로 tree의 모든 level에서 node가 채워져 있다는 의미이다. //p.181
+//이진 탐색 트리의 이상적인 형태는 완벽하게 균형 잡힌(포화, perfectly balanced) 상태이다.
+//이는 위에서 아래로 tree의 모든 level에서 node가 채워져 있다는 의미이다. //p.181
 //tree는 완벽하게 대칭일 뿐 아니라 최하위 level의 node까지 완전히 채워진다. 이것이 Perfect balance의 요건이다.
 
 //"Good-enough" balance
 //Perfect balance을 이루는 것은 이상적이지만 대부분의 경우 불가능하다.
-//완벽하게 균형 잡힌 트리는 바닥까지 모든 level을 채우기 위한 정확한 수의 node가 필요하다.
+//완벽하게 균형 잡힌 트리(포화 트리)는 바닥까지 모든 level을 채우기 위해, 정확한 수의 노드(node)가 필요하다.
 //ex. 1, 3, 7 개의 node를 가진 tree는 완벽하게 균형을 맞출 수 있지만,
 // 2, 4, 5, 6 개의 node를 가진 tree는 마지막 level이 채워지지 않기 때문에 완벽하게 균형을 맞출 수 없다.
-//균형 잡힌 tree의 정의는 tree의 가장 아래 level을 제외한 모든 lavel의 tree를 채워야 한다는 것이다.
+//균형 잡힌 트리(tree)의 정의는 트리(tree)의 가장 아래 level을 제외한 모든 level을 채워야 한다는 것이다.
 //대부분의 이진 트리에서는 이것이 최선이다.
 
 //Unbalanced
@@ -48,12 +49,12 @@
 //          rightChild?.height ?? -1
 //      }
 //각 node의 왼쪽, 오른쪽 child의 height는 최대 1만큼(절대값 1) 달라야 한다. 이를 balance factor(균형인수, 균형계수, BF..)라 한다.
-//balanceFactor는 왼쪽 및 오른쪽 child의 height 차이를 계산한다. 특정 child가 0이 아닌 경우 height는 -1로 간주된다. //p.184
+//balanceFactor는 왼쪽 및 오른쪽 child의 height 차이를 계산한다. 특정 child가 0이 아닌 경우 height는 -1로 간주한다. //p.184
 //height와 balanceFactor를 계산한다. balanceFactor는 (왼쪽 서브 트리 height - 오른쪽 서브 트리 height)
 //불균형한 tree가 되면, 균형을 잡는 과정이 추가 된다.
-//균형 트리에서 삽입 혹은 삭제 후 불균형한 트리가 되면, 각 balanceFactor가 최소 -2, 최대 2 가 된다.
-//즉, 균형 트리에서 삽입, 삭제 후에는 balanceFactor의 절대값이 2보다 크지 않다는 것이 보장된다.
-//두 개 이상의 node에서 BF가 잘못될(-2 혹은 2) 수 있지만, 해당 node 중 가장 아래의 node에서만 균형 잡업(Rotation)을 해 주면 된다.
+//균형 트리에서 삽입 혹은 삭제 후 불균형한 트리가 되면, 각 balanceFactor가 -2, 2 혹은 그 이상의 값이 된다.
+//이렇게 삽입(insertion)이나 삭제(deletion) 후, balanceFactor를 확인해 트리의 균형 상태를 확인하고 트리(tree)의 균형 상태를 보장할 수 있다.
+//두 개 이상의 node에서 BF가 잘못될 수 있지만, 해당 node 중 가장 아래의 node에서만 균형 잡업(Rotation)을 해 주면 된다.
 
 //Rotations
 //이진 탐색 트리의 균형을 맞추는 데 사용되는 절차를 회전(Rotation)이라 한다.
@@ -94,12 +95,12 @@ extension AVLTree {
         return pivot
     }
 }
-//왼쪽 과 오른쪽이 바뀌었다는 점을 제외하면, leftRotate(_:)과 동일하다.
+//왼쪽과 오른쪽이 바뀌었다는 점을 제외하면, leftRotate(_:)과 동일하다.
 
 //right-left rotation
 //left rotation은 일련의 right child의 균형을 맞춘다. 반대로 right rotation는 일련의 left child의 균형을 맞춘다.
-//하지만, 균형을 맞춰야할 node들이 left와 right child 모두 있는 경우도 있다. //p.188
-//right-left rotation은 right rotation으로 left node를 회전해, 일련의 right child를 불균형 상태로 만든 후,
+//하지만, 균형을 맞춰야할 node들이 left와 right child에 모두 있는 경우도 있다. //p.188
+//right-left rotation은 right rotation으로 일련의 right child를 불균형 상태로 만든 후,
 //left rotation을 해서 전체 트리의 균형을 맞춘다.
 extension AVLTree {
     private func rightLeftRotate(_ node: AVLNode<Element>) -> AVLNode<Element> {
@@ -113,7 +114,7 @@ extension AVLTree {
 
 //left-right rotation
 //left-right rotation은 right-left rotation의 대칭이다. //p.189
-//left-right rotation은 left rotation으로 right node를 회전해, 일련의 left child를 불균형 상태로 만든 후,
+//left-right rotation은 left rotation으로 일련의 left child를 불균형 상태로 만든 후,
 //right rotation을 해서 전체 트리의 균형을 맞춘다.
 extension AVLTree {
     private func leftRightRotate(_ node: AVLNode<Element>) -> AVLNode<Element> {
@@ -127,17 +128,17 @@ extension AVLTree {
 //언제 올바른 위치에 회전을 적용하는지 결정해야 한다.
 
 //Balance
-//다음 작업은 balanceFactor를 사용해, node가 밸런싱이 필요한지 여부를 결정하는 것이다.
+//다음 작업은 balanceFactor를 사용해, 노드(node)가 밸런싱이 필요한지 여부를 결정하는 메서드를 설계하는 것이다.
 extension AVLTree {
     private func balanced(_ node: AVLNode<Element>) -> AVLNode<Element> {
         switch node.balanceFactor { //balanceFactor = leftHeight - rightHeight
-        case 2: //왼쪽 child가 더 무겁다. right rotation 혹은 left-right rotation
+        case 2: //왼쪽 child가 더 무겁다(더 많은 node를 포함하고 있다). right rotation 혹은 left-right rotation
             if let leftChild = node.leftChild, leftChild.balanceFactor == -1 { //이중 회전
                 return leftRightRotate(node)
             } else { //단일 회전
                 return rightRotate(node)
             }
-        case -2: //오른쪽 child가 더 무겁다. left rotation 혹은 right-left rotation
+        case -2: //오른쪽 child가 더 무겁다(더 많은 node를 포함하고 있다). left rotation 혹은 right-left rotation
             if let rightChild = node.rightChild, rightChild.balanceFactor == 1 { //이중 회전
                 return rightLeftRotate(node)
             } else { //단일 회전
@@ -178,8 +179,8 @@ extension AVLTree {
         return balancedNode
     }
 }
-//insert 이후, node를 반환하기 전에 balanced()를 호출한다. 이렇게 하면, call stack은 모든 node에서 균형에 문제가 있는지 확인할 수 있다.
-//또한, node의 height를 업데이트 한다.
+//insert 이후, node를 반환하기 전에 balanced()를 호출한다. 이렇게 하면, call stack은 모든 node에 대해 균형에 문제가 있는지 확인할 수 있다.
+//이후, node의 height를 업데이트 한다.
 example(of: "repeated insertions in sequence") {
     var tree = AVLTree<Int>()
     for i in 0..<15 {
@@ -234,8 +235,8 @@ example(of: "repeated insertions in sequence") {
 // └──nil
 
 //Revisiting remove
-//self-balancing 추가한 remove을 구현하는 것도 insert와 비슷하다.
-//node를 반환하기 전에 balanced()를 호출해 node에서 균형 문제를 해결하고, node의 height를 업데이트 한다.
+//self-balancing 추가한 삭제(remove)를 구현하는 것은 삽입(insert)과 비슷하다.
+//node를 반환하기 전에 balanced()를 호출해 node의 불균형 문제를 해결하고, node의 height를 업데이트 한다.
 example(of: "removing a value") {
     var tree = AVLTree<Int>()
     tree.insert(15)
@@ -254,12 +255,21 @@ example(of: "removing a value") {
     // 16
     // └──15
 }
-//AVL tree의 self-balancing property는 insert 및 remove이 O(log n) 시간복잡도로 최적의 성능으로 작동하도록 보장한다.
+//AVL tree의 self-balancing 속성(property)은 삽입(insert) 및 제거(remove) 연산이 O(log n) 시간복잡도의 최적 성능으로 작동하도록 보장한다.
+
+
+
+
+//Key points
+// • self-balancing tree는 tree에서 요소(element)를 추가(add)하거나 제거(remove)할 때마다 균형(balance)을 조정하는 절차를 수행하여,
+//  성능 저하를 방지한다.
+// • AVL 트리는 트리가 더 이상 균형을 이루지 않을 때, 트리의 일부를 조정하여, 균형을 유지한다.
+// • node 삽입(insertion) 및 제거(removal) 시, 4가지 유형의 회전(rotaion)으로 균형(Balance)을 맞춘다.
 
 
 
 
 //Where to go from here?
-//AVL tree는 최초의 self-balancing BST 이지만, 이후에 구현된 red-black tree, splay tree 등이 있다.
+//AVL tree는 최초의 self-balancing BST 이다. 이후에 고안된 red-black tree, splay tree 등도 있다.
 //https://github.com/raywenderlich/swift-algorithm-club/tree/master/Red-Black%20Tree
 //https://github.com/raywenderlich/swift-algorithm-club/tree/master/Red-Black%20Tree

@@ -222,8 +222,10 @@ extension AVLTree {
             node.rightChild = remove(node: node.rightChild, value: value)
         }
         
+        //추가
         let balancedNode = balanced(node)
         balancedNode.height = max(balancedNode.leftHeight, balancedNode.rightHeight) + 1
+        
         return balancedNode
     }
 }

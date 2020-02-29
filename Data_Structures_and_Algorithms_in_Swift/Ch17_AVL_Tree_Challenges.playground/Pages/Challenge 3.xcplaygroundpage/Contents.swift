@@ -14,7 +14,7 @@
  Have AVLNode conform to this.
  */
 //이진 트리에는 많은 종류가 있으므로, 공통적인 기능을 Protocol로 그룹화하는 것이 좋다. 순회 메서드가 이의 좋은 예이다.
-//TraversableBinaryNode protocol을 생성하고, Transversal 메서드를 구현하고, AVLNode가 이를 준수하도록 한다.
+//Transversal 메서드의 기본 구현을 제공하는 TraversableBinaryNode protocol을 생성하고, AVLNode가 이를 준수하도록 한다.
 
 
 
@@ -56,6 +56,7 @@ example(of: "using TraversableBinaryNode") {
     for i in 0..<15 {
         tree.insert(i)
     }
+    
     print(tree)
     //   ┌──14
     //  ┌──13

@@ -7,7 +7,8 @@
  
  How many **nodes** are there in a perfectly balanced tree of height 3? What about a perfectly balanced tree of height `h`?
 */
-//height가 3인 완벽하게 균형 잡힌 tree에는 몇 개의 node가 있는가? height가 h인 완벽하게 균형 잡힌 tree는 어떤가?
+//높이(height)가 3인 완벽하게 균형 잡힌(포화) 트리(tree)에는 몇 개의 노드(node)가 있는가?
+//높이(height)가 h인 완벽하게 균형 잡힌(포화) 트리(tree)는 어떤가?
 
 
 

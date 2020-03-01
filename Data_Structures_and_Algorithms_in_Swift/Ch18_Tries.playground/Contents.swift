@@ -2,13 +2,13 @@
 
 //Trie(try와 발음이 같다)는 영어 단어와 같이 Collection으로 표현할 수 있는 데이터를 저장하는 데 특화된 tree이다. //p.200
 //문자열(String)의 각 문자(Character)는 node에 매핑된다. 각 문자열의 마지막 node는 종단 node로 표시 된다.
-//trie의 장점은 context의 접두사 일치 확인 시 가장 잘 설명된다.
+//trie의 장점은 context의 접두사(prefix) 일치 여부 확인 시 가장 잘 설명할 수 있다.
 
 
 
 
 //Example
-//문자열의 접두사 일치를 처리하는 방법은 다음과 같다.
+//문자열의 접두사 일치 여부를 확인하는 방법은 다음과 같다.
 class EnglishDictionary {
     private var words: [String] = []
     
@@ -17,16 +17,16 @@ class EnglishDictionary {
     }
 }
 //문자열 집합에서 접두사와 일치하는 문자열을 반환한다.
-//단어 배열의 요소 수가 작다면, 이는 잘 작동한다. 하지만, 수천 개 이상의 단어를 다뤄야 한다면 소요시간이 매우 늘어나게 된다.
+//단어 배열의 요소 수가 작다면, 이는 합리적인 해결방안이다. 하지만, 수천 개 이상의 단어를 다뤄야 한다면 소요시간이 매우 늘어나게 된다.
 //words(matching:)의 시간 복잡도는 O(k*n)이다. 여기서 k는 가장 긴 문자열이고, n은 확인해야 할 단어의 수이다.
-//Trie 자료구조는 이러한 유형의 문제에 대해 뛰어난 성능을 보인다.
-//Trie는 트리이므로 여러 child를 가질 수 있고, 각 node는 단일 character를 나타낼 수 있다.
-//이 예에서는 구둣점으로 표시한 indicator(종단 node를 나타낸다)를 가진 node를 추적해 단어를 형성한다.
+//Trie 자료구조는 이러한 유형의 문제 해결에 뛰어난 성능을 보인다.
+//Trie는 트리이므로 여러 children을 가질 수 있고, 각 node는 단일 character를 나타낼 수 있다.
+//이 예에서는 root에서부터 검정색 점 indicator(종단 노드를 나타낸다)를 가진 노드를 추적해 단어를 형성한다.
 //trie의 흥미로운 특징은 여러 단어가 동일한 문자를 공유할 수 있다는 것이다.
 //ex. 접두사 cu를 포함한 단어를 찾아야 하는 경우 //p.202
 //먼저 c가 포함된 node로 이동한다. 그러면 trie의 다른 분기를 빠르게 제외할 수 있다.
-//이후 u node로 이동한다. 여기가 접두사 cu의 끝이므로, trie는 node chain으로 형성된 모든 Collection을 u node에서 반환한다.
-//이 경우에는 cut 과 cute가 반환된다. 수십 만개의 단어를 검색해야 하는 경우, trie를 사용하여 제외할 수 있는 비교의 수는 매우 많다.
+//이후 u node로 이동한다. 여기가 접두사(prefix) cu의 끝이므로, trie는 u 노드(node)로부터 node chain으로 형성된 모든 Collection을 반환한다.
+//이 경우에는 cut 과 cute가 반환된다. 수십 만개의 단어를 검색해야 하는 경우, trie를 사용하여 제외하는 비교(comparison)는 상당히 많아진다.
 
 
 
@@ -56,12 +56,12 @@ public class Trie<CollectionType: Collection> where CollectionType.Element: Hash
     private let root = Node(key: nil, parent: nil)
     public init() {}
 }
-//Trie 클래스는 문자열을 비롯한 Collection 프로토콜을 구현하는 type을 사용한다.
+//Trie 클래스(class)는 문자열(string)을 비롯한, Collection 프로토콜을 구현한 모든 type을 대상으로 사용한다.
 //이 요구사항 외에도, Collection의 각 요소는 Hashable을 구현해야 한다.
 //이는 Collection의 요소를 TrieNode에서 children dictionary의 key로 사용하기 때문이다.
 
 //Insert
-//Trie는 Collection을 준수하는 모든 type을 사용한다. trie는 각 node가 Collection의 요소에 매핑된다.
+//Trie는 Collection을 준수하는 모든 type을 대상으로 한다. trie의 각 node는 Collection의 요소에 매핑된다.
 extension Trie {
     public func insert(_ collection: CollectionType) {
         var current = root //root node에서 시작하여 진행 상황을 추적한다.
@@ -93,7 +93,7 @@ extension Trie {
     }
 }
 //insert와 비슷한 방법으로 trie를 순회(traverse)한다. collection의 모든 요소를 검사하여, tree에 있는지 확인한다.
-//Collection의 마지막 요소에 도달하면, 이는 반드시 종단 node여야 한다.
+//Collection의 마지막 요소에 도달하면, 이는 반드시 종단 요소여야 한다.
 //그렇지 않다면, 이 Collection은 tree에 추가되지 않은 것이고, 찾은 요소는 더 큰 Collection의 하위 집합일 뿐이다.
 //contains의 시간 복잡도는 O(k)이다. 여기서 k는 찾고 있는 Collection의 요소 수 이다.
 //Collection이 trie에 있는지 확인하려면, k node를 통과해야 하기 때문이다.
@@ -226,5 +226,11 @@ example(of: "prefix matching") {
     // Collections starting with "care"
     // ["care", "cared"]
 }
-//개별 node가 공유될 수 있기 때문에 trie는 메모리 효율이 높다.
+
+
+
+
+//Key points
+// • Trie는 접두사 일치(prefix-matching) 판별에 뛰어난 성능을 보인다.
+// • 개별 node가 여러 가지 다른 값 사이에 공유될 수 있기 때문에 trie는 상대적으로 메모리 효율이 높다.
 //ex. "car", "carb", "care"는 단어의 첫 세 글자를 공유할 수 있다.

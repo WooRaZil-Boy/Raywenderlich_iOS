@@ -17,7 +17,7 @@
  Add code to the **Trie.swift** file in the Sources folder.
  
  */
-//Trie에 추가적인 속성을 구현한다.
+//유용하게 사용할 수 있는 추가적인 속성을 Trie에 구현한다.
 // 1. collections : trie의 모든 collection을 반환한다.
 // 2. count : 현재 trie의 collection 수를 반환한다.
 // 3. isEmpty : trie가 비어 있는지 여부를 반환한다.

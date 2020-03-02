@@ -16,11 +16,13 @@ public class Trie<CollectionType: Collection & Hashable> where CollectionType.El
     
     //추가
     public private(set) var collections: Set<CollectionType> = [] //stored property로 구현
-    //모든 key를 Trie에 저장하는 Set. get은 public 이고, set은 private이다. 속성이 클래스 정의 외부에서 변경되는 것을 막는다.
+    //이 속성은 모든 key를 Trie에 저장하는 집합(Set)이다.
+    //get은 public 이고, set은 private으로, 해당 속성이 클래스 정의 외부에서 변경되는 것을 막는다.
     //이 Set를 사용하려면, Collection이 Hashable을 구현하도록 제한해야 한다.
     public var count: Int {
         collections.count
     }
+    
     public var isEmpty: Bool {
         collections.isEmpty
     }

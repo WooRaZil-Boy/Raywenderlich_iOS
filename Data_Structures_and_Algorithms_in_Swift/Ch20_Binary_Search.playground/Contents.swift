@@ -11,24 +11,25 @@
 
 
 //Example
-//선형 탐색(linear search)과 비교해 보면, 이진 탐색의 장점을 쉽게 알 수 있다.
+//선형 탐색(linear search)과 비교해 보면, 이진 탐색(binary search)의 장점을 쉽게 알 수 있다.
 //Swift의 Array 유형은 linear search를 사용하여 firstIndex(of:) 메서드를 구현한다.
 //즉, 전체 Collection을 탐색하거나, 해당 요소를 찾을 때까지 탐색한다. //p.216
-//이진 탐색은 Collection이 이미 정렬되어 있다는 있기 때문에 다르게 처리할 수 있다. //p.216
-//다음과 같은 방식으로 탐색을 수행한다.
+//이진 탐색은 Collection이 이미 정렬되어 있다는 있기 때문에 다르게 처리한다. //p.216
+//8단계가 아닌, 3단계만에 31을 찾을 수 있다. 다음과 같은 방식으로 탐색을 수행한다.
 
 //Step 1: Find middle index
 //Collection의 중간 index를 찾는다. //p.216
 
 //Step 2: Check the element at the middle index
-//다음 단계는 중간 index에 저장된 요소를 확인한다. 찾는 값과 일치하면 index를 반환하고 그렇지 않으면 다음 단계로 넘어간다.
+//다음 단계는 중간 index에 저장된 요소(element)를 확인하는 것이다. 찾는 값과 일치하면 index를 반환하고 그렇지 않으면 다음 단계로 넘어간다.
 
 //Step 3: Recursively call binary Search
 //마지막 단계는 이진 탐색을 재귀적으로 호출하는 것이다. 하지만, 이번에는 찾는 값에 따라 중간 index의 왼쪽 또는 오른쪽에 있는 요소만 탐색한다.
 //찾는 값이 중간값(중간 index의 value)보다 작은 경우 왼쪽의 하위 sequence를 탐색한다.
 //찾는 값이 중간값(중간 index의 value)보다 큰 경우 오른쪽의 하위 sequence를 탐색한다.
-//각 단계는 수행해야 하는 비교의 절반을 효과적으로 제거한다. //p.217
-//Collection을 더 이상 왼쪽과 오른쪽으로 나눌 수 없거나, 원하는 값을 찾을 때까지 세 단계를 반복한다.
+//각 단계는 수행해야 하는 비교의 절반을 효과적으로 제거한다.
+//위의 예제에서는 찾으려는 31이, 중간값인 22보다 크므로 오른쪽 하위 시퀀스(sequence)에 이진 탐색을 적용한다. //p.217
+//Collection을 더 이상 왼쪽(left)과 오른쪽(right)로 나눌 수 없거나, 원하는 값을 찾을 때까지 이 세 단계를 반복한다.
 //이진 탐색(Binary search)은 이러한 방식으로 O(log n) 시간 복잡도를 달성한다.
 
 
@@ -74,5 +75,12 @@ print("binarySearch(for:): \(String(describing: binarySearch31))") // binarySear
 //이진 탐색은 프로그래밍 인터뷰에 자주 나오는 효율적인 알고리즘이다. "정렬된 배열이며..." 라는 언급이 있을 때마다 이진 탐색 알고리즘을 고려하는 것이 좋다.
 //또한, 주어진 문제에서 검색에 O(n^2)의 시간 복잡도가 걸릴 것 같다면,
 //이진 탐색을 사용해 O(n log n) 까지 시간 복잡도를 줄일 수 있는 사전 정렬(up-front sorting)을 고려해 보는 것이 좋다.
-//때로는, 이진 탐색을 사용하기 위해 Collection을 정렬하는 것이 유용할 수 있다.
 
+
+
+
+//Key points
+// • 이진 탐색(Binary search)은 정렬된(sorted) Collection에서만 사용가능한 알고리즘이다.
+// • 때로는, 이진 탐색(binary search)을 사용하기 위해 Collection을 정렬하는 것이 유용할 수 있다.
+// • 시퀀스(sequence)의 firstIndex(of:) 메서드는 O(n) 시간 복잡도(time complexity)를 가지는 선형 탐색(linear search)을 사용한다.
+//  이진 탐색은 O(log n) 시간 복잡도를 가지므로, 반복 적인 조회(lookup) 작업을 해야 하는 대규모 데이터 세트에 적합하다.

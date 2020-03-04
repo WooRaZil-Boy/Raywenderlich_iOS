@@ -14,29 +14,31 @@ findIndices(of: 3, in: array)
 `findIndices` should return the range `2..<5`, since those are the start and end indices for the value `3`.
 */
 //정렬된 Array를 검색하고 특정 요소의 index range를 찾는 함수를 작성한다.
-//위의 예에서 findIndices는 2..<5 범위를 반환한다. 찾는 값인 3의 시작 및 종료 index 이다.
+//위의 예에서 findIndices는 2..<5 범위를 반환한다. 찾는 값인 3의 시작과 종료 index 이다.
 
 
 
 
-//최적화되지 않은 간단한 해결 방법은 매우 간단하게 구현할 수 있다.
-//  func findIndices(of value: Int, in array: [Int]) -> Range<Int>? {
-//      guard let leftIndex = array.firstIndex(of: value) else {
-//          return nil
-//      }
-//      guard let rightIndex = array.lastIndex(of: value) else {
-//          return nil
-//      }
+//최적화되지 않은 해결 방법은 매우 간단하게 구현할 수 있다.
+//func findIndices(of value: Int, in array: [Int]) -> Range<Int>? {
+//    guard let leftIndex = array.firstIndex(of: value) else {
+//        return nil
+//    }
 //
-//      return leftIndex..<rightIndex
-//  }
-//이 알고리즘의 시간 복잡도는 O(n)이며, 나쁘지 않은 것처럼 보인다. 하지만, O(log n)으로 최적화 할 수 있다.
+//    guard let rightIndex = array.lastIndex(of: value) else {
+//        return nil
+//    }
+//
+//    return leftIndex..<rightIndex
+//}
+//이 알고리즘의 시간 복잡도는 O(n)이며, 나쁘지 않은 것처럼 보인다. 하지만 다른 해결 방법을 사용해 O(log n)으로 최적화 할 수 있다.
 //이진 탐색은 정렬된 Collection의 value를 식별하는 알고리즘으로, 정렬된 Collection이 보장되는 경우 항상 염두에 둬야 한다.
 //이전 장에서 구현한 이진 탐색(Ch20)은 해당 index가 시작 index인지, 종료 index인지 알수가 없다. 따라서 이를 보완해 이진 탐색을 수정한다.
 func findIndices(of value: Int, in array: [Int]) -> CountableRange<Int>? {
     //이진 탐색을 수정하여 어떤 index(start index 인지 end index 인지)를 찾고 있는지에 따라 인접값이 현재값과 다른지 검사할 수 있다.
     guard let startIndex = startIndex(of: value, in: array, range: 0..<array.count) else { return nil }
     guard let endIndex = endIndex(of: value, in: array, range: 0..<array.count) else { return nil }
+    
     return startIndex..<endIndex
 }
 
@@ -68,6 +70,7 @@ func startIndex(of value: Int, in array: [Int], range: CountableRange<Int>) -> I
     }
 }
 
+//endIndex 메서드도 비슷하게 구현할 수 있다.
 func endIndex(of value: Int, in array: [Int], range: CountableRange<Int>) -> Int? { //helper
     let middleIndex = range.lowerBound + (range.upperBound - range.lowerBound) / 2 //중간값의 index를 가져온다.
     //Ch20의 구현과는 range type이 달라서 코드가 다를 뿐 찾는 방법은 같다.

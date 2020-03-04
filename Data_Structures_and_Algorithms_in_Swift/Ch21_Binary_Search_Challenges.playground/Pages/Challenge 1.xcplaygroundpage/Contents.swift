@@ -14,9 +14,9 @@
  ```
  
  */
-//RandomAccessCollection 프로토콜을 extension해서 이전 탐색을 구현했다.
+//이전에는 RandomAccessCollection 프로토콜을 extension해서 이전 탐색을 구현했다.
 //이진 탐색은 정렬된 Collection에서만 작동하므로, RandomAccessCollection의 일부로 해당 함수를 노출하면 오용될 가능성이 있다.
-//이를 개선하기 위해, 이진 검색을 일반 함수로 구현한다.
+//이를 방지하기 위해, 이진 검색을 일반 함수로 구현한다.
 
 
 
@@ -27,9 +27,11 @@ func binarySearch<Elements: RandomAccessCollection>(
     in range: Range<Elements.Index>? = nil) -> Elements.Index? where Elements.Element: Comparable {
     
     let range = range ?? collection.startIndex..<collection.endIndex
+    
     guard range.lowerBound < range.upperBound else {
         return nil
     }
+    
     let size = collection.distance(from: range.lowerBound, to: range.upperBound)
     let middle = collection.index(range.lowerBound, offsetBy: size / 2)
     

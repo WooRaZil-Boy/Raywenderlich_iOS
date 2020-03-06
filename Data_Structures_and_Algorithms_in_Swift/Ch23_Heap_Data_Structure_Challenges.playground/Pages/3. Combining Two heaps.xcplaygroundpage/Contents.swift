@@ -23,6 +23,11 @@
 
 
 // 3. Combining Two Heaps
+//두 개의 heap을 결합하는 메서드를 작성한다.
+
+
+
+
 //    mutating public func merge(heap: Heap) {
 //        elements = elements + heap.elements
 //        buildHeap()
@@ -31,7 +36,6 @@
 //두 개의 heap을 병합하는 것은 매우 간단하다. 먼저 두 Array를 결합한다. 이 작업의 시간 복잡도는 O(m)이다(m은 병합할 heap의 길이).
 //그리고 병합된 Array로 Heap을 만드는데 O(n)이 걸린다. 전체적인 알고리즘의 시간복잡도는 O(n)이다.
     
-
   
 
 

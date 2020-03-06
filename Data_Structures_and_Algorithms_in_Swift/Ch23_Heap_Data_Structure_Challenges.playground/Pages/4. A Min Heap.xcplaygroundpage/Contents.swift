@@ -5,22 +5,26 @@
  ## 4. A Min Heap?
  Write a function to check if a given array is a min heap.
  */
-//최소 힙인지 확인
+//주어진 배열(Array)가 최소 힙(min heap)인지 확인하는 함수를 작성한다.
+
+
+
+
+//주어진 Array가 최소 힙인지 확인하려면 binary heap의 모든 상위 node만 확인하면 된다.
+//최소 힙의 조건을 충족시키려면 모든 상위 node가 왼쪽 및 오른쪽 하위 node보다 작거나 같아야 한다.
 
 func leftChildIndex(ofParentAt index: Int) -> Int {
-  (2 * index) + 1
+    (2 * index) + 1
 }
 
 func rightChildIndex(ofParentAt index: Int) -> Int {
-  (2 * index) + 2
+    (2 * index) + 2
 }
 
 
 
 
 func isMinHeap<Element: Comparable> (elements: [Element]) -> Bool {
-    //주어진 Array가 최소 힙인지 확인하려면 binary heap의 모든 상위 node만 확인하면 된다.
-    //최소 힙을 충족시키려면 모든 상위 node가 왼쪽 및 오른쪽 하위 node보다 작거나 같아야 한다.
     guard !elements.isEmpty else { //Array가 비어 있다면, 최소 힙이다.
         return true
     }

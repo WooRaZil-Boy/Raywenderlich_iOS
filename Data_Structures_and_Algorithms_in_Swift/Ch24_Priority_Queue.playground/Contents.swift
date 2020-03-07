@@ -1,11 +1,11 @@
 //Chapter 24: Priority Queue
 
-//Queue는 FIFO(first-in-first-out) 순서로 요소의 순서를 유지하는 단순한 list dlek.
-//Priority Queue(우선 순위 큐)는 FIFO 순서를 사용하는 대신, 요소를 우선 순위 순서대로 삭제하는 Queue의 또 다른 버전이다.
+//Queue는 FIFO(first-in-first-out)로 요소의 순서를 유지하는 단순한 list이다.
+//우선 순위 큐(Priority Queue)는 FIFO 순서를 사용하는 대신, 요소를 우선 순위 순서대로 삭제하는 Queue의 또 다른 버전이다.
 //우선 순위 큐의 종류는 다음과 같다.
-// 1. Max-priority : front의 요소가 가장 크다.
-// 2. Min-priority : front의 요소가 가장 작다.
-//우선 순위 큐는 요소의 list가 주어졌을 때, 최대값 또는 최소값을 찾아야 할때 특히 유용하다.
+// 1. Max-priority : 항상 front의 요소가 가장 크다.
+// 2. Min-priority : 항상 front의 요소가 가장 작다.
+//우선 순위 큐(Priority Queue)는 주어진 요소(element)의 리스트(list)에서 최대값 또는 최소값을 찾아야 할때 특히 유용하다.
 
 
 
@@ -16,14 +16,14 @@
 // • A* pathfinding algorithm : 우선 순위 큐를 사용해 탐색되지 않은 경로를 추적하는 최단 경로를 생성한다.
 // • Heap sort : 우선 순위 큐를 사용해 힙 정렬을 구현한다.
 // • Huffman coding : 압축 트리(compression tree)를 구성한다.
-//   우선 순위 큐는 상위 node가 없는 가장 frequency가 작은 두 개의 node를 반복적으로 찾는데 사용한다.
+//   우선 순위 큐는 상위 node가 없는 가장 frequency가 작은 두 개의 node를 반복적으로 찾는데 사용된다.
 
 
 
 
 //Common operations
-//Priority Queue는 일반 Queue와 동일한 연산(Operation)을 가지고 있고, 구현만 달라진다.
-//기본적으로 Queue protocol을 준수하고, 일반 Queue와 동일한 연산을 구현한다.
+//Priority Queue는 일반 Queue와 동일한 연산자(Operation)를 가지고 있고, 구현만 달라진다.
+//기본적으로 Queue protocol을 준수해, 일반 큐(Queue) 연산을 구현한다.
 // • enqueue : 요소를 Queue에 삽입한다. 성공하면 true를 반환한다.
 // • dequeue : 우선 순위가 가장 높은 요소를 제거하고 반환한다. Queue가 비어 있으면 nil을 반환한다.
 // • isEmpty : Queue가 비었는지 확인한다.
@@ -94,3 +94,11 @@ while !priorityQueue.isEmpty {
 //max priority queue에서는 가장 큰 항목부터 dequeue 된다.
 
 
+
+
+//Key points
+// • 우선 순위 큐(Priority Queue)는 우선 순위 순서대로 요소(element)를 찾기 위해 사용한다.
+// • 큐(Queue)의 기본 구현에 초점을 맞추고 힙(Heap)의 추가적인 기능을 제거해,
+//  우선 순위 큐(Priority Queue)의 추상화(abstraction) 계층(layer)을 만든다.
+// • 추상화(abstraction)는 우선 순위 큐(Priority Queue)의 의도를 명확하고 간결하게 한다.
+//  우선 순위 큐(Priority Queue)는 enqueue와 dequeue만 구현하면 된다.

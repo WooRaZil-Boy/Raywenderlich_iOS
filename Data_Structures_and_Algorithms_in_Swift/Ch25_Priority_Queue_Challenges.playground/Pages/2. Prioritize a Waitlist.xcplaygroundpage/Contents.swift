@@ -13,10 +13,11 @@ public struct Person: Equatable {
   let isMilitary: Bool
 }
 
-
-
-
 //티켓 판매를 위한 대기자 명단에서 군인을 먼저 우대하고, 이후 나이순서 대로 우선 순위를 줘서 정렬한다.
+
+
+
+
 //우선 순위 큐 자료구조를 사용하면 우선 순위대로 처리할 수 있다.
 func tswiftSort(person1: Person, person2: Person) -> Bool { //두 요소를 비교한다.
     if person1.isMilitary == person2.isMilitary { //둘 다 군 경력이 있다면 나이로 정렬한다.
@@ -38,6 +39,11 @@ let waitlist = [p1, p2, p3, p4, p5]
 var priorityQueue = PriorityQueue(sort: tswiftSort, elements: waitlist)
 while !priorityQueue.isEmpty {
     print(priorityQueue.dequeue()!)
+    // Person(name: "Jake", age: 22, isMilitary: true)
+    // Person(name: "Josh", age: 21, isMilitary: true)
+    // Person(name: "Sabrina", age: 30, isMilitary: false)
+    // Person(name: "Clay", age: 28, isMilitary: false)
+    // Person(name: "Cindy", age: 28, isMilitary: false)
 }
 
 

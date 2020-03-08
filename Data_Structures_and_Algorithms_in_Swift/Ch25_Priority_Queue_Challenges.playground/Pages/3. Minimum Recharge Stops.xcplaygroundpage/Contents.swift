@@ -53,7 +53,7 @@ enum DestinationResult {
 }
 
 //문제 해결을 위해 ChargingStation(struct)와 DestinationResult(enum) 두 개의 entity가 주어진다.
-//ChargingStation는 충전소의 정보를, DestinationResult는 차량이 주행을 완료할 수 있는 지 여부를 나타낸다.
+//ChargingStation는 충전소의 정보를, DestinationResult는 차량이 주행을 완료할 수 있는지 여부를 나타낸다.
 //그리고 세 가지 매개변수가 있는 minRechargeStops(_:) 함수가 있다. 이 함수의 매개변수는 다음과 같다.
 // • target : 차량이 주행해야 하는 거리(마일)
 // • startCharge : 주행 전 출발 위치에서의 충전된 양
@@ -109,3 +109,4 @@ let stations = [ChargingStation(distance: 10, chargeCapacity: 60),
                 ChargingStation(distance: 60, chargeCapacity: 40)]
 
 minRechargeStops(target: 100, startCharge: 10, stations: stations)
+//충전소를 최소 2번 들러야 함을 알 수 있다.

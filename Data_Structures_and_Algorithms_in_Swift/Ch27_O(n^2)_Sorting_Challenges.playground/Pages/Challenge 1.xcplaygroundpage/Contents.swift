@@ -5,7 +5,7 @@
 //: Given a collection of Equatable elements, bring all instances of a given
 //: value in the array to the right side of the array.
 
-//Equatable 요소의 Collection이 주어졌을 때, 동일한 모든 value를 오른쪽으로 이동한다.
+//Equatable 요소의 Collection이 주어졌을 때, 동일한 모든 value를 배열의 오른쪽으로 이동한다.
 
 
 
@@ -14,7 +14,7 @@
 extension MutableCollection where Self: BidirectionalCollection, Element: Equatable {
     //기본 Storage를 변경해야 하므로, 이 함수는 MutableCollection를 구현한 type에서만 사용할 수 있다.
     //이 알고리즘을 효율적으로 완료하려면, 역방향 index 순회가 필요하므로, BidirectionalCollection도 구현해야 한다.
-    //비교 연산이 필요하므로, 요소는 Equatable를 구현해야 한다.
+    //마지막으로 값을 찾기 위한 비교 연산이 필요하므로, 요소는 Equatable를 구현해야 한다.
     mutating func rightAlign(value: Element) {
         var left = startIndex
         var right = index(before: endIndex)

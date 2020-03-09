@@ -1,20 +1,20 @@
 //Chapter 26: O(n^2) Sorting Algorithms
 
-//O(n^2) 시간 복잡도는 성능이 좋지 않지만, 이 알고리즘들은 이해하기 쉽고 일부 시나리오에서는 유용하다.
-//이러한 알고리즘은 공간 효율적이며, 상수 O(1) 추가 메모리 공간만 필요하다. 작은 데이터 세트의 경우, 이러한 정렬들은 보다 복잡한 정렬들에 비해 매우 효과적이다.
+//O(n^2) 시간 복잡도(time complexity) 정렬 알고리즘(sorting algorithm)은 성능이 좋지는 않지만, 이해하기 쉽고 일부 시나리오에서는 유용하게 사용할 수 있다.
+//이러한 알고리즘은 공간 효율적이며, 상수(constant, 일정한) O(1) 추가 메모리 공간만 필요로 한다. 작은 데이터 세트의 경우, 이러한 정렬 알고리즘은 보다 복잡한 정렬 알고리즘 보다 훨씬 효과적일 수 있다.
 //대표적인 O(n^2) 정렬 알고리즘은 다음과 같다.
-// • Bubble sort (거품 정렬)
-// • Selection sort(선택 정렬)
-// • Insertion sort(삽입 정렬)
-//이 알고리즘 모두 comparison-based(비교 기반) 정렬 방법이다. 요소를 정렬하기 위해 less-than operator(<) 등을 사용한다.
+// • 거품 정렬(Bubble sort)
+// • 선택 정렬(Selection sort)
+// • 삽입 정렬(Insertion sort)
+//이 알고리즘 모두 comparison-based(비교 기반) 정렬 방법이다. 요소(element) 정렬을 위해 less-than operator(<) 등을 사용한다.
 //이런 비교가 호출되는 횟수로 정렬기법의 일반적인 성능을 측정한다.
 
 
 
 
 //Bubble sort
-//가장 간단한 정렬 중 하나인 버블 정렬은 인접 value 반복적으로 비교하고, 필요한 경우 이를 교환하여 정렬을 수행한다.
-//따라서 큰 값을 가진 요소들 일 수록 Collection이 끝까지 "bubble up" 된다(정렬 방향을 반대로 하면, 작은 값일 수록).
+//가장 간단한 정렬 중 하나인 버블 정렬은 인접 value를 반복적으로 비교하고, 필요한 경우 이를 교환하여 정렬을 수행한다.
+//따라서 큰 값을 가진 요소일 수록(내림 차순 정렬일 경우에는 반대로 작은 값일 수록) Collection의 끝까지 "bubble up" 된다.
 
 //Example
 //[9, 4, 10, 3]이 있을 때, 버블 정렬 알고리즘의 단일 pass는 다음과 같은 단계로 구성된다. //p.267
@@ -36,12 +36,14 @@ public func bubbleSort<Element>(_ array: inout [Element]) where Element: Compara
         //모든 pass는 이전 pass보다 하나 더 적은 수의 비교를 수행하므로(pass가 끝날 때마다 큰 값 순으로 하나씩 완전히 정렬된다),
         //기본적으로 각 pass마다 Array를 하나씩 줄인다.
         var swapped = false
+        
         for current in 0..<end { //이 loop는 단일 pass를 수행한다.
             if array[current] > array[current + 1] { //인접한 값을 비교하고 필요한 경우 swap한다.
                 array.swapAt(current, current + 1)
                 swapped = true
             }
         }
+        
         if !swapped { //해당 pass에서 교환한 값이 없다면, Collection이 완전히 정렬된 것이므로 빠르게 반환할 수 있다.
             return
         }
@@ -50,8 +52,11 @@ public func bubbleSort<Element>(_ array: inout [Element]) where Element: Compara
 
 example(of: "bubble sort") {
     var array = [9, 4, 10, 3]
+    
     print("Original: \(array)") // Original: [9, 4, 10, 3]
+    
     bubbleSort(&array)
+    
     print("Bubble sorted: \(array)") // Bubble sorted: [3, 4, 9, 10]
 }
 //이미 정렬되어 있는 경우 버블 정렬의 시간 복잡도는 O(n)이다(최선). 최악과 평균의 경우 시간 복잡도는 O(n^2)으로 가장 매력적이지 않은 정렬 알고리즘 중 하나이다.
@@ -63,9 +68,9 @@ example(of: "bubble sort") {
 //선택 정렬은 버블 정렬의 기본 개념을 따르지만, swapAt 연산 횟수를 줄여 알고리즘을 개선한다. 선택 정렬은 각 pass의 끝에서만 swap 한다.
 
 //Example
-//[9, 4, 10, 3]이 있을 때, 선택 정렬은 각 pass에서 정렬되지 않은 가장 낮은 값을 찾아 제자리로 swap 한다. //p. 269
-// 1. 3이 가장 낮은 값이므로 9와 swap한다. [3, 4, 10, 9]
-// 2. 그다음 가장 낮은 값은 4이다. 정렬된 위치에 있으므로 그대로 둔다. [3, 4, 10, 9]
+//[9, 4, 10, 3]이 있을 때, 선택 정렬은 각 pass에서 정렬되지 않은 가장 작은 값을 찾아 제자리로 swap 한다. //p. 269
+// 1. 3이 가장 작은 값이므로 9와 swap한다. [3, 4, 10, 9]
+// 2. 그다음 가장 작은 값은 4이다. 정렬된 위치에 있으므로 그대로 둔다. [3, 4, 10, 9]
 // 3. 마지막으로 9와 10을 swap한다. [3, 4, 9, 10]
 
 //Implementation
@@ -77,11 +82,13 @@ public func selectionSort<Element>(_ array: inout [Element]) where Element: Comp
     for current in 0..<(array.count - 1) { //마지막 요소를 제외한 Collection의 모든 요소에 대해 pass를 수행한다.
         //다른 모든 요소가 올바르게 정렬되어 있다면, 마지막 요소도 포함되므로, 여기에 마지막 요소를 포함할 필요는 없다.
         var lowest = current
-        for other in (current + 1)..<array.count { //모든 pass마다, 남은 Collection에서 가장 낮은 값을 가진 요소를 찾는다.
+        
+        for other in (current + 1)..<array.count { //모든 pass마다, 남은 Collection에서 가장 작은 값을 가진 요소를 찾는다.
             if array[lowest] > array[other] {
                 lowest = other
             }
         }
+        
         if lowest != current { //해당 요소가 current가 아닌 경우 swap 한다. //current가 최소값이 아닌 경우
             array.swapAt(lowest, current)
         }
@@ -101,8 +108,8 @@ example(of: "selection sort") {
 
 
 //Insertion sort
-//삽입 정렬은 더 유용하다. 버블 정렬, 선택 정렬과 마찬가지로 시간 복잡도는 O(n^2)이지만, 성능은 더 뛰어나다.
-//삽입 정렬은 데이터가 정렬되어 있을수록 할 작업이 적어진다. 데이터가 이미 정렬된 경우 삽입 정렬의 시간 복잡도는 O(n)이다.
+//삽입 정렬은 더 유용하다. 버블 정렬, 선택 정렬과 마찬가지로 시간 복잡도는 O(n^2)이지만, 성능은 더 성능은 더 뛰어날 수 있다.
+//삽입 정렬은 데이터가 정렬되어 있을수록 해야할 작업이 적어진다. 데이터가 이미 정렬된 경우 삽입 정렬의 시간 복잡도는 O(n)이다.
 //Swift standard library의 정렬 알고리즘은 정렬되지 않은 작은(20개 이하의 요소) partition의 경우, 삽입 정렬을 응용한 hybrid 방식을 사용한다.
 
 //Example
@@ -111,7 +118,7 @@ example(of: "selection sort") {
 // 2. 4와 9를 비교하여 4를 왼쪽으로 바꾸면서 9와 위치를 swap한다. 이미 정렬된 부분과 비교해서 맞는 위치에 삽입한다. [4, 9, 10, 3]
 // 3. 10은 이전 요소와 비교해 올바른 위치에 있으므로 이동할 필요가 없다. [4, 9, 10, 3]
 // 4. 마지막으로 3을 각각 10, 9, 4와 비교하고 교환하여 가장 앞으로 이동시킨다. [3, 4, 9, 10]
-//삽입 정렬에서 최상의 경우는 이미 정렬되어 있고, 왼쪽 이동(shift)필요하지 않을 때이다.
+//삽입 정렬(insertion sort)에서 최상(best)의 경우는 이미 정렬된 경우이며, 이때는 왼쪽 이동(shift)이 필요하지 않다.
 
 //Implementation
 public func insertionSort<Element>(_ array: inout [Element]) where Element: Comparable {
@@ -137,7 +144,7 @@ example(of: "insertion sort") {
     print("Insertion sorted: \(array)") // Insertion sorted: [3, 4, 9, 10]
 }
 //삽입 정렬은 데이터가 이미 정렬되어 있는 경우 가장 빠른 알고리즘 중 하나이다. 정렬이 되어 있는 경우 빠르다는 것이 당연하다고 생각할 수 있지만, 모든 정렬 알고리즘이 그런 것은 아니다.
-//실제로 많은 요소가 이미 정렬되어 있는 경우, 삽입 정렬은 좋은 성능을 보인다.
+//실제로 대부분의 요소가 이미 정렬되어 있는 경우, 삽입 정렬은 좋은 성능을 보인다.
 
 
 
@@ -156,14 +163,18 @@ public func bubbleSort<T>(_ collection: inout T) where T: MutableCollection, T.E
     for end in collection.indices.reversed() {
         var swapped = false
         var current = collection.startIndex
+        
         while current < end {
             let next = collection.index(after: current)
+            
             if collection[current] > collection[next] {
                 collection.swapAt(current, next)
                 swapped = true
             }
+            
             current = next
         }
+        
         if !swapped {
             return
         }
@@ -179,12 +190,15 @@ public func selectionSort<T>(_ collection: inout T) where T: MutableCollection, 
     for current in collection.indices {
         var lowest = current
         var other = collection.index(after: current)
+        
         while other < collection.endIndex {
             if collection[lowest] > collection[other] {
                 lowest = other
             }
+            
             other = collection.index(after: other)
         }
+        
         if lowest != current {
             collection.swapAt(lowest, current)
         }
@@ -198,15 +212,26 @@ public func insertionSort<T>(_ collection: inout T) where T: BidirectionalCollec
     
     for current in collection.indices {
         var shifting = current
+        
         while shifting > collection.startIndex {
             let previous = collection.index(before: shifting)
+            
             if collection[shifting] < collection[previous] {
                 collection.swapAt(shifting, previous)
             } else {
                 break
             }
+            
             shifting = previous
         }
     }
 }
 //약간의 코드 변경으로 알고리즘을 일반화할 수 있다.
+
+
+
+
+//Key points
+// • n^2 알고리즘(algorithms)은 대부분 좋지 않은 성능을 보이지만, 특정 상황에서는 뛰어난 성능을 보일 수 있다.
+//  삽입 정렬(insert sort)의 경우 collection이 이미 정렬되어 있는 경우 O(n)으로 좋은 성능을 보이지만, 정렬되지 않은 데이터가 늘어나면 점점 O(n^2)으로 성능이 나빠진다.
+// • 삽입 정렬(insert sort)은 대부분의 데이터가 정렬되 있다는 것을 미리 알고 있는 상황에서 가장 성능이 좋은 정렬 알고리즘(sorting algorithm) 중 하나이다.

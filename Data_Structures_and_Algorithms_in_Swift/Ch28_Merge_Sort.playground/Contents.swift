@@ -1,7 +1,7 @@
 //Chapter 28: Merge Sort
 
 //Merge Sort(합병 정렬)은 가장 효율적인 정렬 알고리즘 중 하나이다. 시간 복잡도는 O(n log n)으로, 모든 범용 정렬 알고리즘 중 가장 빠르다.
-//합병 정렬의 기본 개념은 분할 정복(divide and conquer)이다. 큰 문제를 여러 개의 작고 해결 하기 쉬운 문제로 나눈 다음, 그 해결결과들을 최종 결과로 결합한다.
+//합병 정렬의 기본 개념은 분할 정복(divide and conquer)이다. 큰 문제를 여러 개의 작고 해결 하기 쉬운 문제로 나눈 다음, 그 결과들을 최종 결과로 결합한다.
 //합병 정렬 방식은 먼저 분할 하고, 그 후에 병합한다.
 
 
@@ -9,8 +9,8 @@
 
 //Example
 //[7, 2, 6, 3, 9] 가 있을 때, Merge Sort(합병 정렬) 알고리즘은 다음과 같이 작동한다. //p.282
-// 1. 먼저 Collection을 반으로 나눈다(분할, divide). 이제 정렬되지 않은 두 개의 Collection이 있다. [7, 2], [6, 3, 9]
-// 2. 더 이상 나눠지지 않을 때까지 Collection을 계속 나눈다(분할, divide). 결국에는 하나의 요소가 있는 Collection으로 나눠진다. [7], [2], [6], [3], [9]
+// 1. 먼저 Collection을 반으로 나눈다(분할, divide). 이제 정렬되지 않은 두 개의 더미(pile)가 있다. [7, 2], [6, 3, 9]
+// 2. 더 이상 나눠지지 않을 때까지 더미(pile)를 계속 나눈다(분할, divide). 결국에는 각 더미(pile)에 하나의 요소(sorted!)만 있게 된다. [7], [2], [6], [3], [9]
 // 3. Collection을 분할한 역순으로 병합한다. 병합 할 때마다 순서를 정렬한다. 분할 된 개별 Collection이 이미 정렬되어 있기 때문에 쉽게 처리할 수 있다.
 //  [2, 7], [3, 6], [9] -> [2, 3, 6, 7], [9] -> [2, 3, 6, 7, 9]
 
@@ -19,6 +19,8 @@
 
 //Implementation
 //Split
+//배열(Array)를 반으로 나눈다. 하지만, 한 번 분할하는 것만으로는 충분하지 않다. 더 이상 분할할 수 없을 때까지 반복적으로(recursively) 분할해야 한다.
+//즉, 각 더미(subdivision)마다 하나의 요소(element)만 남을 때까지 분할한다.
 public func mergeSort<Element>(_ array: [Element]) -> [Element] where Element: Comparable {
     guard array.count > 1 else { //재귀 종료 조건. 하나의 요소만 남으면, 분할을 종료한다.
         return array
@@ -29,6 +31,7 @@ public func mergeSort<Element>(_ array: [Element]) -> [Element] where Element: C
     let left = mergeSort(Array(array[..<middle]))
     let right = mergeSort(Array(array[middle...]))
     //반으로 나눈다. 더 이상 분할 할 수 없을 때 까지(하나의 요소만 남을 때까지) 반복적으로 분할해야 한다.
+    
     return merge(left, right) //병합
 }
 
@@ -80,8 +83,11 @@ private func merge<Element>(_ left: [Element], _ right: [Element]) -> [Element] 
 // 3. 병합 함수는 두 개의 정렬된 배열을 가져와 하나의 정렬된 배열을 생성한다.
 example(of: "merge sort") {
     let array = [7, 2, 6, 3, 9]
-    print("Original: \(array)") // Original: [7, 2, 6, 3, 9]
-    print("Merge sorted: \(mergeSort(array))") // Merge sorted: [2, 3, 6, 7, 9]
+    
+    print("Original: \(array)")
+    // Original: [7, 2, 6, 3, 9]
+    print("Merge sorted: \(mergeSort(array))")
+    // Merge sorted: [2, 3, 6, 7, 9]
 }
 
 
@@ -89,11 +95,18 @@ example(of: "merge sort") {
 
 //Performance
 //합병 정렬의 최선, 최악, 평균 시간 복잡도는 O(n log n) 이며, 이는 나쁘지 않은 성능이다. 왜 n log n 인지 이해하기 위해서는 재귀의 작동 방식에 대해 생각해 봐야 한다.
-// • 재귀적으로 단일 배열을 두 개의 작은 배열로 나눈다. 즉, 크기 2의 배열에는 한 번의 재귀가 필요하고, 4일 경우에는 2 번, 8일 경우에는 3 번, 1024는 10 번의 재귀가 필요하다.
+// • 재귀적으로 단일 배열을 두 개의 작은 배열로 나눈다. 즉, 크기 2의 배열은 한 번의 재귀가 필요하고, 4일 경우에는 2 번, 8일 경우에는 3 번, 1024는 10 번의 재귀가 필요하다.
 //  일반화 하면 n 크기의 배열의 경우, log_2(n) 이다.
-// • 병합은 재귀적으로 n개의 요소를 병합한다. 병합된 요소의 수는 각 level에서 여전히 n개가 된다. 이는 병합 시, 재귀 비용이 O(n) 임을 의미한다.
+// • 단일 재귀(recursion) 단계(level)는 n개의 요소를 병합(merge)한다. 병합된(merged) 요소(element)의 수는 각 level에서 여전히 n개가 된다. 이는 단일 재귀 비용이 O(n) 임을 의미한다.
 //따라서, 총 시간 복잡도는 O(log n) * O(n) = O(n log n)이 된다.
-//이전 장의 O(n^2) 정렬 알고리즘은 in-place 하며(추가적인 메모리 필요하지 않다), 요소를 이동하기 위해 swapAt를 사용했다. 하지만, 합병 정렬은 추가적으로 메모리를 할당하여 작업을 수행한다.
+//이전 장의 O(n^2) 정렬 알고리즘은 in-place 하며(추가적인 메모리 필요하지 않는다), 요소를 이동하기 위해 swapAt를 사용했다. 하지만, 합병 정렬은 추가적으로 메모리를 할당하여 작업을 수행한다.
 //재귀에 log_2(n)개의 level이 있으며(2^10 = 1024, 10개의 level), 각 level에서 n개의 요소가 사용된다. 이는 공간 복잡도가 O(n log n)임을 뜻한다.
 //합병 정렬은 hallmark(품질이 보증된) 정렬 알고리즘으로, 비교적 이해하기 쉽고 divide-and-conquer algorithms이 어떻게 작동하는지 기초적인 개념을 잡기 좋다.
 //합병 정렬의 시간 복잡도는 O(n log n)이며, 일반적인 공간 복잡도 또한 O(n log n)이다. 하지만, 사용되지 않는 메모리를 정리하면서 구현하면 O(n)으로 공간 복잡도를 줄일 수 있다.
+
+
+
+
+//Key points
+// • 합병 정렬(Merge sort)은 분할 정복(divide-and-conquer) 알고리즘(algorithm)의 범주(category)에 속한다.
+// • 합병 정렬(merge sort)의 구현 방법은 여러 가지가 있으며, 구현에 따라 성능(performance)이 달라질 수 있다.

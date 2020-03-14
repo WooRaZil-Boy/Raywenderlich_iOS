@@ -15,17 +15,17 @@
 //: array.lexicographicalSort()
 //: print(array) // outputs [13, 1345, 44, 459, 500, 999]
 //: ```
-//이전에는 least significant digit radix sort를 사용했다. most significant digit radix sort를 사용한 기수 정렬을 구현한다.
-//most significant digit radix sort는 사전식 정렬(lexicographical sort)이라고도 하며, 문자열에 사용할 수 있다.
+//이전에는 least significant digit radix sort를 사용했다. most significant digit를 사용하는 radix sort를 구현한다.
+//most significant digit radix sort는 사전식 정렬(lexicographical sort)이라고도 하며, 문자열 정렬에 사용할 수 있다.
 
 
 
 
-//MDS 기수 정렬(most significant digit radix sort)은 bucket 정렬을 사용한다는 점은 LSD 기수 정렬과 같다.
-//차이점은 MSD 기수 정렬은 bucket 정렬의 후속 path를 신중하게 선별해야 한다는 것이다.
-//LSD 기수 정렬에서 bucket 정렬은 모든 pass에 대해 전체 Array를 사용하여 반복적으로 실행한다.
-//하지만, MSD 기수 정렬에서는 전체 Array와 bucket 정렬이 한 번만 실행하고, 이후 pass는 각 bucket을 반복적으로 정렬한다.
-//MSD 기수 정렬을 작은 구성 요소부터 시작하여 하나씩 개별적으로 구현한다.
+//MDS 기수 정렬(most significant digit radix sort)은 bucket 정렬을 사용한다는 점이 LSD 기수 정렬과 유사하다.
+//차이점은 MSD 기수 정렬은 bucket 정렬의 후속 pass를 신중하게 선별해야 한다는 것이다.
+//LSD 기수 정렬에서 bucket 분류는 모든 pass에 대해 전체 Array를 사용하여 반복적으로 실행한다.
+//하지만, MSD 기수 정렬에서는 전체 Array와 bucket 분류를 한 번만 실행하고, 이후 pass는 각 bucket을 반복적으로 정렬한다.
+//MSD 기수 정렬은 작은 구성 요소부터 시작하여 하나씩 개별적으로 구현한다.
 
 //Digits
 import Foundation
@@ -111,3 +111,6 @@ var array: [Int] = (0...10).map { _ in Int(arc4random()) }
 array.lexicographicalSort()
 print(array)
 // [1049613636, 1152103285, 1233893644, 2567986728, 2682366897, 3369800165, 3516188652, 3962379748, 4239312617, 4271303906, 779048765]
+
+//숫자는 무작위로 생성되기 때문에 매번 실행할 때마다 다른 결과를 얻게 된다.
+//중요한 것은 값(value)이 사전 순서(lexicographical ordering)대로 정렬된다는 것이다.

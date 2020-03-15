@@ -9,13 +9,13 @@
  in ascending order.
  
  */
-//Array를 extension 해서 오름차순 힙 정렬을 구현한다.
+//Array에 heapSort()메서드를 추가한다. 이 메서드는 array를 오름차순으로 정렬한다.
 
 
 
 
 extension Array where Element: Comparable {
-  //힙 정렬을 구현하려면, Array의 요소가 Comparable을 구현해야 한다.
+  //힙 정렬을 배열에 추가하려면, Array의 요소가 Comparable을 구현해야 한다.
   func leftChildIndex(ofParentAt index: Int) -> Int {
     (2 * index) + 1
   }
@@ -65,4 +65,3 @@ var array = [6, 12, 2, 26, 8, 18, 21, 9, 5]
 array.heapSort()
 
 //: [Next](@next)
-

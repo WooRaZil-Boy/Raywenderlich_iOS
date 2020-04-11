@@ -20,7 +20,7 @@
 //Collection에서 퀵 정렬을 수행하려면, 다음 사항을 충족해야 한다.
 // • Collection은 반드시 MutableCollection이어야 한다. 이를 구현해야 Collection 요소의 value를 변경할 수 있다.
 // • Collection은 반드시 BidirectionalCollection이어야 한다. 이를 구현해야, Collection을 앞 뒤로 순회할 수 있다.
-//  퀵 정렬은 Collection의 first와 last index에 따라 달라진다.
+//  퀵 정렬은 Collection의 first와 last의 index에 따라 달라진다.
 // • Collection의 요소는 Comparable이어야 한다.
 extension MutableCollection where Self: BidirectionalCollection, Element: Comparable {
     mutating func quicksort() {

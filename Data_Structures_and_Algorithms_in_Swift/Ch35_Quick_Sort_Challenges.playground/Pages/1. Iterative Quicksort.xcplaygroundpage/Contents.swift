@@ -8,13 +8,13 @@
  */
 
 //지금까지 퀵 정렬을 재귀적(recursively)으로 구현했다.
-//이와 달리, partition strategy를 사용해 퀵 정렬을 반복적(recursively)으로 구현할 수 있다.
+//이와 달리, partition strategy를 사용해 퀵 정렬을 반복적(iteratively)으로 구현할 수 있다.
 
 
 
 
 //Lomuto’s partition strategy를 사용해 구현한다.
-//Array의 low 와 high 사이를 range로 한다. Stack을 사용하여, start와 end의 value 쌍을 저장한다.
+//해당 함수는 배열(Array)과 low와 high를 매개변수로 받는다. 스택(Stack)을 사용하여, start와 end의 value 쌍(pair)을 저장한다.
 public func quicksortIterativeLomuto<T: Comparable>(_ a: inout [T], low: Int, high: Int) {
     var stack = Stack<Int>() //index를 저장하는 stack을 생성한다.
     stack.push(low)
@@ -42,7 +42,7 @@ public func quicksortIterativeLomuto<T: Comparable>(_ a: inout [T], low: Int, hi
         }
     }
 }
-//Stack을 사용해 구분하기 위해, start와 end index 쌍을 저장한다.
+//start와 end index 쌍을 스택(Stack)에 저장하여, 분할(partition)을 수행한다.
 var list = [12, 0, 3, 9, 2, 21, 18, 27, 1, 5, 8, -1, 8]
 quicksortIterativeLomuto(&list, low: 0, high: list.count - 1)
 print(list)

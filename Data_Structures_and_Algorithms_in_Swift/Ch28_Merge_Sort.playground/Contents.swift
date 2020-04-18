@@ -34,6 +34,7 @@ public func mergeSort<Element>(_ array: [Element]) -> [Element] where Element: C
     
     return merge(left, right) //병합
 }
+//분할(Split) 부분은 구현하였다. 이제 합병(Merge)을 구현해야 한다.
 
 //Merge
 //분할 이후, 왼쪽과 오른쪽으로 나눠진 Array를 병합해야 한다. 여기서는 코드 가독성을 위해 별도의 함수로 구현한다.

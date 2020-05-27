@@ -1,28 +1,30 @@
 //Chapter 36: Graphs
 
 //SNS와 저가 항공권을 예약하는 것의 공통점은 두 모델 모두 그래프(Graph)로 나타낼 수 있다는 것이다.
-//그래프는 객체 간의 관계를 나타내는 자료구조이다. 이는 간선(edge, edges)으로 연결된 정점(vertex, vertices)로 이루어진다. //p.338
+//그래프는 객체 간의 관계를 나타내는 자료구조이다. 이는 간선(edge, edges)으로 연결된 정점(vertex, vertices)으로 이루어진다. //p.338
 //정점은 객체로, 간선은 객체간의 관계로 생각해 구현한다.
 
 
 
 
 //Weighted graphs
-//가중 그래프(weighted graph)에는 모든 간선에 이를 사용하는데 필요한 비용 가중치가 있다.
-//이를 사용하면, 두 정점 사이에서 가장 저렴하거나 짧은 경로를 선택할 수 있다. ex. 비행 경로 네트워크 //p.339
+//가중 그래프(weighted graph)의 모든 간선(edge)에는 이를 사용하는데 필요한 가중치(weight)가 있다.
+//이를 활용해, 두 정점 사이에서 가장 저렴하거나 짧은 경로를 선택할 수 있다. ex. 다양한 비행 경로가 있는 항공 네트워크 //p.339
 
 //Directed graphs
-//그래프에 방향이 있을 수 있다. 방향 그래프(유향 그래프, Directed graph, digraph)는 한 방향으로 이동하기 때문에 더 제한적이다. //p.339
+//간선(edge)에 가중치(weight)가 있는 것처럼, 그래프(graph)에도 방향(direction)이 있을 수 있다.
+//방향 그래프(유향 그래프, Directed graph, digraph)는 한 방향으로 이동하기 때문에 더 제한적이다. //p.339
 
 //Undirected graphs
 //무방향 그래프(무향 그래프, Undirected graph)는 모든 간선이 양방향인 방향 그래프로 생각할 수 있다. //p.340
 // • 연결된 두 정점은 앞뒤로 간선을 가진다.
-// • 간선의 weight(가중치)는 양방향에 적용된다.
+// • 간선의 weight(가중치)는 양방향으로 적용된다.
 
 
 
 
 //Common operation
+//그래프(Graph)의 프로토콜(protocol)을 작성한다.
 public enum EdgeType {
     case directed
     case undirected
@@ -55,12 +57,12 @@ public struct Vertex<T> {
     public let data: T
 }
 //정점(Vertex)는 그래프 내에서 고유한 index를 가지고 있으며, 데이터를 보유한다.
-//Dictionary의 key로 정점을 사용하므로, Hashable을 준수해야 한다.
+//Dictionary의 key로 정점을 사용하므로, Hashable을 준수해야 한다. 이를 extension으로 추가해 구현해 준다.
 extension Vertex: Hashable where T: Hashable {}
 extension Vertex: Equatable where T: Equatable {}
-//Hashable protocol은 Equatable부터 상속되므로, Equatable도 구현해야 한다.
+//Hashable 프로토콜(protocol)은 Equatable로부터 상속(inherit)되므로, 해당 프로토콜(protocol)은 Equatable도 구현해야 한다.
 //컴파일러는 두 protocol을 준수하도록 합성할 수 있기 때문에, 위의 extension이 비어있다.
-//정점에서 CustomStringConvertible를 구현한다.
+//정점의 CustomStringConvertible를 구현한다.
 extension Vertex: CustomStringConvertible {
     public var description: String {
         "\(index): \(data)"
@@ -71,7 +73,7 @@ extension Vertex: CustomStringConvertible {
 
 
 //Defining an edge
-//간선은 두 정점을 연결한다.
+//두 정점(vertex)을 연결하려면, 그 사이에 간선(edge)이 있어야 한다.
 public struct Edge<T> {
     public let source: Vertex<T>
     public let destination: Vertex<T>
@@ -85,7 +87,8 @@ public struct Edge<T> {
 //Adjacency list
 //그래프는 인접 리스트(adjacency list) 혹은 인접 행렬(adjacency matrix)을 사용해 구현한다.
 //인접 리스트로 구현하는 경우에는 그래프의 모든 정점에 대해 나가는 간선 목록을 저장한다. //p.343
-//해당 정보들을 저장하기 위해 dictionary of arrays를 만든다. Dictionary의 각 key는 정점이며, 해당 정점에서 나가는 간선의 Array를 value로 가진다.
+//해당 정보를 저장하기 위해 배열 딕셔너리(dictionary of arrays)를 만든다.
+//딕셔너리(Dictionary)의 각 키(key)는 정점(vertex)이며, 모든 정점(vertex)은 이에 상응하는 간선(edge)의 배열(Array)을 값(value)으로 가진다.
 
 
 
@@ -102,6 +105,7 @@ extension AdjacencyList {
     public func createVertex(data: T) -> Vertex<T> { //새 정점을 생성하고 반환한다.
         let vertex = Vertex(index: adjacencies.count, data: data)
         adjacencies[vertex] = [] //새 정점과 인접한 간선들의 목록을 빈 Array로 설정해 준다.
+        
         return vertex
     }
 }
@@ -137,7 +141,7 @@ extension Graph {
     }
 }
 //구체적인 구현은 addDirectedEdge와 addUndirectedEdge에 위임한다.
-//Graph 프로토콜을 구현할 때 addDirectedEdge만 구현하면, aaddUndirectedEdge와 add도 사용할 수 있게 된다.
+//Graph 프로토콜을 구현할 때 addDirectedEdge만 구현하면, aaddUndirectedEdge와 add도 사용할 수 있다.
 
 //Retrieving the outgoing edges from a vertex
 extension AdjacencyList {
@@ -145,6 +149,7 @@ extension AdjacencyList {
         adjacencies[source] ?? []
     }
 }
+//저장된 간선(edge)을 반환한다. 정점(vertex)를 알 수 없는 경우에는 빈 배열을 반환한다.
 
 //Retrieving the weight of an edge
 extension AdjacencyList {
@@ -207,7 +212,7 @@ print(graphList)
 // 5: Washington DC ---> [ 1: Tokyo, 6: Austin Texas, 4: San Francisco, 7: Seattle ]
 // 2: Hong Kong ---> [ 0: Singapore, 1: Tokyo, 4: San Francisco ]
 // 7: Seattle ---> [ 5: Washington DC, 4: San Francisco ]
-//각 도시에서 출발하는 항공편을 명확하게 확인해 볼 수 있다. 추가적으로 다음과 같은 정보를 얻을 수도 있다.
+//출력 결과는 인접 리스트(adjacency list)에 대한 시각적인 설명을 보여준다. 각 도시에서 출발하는 항공편을 명확하게 확인할 수 있다. 추가적으로 다음과 같은 정보를 얻을 수도 있다.
 // • 싱가포르 발 도쿄행 비행편의 요금
 graphList.weight(from: singapore1, to: tokyo1) // 500
 // • 샌프란시스코에서 출발하는 모든 항공편
@@ -215,20 +220,22 @@ print("San Francisco Outgoing Flights:")
 print("--------------------------------")
 for edge in graphList.edges(from: sanFrancisco1) {
     print("from: \(edge.source) to: \(edge.destination)")
+    // from: 4: San Francisco to: 2: Hong Kong
+    // from: 4: San Francisco to: 5: Washington DC
+    // from: 4: San Francisco to: 7: Seattle
+    // from: 4: San Francisco to: 6: Austin Texas
 }
-// from: 4: San Francisco to: 2: Hong Kong
-// from: 4: San Francisco to: 5: Washington DC
-// from: 4: San Francisco to: 7: Seattle
-// from: 4: San Francisco to: 6: Austin Texas
+//지금까지 딕셔너리(dictionary)로 모든 정점(vertex)에 대한 출발 간선(outgoing edge)를 저장하는 인접 리스트(adjacency list)를 사용해 그래프(Graph)를 구현했다.
+//인접 행렬(adjacency matrix)을 사용하여 정점(vertex)과 간선(edge)을 저장할 수도 있다.
 
 
 
 
 //Adjacency matrix
-//인접 행렬(adjacency matrix)은 사각형 행렬을 사용해 그래프를 나타낸다. 이 행렬은 2차원 Array 이며, matrix[row][column]의 값은 행(row)과 열(column) 정점 사이의 접선 weight 이다.
+//인접 행렬(adjacency matrix)은 사각형 행렬을 사용해 그래프를 나타낸다. 이 행렬은 2차원 Array 이며, matrix[row][column]의 값은 행(row)과 열(column) 정점 사이 간선의 weight 이다.
 //가중치(비용)이 있는 항공 네트워크를 인접 행렬로 나타낼 수 있다. //p.351
 //존재하지 않는 간선은 가중치도 없으므로 인접행렬에서 0으로 표시한다. 인접 리스트(adjacency list)보다 읽기가 좀 더 힘들다.
-//행과 열이 같다면, 정점과 그 자신의 접선을 의미하는데, 이는 허용되지 않으므로 0이 된다.
+//행(row)과 열(column)이 같을때, 정점(vertex)과 그 자신 사이의 간선(edge)을 의미하는데, 이는 허용되지 않으므로 0이 된다.
 
 
 
@@ -240,7 +247,8 @@ public class AdjacencyMatrix<T>: Graph {
     
     public init() {}
 }
-//Graph의 요구사항을 구현해야 한다.
+//정점 배열(arrayarray of vertices), 간선(edge)﻿과 그 가중치(weight)를 추적하기 위해 인접 행렬(adjacency matrix)이 포함된 AdjacencyMatrix를 정의한다.
+//이전과 마찬가지로 그래프(Graph) 프로토콜(protocol)에 대한 요구 사항을 구현해야 한다.
 
 //Creating a Vertex
 extension AdjacencyMatrix {
@@ -280,7 +288,7 @@ extension AdjacencyMatrix {
 }
 
 //Retrieving the weight of an edge
-//간선의 weight는 해당 인접 행렬의 값과 같다.
+//간선의 weight는 해당 인접 행렬(adjacency matrix)의 값과 같다.
 extension AdjacencyMatrix {
     public func weight(from source: Vertex<T>, to destination: Vertex<T>) -> Double? {
         weights[source.index][destination.index]
@@ -310,7 +318,8 @@ extension AdjacencyMatrix: CustomStringConvertible {
 }
 
 //Building a network
-//AdjacencyList에서 사용한 동일한 예로 그래프를 작성한다. //p.356
+//AdjacencyList에서 사용한 동일한 예제로 그래프를 작성한다. //p.356
+//이전의 let graph = AdjacencyList<String>() 를 let graph = AdjacencyMatrix<String>() 로 수정하면 된다.
 let graphMatrix = AdjacencyMatrix<String>()
 let singapore2 = graphMatrix.createVertex(data: "Singapore")
 let tokyo2 = graphMatrix.createVertex(data: "Tokyo")
@@ -348,23 +357,12 @@ print(graphMatrix)
 // ø        450.0    ø        ø        ø        ø        50.0    ø
 // ø        ø        600.0    ø        ø        337.0    297.0    218.0
 // ø        300.0    ø        ø        337.0    ø        292.0    277.0
-// ø        ø        ø        50.0    297.0    292.0    ø        ø
+// ø        ø        ø        50.0     297.0    292.0    ø        ø
 // ø        ø        ø        ø        218.0    277.0    ø        ø
-//다음과 같은 추가정보들을 얻을 수도 있다.
-// • 싱가포르 발 도쿄행 비행편의 요금
-graphMatrix.weight(from: singapore2, to: tokyo2) // 500
-// • 샌프란시스코에서 출발하는 모든 항공편
-print("San Francisco Outgoing Flights:")
-print("--------------------------------")
-for edge in graphMatrix.edges(from: sanFrancisco2) {
-  print("from: \(edge.source) to: \(edge.destination)")
-}
-// from: 4: San Francisco to: 2: Hong Kong
-// from: 4: San Francisco to: 5: Washington DC
-// from: 4: San Francisco to: 6: Austin Texas
-// from: 4: San Francisco to: 7: Seattle
+
 //AdjacencyMatrix와 AdjacencyList는 동일한 Graph 프로토콜을 준수하므로, 나머지 코드는 동일하게 유지된다.
 //adjacency list를 사용한 구현이, adjacency matrix를 사용한 구현 보다, 추적하기 훨씬 더 쉽다.
+//이 두 가지 접근 방식의 공통적인 부분을 분석하여 어떻게 수행되는지 살펴 본다.
 
 
 
@@ -379,15 +377,29 @@ for edge in graphMatrix.edges(from: sanFrancisco2) {
 //Find Edges and Weight | O(V)                       | O(1)
 //여기서 V는 정점(vertex)를, E는 간선(Edge)를 나타낸다.
 //Adjacency List는 Adjacency Matrix보다 저장 공간을 적게 사용한다. Adjacency List은 단순히 필요한 정점과 간선의 수를 저장한다.
-//Adjacency Matrix에서 행(row)과 열(column)의 수가 정점의 수와 같다. 따라서 공간 복잡도는 O(V^2)가 된다.
-//Adjacency List에서 정점을 추가하는 것은 효율적이다. 정점을 만들고 dictionary에 key-value 쌍을 설정하므로, O(1)이다.
+//Adjacency Matrix에서는 행(row)과 열(column)의 수가 정점의 수와 같다. 따라서 공간 복잡도는 O(V^2)가 된다.
+//Adjacency List에서 정점을 추가하는 것은 효율적이다. 단순히 정점을 만들고 dictionary에 key-value 쌍을 설정하므로, O(1)이다.
 //Adjacency Matrix에서 정점을 추가할 때는 모든 행(row)에 열(column)을 추가하고, 새 정점에 대한 새로운 행(row)을 만들어야 한다.
-//이 작업은 최소 O(V)이며, 연속된 메모리 공간에 행렬을 나타내도록 한 경우에는 O(V^2)일 수 있다.
-//간선 추가는 두 자료구조에서 모두 constant time이므로 효율적이다. Adjacency List에서는 나가는 간선 Array로 추가된다. Adjacency Matrix에서는 2차원 배열의 값이다.
+//이 작업은 최소 O(V)이며, 연속된 메모리 공간에 행렬을 나타내도록 한 경우에는 O(V^2)가 될 수도 있다.
+//간선 추가는 두 자료구조에서 모두 constant time이므로 효율적이다. Adjacency List에서는 나가는 간선 Array에 추가된다. Adjacency Matrix에서는 2차원 배열의 값이다.
 //특정 간선(Edge)이나 가중치(weight)를 찾아야 할 때, Adjacency List는 비효율적이다.
 //Adjacency List에서 간선을 찾으려면, 나가는 간선 목록을 가져온 후에, 모든 간선을 반복하여 일치하는 대상을 찾아야 한다. 이는 O(V)이다.
-//Adjacency Matrix의 경우, 간선 또는 가중치를 찾는 것은 2차원 배열에서 해당 값에 접근하는 것이므로 constant time이다.
+//Adjacency Matrix의 경우에는, 간선 또는 가중치를 찾는 것은 2차원 배열에서 해당 값에 접근하는 것이므로 constant time이다.
 //그래프에 간선이 거의 없는 경우, 희소 그래프(sparse graph)라 하며, 이 경우에는 Adjacency List를 사용하여 구현하는 것이 효과적이다.
-//Adjacency Matrix로 구현하면, 간선이 많지 않아 많은 메모리가 낭비된다.
-//그래프에 간선이 많은 경우, 밀집 그래프(dense graph)라 하며, 이 경우에는 가중치와 간선에 빨리 액세스할 수 있는 Adjacency Matrix로 구현하는 것이 더 적합하다.
+//Adjacency Matrix로 구현하면, 간선이 많지 않기 때문에 많은 메모리가 낭비된다.
+//그래프에 간선이 많은 경우, 밀집 그래프(dense graph)라 하며, 이 경우에는 가중치와 간선에 빠르게 접근할 수 있는 Adjacency Matrix로 구현하는 것이 더 적합하다.
 //https://ko.wikipedia.org/wiki/%EB%B0%80%EC%A7%91_%EA%B7%B8%EB%9E%98%ED%94%84
+
+
+
+
+//Key points
+// • 정점(vertices)과 간선(edges)으로 실 세계의 관계(real-world relationships)를 구현할 수 있다.
+// • 정점(vertices)은 객체(object)로, 간선(edges)는 객체(objects) 간의 관계(relationship)로 생각할 수 있다.
+// • 가중 그래프(Weighted graphs)는 모든 간선(edge)이 가중치(weight)를 가지고 있다.
+// • 방향 그래프(Directed graphs)는 한 방향으로 횡단(traverse)하는 간선(edges)이 있다.
+// • 무향 그래프(Undirected graphs)는 양방향을 가리키는 간선(edges)이 있다.
+// • 인접 리스트(Adjacency list)는 모든 정점(vertex)에 대한 나가는 간선(edges) 목록(list)을 저장한다.
+// • 인접 행렬(Adjacency matrix)은 정방 행렬(square matrix)을 사용하여 그래프(graph)를 나타낸다.
+// • 인접 리스트(Adjacency list)는 일반적으로 간선(edges)이 적은 희소 그래프(sparse graph)에 적합하다.
+// • 인접 행렬(Adjacency matrix)은 일반적으로 간선(edges)이 많은 밀집 그래프(dense graph)에 적합하다.

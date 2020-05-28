@@ -11,13 +11,13 @@
 //Ruiz는 Ray, Sun, Vincent의 친구이다.
 //Patrick은 Cole, Kerry의 친구이다.
 //Cole은 Ruiz, Vincent의 친구이다.
-//이 친구 관계를 그래프를 나타내는 adjacency list를 작성한다.
+//이 친구 관계 그래프를 나타내는 adjacency list를 작성한다.
 //Ruiz와 Vincent 둘 모두의 친구는 누구인가?
 
 
 
 
-//AdjacencyList API를 사용해 구현한다. 0이 아닌 어떤 가중치(weight)를 사용해도 좋지만, 가장 좋은 기본값은 1이다.
+//AdjacencyList API를 사용해 구현한다. 0이 아닌 어떤 값이든 가중치(weight)로 사용해도 좋지만, 가장 좋은 기본값은 1이다.
 let graph = AdjacencyList<String>()
 
 let vincent = graph.createVertex(data: "vincent")
@@ -39,6 +39,14 @@ graph.add(.undirected, from: patrick, to: kerry, weight: 1)
 graph.add(.undirected, from: cole, to: ruiz, weight: 1)
 graph.add(.undirected, from: cole, to: vincent, weight: 1)
 print(graph)
+// 0: vincent ---> [ 1: chesley, 2: ruiz, 3: patrick, 6: cole ]
+// 1: chesley ---> [ 0: vincent ]
+// 2: ruiz ---> [ 0: vincent, 4: ray, 5: sun, 6: cole ]
+// 3: patrick ---> [ 0: vincent, 6: cole, 7: kerry ]
+// 4: ray ---> [ 2: ruiz ]
+// 5: sun ---> [ 2: ruiz ]
+// 6: cole ---> [ 3: patrick, 2: ruiz, 0: vincent ]
+// 7: kerry ---> [ 3: patrick ]
 
 //단순히 그래프를 확인해 서로 친구인지 확인할 수도 있다.
 print("Ruiz and Vincent both share a friend name Cole")

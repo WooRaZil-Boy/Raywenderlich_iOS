@@ -9,7 +9,7 @@
  
  ![Undirected Graph](maxItemInQueue.png)
  */
-//A에서 시작하는 위의 무방향 그래프의 경우, Queue에 있는 최대 항목 수를 구한다.
+//A에서 시작하는 위의 무방향 그래프에서, Queue에 있는 최대 항목 수를 구한다.
 
 
 

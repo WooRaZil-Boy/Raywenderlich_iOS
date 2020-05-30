@@ -14,7 +14,6 @@
 
 
 extension Graph where Element: Hashable {
-    
   func bfs(from source: Vertex<Element>) -> [Vertex<Element>] {
     var queue = QueueStack<Vertex<Element>>() //다음에 방문할 인접 정점을 추적한다.
     var enqueued: Set<Vertex<Element>> = [] //Queue에 추가된 적 있는 정점을 기억한다.
@@ -30,7 +29,8 @@ extension Graph where Element: Hashable {
   }
     
     private func bfs(queue: inout QueueStack<Vertex<Element>>, enqueued: inout Set<Vertex<Element>>, visited: inout [Vertex<Element>]) {
-        guard let vertex = queue.dequeue() else { //Queue가 비워질 때까지 재귀적으로 BFS를 호출해 정점을 dequeue한다.
+        guard let vertex = queue.dequeue() else { //Base case
+            //Queue가 비워질 때까지 재귀적으로 BFS를 호출해 정점을 dequeue한다.
             return
         }
         visited.append(vertex) //해당 점점을 방문한다.
@@ -45,7 +45,6 @@ extension Graph where Element: Hashable {
     }
 }
 //너비 우선 탐색(breadth-first search, BFS)의 전체 시간 복잡도는 O(V + E)이다.
-
 
 //: ![sampleGraph](sampleGraph.png)
 
@@ -70,6 +69,14 @@ graph.add(.undirected, from: e, to: f, weight: nil)
 graph.add(.undirected, from: f, to: g, weight: nil)
 
 print(graph)
+// 0: A ---> [ 1: B, 2: C, 3: D ]
+// 1: B ---> [ 0: A, 4: E ]
+// 2: C ---> [ 0: A, 5: F, 6: G ]
+// 3: D ---> [ 0: A ]
+// 4: E ---> [ 1: B, 7: H, 5: F ]
+// 5: F ---> [ 2: C, 4: E, 6: G ]
+// 6: G ---> [ 2: C, 5: F ]
+// 7: H ---> [ 4: E ]
 
 let vertices = graph.bfs(from: a)
 vertices.forEach { vertex in

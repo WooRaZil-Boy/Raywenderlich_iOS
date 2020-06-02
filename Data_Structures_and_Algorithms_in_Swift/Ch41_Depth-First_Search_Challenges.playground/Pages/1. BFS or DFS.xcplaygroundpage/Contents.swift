@@ -10,7 +10,7 @@
  
  ![Graph](dfschallenge1.png)
  */
-//다음 두 예에 대해, 두 node 사이에 경로가 있는 지 확인하는데 어떤 순회(BFS, DFS)가 더 나은가?
+//다음 두 예에서, 두 node 사이에 경로가 존재하는지 여부를 확인하는데 어떤 순회(BFS, DFS)가 더 나은가?
 /*:
  Path from **A** to **F**.
  */

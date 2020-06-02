@@ -13,6 +13,12 @@
 
 //그래프에서 동일한 source로 이어지는 간선과 정점의 경로가 있는 경우, 이를 Cycle이라 한다.
 //특정 정점에서 출발하여 다시 처음 출발했던 정점으로 되돌아 올 수 있다면 cycle이 있다고 한다.
+
+
+
+
+
+
 extension Graph where Element: Hashable {
   
   func hasCycle(from source: Vertex<Element>) -> Bool  {
@@ -37,7 +43,7 @@ extension Graph where Element: Hashable {
         return false //cycle이 발견되지 않은 경우
     }
 }
-//기본적으로 DFS를 사용한다. Cycle을 찾을 때까지 한 경로를 재귀적으로 탐색하고, 다른 경로를 찾기 위해 Stack을 pop 해서 back-tracking한다.
+//기본적으로 DFS를 사용한다. Cycle을 찾을 때까지 한 경로를 재귀적으로 탐색하고, 다른 경로를 찾기 위해 Stack에서 pop 해서 back-tracking한다.
 //시간 복잡도는 O(V + E)가 된다.
 
 //: ![sampleGraph2](sampleGraph2.png)
@@ -55,4 +61,9 @@ graph.add(.directed, from: b, to: c, weight: nil)
 graph.add(.directed, from: c, to: d, weight: nil)
 
 print(graph)
+// 0: A ---> [ 1: B, 2: C ]
+// 1: B ---> [ 2: C ]
+// 2: C ---> [ 0: A, 3: D ]
+// 3: D ---> [  ]
+
 print(graph.hasCycle(from: a)) // true

@@ -13,17 +13,15 @@
 
 
 extension Graph where Element: Hashable {
-  
-  func depthFirstSearch(from source: Vertex<Element>)
-    -> [Vertex<Element>] {
-      var visited: [Vertex<Element>] = [] //방문한 정점을 순서대로 추적한다.
-      var pushed: Set<Vertex<Element>> = [] //어떤 정점을 방문했는지 추적한다.
-
-      depthFirstSearch(from: source, visited: &visited, pushed: &pushed)
+    func depthFirstSearch(from source: Vertex<Element>) -> [Vertex<Element>] {
+        var visited: [Vertex<Element>] = [] //방문한 정점을 순서대로 추적한다.
+        var pushed: Set<Vertex<Element>> = [] //어떤 정점을 방문했는지 추적한다.
+        depthFirstSearch(from: source, visited: &visited, pushed: &pushed)
         //helper 함수를 호출하여, DFS를 재귀적으로 수행한다.
-      
-      return visited
-  }
+        
+        return visited
+    }
+    
   
     func depthFirstSearch(from source: Vertex<Element>, visited: inout [Vertex<Element>], pushed: inout Set<Vertex<Element>>) {
         pushed.insert(source) //source 정점을 방문한 것으로 표시한다.
@@ -61,6 +59,16 @@ graph.add(.undirected, from: e, to: f, weight: nil)
 graph.add(.undirected, from: e, to: h, weight: nil)
 graph.add(.undirected, from: f, to: g, weight: nil)
 graph.add(.undirected, from: f, to: c, weight: nil)
+
+print(graph)
+// 0: A ---> [ 1: B, 2: C, 3: D ]
+// 1: B ---> [ 0: A, 4: E ]
+// 2: C ---> [ 0: A, 5: F, 6: G ]
+// 3: D ---> [ 0: A ]
+// 4: E ---> [ 1: B, 7: H, 5: F ]
+// 5: F ---> [ 2: C, 4: E, 6: G ]
+// 6: G ---> [ 2: C, 5: F ]
+// 7: H ---> [ 4: E ]
 
 let vertices = graph.depthFirstSearch(from: a)
 vertices.forEach { vertex in

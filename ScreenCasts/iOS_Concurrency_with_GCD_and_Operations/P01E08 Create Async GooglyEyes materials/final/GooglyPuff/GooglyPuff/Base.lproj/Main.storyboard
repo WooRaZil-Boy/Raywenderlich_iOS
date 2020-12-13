@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="QQo-EL-Bmj">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Photos-->
+        <scene sceneID="wNQ-jp-0ok">
+            <objects>
+                <collectionViewController id="jgG-vE-wbp" customClass="PhotoCollectionViewController" customModule="GooglyPuff" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="gT3-mq-uva">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="4P7-Nj-oPK">
+                            <size key="itemSize" width="64" height="64"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="5" minY="5" maxX="5" maxY="5"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCell" id="BNm-4l-f80" customClass="PhotoCollectionViewCell" customModule="GooglyPuff" customModuleProvider="target">
+                                <rect key="frame" x="5" y="5" width="64" height="64"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eSc-U3-l3c">
+                                            <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                    </subviews>
+                                </view>
+                                <connections>
+                                    <outlet property="imageView" destination="eSc-U3-l3c" id="b51-R4-0jm"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="jgG-vE-wbp" id="nR1-JV-Hcd"/>
+                            <outlet property="delegate" destination="jgG-vE-wbp" id="deu-k6-7nY"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Photos" id="TYx-30-sBK">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="tVK-Z9-Mkv">
+                            <connections>
+                                <action selector="addPhotoAssets:" destination="jgG-vE-wbp" id="DpC-R5-yo7"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HCq-Wu-VJ9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1896.8" y="-334.18290854572717"/>
+        </scene>
+        <!--Photo Detail View Controller-->
+        <scene sceneID="j0w-gl-vBb">
+            <objects>
+                <viewController storyboardIdentifier="PhotoDetailStoryboard" id="4R0-Vo-3XI" customClass="PhotoDetailViewController" customModule="GooglyPuff" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wTJ-9W-0Xj"/>
+                        <viewControllerLayoutGuide type="bottom" id="igM-Yt-2Ac"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Iao-tc-IMN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="T74-6l-2xQ">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="T74-6l-2xQ" firstAttribute="top" secondItem="Iao-tc-IMN" secondAttribute="top" id="ImK-WL-UeJ"/>
+                            <constraint firstAttribute="trailing" secondItem="T74-6l-2xQ" secondAttribute="trailing" id="dBV-0N-mxj"/>
+                            <constraint firstItem="T74-6l-2xQ" firstAttribute="leading" secondItem="Iao-tc-IMN" secondAttribute="leading" id="hHC-gU-BAv"/>
+                            <constraint firstItem="igM-Yt-2Ac" firstAttribute="top" secondItem="T74-6l-2xQ" secondAttribute="bottom" id="jXN-Ub-x9F"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="photoImageView" destination="T74-6l-2xQ" id="qzl-in-BSb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9LN-eI-AJV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2701.5999999999999" y="-334.18290854572717"/>
+        </scene>
+        <!--Select an Album-->
+        <scene sceneID="deT-hV-Tm7">
+            <objects>
+                <tableViewController id="wHz-iT-1fI" customClass="AlbumsTableViewController" customModule="GooglyPuff" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" id="8eC-cd-eLD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AlbumsCell" id="mQY-hQ-scB">
+                                <rect key="frame" x="0.0" y="28" width="375" height="60"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mQY-hQ-scB" id="Lko-oC-a6j">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="59.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="vnI-Wj-1iP" kind="show" identifier="AssetsStoryboard" id="X45-bl-6OS"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="wHz-iT-1fI" id="dcW-iH-6Ld"/>
+                            <outlet property="delegate" destination="wHz-iT-1fI" id="7TX-87-z5X"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Select an Album" id="aES-qb-nMs">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="r0b-m3-F2w">
+                            <connections>
+                                <action selector="cancelPressed:" destination="wHz-iT-1fI" id="YkA-1p-0LM"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kyw-mv-O7h" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2702" y="475"/>
+        </scene>
+        <!--Assets Collection View Controller-->
+        <scene sceneID="zID-h9-ska">
+            <objects>
+                <collectionViewController id="vnI-Wj-1iP" customClass="AssetsCollectionViewController" customModule="GooglyPuff" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="ZMh-bD-yYO">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="UuK-tG-JFN">
+                            <size key="itemSize" width="64" height="64"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="5" minY="5" maxX="5" maxY="5"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AssetCell" id="9oA-GM-kkP" customClass="AssetCollectionViewCell" customModule="GooglyPuff" customModuleProvider="target">
+                                <rect key="frame" x="5" y="5" width="64" height="64"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bmn-Fc-Lcz">
+                                            <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mtk-zd-3sN" customClass="CheckMark" customModule="GooglyPuff" customModuleProvider="target">
+                                            <rect key="frame" x="44" y="44" width="20" height="20"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="R4G-Ip-gLe"/>
+                                                <constraint firstAttribute="width" constant="20" id="x3J-Vp-yxJ"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="mtk-zd-3sN" secondAttribute="bottom" id="bPK-gb-Z46"/>
+                                    <constraint firstAttribute="trailing" secondItem="mtk-zd-3sN" secondAttribute="trailing" id="sfp-yf-ICe"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="checkMark" destination="mtk-zd-3sN" id="qd6-ZF-SA4"/>
+                                    <outlet property="imageView" destination="Bmn-Fc-Lcz" id="BOe-gP-f32"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="vnI-Wj-1iP" id="2jD-Wd-1e7"/>
+                            <outlet property="delegate" destination="vnI-Wj-1iP" id="dKE-mn-s4i"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jRt-Vt-Ss0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3508" y="475"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="wuH-g1-2TO">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="QQo-EL-Bmj" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="3oL-Ng-vP0">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="jgG-vE-wbp" kind="relationship" relationship="rootViewController" id="2Tk-GT-e34"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vbS-iu-QEj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="959" y="-334"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="fMI-VB-lYn">
+            <objects>
+                <navigationController storyboardIdentifier="AlbumsStoryboard" automaticallyAdjustsScrollViewInsets="NO" id="gx6-As-6dD" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="IGt-at-leM">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="wHz-iT-1fI" kind="relationship" relationship="rootViewController" id="Pbz-ih-spy"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="m0p-0a-pCX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1897" y="475"/>
+        </scene>
+    </scenes>
+</document>

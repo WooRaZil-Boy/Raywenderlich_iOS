@@ -26,12 +26,12 @@
 //이는 loop를 할 때, 각 요소가 있는지 확인할 필요가 없다. loop의 시작 부분에서 컬렉션 전체가 반복된다.
 
 //var array = [1, 2, 3]
-
+//
 //for number in array {
-//    print(number) // 1 2 3 //4 5 6 이 나오지 않는다
+//    print(number) // 1 2 3 출력 //4 5 6 이 나오지 않는다
 //    array = [4, 5, 6]
 //}
-
+//
 //print(array) // [4, 5, 6]
 
 //Asynchronous code
@@ -39,7 +39,7 @@
 
 //var array = [1, 2, 3]
 //var currentIndex = 0
-
+//
 // This method is connected in Interface Builder to a button
 //@IBAction func printNext(_ sender: Any) {
 //    print(array[currentIndex])

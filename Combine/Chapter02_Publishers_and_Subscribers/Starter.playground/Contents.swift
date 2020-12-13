@@ -115,6 +115,28 @@ example(of: "assign(to:on:)") {
     //KVO에서 \.변수명 으로 관찰하고자 하는 속성에 접근할 수 있다. keyPath를 \.변수명 으로 쓸수 있다.
 }
 
+example(of: "assign(to:)") {
+    class SomeObject {
+        @Published var value = 0
+    }
+    //@Published 속성 래퍼로 annotated된 속성을 사용하여 class의 인스턴스를 정의하고 생성한다.
+    //이는 일반 속성으로 액세스할 수 있는 값에 대한 게시자를 만든다.
+
+    let object = SomeObject()
+
+    object.$value
+        .sink {
+            print($0)
+        }
+    //@Published 속성에 $ 접두사를 사용하여, 기본 publisher에 대한 액세스 권한을 얻고
+    //subscribe하여 수신된 각 값을 출력한다.
+
+    (0..<10).publisher
+        .assign(to: &object.$value)
+    //숫자의 publisher를 만들고, 그것이 내보낸 각 값을 객체의 value publisher에 할당한다.
+    //&를 사용하여 속성에 대한 inout 참조를 나타낸다.
+}
+
 
 
 

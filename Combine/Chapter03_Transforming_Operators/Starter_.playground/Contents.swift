@@ -91,38 +91,68 @@ example(of: "tryMap") {
 
 
 
-//flatMap(maxPublishers:_:)
+//flatMap
 example(of: "flatMap") {
-    let charlotte = Chatter(name: "Charlotte", message: "Hi, I'm Charlotte!")
-    let james = Chatter(name: "James", message: "Hi, I'm James!")
-    //두 개의 Chatter 인스턴스를 생성한다.
-    
-    let chat = CurrentValueSubject<Chatter, Never>(charlotte)
-    //charlotte로 초기화된 publisher를 생성한다.
-    
-    chat
-//        .flatMap { $0.message } //Chatter 구조체의 publisher 유형 속성인 message에 대해 flatMap
-        .flatMap(maxPublishers: .max(2)) { $0.message } //최대 2개까지 수신
-//        .sink(receiveValue: { print($0.message.value) }) //수신된 Chatter 구조체의 message를 출력한다.
-        .sink(receiveValue: { print($0) }) //수신된 값을 출력하도록 변경한다.
-        //해당 값은 이제 Chatter 인스턴스가 아니라 문자열이다.
-        .store(in: &subscriptions)
-    
-    charlotte.message.value = "Charlotte: How's it going?"
-    //charlotte의 message를 변경한다.
-    
-    chat.value = james //publishe의 현재 값을 james로 변경한다.
-    
-    james.message.value = "James: Doing great. You?"
-    charlotte.message.value = "Charlotte: I'm doing fine thanks."
-    
-    let morgan = Chatter(name: "Morgan", message: "Hey guys, what are you up to?")
-    //세 번째 Chatter 인스턴스
-    
-    chat.value = morgan //chat publisher에 게시한다.
-    
-    charlotte.message.value = "Did you hear something?" //Charlotte의 message를 변경한다.
+  func decod(_ codes: [Int]) -> AnyPublisher<String, Never> {
+    //각각 ASCII 코드를 나타내는 정수 배열을 사용하여, 오류를 발생하지 않는(Never) 문자열의 type-erased publisher를 반환하는 함수를 정의한다.
+    Just(
+      codes
+        .compactMap { code in
+          guard (32...255).contains(code) else { return nil }
+          return String(UnicodeScalar(code) ?? " ")
+          //출력 가능한 ASCII 코드를 문자열로 변환하는 Just publisher를 생성한다.
+      }
+      .joined()
+      //문자열을 결합한다.
+
+    )
+    .eraseToAnyPublisher()
+    //fuction의 반환 유형과 일치하도록 publisher의 type을 지운다.
+  }
+  
+  [72, 101, 108, 108, 111, 44, 32, 87, 111, 114, 108, 100, 33] //ASCII 코드 배열
+    .publisher //publisher로 변환
+    .collect() //수집하여 배열로 만든다.
+    .flatMap(decode) //flatMap을 사용하여, decoder 함수를 전달한다.
+    .sink(receiveValue: { print($0) }) //내보낸 요소를 subscribe하고, 값을 출력한다.
+    .store(in: &subscriptions)
 }
+
+
+
+
+//flatMap(maxPublishers:_:)
+//example(of: "flatMap") {
+//    let charlotte = Chatter(name: "Charlotte", message: "Hi, I'm Charlotte!")
+//    let james = Chatter(name: "James", message: "Hi, I'm James!")
+//    //두 개의 Chatter 인스턴스를 생성한다.
+//
+//    let chat = CurrentValueSubject<Chatter, Never>(charlotte)
+//    //charlotte로 초기화된 publisher를 생성한다.
+//
+//    chat
+////        .flatMap { $0.message } //Chatter 구조체의 publisher 유형 속성인 message에 대해 flatMap
+//        .flatMap(maxPublishers: .max(2)) { $0.message } //최대 2개까지 수신
+////        .sink(receiveValue: { print($0.message.value) }) //수신된 Chatter 구조체의 message를 출력한다.
+//        .sink(receiveValue: { print($0) }) //수신된 값을 출력하도록 변경한다.
+//        //해당 값은 이제 Chatter 인스턴스가 아니라 문자열이다.
+//        .store(in: &subscriptions)
+//
+//    charlotte.message.value = "Charlotte: How's it going?"
+//    //charlotte의 message를 변경한다.
+//
+//    chat.value = james //publishe의 현재 값을 james로 변경한다.
+//
+//    james.message.value = "James: Doing great. You?"
+//    charlotte.message.value = "Charlotte: I'm doing fine thanks."
+//
+//    let morgan = Chatter(name: "Morgan", message: "Hey guys, what are you up to?")
+//    //세 번째 Chatter 인스턴스
+//
+//    chat.value = morgan //chat publisher에 게시한다.
+//
+//    charlotte.message.value = "Did you hear something?" //Charlotte의 message를 변경한다.
+//}
 
 
 
@@ -130,6 +160,7 @@ example(of: "flatMap") {
 //replaceNil(with:)
 example(of: "replaceNil") {
     ["A", nil, "C"].publisher //String? 유형의 배열에서 publisher를 생성한다.
+        .eraseToAnyPublisher() //해당 버그 수정
         .replaceNil(with: "-") //업 스트림 publisher에서 수신한 nil 값을 nil이 아닌 새로운 값으로 교체한다.
 //        .replaceNil(with: "-" as String?) //오류. replaceNil은 optional을 반환할 수 없다.
         .map { $0! } //force-unwrap으로 optional을 해제한다.

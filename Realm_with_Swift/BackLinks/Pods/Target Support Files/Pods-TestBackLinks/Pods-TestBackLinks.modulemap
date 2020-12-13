@@ -1,6 +1,0 @@
-framework module Pods_TestBackLinks {
-  umbrella header "Pods-TestBackLinks-umbrella.h"
-
-  export *
-  module * { export * }
-}

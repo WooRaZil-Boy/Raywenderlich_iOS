@@ -1,9 +1,0 @@
-{
-  "commitish" : "0.6.16",
-  "iOS" : [
-    {
-      "name" : "Layout",
-      "hash" : "58d2646c9f94cf8250fc2da18991ef05fd120ee2b63867c78219e5788771f505"
-    }
-  ]
-}

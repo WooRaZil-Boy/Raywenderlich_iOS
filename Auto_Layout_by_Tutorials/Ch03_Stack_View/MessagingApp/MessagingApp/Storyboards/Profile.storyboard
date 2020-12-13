@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ffG-Zy-RMz">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Profile View Controller-->
+        <scene sceneID="jgq-J8-FU6">
+            <objects>
+                <viewController id="ffG-Zy-RMz" customClass="ProfileViewController" customModule="MessagingApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="xTs-3R-TGe">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SoK-vL-aNX">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="313.5"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="8wS-YF-IV7">
+                                        <rect key="frame" x="20" y="26" width="335" height="279.5"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="uKF-34-ouq">
+                                                <rect key="frame" x="0.0" y="0.0" width="335" height="233.5"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PXJ-eK-NRK">
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="160"/>
+                                                        <subviews>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nXA-Xu-BuS">
+                                                                <rect key="frame" x="0.0" y="0.0" width="87.5" height="160"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </view>
+                                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QdM-Hq-o71" customClass="ProfileImageView" customModule="MessagingApp" customModuleProvider="target">
+                                                                <rect key="frame" x="87.5" y="0.0" width="160" height="160"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" secondItem="QdM-Hq-o71" secondAttribute="height" multiplier="1:1" id="V84-bA-OTr"/>
+                                                                    <constraint firstAttribute="width" constant="160" id="lrz-3B-vH3"/>
+                                                                </constraints>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="hasBorder" value="YES"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="borderShape" value="squircle"/>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </imageView>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tb4-Jg-UPx">
+                                                                <rect key="frame" x="247.5" y="0.0" width="87.5" height="160"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </view>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="tb4-Jg-UPx" firstAttribute="width" secondItem="nXA-Xu-BuS" secondAttribute="width" id="QX2-gh-9Ig"/>
+                                                        </constraints>
+                                                    </stackView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Full Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XAP-qu-R8p" customClass="ProfileNameLabel" customModule="MessagingApp" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="176" width="335" height="57.5"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isMultipleLine" value="YES"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="0N5-Me-Kfg">
+                                                <rect key="frame" x="0.0" y="249.5" width="335" height="30"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sy5-2b-oZa">
+                                                        <rect key="frame" x="0.0" y="0.0" width="111.5" height="30"/>
+                                                        <state key="normal" title="Message"/>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a4j-2J-Svc">
+                                                        <rect key="frame" x="111.5" y="0.0" width="112" height="30"/>
+                                                        <state key="normal" title="Call"/>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NQt-5V-gB3">
+                                                        <rect key="frame" x="223.5" y="0.0" width="111.5" height="30"/>
+                                                        <state key="normal" title="Email"/>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="8wS-YF-IV7" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="SoK-vL-aNX" secondAttribute="leading" constant="20" id="SlQ-Kz-MeQ"/>
+                                    <constraint firstAttribute="bottom" secondItem="8wS-YF-IV7" secondAttribute="bottom" constant="8" id="UtZ-4B-bcl"/>
+                                    <constraint firstItem="8wS-YF-IV7" firstAttribute="top" secondItem="SoK-vL-aNX" secondAttribute="top" constant="26" id="ch8-au-TsE"/>
+                                    <constraint firstItem="8wS-YF-IV7" firstAttribute="centerX" secondItem="SoK-vL-aNX" secondAttribute="centerX" id="z2g-k8-xIq"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="SoK-vL-aNX" firstAttribute="top" secondItem="xTs-3R-TGe" secondAttribute="top" id="D8x-iC-qKv"/>
+                            <constraint firstItem="SoK-vL-aNX" firstAttribute="leading" secondItem="xTs-3R-TGe" secondAttribute="leading" id="kry-ZN-rzR"/>
+                            <constraint firstAttribute="trailing" secondItem="SoK-vL-aNX" secondAttribute="trailing" id="tXJ-rW-Puo"/>
+                            <constraint firstItem="uNM-yq-1T7" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="SoK-vL-aNX" secondAttribute="bottom" id="xdE-3J-rj4"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="uNM-yq-1T7"/>
+                    </view>
+                    <connections>
+                        <outlet property="fullNameLabel" destination="XAP-qu-R8p" id="rGN-l3-soP"/>
+                        <outlet property="profileImageView" destination="QdM-Hq-o71" id="PaY-Ln-qBh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JGV-sD-nkZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1343.4782608695652" y="-701.9021739130435"/>
+        </scene>
+    </scenes>
+</document>

@@ -1,6 +1,0 @@
-framework module Pods_TweetieAbstract_Tweetie {
-  umbrella header "Pods-TweetieAbstract-Tweetie-umbrella.h"
-
-  export *
-  module * { export * }
-}

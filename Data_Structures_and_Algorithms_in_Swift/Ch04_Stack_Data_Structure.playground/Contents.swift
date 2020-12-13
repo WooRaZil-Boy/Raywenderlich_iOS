@@ -47,6 +47,7 @@ extension Stack: CustomStringConvertible { //print 함수에서 출력되는 구
 }
 //Stack은 적합한 storage type을 선택하는 것이 중요하다.
 //Array는 append 와 popLast로 한쪽 끝(최상단)에서 상수 시간으로 삽입 및 삭제가 가능하므로 Stack을 구현하기 좋다.
+//이 두 연산자(append, popLast)를 사용하면, Stack의 LIFO 특성 구현이 용이해진다.
 //CustomStringConvertible에서 print로 출력되는 구문을 지정해 줄 수 있다.
 
 
@@ -82,7 +83,8 @@ example(of: "using a stack") {
     // 4
     // 3
     // 2
-    // 1 -----------
+    // 1
+    // -----------
     
     if let poppedElement = stack.pop() {
         assert(4 == poppedElement)
@@ -90,9 +92,6 @@ example(of: "using a stack") {
     }
 }
 //push와 pop은 모두 O(1) 시간 복잡도를 가진다.
-
-
-
 
 //Non-essential operations
 //Stack을 보다 쉽게 사용할 수 있는 유용한 연산들을 추가해 준다.
@@ -102,14 +101,11 @@ extension Stack {
         storage.last
     }
     
-    public var isEmpty: Bool {
+    public var isEmpty: Bool { //Stack이 비었는지 확인한다.
         peek() == nil
     }
 }
 //peek으로 Stack의 내용을 변경하지 않고, 최상단의 요소를 확인할 수 있다.
-
-
-
 
 //Less is more
 //Stack에 Swift Collection protocol을 구현할 수도 있다.
@@ -126,6 +122,7 @@ extension Stack {
 example(of: "initializing a stack from an array") {
     let array = ["A", "B", "C", "D"]
     var stack = Stack(array) // D가 가장 위의 요소가 된다.
+    //Swift 컴파일러는 Array에서 요소의 유형을 유추(infer)할 수 있으므로, Stack<String> 대신, 단순히 Stack으로 사용할 수 있다.
     print(stack)
     // ----top----
     // D
@@ -135,6 +132,7 @@ example(of: "initializing a stack from an array") {
     // -----------
     stack.pop()
 }
+//위 코드는 문자열(String) Stack을 만들고, 맨 위의 요소인 "D"를 pop한다.
 
 //여기서 한 단계 더 나아가 array literal로 stack을 구현할 수 있다.
 extension Stack: ExpressibleByArrayLiteral {
@@ -147,6 +145,7 @@ extension Stack: ExpressibleByArrayLiteral {
 
 example(of: "initializing a stack from an array literal") {
     var stack: Stack = [1.0, 2.0, 3.0, 4.0] //4.0이 가장 위의 요소가 된다.
+    //Swift 컴파일러는 Array에서 요소의 유형을 유추(infer)할 수 있으므로, Stack<Double> 대신, 단순히 Stack으로 사용할 수 있다.
     print(stack)
     // ----top----
     // 4.0
@@ -156,8 +155,17 @@ example(of: "initializing a stack from an array literal") {
     // -----------
     stack.pop()
 }
+//Double 자료형의 Stack을 생성하고, 맨 위의 요소인 4.0을 pop 한다.
 
 //Stack은 Tree와 graph에서 search을 구현하는 데 중요하게 사용된다.
 //ex. 미로에서 길을 찾을 때, 선택지점에서 가능한 모든 결정을(왼쪽, 오른쪽, 직진) stack에 push한다.
-//막다른 길에 다다르면 단순히 stack을 pop해서 이전 선택지점으로 돌아가 다른 결정을 한다.
+//막다른 곳에 다다르면 단순히 stack을 pop해서 이전 선택지점으로 돌아가 다른 결정을 한다.
 //이런 식으로 Stack을 사용해 역추적하면서 문제를 해결할 수 있다.
+
+
+
+
+//Key points
+// • Stack은 LIFO(last-in first-out) 자료구조이다.
+// • Stack은 매우 단순하지만, 다양한 곳에서 사용되는 핵심적인 자료구조이다.
+// • Stack에서 구현해야 하는 필수 연산은 요소를 추가하는 push 메서드와, 요소를 제거하는 pop 메서드이다.

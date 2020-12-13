@@ -77,7 +77,7 @@ final class ContactListTableViewController: UITableViewController {
       contactPreviewView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
       contactPreviewView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
     ])
-    //크기와 제약조건을 설정한다.
+    //크기와 제약조건을 설정한다. //layout anchors
     contactPreviewView.transform = CGAffineTransform(scaleX: 1.25, y: 1.25)
     //1.25배 크게 설정
     contactPreviewView.alpha = 0 //투명

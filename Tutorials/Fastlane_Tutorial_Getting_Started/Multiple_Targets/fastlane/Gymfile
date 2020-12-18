@@ -1,0 +1,10 @@
+scheme(ENV['SCHEME'])
+# scheme를 지정한다.
+output_directory("./fastlane/builds")
+# fastlane이 .ipa 앱 바이너리 파일을 저정할 위치를 지정한다.
+include_bitcode(false)
+# build에서 bitcode를 제외한다. bitcode를 사용하면 앱을 최적화할 수 있지만, 지금은 이를 제외하여 build 속도를 높인다.
+include_symbols(false)
+# build에서 symbols을 제외한다. symbols을 포함하면 debug 정보에 접근할 수 있지만, build 속도를 높이기 위해 일단 제외한다.
+export_xcargs("-allowProvisioningUpdates")
+# Xcode가 automatic provisioning을 사용할 수 있도록 허용한다.

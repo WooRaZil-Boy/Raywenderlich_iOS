@@ -1,0 +1,58 @@
+default_platform(:ios)
+
+platform :ios do
+
+  desc "Create app on Apple Developer and App Store Connect sites"
+  # lane에 대한 설명을 제공한다. lane은 순차적인 workflow 이다.
+  lane :create_app do
+    # lane의 이름을 create_app으로 지정한다.
+    produce
+    # produce를 사용하여 Developer Portal과 App Store Connect에 앱을 추가한다.
+  end
+
+  desc "Take screenshots"
+  lane :screenshot do
+    snapshot
+  end
+
+  desc "Create ipa"
+  lane :build do
+    enable_automatic_code_signing
+    # Xcode에서 automatic provisioning을 사용한다.
+    increment_build_number
+    # build number를 1증가 시킨다. 
+    # App Store Connect의 업로드 요구사항으로, 각 build number가 고유해야 한다.
+    gym
+    # 서명된 .ipa 파일을 생성한다.
+  end
+
+  desc "Upload to App Store and submit for review"
+  lane :upload do
+    deliver
+  end
+
+  desc "Create app, take screenshots, build and upload to App Store"
+  lane :do_everything do
+    if ENV['SCHEME'] != nil
+      create_app
+      screenshot
+      build
+      upload
+    else
+      execute_for_all_envs{ do_everything }
+    end
+  end
+
+  def execute_for_all_envs
+    schemeList = Dir.glob(".env.*")
+    # 현재 directory의 .env. 파일을 array에 넣는다.
+    schemeList.each do |file|
+    # .env 파일을 loop한다.
+      Dotenv.overload(file)
+      # 현재 .env 파일로 ENV를 오버로드 한다.
+      yield
+      # execute_for_all_envs 호출 후, block을 실행한다.
+    end
+  end
+
+end

@@ -1,0 +1,17 @@
+price_tier(0)
+# price tier을 0(무료)으로 설정한다.
+submission_information({
+    export_compliance_encryption_updated: false,
+    export_compliance_uses_encryption: false,
+    content_rights_contains_third_party_content: false,
+    add_id_info_uses_idfa: false
+})
+# review를 수동으로 제출할 때 제출해야 하는 Apple의 질문에 대한 답변을 설정한다.
+app_rating_config_path("./fastlane/metadata/app_store_rating_config.json")
+# app rating의 configuration 위치를 지정한다.
+ipa("./fastlane/builds/mZone Poker.ipa")
+# .ipa 파일의 위치를 지정한다.
+submit_for_review(true)
+# review 제출을 자동으로 하려면, submit_for_review를 true로 설정한다.
+automatic_release(false)
+# review 통과 이후, app을 수동으로 제출하려면 automatic_release을 false로 설정한다.

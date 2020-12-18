@@ -1,0 +1,4 @@
+app_identifier("[[BUNDLE_IDENTIFIER]]") # The bundle identifier of your app
+apple_id("[[APPLE_ID]]") # Your Apple email address
+
+# team_name ("[[TEAM_NAME]]") # Team name

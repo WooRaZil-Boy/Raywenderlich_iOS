@@ -1,0 +1,25 @@
+# 1 - A list of devices you want to take the screenshots from
+# fastlane에서 screenshots을 캡쳐하려는 기기 목록
+devices([
+  "iPhone 8 Plus",
+  "iPhone SE"
+])
+ 
+# 2 - A list of supported languages
+# 캡쳐할 지역화 언어
+languages([
+  'en-US',
+  'fr-FR'
+])
+ 
+# 3 - The name of the scheme which contains the UI Tests
+# screenshot 자동화를 실행하기 위해 곧 생성할 Xcode scheme 이름
+scheme(ENV['TEST_SCHEME'])
+
+# 4 - Where should the resulting screenshots be stored?
+# screenshot의 output directory
+output_directory "./fastlane/screenshots/#{ENV['SCHEME']}"
+ 
+# 5 - Clears previous screenshots
+# fastlane은 새로운 screenshot을 캡쳐하기 전에 output directory의 screenshots을 삭제한다.
+clear_previous_screenshots(true)

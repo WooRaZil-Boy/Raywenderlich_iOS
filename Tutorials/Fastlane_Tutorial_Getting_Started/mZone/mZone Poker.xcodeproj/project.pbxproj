@@ -1,0 +1,497 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		048F74E31DDF910E006E1D10 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 048F74E21DDF910E006E1D10 /* Assets.xcassets */; };
+		048FCDD821D849D200136720 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048FCDD721D849D200136720 /* SnapshotHelper.swift */; };
+		04DAB70A21D55478003854E9 /* mZone_Poker_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DAB70921D55478003854E9 /* mZone_Poker_UITests.swift */; };
+		EC9527461B8043450098D609 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9527451B8043450098D609 /* AppDelegate.swift */; };
+		EC9527481B8043450098D609 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9527471B8043450098D609 /* ViewController.swift */; };
+		EC95274B1B8043450098D609 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC9527491B8043450098D609 /* Main.storyboard */; };
+		EC9527501B8043450098D609 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC95274E1B8043450098D609 /* LaunchScreen.storyboard */; };
+		EC95275B1B804DC50098D609 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EC95275D1B804DC50098D609 /* Localizable.strings */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		04DAB70C21D55478003854E9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EC95273A1B8043450098D609 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EC9527411B8043450098D609;
+			remoteInfo = "mZone Poker";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		041A98171DCEF4B100F96C9E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		041A98181DCEF4BA00F96C9E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
+		048F74E21DDF910E006E1D10 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		048FCDD721D849D200136720 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = "<group>"; };
+		04B62B1421EE56DB0097A21E /* mZone Poker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "mZone Poker.app"; path = "/Users/lyndseyscott/Desktop/mZone_Sample_Project/mZone-Final/build/Debug-iphoneos/mZone Poker.app"; sourceTree = "<absolute>"; };
+		04B62B1521EE56DB0097A21E /* mZone Poker UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "mZone Poker UITests.xctest"; path = "/Users/lyndseyscott/Desktop/mZone_Sample_Project/mZone-Final/build/Debug-iphoneos/mZone Poker UITests.xctest"; sourceTree = "<absolute>"; };
+		04DAB70921D55478003854E9 /* mZone_Poker_UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mZone_Poker_UITests.swift; sourceTree = "<group>"; };
+		04DAB70B21D55478003854E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EC9527451B8043450098D609 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EC9527471B8043450098D609 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EC95274A1B8043450098D609 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		EC95274F1B8043450098D609 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		EC9527511B8043450098D609 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EC95275E1B804DCA0098D609 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		EC95275F1B804DF20098D609 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		04DAB70421D55478003854E9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EC95273F1B8043450098D609 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		04DAB70821D55478003854E9 /* mZone Poker UITests */ = {
+			isa = PBXGroup;
+			children = (
+				04DAB70921D55478003854E9 /* mZone_Poker_UITests.swift */,
+				04DAB70B21D55478003854E9 /* Info.plist */,
+			);
+			path = "mZone Poker UITests";
+			sourceTree = "<group>";
+		};
+		EC9527391B8043450098D609 = {
+			isa = PBXGroup;
+			children = (
+				EC9527441B8043450098D609 /* mZone Poker */,
+				048FCDD721D849D200136720 /* SnapshotHelper.swift */,
+				04DAB70821D55478003854E9 /* mZone Poker UITests */,
+			);
+			indentWidth = 2;
+			sourceTree = "<group>";
+			tabWidth = 2;
+		};
+		EC9527441B8043450098D609 /* mZone Poker */ = {
+			isa = PBXGroup;
+			children = (
+				EC9527451B8043450098D609 /* AppDelegate.swift */,
+				EC9527471B8043450098D609 /* ViewController.swift */,
+				EC9527491B8043450098D609 /* Main.storyboard */,
+				EC95275D1B804DC50098D609 /* Localizable.strings */,
+				048F74E21DDF910E006E1D10 /* Assets.xcassets */,
+				EC95274E1B8043450098D609 /* LaunchScreen.storyboard */,
+				EC9527511B8043450098D609 /* Info.plist */,
+			);
+			path = "mZone Poker";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		04DAB70621D55478003854E9 /* mZone Poker UITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 04DAB70E21D55478003854E9 /* Build configuration list for PBXNativeTarget "mZone Poker UITests" */;
+			buildPhases = (
+				04DAB70321D55478003854E9 /* Sources */,
+				04DAB70421D55478003854E9 /* Frameworks */,
+				04DAB70521D55478003854E9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				04DAB70D21D55478003854E9 /* PBXTargetDependency */,
+			);
+			name = "mZone Poker UITests";
+			productName = "mZone Poker UITests";
+			productReference = 04B62B1521EE56DB0097A21E /* mZone Poker UITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		EC9527411B8043450098D609 /* mZone Poker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EC9527541B8043450098D609 /* Build configuration list for PBXNativeTarget "mZone Poker" */;
+			buildPhases = (
+				EC95273E1B8043450098D609 /* Sources */,
+				EC95273F1B8043450098D609 /* Frameworks */,
+				EC9527401B8043450098D609 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "mZone Poker";
+			productName = "mZone Poker";
+			productReference = 04B62B1421EE56DB0097A21E /* mZone Poker.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EC95273A1B8043450098D609 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1010;
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = "Ray Wenderlich";
+				TargetAttributes = {
+					04DAB70621D55478003854E9 = {
+						CreatedOnToolsVersion = 10.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = EC9527411B8043450098D609;
+					};
+					EC9527411B8043450098D609 = {
+						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 1010;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = EC95273D1B8043450098D609 /* Build configuration list for PBXProject "mZone Poker" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				fr,
+			);
+			mainGroup = EC9527391B8043450098D609;
+			productRefGroup = EC9527391B8043450098D609;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EC9527411B8043450098D609 /* mZone Poker */,
+				04DAB70621D55478003854E9 /* mZone Poker UITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		04DAB70521D55478003854E9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EC9527401B8043450098D609 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EC9527501B8043450098D609 /* LaunchScreen.storyboard in Resources */,
+				EC95275B1B804DC50098D609 /* Localizable.strings in Resources */,
+				048F74E31DDF910E006E1D10 /* Assets.xcassets in Resources */,
+				EC95274B1B8043450098D609 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		04DAB70321D55478003854E9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04DAB70A21D55478003854E9 /* mZone_Poker_UITests.swift in Sources */,
+				048FCDD821D849D200136720 /* SnapshotHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EC95273E1B8043450098D609 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EC9527481B8043450098D609 /* ViewController.swift in Sources */,
+				EC9527461B8043450098D609 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		04DAB70D21D55478003854E9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EC9527411B8043450098D609 /* mZone Poker */;
+			targetProxy = 04DAB70C21D55478003854E9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		EC9527491B8043450098D609 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EC95274A1B8043450098D609 /* Base */,
+				041A98171DCEF4B100F96C9E /* en */,
+				041A98181DCEF4BA00F96C9E /* fr */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		EC95274E1B8043450098D609 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EC95274F1B8043450098D609 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		EC95275D1B804DC50098D609 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EC95275E1B804DCA0098D609 /* en */,
+				EC95275F1B804DF20098D609 /* fr */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		04DAB70F21D55478003854E9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "mZone Poker UITests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.razeware.mZone-Poker-UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "mZone Poker";
+			};
+			name = Debug;
+		};
+		04DAB71021D55478003854E9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "mZone Poker UITests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.razeware.mZone-Poker-UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "mZone Poker";
+			};
+			name = Release;
+		};
+		EC9527521B8043450098D609 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Debug;
+		};
+		EC9527531B8043450098D609 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EC9527551B8043450098D609 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 26;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "mZone Poker/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "YOUR-UNIQUE-BUNDLE-IDENTIFIER";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_VERSION = 4.2;
+				VERSIONING_SYSTEM = "Apple Generic";
+			};
+			name = Debug;
+		};
+		EC9527561B8043450098D609 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 26;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "mZone Poker/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "YOUR-UNIQUE-BUNDLE-IDENTIFIER";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_VERSION = 4.2;
+				VERSIONING_SYSTEM = "Apple Generic";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		04DAB70E21D55478003854E9 /* Build configuration list for PBXNativeTarget "mZone Poker UITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04DAB70F21D55478003854E9 /* Debug */,
+				04DAB71021D55478003854E9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EC95273D1B8043450098D609 /* Build configuration list for PBXProject "mZone Poker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EC9527521B8043450098D609 /* Debug */,
+				EC9527531B8043450098D609 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EC9527541B8043450098D609 /* Build configuration list for PBXNativeTarget "mZone Poker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EC9527551B8043450098D609 /* Debug */,
+				EC9527561B8043450098D609 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EC95273A1B8043450098D609 /* Project object */;
+}

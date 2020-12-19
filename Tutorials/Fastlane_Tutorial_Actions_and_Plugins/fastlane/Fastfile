@@ -1,0 +1,76 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Overlay the app icon with build information"
+  lane :overlay_icon do
+    build_number = get_build_number
+    # 내장된 get_build_number action을 사용하여 현재 build number를 검색한다.
+    version_number = get_version_number
+    # 내장된 get_version_number action을 사용하여 현재 app의 marketing version을 가져온다.
+        
+    version_icon(
+      appiconset_path: "mZone Poker/Assets.xcassets/AppIcon.appiconset",
+      text: "beta: #{version_number} (#{build_number})"
+      # version_icon 플러그인의 version_icon action을 호출하여 
+      # 하단에 app version과 build number를 overlay로 표시하는 app icon으로 업데이트한다.
+    )
+    end
+
+  desc "Build beta ipa"
+  lane :build_beta do
+    enable_automatic_code_signing
+    # provisioning profiles과 다른 code-signing settings에 신경 쓸 필요가 없는 automatic code signing을 설정한다.
+    gym(
+      export_method: "ad-hoc",
+      # gym 명령을 실행하고, export_method 매개변수를 ad-hoc로 설정한다.
+      # 이는 테스트를 위한 앱을 생성한다. Apple Developer 계정에 연결된 모든 기기는 앱을 실행할 수 있다.
+      xcargs: "ASSETCATALOG_COMPILER_APPICON_NAME=AppIcon-Versioned"
+      # 기본 앱 icon 대신 이전에 생성한 AppIcon-Versioned을 사용하도록 강제하도록 overrides 한다.
+      # 베타 build를 만들 때, 베타 icon만 적용하도록 하는 좋은 방법이다.
+    )
+  end
+  
+  desc "Upload to Firebase"
+  lane :upload_firebase do
+    firebase_app_distribution(
+      # 새로 추가한 plugin에서 제공하는 firebase_app_distribution action을 호출한다.
+      ipa_path: "./fastlane/builds/mZone Poker.ipa",
+      # 업로드할 .ipa의 위치를 action에 알려준다.
+      app: "[[FIREBASE APP ID]]",
+      groups: "beta-testers",
+      # 업로드할 app 및 access group을 지정한다.
+      release_notes: "Added icon overlay and started distributing via Firebase"
+      # beta tester가 build의 새로운 기능을 알 수 있도록 release notes를 제공한다.
+      # 지금은 단순하게 hard coding하고 있지만, git을 사용하는 경우 changelog_from_git_commits와 같은 다른 action과 결합하여 release notes를 자동으로 작성할 수 있다.
+    )
+  end
+
+  desc "Send Slack notification for build"
+  lane :send_slack do 
+    build_number = get_build_number
+    # 내장된 get_build_number action을 사용하여, 현재 build number를 가져온다.
+    version_number = get_version_number
+    # 내장된 get_version_number action을 사용하여, 현재 app marketing version을 가져온다.
+
+    slack(
+      message: "App build complete for Version: #{version_number} (#{build_number})",
+      success: true,
+      payload: {
+        "Build Date" => Time.new.to_s,
+        "Built by" => 'fastlane'
+      },
+      slack_url: "[[SLACK INCOMING WEBHOOK URL]]"
+    )
+    # slack action을 실행하여, build notification과 함께 slack의 workspace에 메시지를 게시한다.
+  end
+
+  desc "Create and distribute a beta build"
+  lane :beta do
+    increment_build_number
+    overlay_icon
+    build_beta
+    upload_firebase
+    send_slack
+  end
+  
+end

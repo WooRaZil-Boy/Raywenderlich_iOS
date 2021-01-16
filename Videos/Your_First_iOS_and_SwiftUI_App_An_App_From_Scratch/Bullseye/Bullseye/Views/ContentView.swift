@@ -59,6 +59,8 @@ struct ContentView: View {
 //canvas, code 양쪽 어느 부분이든 drag-drop 하면 된다.
 //⌥ + ⌘ + p 로 preview를 새로고침한다.
 
+//preview의 Dynamic Type을 변경하여 HIG 변경에 따른 preview를 확인할 수 있다.
+
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
     ContentView()

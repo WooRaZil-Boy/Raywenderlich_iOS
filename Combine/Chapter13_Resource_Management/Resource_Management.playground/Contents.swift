@@ -52,14 +52,39 @@ subject.send(Data()) //데이터 전송. 두 구독이 모두 데이터를 수�
 
 
 //Future
-let future = Future<Int, Error> { fulfill in
-    do {
-        let result = try performSomeWork()
-        fulfill(.success(result))
-    } catch {
-        fulfill(.failure(error))
-    }
+func performSomeWork() throws -> Int {
+  //Future에서 수행하는 작업을 시뮬레이션 하는 함수(asynchronous일 수 있다)
+  print("Performing some work and returning a result")
+  return 5
 }
+
+let future = Future<Int, Error> { fulfill in
+  //새로운 Future를 생성한다. subscribers를 기다리지 않고 작업이 즉시 시작된다.
+  do {
+    let result = try performSomeWork()
+    fulfill(.success(result))
+    //성공 시, result로 Promise를 수행한다.
+  } catch {
+    fulfill(.failure(error))
+    //실패 시, error를 Promise에 전달한다.
+  }
+}
+
+print("Subscribing to future...")
+
+let subscription1 = future
+  //한 번 subscribes 하면 result를 받을 수 있다.
+  .sink(
+    receiveCompletion: { _ in print("subscription1 completed") },
+    receiveValue: { print("subscription1 received: '\($0)'") }
+  )
+
+let subscription2 = future
+  //두 번째 subscribes에서 작업을 다시 수행하지 않고도 result를 받을 수 있다.
+  .sink(
+    receiveCompletion: { _ in print("subscription2 completed") },
+    receiveValue: { print("subscription2 received: '\($0)'") }
+  )
 //Future는 네트워크 요청의 단일 결과를 공유해야 할 때 사용하기 좋다.
 
 
